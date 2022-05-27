@@ -10,7 +10,7 @@
 
   <meta name="description" content="Geekdoc is a simple Hugo theme for documentations. It is intentionally designed as a fast and lean theme and may not fit the requirements of complex projects. If a more feature-complete theme is required there are a lot of good alternatives out there." />
 
-    <title>News | Rockdocs</title>
+    <title>Features | Rockdocs</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -31,19 +31,19 @@
     
   <meta
     property="og:title"
-    content="News"
+    content="Features"
   />
   <meta property="og:site_name" content="Rockdocs" />
   <meta property="og:image" content="https://www.rockdata.net/socialmedia2.png" />
   <meta property="og:description" content="Geekdoc is a simple Hugo theme for documentations. It is intentionally designed as a fast and lean theme and may not fit the requirements of complex projects. If a more feature-complete theme is required there are a lot of good alternatives out there." />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://www.rockdata.net/posts/" />
+<meta property="og:url" content="https://www.rockdata.net/tags/Features/" />
 
 
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="News" />
+<meta name="twitter:title" content="Features" />
   <meta property="twitter:image" content="https://www.rockdata.net/socialmedia2.png" />
   <meta name="twitter:description" content="Geekdoc is a simple Hugo theme for documentations. It is intentionally designed as a fast and lean theme and may not fit the requirements of complex projects. If a more feature-complete theme is required there are a lot of good alternatives out there." />
 
@@ -110,7 +110,7 @@
   href="/custom.css"
   media="all"
 />
-  <link href="https://www.rockdata.net/posts/" rel="canonical" type="text/html" />
+  <link href="https://www.rockdata.net/tags/Features/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -1121,7 +1121,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
           
             <li>
               <a
-                class="gdoc-nav__entry"
+                class="gdoc-nav__entry is-active"
                 href="/tags/Features/"
               >
                 Features
@@ -1187,7 +1187,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 
                 <a
                   href="/posts/"
-                  class="gdoc-nav__entry is-active"
+                  class="gdoc-nav__entry"
                 >
                   News
                 </a>
@@ -1308,65 +1308,24 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         <div class="gdoc-page">
           
   
-    <article class="gdoc-markdown gdoc-post">
+    <article class="gdoc-post">
       <header class="gdoc-post__header">
         <h1 class="gdoc-post__title">
-          <a href="/posts/initial-release/">Initial release</a>
+          <a href="/features/undo/">Undo</a>
         </h1>
       </header>
-      <section>
-        This is the first release of the Geekdoc theme.
-Dolor sit, sumo unique argument um no. Gracie nominal id xiv. Romanesque acclimates investiture. Ornateness bland it ex enc, est yeti am bongo detract re. Pro ad prompts feud gait, quid exercise emeritus bis e. In pro quints consequent, denim fastidious copious quo ad. Stet probates in duo.
+
+      <section class="gdoc-markdown">
+        Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo to do the following:
+ Roll back an active transaction Recover a terminated transaction Provide read consistency  Redrock Postgres stores undo data inside the database rather than in external logs. Undo data is stored in blocks that are updated just like data blocks, with changes to these blocks generating redo. In this way, Redrock Postgres can efficiently access undo data without needing to read external logs.
       </section>
-      <div class="gdoc-post__readmore">
-        
-      </div>
 
-      <footer class="gdoc-post__footer">
-        <div class="flex flex-wrap align-center gdoc-post__meta">
-          <span class="flex align-center no-wrap">
-  <svg class="gdoc-icon gdoc_date"><use xlink:href="#gdoc_date"></use></svg>
-  <span class="gdoc-post__tag">
-    <time datetime="2022-05-22T14:46:26&#43;08:00">
-      
-        Updated on
-      
-      May 22, 2022
-    </time>
-  </span>
-</span>
-
-<span class="flex align-center no-wrap">
-  <svg class="gdoc-icon gdoc_timer"><use xlink:href="#gdoc_timer"></use></svg>
-  <span class="gdoc-post__tag">One minute to read</span>
-</span>
-
-
-
-
-
-
-        </div>
-      </footer>
-    </article>
-  
-    <article class="gdoc-markdown gdoc-post">
-      <header class="gdoc-post__header">
-        <h1 class="gdoc-post__title">
-          <a href="/posts/hello_geekdoc/">Hello Geekdoc</a>
-        </h1>
-      </header>
-      <section>
-        This is the first release of the Geekdoc theme.
-Dolor sit, sumo unique argument um no. Gracie nominal id xiv. Romanesque acclimates investiture. Ornateness bland it ex enc, est yeti am bongo detract re. Pro ad prompts feud gait, quid exercise emeritus bis e. In pro quints consequent, denim fastidious copious quo ad. Stet probates in duo.
-Amalia id per in minimum facility, quid facet modifier ea ma. Ill um select ma ad, en ferric patine sentient vim.
-      </section>
       <div class="gdoc-post__readmore">
         
           <a
             class="flex-inline align-center fake-link"
             title="Read full post"
-            href="/posts/hello_geekdoc/"
+            href="/features/undo/"
           >
             Read full post
             <i class="gdoc-icon">gdoc_arrow_right_alt</i>
@@ -1379,11 +1338,108 @@ Amalia id per in minimum facility, quid facet modifier ea ma. Ill um select ma a
           <span class="flex align-center no-wrap">
   <svg class="gdoc-icon gdoc_date"><use xlink:href="#gdoc_date"></use></svg>
   <span class="gdoc-post__tag">
-    <time datetime="2022-05-22T14:46:26&#43;08:00">
+    <time datetime="2022-05-26T18:20:42&#43;08:00">
       
         Updated on
       
-      May 22, 2022
+      May 26, 2022
+    </time>
+  </span>
+</span>
+
+<span class="flex align-center no-wrap">
+  <svg class="gdoc-icon gdoc_timer"><use xlink:href="#gdoc_timer"></use></svg>
+  <span class="gdoc-post__tag">2 minutes to read</span>
+</span>
+
+
+
+  
+    
+    
+      
+        <span class="flex align-center no-wrap">
+          <svg class="gdoc-icon gdoc_bookmark"><use xlink:href="#gdoc_bookmark"></use></svg>
+          
+  <span class="gdoc-post__tag gdoc-button gdoc-button--regular">
+    <a
+      class="gdoc-button__link"
+      href="/tags/Documentation/"
+      title="All posts tagged with &#39;Documentation&#39;"
+    >
+      Documentation
+    </a>
+  </span>
+
+        </span>
+      
+    
+    
+  
+    
+    
+      
+        <span class="flex align-center">
+          
+  <span class="gdoc-post__tag gdoc-button gdoc-button--regular">
+    <a
+      class="gdoc-button__link"
+      href="/tags/Features/"
+      title="All posts tagged with &#39;Features&#39;"
+    >
+      Features
+    </a>
+  </span>
+
+        </span>
+      
+    
+    
+  
+
+
+
+
+        </div>
+      </footer>
+    </article>
+  
+    <article class="gdoc-post">
+      <header class="gdoc-post__header">
+        <h1 class="gdoc-post__title">
+          <a href="/advanced/plscheme/">PL/scheme, Procedural Language Handler</a>
+        </h1>
+      </header>
+
+      <section class="gdoc-markdown">
+        PL/scheme is a PostgreSQL procedural language handler for Scheme programming language. PL/scheme uses Chibi Scheme in the background as its Scheme interpreter. With lots of builtin SRFIs and complete R7RS compliancy of Chibi Scheme, PL/scheme can power up PostgreSQL procedures in a Lisp style.
+Features     You can find some of the supported features by PL/scheme in the below list.
+ Extensible native type support even for not created yet SQL data types.
+      </section>
+
+      <div class="gdoc-post__readmore">
+        
+          <a
+            class="flex-inline align-center fake-link"
+            title="Read full post"
+            href="/advanced/plscheme/"
+          >
+            Read full post
+            <i class="gdoc-icon">gdoc_arrow_right_alt</i>
+          </a>
+        
+      </div>
+
+      <footer class="gdoc-post__footer">
+        <div class="flex flex-wrap align-center gdoc-post__meta">
+          <span class="flex align-center no-wrap">
+  <svg class="gdoc-icon gdoc_date"><use xlink:href="#gdoc_date"></use></svg>
+  <span class="gdoc-post__tag">
+    <time datetime="2022-05-26T18:20:42&#43;08:00">
+      
+        Updated on
+      
+      May 26, 2022
     </time>
   </span>
 </span>
@@ -1425,10 +1481,10 @@ Amalia id per in minimum facility, quid facet modifier ea ma. Ill um select ma a
   <span class="gdoc-post__tag gdoc-button gdoc-button--regular">
     <a
       class="gdoc-button__link"
-      href="/tags/Updates/"
-      title="All posts tagged with &#39;Updates&#39;"
+      href="/tags/Features/"
+      title="All posts tagged with &#39;Features&#39;"
     >
-      Updates
+      Features
     </a>
   </span>
 

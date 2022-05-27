@@ -8,9 +8,10 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Geekdoc is a simple Hugo theme for documentations. It is intentionally designed as a fast and lean theme and may not fit the requirements of complex projects. If a more feature-complete theme is required there are a lot of good alternatives out there." />
+  <meta name="description" content="Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo to do the following:
+ Roll back an active transaction Recover a terminated transaction Provide read consistency  Redrock Postgres stores undo data inside the database rather than in external logs. Undo data is stored in blocks that are updated just like data blocks, with changes to these blocks generating redo. In this way, Redrock Postgres can efficiently access undo data without needing to read external logs." />
 
-    <title>News | Rockdocs</title>
+    <title>Undo | Rockdocs</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -31,23 +32,69 @@
     
   <meta
     property="og:title"
-    content="News"
+    content="Undo"
   />
   <meta property="og:site_name" content="Rockdocs" />
   <meta property="og:image" content="https://www.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Geekdoc is a simple Hugo theme for documentations. It is intentionally designed as a fast and lean theme and may not fit the requirements of complex projects. If a more feature-complete theme is required there are a lot of good alternatives out there." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://www.rockdata.net/posts/" />
+  <meta property="og:description" content="Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo to do the following:
+ Roll back an active transaction Recover a terminated transaction Provide read consistency  Redrock Postgres stores undo data inside the database rather than in external logs. Undo data is stored in blocks that are updated just like data blocks, with changes to these blocks generating redo. In this way, Redrock Postgres can efficiently access undo data without needing to read external logs." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.rockdata.net/features/undo/" />
 
-
+<meta property="article:section" content="Features" />
+    <meta
+      property="article:published_time"
+      content="2020-06-13T00:06:00+02:00"
+    />
+    <meta
+      property="article:modified_time"
+      content="2022-05-26T18:20:42+08:00"
+    />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="News" />
+<meta name="twitter:title" content="Undo" />
   <meta property="twitter:image" content="https://www.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Geekdoc is a simple Hugo theme for documentations. It is intentionally designed as a fast and lean theme and may not fit the requirements of complex projects. If a more feature-complete theme is required there are a lot of good alternatives out there." />
+  <meta name="twitter:description" content="Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo to do the following:
+ Roll back an active transaction Recover a terminated transaction Provide read consistency  Redrock Postgres stores undo data inside the database rather than in external logs. Undo data is stored in blocks that are updated just like data blocks, with changes to these blocks generating redo. In this way, Redrock Postgres can efficiently access undo data without needing to read external logs." />
 
 
+  <script type="application/ld+json">
+  {
+      "@context": "http://schema.org",
+      "@type": "TechArticle",
+      "articleSection": "Features",
+      "name": "Undo",
+      "url" : "https://www.rockdata.net/features/undo/",
+      "headline": "Undo",
+      "description": "Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo to do the following:\n Roll back an active transaction Recover a terminated transaction Provide read consistency  Redrock Postgres stores undo data inside the database rather than in external logs. Undo data is stored in blocks that are updated just like data blocks, with changes to these blocks generating redo. In this way, Redrock Postgres can efficiently access undo data without needing to read external logs.",
+      "thumbnailUrl": "https://www.rockdata.net/socialmedia2.png",
+      "wordCount" : "241",
+      "inLanguage": "en",
+      "isFamilyFriendly": "true",
+      "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://www.rockdata.net/features/undo/"
+      },
+      "keywords" : [ "Documentation" , "Features" ],
+      "copyrightHolder" : "Rockdocs",
+      "copyrightYear" : "2020",
+      "dateCreated": "2020-06-13T00:06:00.00Z",
+      "datePublished": "2020-06-13T00:06:00.00Z",
+      "dateModified": "2022-05-26T18:20:42.00Z",
+      "publisher":{
+          "@type":"Organization",
+          "name": "Rockdocs",
+          "url": "https://www.rockdata.net/",
+          "logo": {
+              "@type": "ImageObject",
+              "url": "https://www.rockdata.net/brand.svg",
+              "width":"32",
+              "height":"32"
+          }
+      }
+  }
+  </script>
 
 
     <script src="/js/main-4f8bb62c.bundle.min.js"></script>
@@ -110,7 +157,7 @@
   href="/custom.css"
   media="all"
 />
-  <link href="https://www.rockdata.net/posts/" rel="canonical" type="text/html" />
+  <link href="https://www.rockdata.net/features/undo/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -959,7 +1006,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <span class="flex">
                   <a
                     href="/features/undo/"
-                    class="gdoc-nav__entry"
+                    class="gdoc-nav__entry is-active"
                   >
                     Undo
                   </a>
@@ -1102,47 +1149,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   </section>
 
   
-    <section class="gdoc-nav--tags">
-      <h2>Tags</h2>
-      <ul class="gdoc-nav__list">
-        
-        
-          
-            <li>
-              <a
-                class="gdoc-nav__entry"
-                href="/tags/Documentation/"
-              >
-                Documentation
-              </a>
-            </li>
-          
-        
-          
-            <li>
-              <a
-                class="gdoc-nav__entry"
-                href="/tags/Features/"
-              >
-                Features
-              </a>
-            </li>
-          
-        
-          
-            <li>
-              <a
-                class="gdoc-nav__entry"
-                href="/tags/Updates/"
-              >
-                Updates
-              </a>
-            </li>
-          
-        
-      </ul>
-    </section>
-  
 
 
   <section class="gdoc-nav--more">
@@ -1187,7 +1193,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 
                 <a
                   href="/posts/"
-                  class="gdoc-nav__entry is-active"
+                  class="gdoc-nav__entry"
                 >
                   News
                 </a>
@@ -1308,143 +1314,105 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         <div class="gdoc-page">
           
   
-    <article class="gdoc-markdown gdoc-post">
-      <header class="gdoc-post__header">
-        <h1 class="gdoc-post__title">
-          <a href="/posts/initial-release/">Initial release</a>
-        </h1>
-      </header>
-      <section>
-        This is the first release of the Geekdoc theme.
-Dolor sit, sumo unique argument um no. Gracie nominal id xiv. Romanesque acclimates investiture. Ornateness bland it ex enc, est yeti am bongo detract re. Pro ad prompts feud gait, quid exercise emeritus bis e. In pro quints consequent, denim fastidious copious quo ad. Stet probates in duo.
-      </section>
-      <div class="gdoc-post__readmore">
+
+
+  
+
+
+
+
+
+
+<div
+  class="gdoc-page__header flex flex-wrap
+  
+    justify-between
+  
+  
+  "
+  itemprop="breadcrumb"
+>
+  
+    <div>
+      <svg class="gdoc-icon gdoc_path hidden-mobile"><use xlink:href="#gdoc_path"></use></svg>
+      <ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
         
-      </div>
-
-      <footer class="gdoc-post__footer">
-        <div class="flex flex-wrap align-center gdoc-post__meta">
-          <span class="flex align-center no-wrap">
-  <svg class="gdoc-icon gdoc_date"><use xlink:href="#gdoc_date"></use></svg>
-  <span class="gdoc-post__tag">
-    <time datetime="2022-05-22T14:46:26&#43;08:00">
-      
-        Updated on
-      
-      May 22, 2022
-    </time>
-  </span>
-</span>
-
-<span class="flex align-center no-wrap">
-  <svg class="gdoc-icon gdoc_timer"><use xlink:href="#gdoc_timer"></use></svg>
-  <span class="gdoc-post__tag">One minute to read</span>
-</span>
-
-
-
-
-
-
-        </div>
-      </footer>
-    </article>
-  
-    <article class="gdoc-markdown gdoc-post">
-      <header class="gdoc-post__header">
-        <h1 class="gdoc-post__title">
-          <a href="/posts/hello_geekdoc/">Hello Geekdoc</a>
-        </h1>
-      </header>
-      <section>
-        This is the first release of the Geekdoc theme.
-Dolor sit, sumo unique argument um no. Gracie nominal id xiv. Romanesque acclimates investiture. Ornateness bland it ex enc, est yeti am bongo detract re. Pro ad prompts feud gait, quid exercise emeritus bis e. In pro quints consequent, denim fastidious copious quo ad. Stet probates in duo.
-Amalia id per in minimum facility, quid facet modifier ea ma. Ill um select ma ad, en ferric patine sentient vim.
-      </section>
-      <div class="gdoc-post__readmore">
         
-          <a
-            class="flex-inline align-center fake-link"
-            title="Read full post"
-            href="/posts/hello_geekdoc/"
-          >
-            Read full post
-            <i class="gdoc-icon">gdoc_arrow_right_alt</i>
-          </a>
         
-      </div>
-
-      <footer class="gdoc-post__footer">
-        <div class="flex flex-wrap align-center gdoc-post__meta">
-          <span class="flex align-center no-wrap">
-  <svg class="gdoc-icon gdoc_date"><use xlink:href="#gdoc_date"></use></svg>
-  <span class="gdoc-post__tag">
-    <time datetime="2022-05-22T14:46:26&#43;08:00">
-      
-        Updated on
-      
-      May 22, 2022
-    </time>
-  </span>
-</span>
-
-<span class="flex align-center no-wrap">
-  <svg class="gdoc-icon gdoc_timer"><use xlink:href="#gdoc_timer"></use></svg>
-  <span class="gdoc-post__tag">One minute to read</span>
-</span>
-
-
-
+        
+  
   
     
     
-      
-        <span class="flex align-center no-wrap">
-          <svg class="gdoc-icon gdoc_bookmark"><use xlink:href="#gdoc_bookmark"></use></svg>
-          
-  <span class="gdoc-post__tag gdoc-button gdoc-button--regular">
-    <a
-      class="gdoc-button__link"
-      href="/tags/Documentation/"
-      title="All posts tagged with &#39;Documentation&#39;"
-    >
-      Documentation
-    </a>
-  </span>
-
-        </span>
-      
     
     
   
+  
     
     
-      
-        <span class="flex align-center">
-          
-  <span class="gdoc-post__tag gdoc-button gdoc-button--regular">
-    <a
-      class="gdoc-button__link"
-      href="/tags/Updates/"
-      title="All posts tagged with &#39;Updates&#39;"
-    >
-      Updates
-    </a>
-  </span>
-
-        </span>
-      
     
     
   
-
-
-
-
-        </div>
-      </footer>
-    </article>
   
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/features/' href='/features/'><span itemprop='name'>Features</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Undo</span><meta itemprop='position' content='3' /></li>
+  
+
+  
+
+  
+
+      </ol>
+    </div>
+  
+  
+    <div>
+      <span class="editpage">
+        <svg class="gdoc-icon gdoc_code"><use xlink:href="#gdoc_code"></use></svg>
+        <a
+          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/en/features/undo.md"
+        >
+          Edit page
+        </a>
+      </span>
+    </div>
+  
+</div>
+
+
+
+  <article
+    class="gdoc-markdown gdoc-markdown__align--left"
+  >
+    <h1>Undo</h1>
+    <p>Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo to do the following:</p>
+<ul>
+<li>Roll back an active transaction</li>
+<li>Recover a terminated transaction</li>
+<li>Provide read consistency</li>
+</ul>
+<p>Redrock Postgres stores undo data inside the database rather than in external logs. Undo data is stored in blocks that are updated just like data blocks, with changes to these blocks generating redo. In this way, Redrock Postgres can efficiently access undo data without needing to read external logs.</p>
+<p>Undo data is stored in an independent tablespace. Redrock Postgres provides a fully automated mechanism, known as automatic undo management mode, for managing undos and space.</p>
+<div class="gdoc-page__anchorwrap">
+    <h4 id="undos-and-transactions">
+        Undos and Transactions
+        <a data-clipboard-text="https://www.rockdata.net/features/undo/#undos-and-transactions" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Undos and Transactions" aria-label="Anchor to: Undos and Transactions" href="#undos-and-transactions">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h4>
+</div>
+<p>When a transaction starts, the database binds (assigns) the transaction to an undo segment, and therefore to a transaction table.</p>
+<p>Multiple active transactions can write concurrently to the same undo or to different undos. For example, transactions T1 and T2 can both write to undo U1, or T1 can write to U1 while T2 writes to undo U2.</p>
+<div class="gdoc-page__anchorwrap">
+    <h4 id="transaction-rollback">
+        Transaction Rollback
+        <a data-clipboard-text="https://www.rockdata.net/features/undo/#transaction-rollback" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Transaction Rollback" aria-label="Anchor to: Transaction Rollback" href="#transaction-rollback">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h4>
+</div>
+<p>When a <code>ROLLBACK</code> statement is issued, the database uses undo records to roll back changes made to the database by the uncommitted transaction. During recovery, the database rolls back any uncommitted changes applied from the online redo log to the data files. Undo records provide read consistency by maintaining the before image of the data for users accessing data at the same time that another user is changing it.</p>
+
+  </article>
 
 
 
