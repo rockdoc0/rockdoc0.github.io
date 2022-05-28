@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: /tags/*
 
-Sitemap: https://www.rockdata.net/sitemap.xml
+Sitemap: https://doc.rockdata.net/sitemap.xml
