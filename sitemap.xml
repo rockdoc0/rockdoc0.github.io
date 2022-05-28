@@ -1,56 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-  xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <url>
-    <loc>https://www.rockdata.net/usage/getting-started/</loc>
-    <lastmod>2022-05-27T09:18:30+08:00</lastmod>
-  </url><url>
-    <loc>https://www.rockdata.net/usage/</loc>
-    <lastmod>2022-05-22T14:46:26+08:00</lastmod>
-  </url><url>
-    <loc>https://www.rockdata.net/features/</loc>
-    <lastmod>2022-05-27T09:18:30+08:00</lastmod>
-  </url><url>
-    <loc>https://www.rockdata.net/advanced/</loc>
-    <lastmod>2022-05-27T09:18:30+08:00</lastmod>
-  </url><url>
-    <loc>https://www.rockdata.net/usage/configuration/</loc>
-    <lastmod>2022-05-27T09:18:30+08:00</lastmod>
-  </url><url>
-    <loc>https://www.rockdata.net/features/undo/</loc>
-    <lastmod>2022-05-26T18:20:42+08:00</lastmod>
-  </url><url>
-    <loc>https://www.rockdata.net/posts/</loc>
-    <lastmod>2022-05-22T14:46:26+08:00</lastmod>
-  </url><url>
-    <loc>https://www.rockdata.net/tags/Documentation/</loc>
-    <lastmod>2022-05-26T18:20:42+08:00</lastmod>
-  </url><url>
-    <loc>https://www.rockdata.net/tags/Features/</loc>
-    <lastmod>2022-05-26T18:20:42+08:00</lastmod>
-  </url><url>
-    <loc>https://www.rockdata.net/advanced/plscheme/</loc>
-    <lastmod>2022-05-26T18:20:42+08:00</lastmod>
-  </url><url>
-    <loc>https://www.rockdata.net/tags/</loc>
-    <lastmod>2022-05-26T18:20:42+08:00</lastmod>
-  </url><url>
-    <loc>https://www.rockdata.net/posts/initial-release/</loc>
-    <lastmod>2022-05-22T14:46:26+08:00</lastmod>
-  </url><url>
-    <loc>https://www.rockdata.net/posts/hello_geekdoc/</loc>
-    <lastmod>2022-05-22T14:46:26+08:00</lastmod>
-  </url><url>
-    <loc>https://www.rockdata.net/tags/Updates/</loc>
-    <lastmod>2022-05-22T14:46:26+08:00</lastmod>
-  </url><url>
-    <loc>https://www.rockdata.net/_includes/</loc>
-    <lastmod>2022-05-22T14:46:26+08:00</lastmod>
-  </url><url>
-    <loc>https://www.rockdata.net/_includes/include-page/</loc>
-    <lastmod>2022-05-22T14:46:26+08:00</lastmod>
-  </url><url>
-    <loc>https://www.rockdata.net/</loc>
-    <lastmod>2022-05-26T18:20:42+08:00</lastmod>
-  </url>
-</urlset>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <sitemap>
+    <loc>https://www.rockdata.net/en/sitemap.xml</loc>
+    
+      <lastmod>2022-05-27T09:18:30+08:00</lastmod>
+    
+  </sitemap>
+  
+  <sitemap>
+    <loc>https://www.rockdata.net/zh-cn/sitemap.xml</loc>
+    
+      <lastmod>2022-05-28T14:47:24+08:00</lastmod>
+    
+  </sitemap>
+  
+</sitemapindex>
