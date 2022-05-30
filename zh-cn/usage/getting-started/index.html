@@ -8,7 +8,15 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Installation Architectural Fundamentals Accessing Database Whats next?      Installation     Before you can use PostgreSQL you need to install it, of course. It is possible that PostgreSQL is already installed at your site, either because it was included in your operating system distribution or because the system administrator already installed it. If that is the case, you should obtain information from the operating system documentation or your system administrator about how to access PostgreSQL." />
+  <meta name="description" content="安装 架构基础 访问数据库 下一步是什么？      安装     自然，在你能开始使用PostgreSQL之前， 你必须安装它。PostgreSQL很有可能已经安装到你的节点上了， 因为它可能包含在你的操作系统的发布里， 或者是系统管理员已经安装了它。如果是这样的话， 那么你应该从操作系统的文档或者你的系统管理员那里获取有关如何访问PostgreSQL的信息。
+如果你不清楚PostgreSQL是否已经安装， 或者不知道你能否用它（已经安装的）做自己的实验，那么你就可以自己安装。 这么做并不难，并且是一次很好的练习。PostgreSQL可以由任何非特权用户安装， 并不需要超级用户 （root）的权限。
+如果你准备自己安装PostgreSQL， 那么请参考第 16 章以获取安装的有关信息， 安装之后再回到这个指导手册来。一定要记住要尽可能遵循有关设置合适的环境变量章节里的信息。
+如果你的站点管理员没有按照缺省的方式设置各项相关参数， 那你还有点额外的活儿要干。比如，如果数据库服务器机器是一个远程的机器， 那你就需要把PGHOST环境变量设置为数据库服务器的名字。环境变量PGPORT也可能需要设置。总而言之就是： 如果当你试着启动一个应用而该应用报告说不能与数据库建立联接时， 你应该马上与你的数据库管理员联系，如果你就是管理员， 那么你就要参考文档以确保你的环境变量得到正确的设置。 如果你不理解随后的几段，那么先阅读下一节。
+架构基础     在我们继续之前，你应该先了解PostgreSQL的系统架构。 对PostgreSQL的部件之间如何相互作用的理解将会使本节更易理解。
+在数据库术语里，PostgreSQL使用一种客户端/服务器的模型。一次PostgreSQL会话由下列相关的进程（程序）组成：
+ 一个服务器进程，它管理数据库文件、接受来自客户端应用与数据库的联接并且代表客户端在数据库上执行操作。 该数据库服务器程序叫做postgres。 那些需要执行数据库操作的用户的客户端（前端）应用。 客户端应用可能本身就是多种多样的：可以是一个面向文本的工具， 也可以是一个图形界面的应用，或者是一个通过访问数据库来显示网页的网页服务器，或者是一个特制的数据库管理工具。 一些客户端应用是和 PostgreSQL发布一起提供的，但绝大部分是用户开发的。  和典型的客户端/服务器应用（C/S应用）一样，这些客户端和服务器可以在不同的主机上。 这时它们通过 TCP/IP 网络联接通讯。 你应该记住的是，在客户机上可以访问的文件未必能够在数据库服务器机器上访问（或者只能用不同的文件名进行访问）。
+PostgreSQL服务器可以处理来自客户端的多个并发请求。 因此，它为每个连接启动（“forks”）一个新的进程。 从这个时候开始，客户端和新服务器进程就不再经过最初的 postgres进程的干涉进行通讯。 因此，主服务器进程总是在运行并等待着客户端联接， 而客户端和相关联的服务器进程则是起起停停（当然，这些对用户是透明的。我们介绍这些主要是为了内容的完整性）。
+访问数据库     一旦你创建了数据库，你就可以通过以下方式访问它：" />
 
     <title>开始上手 | Redrock Documentation</title>
 
@@ -35,21 +43,37 @@
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Installation Architectural Fundamentals Accessing Database Whats next?      Installation     Before you can use PostgreSQL you need to install it, of course. It is possible that PostgreSQL is already installed at your site, either because it was included in your operating system distribution or because the system administrator already installed it. If that is the case, you should obtain information from the operating system documentation or your system administrator about how to access PostgreSQL." />
+  <meta property="og:description" content="安装 架构基础 访问数据库 下一步是什么？      安装     自然，在你能开始使用PostgreSQL之前， 你必须安装它。PostgreSQL很有可能已经安装到你的节点上了， 因为它可能包含在你的操作系统的发布里， 或者是系统管理员已经安装了它。如果是这样的话， 那么你应该从操作系统的文档或者你的系统管理员那里获取有关如何访问PostgreSQL的信息。
+如果你不清楚PostgreSQL是否已经安装， 或者不知道你能否用它（已经安装的）做自己的实验，那么你就可以自己安装。 这么做并不难，并且是一次很好的练习。PostgreSQL可以由任何非特权用户安装， 并不需要超级用户 （root）的权限。
+如果你准备自己安装PostgreSQL， 那么请参考第 16 章以获取安装的有关信息， 安装之后再回到这个指导手册来。一定要记住要尽可能遵循有关设置合适的环境变量章节里的信息。
+如果你的站点管理员没有按照缺省的方式设置各项相关参数， 那你还有点额外的活儿要干。比如，如果数据库服务器机器是一个远程的机器， 那你就需要把PGHOST环境变量设置为数据库服务器的名字。环境变量PGPORT也可能需要设置。总而言之就是： 如果当你试着启动一个应用而该应用报告说不能与数据库建立联接时， 你应该马上与你的数据库管理员联系，如果你就是管理员， 那么你就要参考文档以确保你的环境变量得到正确的设置。 如果你不理解随后的几段，那么先阅读下一节。
+架构基础     在我们继续之前，你应该先了解PostgreSQL的系统架构。 对PostgreSQL的部件之间如何相互作用的理解将会使本节更易理解。
+在数据库术语里，PostgreSQL使用一种客户端/服务器的模型。一次PostgreSQL会话由下列相关的进程（程序）组成：
+ 一个服务器进程，它管理数据库文件、接受来自客户端应用与数据库的联接并且代表客户端在数据库上执行操作。 该数据库服务器程序叫做postgres。 那些需要执行数据库操作的用户的客户端（前端）应用。 客户端应用可能本身就是多种多样的：可以是一个面向文本的工具， 也可以是一个图形界面的应用，或者是一个通过访问数据库来显示网页的网页服务器，或者是一个特制的数据库管理工具。 一些客户端应用是和 PostgreSQL发布一起提供的，但绝大部分是用户开发的。  和典型的客户端/服务器应用（C/S应用）一样，这些客户端和服务器可以在不同的主机上。 这时它们通过 TCP/IP 网络联接通讯。 你应该记住的是，在客户机上可以访问的文件未必能够在数据库服务器机器上访问（或者只能用不同的文件名进行访问）。
+PostgreSQL服务器可以处理来自客户端的多个并发请求。 因此，它为每个连接启动（“forks”）一个新的进程。 从这个时候开始，客户端和新服务器进程就不再经过最初的 postgres进程的干涉进行通讯。 因此，主服务器进程总是在运行并等待着客户端联接， 而客户端和相关联的服务器进程则是起起停停（当然，这些对用户是透明的。我们介绍这些主要是为了内容的完整性）。
+访问数据库     一旦你创建了数据库，你就可以通过以下方式访问它：" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/zh-cn/usage/getting-started/" />
 
 <meta property="article:section" content="Usage" />
     <meta
       property="article:modified_time"
-      content="2022-05-28T14:47:24+08:00"
+      content="2022-05-30T19:41:27+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="开始上手" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Installation Architectural Fundamentals Accessing Database Whats next?      Installation     Before you can use PostgreSQL you need to install it, of course. It is possible that PostgreSQL is already installed at your site, either because it was included in your operating system distribution or because the system administrator already installed it. If that is the case, you should obtain information from the operating system documentation or your system administrator about how to access PostgreSQL." />
+  <meta name="twitter:description" content="安装 架构基础 访问数据库 下一步是什么？      安装     自然，在你能开始使用PostgreSQL之前， 你必须安装它。PostgreSQL很有可能已经安装到你的节点上了， 因为它可能包含在你的操作系统的发布里， 或者是系统管理员已经安装了它。如果是这样的话， 那么你应该从操作系统的文档或者你的系统管理员那里获取有关如何访问PostgreSQL的信息。
+如果你不清楚PostgreSQL是否已经安装， 或者不知道你能否用它（已经安装的）做自己的实验，那么你就可以自己安装。 这么做并不难，并且是一次很好的练习。PostgreSQL可以由任何非特权用户安装， 并不需要超级用户 （root）的权限。
+如果你准备自己安装PostgreSQL， 那么请参考第 16 章以获取安装的有关信息， 安装之后再回到这个指导手册来。一定要记住要尽可能遵循有关设置合适的环境变量章节里的信息。
+如果你的站点管理员没有按照缺省的方式设置各项相关参数， 那你还有点额外的活儿要干。比如，如果数据库服务器机器是一个远程的机器， 那你就需要把PGHOST环境变量设置为数据库服务器的名字。环境变量PGPORT也可能需要设置。总而言之就是： 如果当你试着启动一个应用而该应用报告说不能与数据库建立联接时， 你应该马上与你的数据库管理员联系，如果你就是管理员， 那么你就要参考文档以确保你的环境变量得到正确的设置。 如果你不理解随后的几段，那么先阅读下一节。
+架构基础     在我们继续之前，你应该先了解PostgreSQL的系统架构。 对PostgreSQL的部件之间如何相互作用的理解将会使本节更易理解。
+在数据库术语里，PostgreSQL使用一种客户端/服务器的模型。一次PostgreSQL会话由下列相关的进程（程序）组成：
+ 一个服务器进程，它管理数据库文件、接受来自客户端应用与数据库的联接并且代表客户端在数据库上执行操作。 该数据库服务器程序叫做postgres。 那些需要执行数据库操作的用户的客户端（前端）应用。 客户端应用可能本身就是多种多样的：可以是一个面向文本的工具， 也可以是一个图形界面的应用，或者是一个通过访问数据库来显示网页的网页服务器，或者是一个特制的数据库管理工具。 一些客户端应用是和 PostgreSQL发布一起提供的，但绝大部分是用户开发的。  和典型的客户端/服务器应用（C/S应用）一样，这些客户端和服务器可以在不同的主机上。 这时它们通过 TCP/IP 网络联接通讯。 你应该记住的是，在客户机上可以访问的文件未必能够在数据库服务器机器上访问（或者只能用不同的文件名进行访问）。
+PostgreSQL服务器可以处理来自客户端的多个并发请求。 因此，它为每个连接启动（“forks”）一个新的进程。 从这个时候开始，客户端和新服务器进程就不再经过最初的 postgres进程的干涉进行通讯。 因此，主服务器进程总是在运行并等待着客户端联接， 而客户端和相关联的服务器进程则是起起停停（当然，这些对用户是透明的。我们介绍这些主要是为了内容的完整性）。
+访问数据库     一旦你创建了数据库，你就可以通过以下方式访问它：" />
 
 
   <script type="application/ld+json">
@@ -60,9 +84,9 @@
       "name": "开始上手",
       "url" : "https://doc.rockdata.net/zh-cn/usage/getting-started/",
       "headline": "开始上手",
-      "description": "Installation Architectural Fundamentals Accessing Database Whats next?      Installation     Before you can use PostgreSQL you need to install it, of course. It is possible that PostgreSQL is already installed at your site, either because it was included in your operating system distribution or because the system administrator already installed it. If that is the case, you should obtain information from the operating system documentation or your system administrator about how to access PostgreSQL.",
+      "description": "安装 架构基础 访问数据库 下一步是什么？      安装     自然，在你能开始使用PostgreSQL之前， 你必须安装它。PostgreSQL很有可能已经安装到你的节点上了， 因为它可能包含在你的操作系统的发布里， 或者是系统管理员已经安装了它。如果是这样的话， 那么你应该从操作系统的文档或者你的系统管理员那里获取有关如何访问PostgreSQL的信息。\n如果你不清楚PostgreSQL是否已经安装， 或者不知道你能否用它（已经安装的）做自己的实验，那么你就可以自己安装。 这么做并不难，并且是一次很好的练习。PostgreSQL可以由任何非特权用户安装， 并不需要超级用户 （root）的权限。\n如果你准备自己安装PostgreSQL， 那么请参考第 16 章以获取安装的有关信息， 安装之后再回到这个指导手册来。一定要记住要尽可能遵循有关设置合适的环境变量章节里的信息。\n如果你的站点管理员没有按照缺省的方式设置各项相关参数， 那你还有点额外的活儿要干。比如，如果数据库服务器机器是一个远程的机器， 那你就需要把PGHOST环境变量设置为数据库服务器的名字。环境变量PGPORT也可能需要设置。总而言之就是： 如果当你试着启动一个应用而该应用报告说不能与数据库建立联接时， 你应该马上与你的数据库管理员联系，如果你就是管理员， 那么你就要参考文档以确保你的环境变量得到正确的设置。 如果你不理解随后的几段，那么先阅读下一节。\n架构基础     在我们继续之前，你应该先了解PostgreSQL的系统架构。 对PostgreSQL的部件之间如何相互作用的理解将会使本节更易理解。\n在数据库术语里，PostgreSQL使用一种客户端\/服务器的模型。一次PostgreSQL会话由下列相关的进程（程序）组成：\n 一个服务器进程，它管理数据库文件、接受来自客户端应用与数据库的联接并且代表客户端在数据库上执行操作。 该数据库服务器程序叫做postgres。 那些需要执行数据库操作的用户的客户端（前端）应用。 客户端应用可能本身就是多种多样的：可以是一个面向文本的工具， 也可以是一个图形界面的应用，或者是一个通过访问数据库来显示网页的网页服务器，或者是一个特制的数据库管理工具。 一些客户端应用是和 PostgreSQL发布一起提供的，但绝大部分是用户开发的。  和典型的客户端\/服务器应用（C\/S应用）一样，这些客户端和服务器可以在不同的主机上。 这时它们通过 TCP\/IP 网络联接通讯。 你应该记住的是，在客户机上可以访问的文件未必能够在数据库服务器机器上访问（或者只能用不同的文件名进行访问）。\nPostgreSQL服务器可以处理来自客户端的多个并发请求。 因此，它为每个连接启动（“forks”）一个新的进程。 从这个时候开始，客户端和新服务器进程就不再经过最初的 postgres进程的干涉进行通讯。 因此，主服务器进程总是在运行并等待着客户端联接， 而客户端和相关联的服务器进程则是起起停停（当然，这些对用户是透明的。我们介绍这些主要是为了内容的完整性）。\n访问数据库     一旦你创建了数据库，你就可以通过以下方式访问它：",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "974",
+      "wordCount" : "131",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -73,7 +97,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-05-28T14:47:24.00Z",
+      "dateModified": "2022-05-30T19:41:27.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1414,76 +1438,75 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     <h1>开始上手</h1>
     <div class="gdoc-toc gdoc-toc__level--3">
       <nav id="TableOfContents"><ul>
-        <li><a href="#installation">Installation</a></li>
-        <li><a href="#architectural-fundamentals">Architectural Fundamentals</a></li>
-        <li><a href="#accessing-database">Accessing Database</a></li>
-        <li><a href="#whats-next">Whats next?</a></li>
+        <li><a href="#安装">安装</a></li>
+        <li><a href="#架构基础">架构基础</a></li>
+        <li><a href="#访问数据库">访问数据库</a></li>
+        <li><a href="#下一步是什么">下一步是什么？</a></li>
       </ul></nav>
       <hr />
     </div>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="installation">
-        Installation
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/usage/getting-started/#installation" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： Installation" aria-label="锚定到： Installation" href="#installation">
+    <h2 id="安装">
+        安装
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/usage/getting-started/#安装" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 安装" aria-label="锚定到： 安装" href="#%e5%ae%89%e8%a3%85">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>Before you can use PostgreSQL you need to install it, of course. It is possible that PostgreSQL is already installed at your site, either because it was included in your operating system distribution or because the system administrator already installed it. If that is the case, you should obtain information from the operating system documentation or your system administrator about how to access PostgreSQL.</p>
-<p>If you are not sure whether PostgreSQL is already available or whether you can use it for your experimentation then you can install it yourself. Doing so is not hard and it can be a good exercise. PostgreSQL can be installed by any unprivileged user; no superuser (root) access is required.</p>
-<p>If you are installing PostgreSQL yourself, then refer to <a
+<p>自然，在你能开始使用PostgreSQL之前， 你必须安装它。PostgreSQL很有可能已经安装到你的节点上了， 因为它可能包含在你的操作系统的发布里， 或者是系统管理员已经安装了它。如果是这样的话， 那么你应该从操作系统的文档或者你的系统管理员那里获取有关如何访问PostgreSQL的信息。</p>
+<p>如果你不清楚PostgreSQL是否已经安装， 或者不知道你能否用它（已经安装的）做自己的实验，那么你就可以自己安装。 这么做并不难，并且是一次很好的练习。PostgreSQL可以由任何非特权用户安装， 并不需要超级用户 （root）的权限。</p>
+<p>如果你准备自己安装PostgreSQL， 那么请参考<a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/14/installation.html"
+  href="http://www.postgres.cn/docs/12/installation.html"
   
->Chapter 17</a> for instructions on installation, and return to this guide when the installation is complete. Be sure to follow closely the section about setting up the appropriate environment variables.</p>
-<p>If your site administrator has not set things up in the default way, you might have some more work to do. For example, if the database server machine is a remote machine, you will need to set the <code>PGHOST</code> environment variable to the name of the database server machine. The environment variable <code>PGPORT</code> might also have to be set. The bottom line is this: if you try to start an application program and it complains that it cannot connect to the database, you should consult your site administrator or, if that is you, the documentation to make sure that your environment is properly set up. If you did not understand the preceding paragraph then read the next section.</p>
+>第 16 章</a>以获取安装的有关信息， 安装之后再回到这个指导手册来。一定要记住要尽可能遵循有关设置合适的环境变量章节里的信息。</p>
+<p>如果你的站点管理员没有按照缺省的方式设置各项相关参数， 那你还有点额外的活儿要干。比如，如果数据库服务器机器是一个远程的机器， 那你就需要把<code>PGHOST</code>环境变量设置为数据库服务器的名字。环境变量<code>PGPORT</code>也可能需要设置。总而言之就是： 如果当你试着启动一个应用而该应用报告说不能与数据库建立联接时， 你应该马上与你的数据库管理员联系，如果你就是管理员， 那么你就要参考文档以确保你的环境变量得到正确的设置。 如果你不理解随后的几段，那么先阅读下一节。</p>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="architectural-fundamentals">
-        Architectural Fundamentals
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/usage/getting-started/#architectural-fundamentals" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： Architectural Fundamentals" aria-label="锚定到： Architectural Fundamentals" href="#architectural-fundamentals">
+    <h2 id="架构基础">
+        架构基础
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/usage/getting-started/#架构基础" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 架构基础" aria-label="锚定到： 架构基础" href="#%e6%9e%b6%e6%9e%84%e5%9f%ba%e7%a1%80">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>Before we proceed, you should understand the basic PostgreSQL system architecture. Understanding how the parts of PostgreSQL interact will make this chapter somewhat clearer.</p>
-<p>In database jargon, PostgreSQL uses a client/server model. A PostgreSQL session consists of the following cooperating processes (programs):</p>
+<p>在我们继续之前，你应该先了解PostgreSQL的系统架构。 对PostgreSQL的部件之间如何相互作用的理解将会使本节更易理解。</p>
+<p>在数据库术语里，PostgreSQL使用一种客户端/服务器的模型。一次PostgreSQL会话由下列相关的进程（程序）组成：</p>
 <ul>
-<li>A server process, which manages the database files, accepts connections to the database from client applications, and performs database actions on behalf of the clients. The database server program is called <code>postgres</code>.</li>
-<li>The user&rsquo;s client (frontend) application that wants to perform database operations. Client applications can be very diverse in nature: a client could be a text-oriented tool, a graphical application, a web server that accesses the database to display web pages, or a specialized database maintenance tool. Some client applications are supplied with the PostgreSQL distribution; most are developed by users.</li>
+<li>一个服务器进程，它管理数据库文件、接受来自客户端应用与数据库的联接并且代表客户端在数据库上执行操作。 该数据库服务器程序叫做<code>postgres</code>。</li>
+<li>那些需要执行数据库操作的用户的客户端（前端）应用。 客户端应用可能本身就是多种多样的：可以是一个面向文本的工具， 也可以是一个图形界面的应用，或者是一个通过访问数据库来显示网页的网页服务器，或者是一个特制的数据库管理工具。 一些客户端应用是和 PostgreSQL发布一起提供的，但绝大部分是用户开发的。</li>
 </ul>
-<p>As is typical of client/server applications, the client and the server can be on different hosts. In that case they communicate over a TCP/IP network connection. You should keep this in mind, because the files that can be accessed on a client machine might not be accessible (or might only be accessible using a different file name) on the database server machine.</p>
-<p>The PostgreSQL server can handle multiple concurrent connections from clients. To achieve this it starts (“forks”) a new process for each connection. From that point on, the client and the new server process communicate without intervention by the original <code>postgres</code> process. Thus, the supervisor server process is always running, waiting for client connections, whereas client and associated server processes come and go. (All of this is of course invisible to the user. We only mention it here for completeness.)</p>
+<p>和典型的客户端/服务器应用（C/S应用）一样，这些客户端和服务器可以在不同的主机上。 这时它们通过 TCP/IP 网络联接通讯。 你应该记住的是，在客户机上可以访问的文件未必能够在数据库服务器机器上访问（或者只能用不同的文件名进行访问）。</p>
+<p>PostgreSQL服务器可以处理来自客户端的多个并发请求。 因此，它为每个连接启动（“forks”）一个新的进程。 从这个时候开始，客户端和新服务器进程就不再经过最初的 <code>postgres</code>进程的干涉进行通讯。 因此，主服务器进程总是在运行并等待着客户端联接， 而客户端和相关联的服务器进程则是起起停停（当然，这些对用户是透明的。我们介绍这些主要是为了内容的完整性）。</p>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="accessing-database">
-        Accessing Database
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/usage/getting-started/#accessing-database" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： Accessing Database" aria-label="锚定到： Accessing Database" href="#accessing-database">
+    <h2 id="访问数据库">
+        访问数据库
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/usage/getting-started/#访问数据库" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 访问数据库" aria-label="锚定到： 访问数据库" href="#%e8%ae%bf%e9%97%ae%e6%95%b0%e6%8d%ae%e5%ba%93">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>Once you have created a database, you can access it by:</p>
+<p>一旦你创建了数据库，你就可以通过以下方式访问它：</p>
 <ul>
-<li>Running the PostgreSQL interactive terminal program, called <em>psql</em>, which allows you to interactively enter, edit, and execute SQL commands.</li>
-<li>Using an existing graphical frontend tool like pgAdmin or an office suite with ODBC or JDBC support to create and manipulate a database. These possibilities are not covered in this tutorial.</li>
-<li>Writing a custom application, using one of the several available language bindings. These possibilities are discussed further in <a
+<li>运行PostgreSQL的交互式终端程序，它被称为<em>psql</em>， 它允许你交互地输入、编辑和执行SQL命令。</li>
+<li>使用一种已有的图形化前端工具，比如pgAdmin或者带ODBC或JDBC支持的办公套件来创建和管理数据库。这种方法在这份教程中没有介绍。</li>
+<li>使用多种绑定发行的语言中的一种写一个自定义的应用。这些可能性在<a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/client-interfaces.html"
+  href="http://www.postgres.cn/docs/12/client-interfaces.html"
   
->Part IV</a>.</li>
+>第 IV 部分</a>中将有更深入的讨论。</li>
 </ul>
-<p>You probably want to start up <code>psql</code> to try the examples in this tutorial. It can be activated for the <code>postgres</code> database by typing the command:</p>
+<p>你可能需要启动<code>psql</code>来试验本教程中的例子。 你可以用下面的命令为<code>postgres</code>数据库激活它：</p>
 <pre tabindex="0"><code>$ psql postgres
-</code></pre><p>If you do not supply the database name then it will default to your user account name.</p>
-<p>In <code>psql</code>, you will be greeted with the following message:</p>
+</code></pre><p>如果你不提供数据库名字，那么它的缺省值就是你的用户账号名字。</p>
+<p>在<code>psql</code>中，你将看到下面的欢迎信息：</p>
 <pre tabindex="0"><code>psql (12.1)
 Type &#34;help&#34; for help.
 
 postgres=&gt;
-</code></pre><p>The last line could also be:</p>
+</code></pre><p>最后一行也可能是：</p>
 <pre tabindex="0"><code>postgres=#
-</code></pre><p>That would mean you are a database superuser, which is most likely the case if you installed the PostgreSQL instance yourself. Being a superuser means that you are not subject to access controls. For the purposes of this tutorial that is not important.</p>
-<p>If you encounter problems starting <code>psql</code> then go back to the previous section. The diagnostics of <code>createdb</code> and <code>psql</code> are similar, and if the former worked the latter should work as well.</p>
-<p>The last line printed out by <code>psql</code> is the prompt, and it indicates that <code>psql</code> is listening to you and that you can type SQL queries into a work space maintained by <code>psql</code>. Try out these commands:</p>
+</code></pre><p>这个提示符意味着你是数据库超级用户，最可能出现在你自己安装了 PostgreSQL实例的情况下。 作为超级用户意味着你不受访问控制的限制。 对于本教程的目的而言， 是否超级用户并不重要。</p>
+<p><code>psql</code>打印出的最后一行是提示符，它表示<code>psql</code>正听着你说话，这个时候你就可以敲入 SQL查询到一个<code>psql</code>维护的工作区中。试验一下下面的命令：</p>
 <pre tabindex="0"><code>postgres=&gt; SELECT version();
                                          version
 ------------------------------------------------------------------------------------------
@@ -1501,28 +1524,28 @@ postgres=&gt; SELECT 2 + 2;
 ----------
         4
 (1 row)
-</code></pre><p>The <code>psql</code> program has a number of internal commands that are not SQL commands. They begin with the backslash character, “<code>\</code>”. For example, you can get help on the syntax of various PostgreSQL SQL commands by typing:</p>
+</code></pre><p><code>psql</code>程序有一些不属于SQL命令的内部命令。它们以反斜线开头，“<code>\</code>”。 欢迎信息中列出了一些这种命令。比如，你可以用下面的命令获取各种PostgreSQL的SQL命令的帮助语法：</p>
 <pre tabindex="0"><code>postgres=&gt; \h
-</code></pre><p>To get out of <code>psql</code>, type:</p>
+</code></pre><p>要退出<code>psql</code>，输入：</p>
 <pre tabindex="0"><code>postgres=&gt; \q
-</code></pre><p>and <code>psql</code> will quit and return you to your command shell. (For more internal commands, type <code>\?</code> at the <code>psql</code> prompt.) The full capabilities of <code>psql</code> are documented in <a
+</code></pre><p><code>psql</code>将会退出并且让你返回到命令行shell。 （要获取更多有关内部命令的信息，你可以在<code>psql</code>提示符上键入<code>\?</code>。） <code>psql</code>的完整功能在<a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/app-psql.html"
+  href="http://www.postgres.cn/docs/12/app-psql.html"
   
->psql</a>. In this tutorial we will not use these features explicitly, but you can use them yourself when it is helpful.</p>
+>psql</a>中有文档说明。在这份文档里，我们将不会明确使用这些特性，但是你自己可以在需要的时候使用它们。</p>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="whats-next">
-        Whats next?
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/usage/getting-started/#whats-next" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： Whats next?" aria-label="锚定到： Whats next?" href="#whats-next">
+    <h2 id="下一步是什么">
+        下一步是什么？
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/usage/getting-started/#下一步是什么" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 下一步是什么？" aria-label="锚定到： 下一步是什么？" href="#%e4%b8%8b%e4%b8%80%e6%ad%a5%e6%98%af%e4%bb%80%e4%b9%88">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>There are a lot more things to discover. To get more information, please refer to <a
+<p>还有很多东西要发现。 要获取更多信息，请参阅 <a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/index.html"
+  href="http://www.postgres.cn/docs/12/index.html"
   
->PostgreSQL Documentation</a>.</p>
+>PostgreSQL 文档</a>。</p>
 
   </article>
 

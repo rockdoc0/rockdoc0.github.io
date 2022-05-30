@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://doc.rockdata.net/zh-cn/usage/getting-started/</loc>
-    <lastmod>2022-05-28T14:47:24+08:00</lastmod>
+    <lastmod>2022-05-30T19:41:27+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -42,7 +42,7 @@
                 />
   </url><url>
     <loc>https://doc.rockdata.net/zh-cn/usage/configuration/</loc>
-    <lastmod>2022-05-28T14:47:24+08:00</lastmod>
+    <lastmod>2022-05-30T19:41:27+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -67,8 +67,21 @@
                 href="https://doc.rockdata.net/zh-cn/advanced/"
                 />
   </url><url>
+    <loc>https://doc.rockdata.net/zh-cn/advanced/plscheme/</loc>
+    <lastmod>2022-05-30T19:41:27+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://doc.rockdata.net/advanced/plscheme/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://doc.rockdata.net/zh-cn/advanced/plscheme/"
+                />
+  </url><url>
     <loc>https://doc.rockdata.net/zh-cn/features/undo/</loc>
-    <lastmod>2022-05-28T14:47:24+08:00</lastmod>
+    <lastmod>2022-05-30T19:41:27+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -93,58 +106,6 @@
                 href="https://doc.rockdata.net/zh-cn/posts/"
                 />
   </url><url>
-    <loc>https://doc.rockdata.net/zh-cn/tags/Documentation/</loc>
-    <lastmod>2022-05-28T14:47:24+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://doc.rockdata.net/tags/Documentation/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://doc.rockdata.net/zh-cn/tags/Documentation/"
-                />
-  </url><url>
-    <loc>https://doc.rockdata.net/zh-cn/tags/Features/</loc>
-    <lastmod>2022-05-28T14:47:24+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://doc.rockdata.net/tags/Features/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://doc.rockdata.net/zh-cn/tags/Features/"
-                />
-  </url><url>
-    <loc>https://doc.rockdata.net/zh-cn/advanced/plscheme/</loc>
-    <lastmod>2022-05-28T14:47:24+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://doc.rockdata.net/advanced/plscheme/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://doc.rockdata.net/zh-cn/advanced/plscheme/"
-                />
-  </url><url>
-    <loc>https://doc.rockdata.net/zh-cn/tags/</loc>
-    <lastmod>2022-05-28T14:47:24+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://doc.rockdata.net/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://doc.rockdata.net/zh-cn/tags/"
-                />
-  </url><url>
     <loc>https://doc.rockdata.net/zh-cn/posts/initial-release/</loc>
     <lastmod>2022-05-28T14:47:24+08:00</lastmod>
     <xhtml:link
@@ -158,6 +119,19 @@
                 href="https://doc.rockdata.net/zh-cn/posts/initial-release/"
                 />
   </url><url>
+    <loc>https://doc.rockdata.net/zh-cn/tags/Documentation/</loc>
+    <lastmod>2022-05-28T14:47:24+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://doc.rockdata.net/tags/Documentation/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://doc.rockdata.net/zh-cn/tags/Documentation/"
+                />
+  </url><url>
     <loc>https://doc.rockdata.net/zh-cn/posts/hello_geekdoc/</loc>
     <lastmod>2022-05-28T14:47:24+08:00</lastmod>
     <xhtml:link
@@ -169,6 +143,19 @@
                 rel="alternate"
                 hreflang="zh-cn"
                 href="https://doc.rockdata.net/zh-cn/posts/hello_geekdoc/"
+                />
+  </url><url>
+    <loc>https://doc.rockdata.net/zh-cn/tags/</loc>
+    <lastmod>2022-05-28T14:47:24+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://doc.rockdata.net/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://doc.rockdata.net/zh-cn/tags/"
                 />
   </url><url>
     <loc>https://doc.rockdata.net/zh-cn/tags/Updates/</loc>
@@ -211,7 +198,7 @@
                 />
   </url><url>
     <loc>https://doc.rockdata.net/zh-cn/</loc>
-    <lastmod>2022-05-28T14:47:24+08:00</lastmod>
+    <lastmod>2022-05-30T19:41:27+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"

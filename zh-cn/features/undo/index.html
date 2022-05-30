@@ -8,8 +8,12 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo to do the following:
- Roll back an active transaction Recover a terminated transaction Provide read consistency  Redrock Postgres stores undo data inside the database rather than in external logs. Undo data is stored in blocks that are updated just like data blocks, with changes to these blocks generating redo. In this way, Redrock Postgres can efficiently access undo data without needing to read external logs." />
+  <meta name="description" content="Redrock Postgres 维护事务操作的记录，统称为撤消数据。 Redrock Postgres 使用 undo 来执行以下操作：
+ 回滚活跃事务 恢复异常结束的事务 提供读一致性  Redrock Postgres 将 undo 数据存储在数据库中而不是外部日志中。 undo 数据存储在与数据块一样更新的块中，对这些块的更改会产生重做。 通过这种方式，Redrock Postgres 可以高效地访问 undo 数据，而无需读取外部日志。
+undo 数据存储在独立的表空间中。 Redrock Postgres 提供了一种完全自动化的机制，称为自动回滚段管理模式，用于管理回滚段和存储空间。
+回滚段和事务     当事务开始时，数据库将事务绑定（分配）到回滚段，因此绑定到事务表。
+多个活动事务可以同时写入相同的回滚段或不同的回滚段。 例如，事务 T1 和 T2 都可以写入 undo U1，或者 T1 可以写入 U1 而 T2 写入 undo U2。
+事务回滚     当执行 ROLLBACK语句时，数据库使用 undo 记录回滚未提交事务对数据库所做的更改。 在恢复期间，数据库回滚从联机重做日志应用到数据文件的任何未提交的更改。 undo 记录通过在另一个用户正在更改数据的同时为访问数据的用户维护数据的前映像来提供读取一致性。" />
 
     <title>回滚段 | Redrock Documentation</title>
 
@@ -36,23 +40,31 @@
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo to do the following:
- Roll back an active transaction Recover a terminated transaction Provide read consistency  Redrock Postgres stores undo data inside the database rather than in external logs. Undo data is stored in blocks that are updated just like data blocks, with changes to these blocks generating redo. In this way, Redrock Postgres can efficiently access undo data without needing to read external logs." />
+  <meta property="og:description" content="Redrock Postgres 维护事务操作的记录，统称为撤消数据。 Redrock Postgres 使用 undo 来执行以下操作：
+ 回滚活跃事务 恢复异常结束的事务 提供读一致性  Redrock Postgres 将 undo 数据存储在数据库中而不是外部日志中。 undo 数据存储在与数据块一样更新的块中，对这些块的更改会产生重做。 通过这种方式，Redrock Postgres 可以高效地访问 undo 数据，而无需读取外部日志。
+undo 数据存储在独立的表空间中。 Redrock Postgres 提供了一种完全自动化的机制，称为自动回滚段管理模式，用于管理回滚段和存储空间。
+回滚段和事务     当事务开始时，数据库将事务绑定（分配）到回滚段，因此绑定到事务表。
+多个活动事务可以同时写入相同的回滚段或不同的回滚段。 例如，事务 T1 和 T2 都可以写入 undo U1，或者 T1 可以写入 U1 而 T2 写入 undo U2。
+事务回滚     当执行 ROLLBACK语句时，数据库使用 undo 记录回滚未提交事务对数据库所做的更改。 在恢复期间，数据库回滚从联机重做日志应用到数据文件的任何未提交的更改。 undo 记录通过在另一个用户正在更改数据的同时为访问数据的用户维护数据的前映像来提供读取一致性。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/zh-cn/features/undo/" />
 
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-05-28T14:47:24+08:00"
+      content="2022-05-30T19:41:27+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="回滚段" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo to do the following:
- Roll back an active transaction Recover a terminated transaction Provide read consistency  Redrock Postgres stores undo data inside the database rather than in external logs. Undo data is stored in blocks that are updated just like data blocks, with changes to these blocks generating redo. In this way, Redrock Postgres can efficiently access undo data without needing to read external logs." />
+  <meta name="twitter:description" content="Redrock Postgres 维护事务操作的记录，统称为撤消数据。 Redrock Postgres 使用 undo 来执行以下操作：
+ 回滚活跃事务 恢复异常结束的事务 提供读一致性  Redrock Postgres 将 undo 数据存储在数据库中而不是外部日志中。 undo 数据存储在与数据块一样更新的块中，对这些块的更改会产生重做。 通过这种方式，Redrock Postgres 可以高效地访问 undo 数据，而无需读取外部日志。
+undo 数据存储在独立的表空间中。 Redrock Postgres 提供了一种完全自动化的机制，称为自动回滚段管理模式，用于管理回滚段和存储空间。
+回滚段和事务     当事务开始时，数据库将事务绑定（分配）到回滚段，因此绑定到事务表。
+多个活动事务可以同时写入相同的回滚段或不同的回滚段。 例如，事务 T1 和 T2 都可以写入 undo U1，或者 T1 可以写入 U1 而 T2 写入 undo U2。
+事务回滚     当执行 ROLLBACK语句时，数据库使用 undo 记录回滚未提交事务对数据库所做的更改。 在恢复期间，数据库回滚从联机重做日志应用到数据文件的任何未提交的更改。 undo 记录通过在另一个用户正在更改数据的同时为访问数据的用户维护数据的前映像来提供读取一致性。" />
 
 
   <script type="application/ld+json">
@@ -63,9 +75,9 @@
       "name": "回滚段",
       "url" : "https://doc.rockdata.net/zh-cn/features/undo/",
       "headline": "回滚段",
-      "description": "Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo to do the following:\n Roll back an active transaction Recover a terminated transaction Provide read consistency  Redrock Postgres stores undo data inside the database rather than in external logs. Undo data is stored in blocks that are updated just like data blocks, with changes to these blocks generating redo. In this way, Redrock Postgres can efficiently access undo data without needing to read external logs.",
+      "description": "Redrock Postgres 维护事务操作的记录，统称为撤消数据。 Redrock Postgres 使用 undo 来执行以下操作：\n 回滚活跃事务 恢复异常结束的事务 提供读一致性  Redrock Postgres 将 undo 数据存储在数据库中而不是外部日志中。 undo 数据存储在与数据块一样更新的块中，对这些块的更改会产生重做。 通过这种方式，Redrock Postgres 可以高效地访问 undo 数据，而无需读取外部日志。\nundo 数据存储在独立的表空间中。 Redrock Postgres 提供了一种完全自动化的机制，称为自动回滚段管理模式，用于管理回滚段和存储空间。\n回滚段和事务     当事务开始时，数据库将事务绑定（分配）到回滚段，因此绑定到事务表。\n多个活动事务可以同时写入相同的回滚段或不同的回滚段。 例如，事务 T1 和 T2 都可以写入 undo U1，或者 T1 可以写入 U1 而 T2 写入 undo U2。\n事务回滚     当执行 ROLLBACK语句时，数据库使用 undo 记录回滚未提交事务对数据库所做的更改。 在恢复期间，数据库回滚从联机重做日志应用到数据文件的任何未提交的更改。 undo 记录通过在另一个用户正在更改数据的同时为访问数据的用户维护数据的前映像来提供读取一致性。",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "241",
+      "wordCount" : "54",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -76,7 +88,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-05-28T14:47:24.00Z",
+      "dateModified": "2022-05-30T19:41:27.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1415,33 +1427,33 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     class="gdoc-markdown gdoc-markdown__align--left"
   >
     <h1>回滚段</h1>
-    <p>Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo to do the following:</p>
+    <p>Redrock Postgres 维护事务操作的记录，统称为撤消数据。 Redrock Postgres 使用 undo 来执行以下操作：</p>
 <ul>
-<li>Roll back an active transaction</li>
-<li>Recover a terminated transaction</li>
-<li>Provide read consistency</li>
+<li>回滚活跃事务</li>
+<li>恢复异常结束的事务</li>
+<li>提供读一致性</li>
 </ul>
-<p>Redrock Postgres stores undo data inside the database rather than in external logs. Undo data is stored in blocks that are updated just like data blocks, with changes to these blocks generating redo. In this way, Redrock Postgres can efficiently access undo data without needing to read external logs.</p>
-<p>Undo data is stored in an independent tablespace. Redrock Postgres provides a fully automated mechanism, known as automatic undo management mode, for managing undos and space.</p>
+<p>Redrock Postgres 将 undo 数据存储在数据库中而不是外部日志中。 undo 数据存储在与数据块一样更新的块中，对这些块的更改会产生重做。 通过这种方式，Redrock Postgres 可以高效地访问 undo 数据，而无需读取外部日志。</p>
+<p>undo 数据存储在独立的表空间中。 Redrock Postgres 提供了一种完全自动化的机制，称为自动回滚段管理模式，用于管理回滚段和存储空间。</p>
 <div class="gdoc-page__anchorwrap">
-    <h4 id="undos-and-transactions">
-        Undos and Transactions
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/undo/#undos-and-transactions" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： Undos and Transactions" aria-label="锚定到： Undos and Transactions" href="#undos-and-transactions">
+    <h4 id="回滚段和事务">
+        回滚段和事务
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/undo/#回滚段和事务" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 回滚段和事务" aria-label="锚定到： 回滚段和事务" href="#%e5%9b%9e%e6%bb%9a%e6%ae%b5%e5%92%8c%e4%ba%8b%e5%8a%a1">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h4>
 </div>
-<p>When a transaction starts, the database binds (assigns) the transaction to an undo segment, and therefore to a transaction table.</p>
-<p>Multiple active transactions can write concurrently to the same undo or to different undos. For example, transactions T1 and T2 can both write to undo U1, or T1 can write to U1 while T2 writes to undo U2.</p>
+<p>当事务开始时，数据库将事务绑定（分配）到回滚段，因此绑定到事务表。</p>
+<p>多个活动事务可以同时写入相同的回滚段或不同的回滚段。 例如，事务 T1 和 T2 都可以写入 undo U1，或者 T1 可以写入 U1 而 T2 写入 undo U2。</p>
 <div class="gdoc-page__anchorwrap">
-    <h4 id="transaction-rollback">
-        Transaction Rollback
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/undo/#transaction-rollback" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： Transaction Rollback" aria-label="锚定到： Transaction Rollback" href="#transaction-rollback">
+    <h4 id="事务回滚">
+        事务回滚
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/undo/#事务回滚" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 事务回滚" aria-label="锚定到： 事务回滚" href="#%e4%ba%8b%e5%8a%a1%e5%9b%9e%e6%bb%9a">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h4>
 </div>
-<p>When a <code>ROLLBACK</code> statement is issued, the database uses undo records to roll back changes made to the database by the uncommitted transaction. During recovery, the database rolls back any uncommitted changes applied from the online redo log to the data files. Undo records provide read consistency by maintaining the before image of the data for users accessing data at the same time that another user is changing it.</p>
+<p>当执行 <code>ROLLBACK</code>语句时，数据库使用 undo 记录回滚未提交事务对数据库所做的更改。 在恢复期间，数据库回滚从联机重做日志应用到数据文件的任何未提交的更改。 undo 记录通过在另一个用户正在更改数据的同时为访问数据的用户维护数据的前映像来提供读取一致性。</p>
 
   </article>
 

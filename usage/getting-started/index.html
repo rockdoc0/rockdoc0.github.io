@@ -42,7 +42,7 @@
 <meta property="article:section" content="Usage" />
     <meta
       property="article:modified_time"
-      content="2022-05-27T09:18:30+08:00"
+      content="2022-05-30T19:41:27+08:00"
     />
 
 
@@ -62,7 +62,7 @@
       "headline": "Getting Started",
       "description": "Installation Architectural Fundamentals Accessing Database Whats next?      Installation     Before you can use PostgreSQL you need to install it, of course. It is possible that PostgreSQL is already installed at your site, either because it was included in your operating system distribution or because the system administrator already installed it. If that is the case, you should obtain information from the operating system documentation or your system administrator about how to access PostgreSQL.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "974",
+      "wordCount" : "942",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -73,7 +73,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-05-27T09:18:30.00Z",
+      "dateModified": "2022-05-30T19:41:27.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1127,7 +1127,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     href="/advanced/plscheme/"
                     class="gdoc-nav__entry"
                   >
-                    PL/scheme, Procedural Language Handler
+                    PL/Scheme
                   </a>
                 </span>
               
@@ -1482,7 +1482,6 @@ postgres=&gt;
 </code></pre><p>The last line could also be:</p>
 <pre tabindex="0"><code>postgres=#
 </code></pre><p>That would mean you are a database superuser, which is most likely the case if you installed the PostgreSQL instance yourself. Being a superuser means that you are not subject to access controls. For the purposes of this tutorial that is not important.</p>
-<p>If you encounter problems starting <code>psql</code> then go back to the previous section. The diagnostics of <code>createdb</code> and <code>psql</code> are similar, and if the former worked the latter should work as well.</p>
 <p>The last line printed out by <code>psql</code> is the prompt, and it indicates that <code>psql</code> is listening to you and that you can type SQL queries into a work space maintained by <code>psql</code>. Try out these commands:</p>
 <pre tabindex="0"><code>postgres=&gt; SELECT version();
                                          version

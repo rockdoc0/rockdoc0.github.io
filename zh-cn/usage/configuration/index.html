@@ -8,7 +8,7 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Overview of all available server configuration options provided by the database." />
+  <meta name="description" content="数据库提供的所有可用服务器配置选项的概述。" />
 
     <title>参数配置 | Redrock Documentation</title>
 
@@ -35,21 +35,21 @@
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Overview of all available server configuration options provided by the database." />
+  <meta property="og:description" content="数据库提供的所有可用服务器配置选项的概述。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/zh-cn/usage/configuration/" />
 
 <meta property="article:section" content="Usage" />
     <meta
       property="article:modified_time"
-      content="2022-05-28T14:47:24+08:00"
+      content="2022-05-30T19:41:27+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="参数配置" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Overview of all available server configuration options provided by the database." />
+  <meta name="twitter:description" content="数据库提供的所有可用服务器配置选项的概述。" />
 
 
   <script type="application/ld+json">
@@ -60,9 +60,9 @@
       "name": "参数配置",
       "url" : "https://doc.rockdata.net/zh-cn/usage/configuration/",
       "headline": "参数配置",
-      "description": "Overview of all available server configuration options provided by the database.",
+      "description": "数据库提供的所有可用服务器配置选项的概述。",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "570",
+      "wordCount" : "48",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -73,7 +73,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-05-28T14:47:24.00Z",
+      "dateModified": "2022-05-30T19:41:27.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1412,90 +1412,87 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     class="gdoc-markdown gdoc-markdown__align--left"
   >
     <h1>参数配置</h1>
-    <p>Overview of all available server configuration options provided by the database.</p>
+    <p>数据库提供的所有可用服务器配置选项的概述。</p>
 <div class="gdoc-toc gdoc-toc__level--3">
       <nav id="TableOfContents"><ul>
-        <li><a href="#configuration">Configuration</a>
-          <ul>
-            <li><a href="#automatic-analyzing">Automatic Analyzing</a></li>
-            <li><a href="#run-time-statistics">Run-time Statistics</a></li>
-          </ul>
-        </li>
+        <li><a href="#参数配置">参数配置</a></li>
+        <li><a href="#自动分析">自动分析</a></li>
+        <li><a href="#运行时统计信息">运行时统计信息</a></li>
       </ul></nav>
       <hr />
     </div>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="configuration">
-        Configuration
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/usage/configuration/#configuration" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： Configuration" aria-label="锚定到： Configuration" href="#configuration">
+    <h2 id="参数配置">
+        参数配置
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/usage/configuration/#参数配置" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 参数配置" aria-label="锚定到： 参数配置" href="#%e5%8f%82%e6%95%b0%e9%85%8d%e7%bd%ae">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
 <div class="gdoc-page__anchorwrap">
-    <h3 id="automatic-analyzing">
-        Automatic Analyzing
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/usage/configuration/#automatic-analyzing" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： Automatic Analyzing" aria-label="锚定到： Automatic Analyzing" href="#automatic-analyzing">
+    <h2 id="自动分析">
+        自动分析
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/usage/configuration/#自动分析" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 自动分析" aria-label="锚定到： 自动分析" href="#%e8%87%aa%e5%8a%a8%e5%88%86%e6%9e%90">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
-    </h3>
+    </h2>
 </div>
-<p>These settings control the behavior of the <em>autoanalyze</em> feature. Refer to <a
+<p>这些设置控制<em>autoanalyze</em>特性的行为。详情请参考 <a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/routine-vacuuming.html#AUTOVACUUM"
+  href="http://www.postgres.cn/docs/12/routine-vacuuming.html#AUTOVACUUM"
   
->Section 24.1.6</a> for more information. Note that many of these settings can be overridden on a per-table basis; see <a
+>第 24.1.6 节</a>。注意很多这些设置可以被针对每个表 的设置所覆盖，请见<a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/sql-createtable.html#SQL-CREATETABLE-STORAGE-PARAMETERS"
+  href="http://www.postgres.cn/docs/12/sql-createtable.html#SQL-CREATETABLE-STORAGE-PARAMETERS"
   
->Storage Parameters</a>.</p>
+>存储参数</a>。</p>
 <ul>
 <li>
 <p><code>autoanalyze</code> (<code>boolean</code>)</p>
-<p>Controls whether the server should run the autoanalyze launcher daemon. This is on by default; however, <a
+<p>控制服务器是否运行自动分析启动器后台进程。默认为开启， 不过要自动分析正常工作还需要启用<a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/runtime-config-statistics.html#GUC-TRACK-COUNTS"
+  href="http://www.postgres.cn/docs/12/runtime-config-statistics.html#GUC-TRACK-COUNTS"
   
->track_counts</a> must also be enabled for autoanalyze to work. This parameter can only be set in the <code>postgresql.conf</code> file or on the server command line; however, autoanalyzing can be disabled for individual tables by changing table storage parameters.</p>
+>track_counts</a>。 该参数只能在<code>postgresql.conf</code>文件或服务器命令行中设置， 不过，通过更改表存储参数可以为表禁用自动分析。</p>
 </li>
 <li>
 <p><code>log_autoanalyze_min_duration</code> (<code>integer</code>)</p>
-<p>Causes each action executed by autoanalyze to be logged if it ran for at least the specified amount of time. Setting this to zero logs all autoanalyze actions. <code>-1</code> (the default) disables logging autoanalyze actions. If this value is specified without units, it is taken as milliseconds. For example, if you set this to <code>250ms</code> then all automatic analyzes that run 250ms or longer will be logged. In addition, when this parameter is set to any value other than <code>-1</code>, a message will be logged if an autoanalyze action is skipped due to a conflicting lock or a concurrently dropped relation. Enabling this parameter can be helpful in tracking autoanalyze activity. This parameter can only be set in the <code>postgresql.conf</code> file or on the server command line; but the setting can be overridden for individual tables by changing table storage parameters.</p>
+<p>如果自动分析运行至少该值所指定的时间量，被自动分析执行的每一个动作都会被日志记录。 将该参数设置为0会记录所有的自动分析动作。 <code>-1</code>（默认值）将禁用对自动分析动作的记录。 如果指定值时没有单位，则以毫秒为单位。 例如，如果你将它设置为<code>250ms</code>，则所有运行250ms或更长时间的自动分析将被记录。此外，当该参数被设置为除<code>-1</code>外的任何值时， 如果一个自动分析动作由于一个锁冲突或者被并发删除的关系而被跳过，将会为此记录一个消息。 开启这个参数对于追踪自动分析活动非常有用。这个参数只能在 <code>postgresql.conf</code>文件或者服务器命令行中设置。但是可以通过更改表的存储参数为个别表覆盖这个设置。</p>
 </li>
 <li>
 <p><code>autoanalyze_max_workers</code> (<code>integer</code>)</p>
-<p>Specifies the maximum number of autoanalyze processes (other than the autoanalyze launcher) that may be running at any one time. The default is three. This parameter can only be set at server start.</p>
+<p>指定能同时运行的自动分析进程（除了自动分析启动器之外）的最大数量。默认值为3。该参数只能在服务器启动时设置。</p>
 </li>
 <li>
 <p><code>autoanalyze_naptime</code> (<code>integer</code>)</p>
-<p>Specifies the minimum delay between autoanalyze runs on any given database. In each round the daemon examines the database and issues <code>ANALYZE</code> commands as needed for tables in that database. If this value is specified without units, it is taken as seconds. The default is one minute (<code>1min</code>). This parameter can only be set in the <code>postgresql.conf</code> file or on the server command line.</p>
+<p>指定自动清理在任意给定数据库上运行的最小延迟。在每一轮中后台进程检查数据库并根据需要为数据库中的表发出<code>VACUUM</code>和<code>ANALYZE</code>命令。 如果指定值时没有单位，则以秒为单位。默认值为1分钟（<code>1min</code>）。该参数只能在<code>postgresql.conf</code>文件或在服务器命令行上设置。</p>
 </li>
 <li>
 <p><code>autoanalyze_base_threshold</code> (<code>integer</code>)</p>
-<p>Specifies the minimum number of inserted, updated or deleted tuples needed to trigger an <code>ANALYZE</code> in any one table. The default is 50 tuples. This parameter can only be set in the <code>postgresql.conf</code> file or on the server command line; but the setting can be overridden for individual tables by changing table storage parameters.</p>
+<p>指定能在一个表上触发<code>ANALYZE</code>的被插入、被更新或被删除元组的最小数量。默认值为50个元组。该参数只能在<code>postgresql.conf</code>文件或在服务器命令中设置。但是对个别表可以通过修改表存储参数来覆盖该设置。</p>
 </li>
 <li>
 <p><code>autoanalyze_scale_factor</code> (<code>floating point</code>)</p>
-<p>Specifies a fraction of the table size to add to <code>autovacuum_analyze_threshold</code> when deciding whether to trigger an <code>ANALYZE</code>. The default is 0.1 (10% of table size). This parameter can only be set in the <code>postgresql.conf</code> file or on the server command line; but the setting can be overridden for individual tables by changing table storage parameters.</p>
+<p>指定一个表尺寸的分数，在决定是否触发<code>ANALYZE</code>时将它加到<code>autoanalyze_base_threshold</code>上。默认值为0.1（表尺寸的10%）。该参数只能在<code>postgresql.conf</code>文件或在服务器命令中设置。但是对个别表可以通过修改表存储参数来覆盖该设置。</p>
 </li>
 </ul>
 <div class="gdoc-page__anchorwrap">
-    <h3 id="run-time-statistics">
-        Run-time Statistics
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/usage/configuration/#run-time-statistics" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： Run-time Statistics" aria-label="锚定到： Run-time Statistics" href="#run-time-statistics">
+    <h2 id="运行时统计信息">
+        运行时统计信息
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/usage/configuration/#运行时统计信息" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 运行时统计信息" aria-label="锚定到： 运行时统计信息" href="#%e8%bf%90%e8%a1%8c%e6%97%b6%e7%bb%9f%e8%ae%a1%e4%bf%a1%e6%81%af">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
-    </h3>
+    </h2>
 </div>
-<p>These parameters control server-wide statistics collection features. When statistics collection is enabled, the data that is produced can be accessed via the <code>pg_stat</code> and <code>pg_statio</code> family of system views. Refer to <a
+<p>这些参数控制服务器范围的统计数据收集特性。当统计收集被启用时，被产生的数据可以通过<code>pg_stat</code>和<code>pg_statio</code>系统视图族访问。详见<a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/monitoring.html"
+  href="http://www.postgres.cn/docs/12/monitoring.html"
   
->Chapter 27</a> for more information.</p>
+>第 27 章</a>。</p>
 <ul>
 <li>
 <p><code>track_wait_events</code> (<code>boolean</code>)</p>
-<p>Enables the collection of information on the wait events occured in each session, include occured times and timing information. This parameter is on by default. Note that even when enabled, this information is not visible to all users, only to superusers and the user owning the session being reported on, so it should not represent a security risk. Only superusers can change this setting.</p>
+<p>启用有关每个会话中发生的等待事件的信息的收集，包括发生的等待次数和耗时信息。该参数默认开启。注意即使被启用，这些信息也不是对所有用户可见，只有超级用户和拥有报告信息的会话的用户可见，因此它不会表现为一个安全风险。只有超级用户可以更改这个设置。</p>
 </li>
 </ul>
   </article>
