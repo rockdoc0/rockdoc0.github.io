@@ -2,6 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://doc.rockdata.net/zh-cn/installation/windows/</loc>
+    <lastmod>2022-06-03T19:01:24+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://doc.rockdata.net/installation/windows/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://doc.rockdata.net/zh-cn/installation/windows/"
+                />
+  </url><url>
     <loc>https://doc.rockdata.net/zh-cn/usage/getting-started/</loc>
     <lastmod>2022-05-30T19:41:27+08:00</lastmod>
     <xhtml:link
@@ -28,6 +41,32 @@
                 href="https://doc.rockdata.net/zh-cn/usage/"
                 />
   </url><url>
+    <loc>https://doc.rockdata.net/zh-cn/installation/</loc>
+    <lastmod>2022-06-03T16:52:55+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://doc.rockdata.net/installation/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://doc.rockdata.net/zh-cn/installation/"
+                />
+  </url><url>
+    <loc>https://doc.rockdata.net/zh-cn/installation/redhat/</loc>
+    <lastmod>2022-06-03T19:01:24+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://doc.rockdata.net/installation/redhat/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://doc.rockdata.net/zh-cn/installation/redhat/"
+                />
+  </url><url>
     <loc>https://doc.rockdata.net/zh-cn/features/</loc>
     <lastmod>2022-05-28T14:47:24+08:00</lastmod>
     <xhtml:link
@@ -39,6 +78,19 @@
                 rel="alternate"
                 hreflang="zh-cn"
                 href="https://doc.rockdata.net/zh-cn/features/"
+                />
+  </url><url>
+    <loc>https://doc.rockdata.net/zh-cn/installation/debian/</loc>
+    <lastmod>2022-06-03T19:01:24+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://doc.rockdata.net/installation/debian/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://doc.rockdata.net/zh-cn/installation/debian/"
                 />
   </url><url>
     <loc>https://doc.rockdata.net/zh-cn/usage/configuration/</loc>
@@ -121,29 +173,9 @@
   </url><url>
     <loc>https://doc.rockdata.net/zh-cn/tags/Documentation/</loc>
     <lastmod>2022-05-28T14:47:24+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://doc.rockdata.net/tags/Documentation/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://doc.rockdata.net/zh-cn/tags/Documentation/"
-                />
   </url><url>
     <loc>https://doc.rockdata.net/zh-cn/posts/hello_geekdoc/</loc>
     <lastmod>2022-05-28T14:47:24+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://doc.rockdata.net/posts/hello_geekdoc/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://doc.rockdata.net/zh-cn/posts/hello_geekdoc/"
-                />
   </url><url>
     <loc>https://doc.rockdata.net/zh-cn/tags/</loc>
     <lastmod>2022-05-28T14:47:24+08:00</lastmod>
@@ -160,16 +192,6 @@
   </url><url>
     <loc>https://doc.rockdata.net/zh-cn/tags/Updates/</loc>
     <lastmod>2022-05-28T14:47:24+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://doc.rockdata.net/tags/Updates/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://doc.rockdata.net/zh-cn/tags/Updates/"
-                />
   </url><url>
     <loc>https://doc.rockdata.net/zh-cn/_includes/</loc>
     <lastmod>2022-05-28T14:47:24+08:00</lastmod>
@@ -198,7 +220,7 @@
                 />
   </url><url>
     <loc>https://doc.rockdata.net/zh-cn/</loc>
-    <lastmod>2022-05-30T19:41:27+08:00</lastmod>
+    <lastmod>2022-06-03T10:15:17+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
