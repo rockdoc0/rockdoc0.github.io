@@ -94,7 +94,7 @@
                 />
   </url><url>
     <loc>https://doc.rockdata.net/zh-cn/usage/configuration/</loc>
-    <lastmod>2022-05-30T19:41:27+08:00</lastmod>
+    <lastmod>2022-06-03T20:32:12+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -159,7 +159,7 @@
                 />
   </url><url>
     <loc>https://doc.rockdata.net/zh-cn/posts/initial-release/</loc>
-    <lastmod>2022-05-28T14:47:24+08:00</lastmod>
+    <lastmod>2022-06-03T19:39:59+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -170,28 +170,6 @@
                 hreflang="zh-cn"
                 href="https://doc.rockdata.net/zh-cn/posts/initial-release/"
                 />
-  </url><url>
-    <loc>https://doc.rockdata.net/zh-cn/tags/Documentation/</loc>
-    <lastmod>2022-05-28T14:47:24+08:00</lastmod>
-  </url><url>
-    <loc>https://doc.rockdata.net/zh-cn/posts/hello_geekdoc/</loc>
-    <lastmod>2022-05-28T14:47:24+08:00</lastmod>
-  </url><url>
-    <loc>https://doc.rockdata.net/zh-cn/tags/</loc>
-    <lastmod>2022-05-28T14:47:24+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://doc.rockdata.net/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://doc.rockdata.net/zh-cn/tags/"
-                />
-  </url><url>
-    <loc>https://doc.rockdata.net/zh-cn/tags/Updates/</loc>
-    <lastmod>2022-05-28T14:47:24+08:00</lastmod>
   </url><url>
     <loc>https://doc.rockdata.net/zh-cn/_includes/</loc>
     <lastmod>2022-05-28T14:47:24+08:00</lastmod>
@@ -217,6 +195,18 @@
                 rel="alternate"
                 hreflang="zh-cn"
                 href="https://doc.rockdata.net/zh-cn/_includes/include-page/"
+                />
+  </url><url>
+    <loc>https://doc.rockdata.net/zh-cn/tags/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://doc.rockdata.net/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://doc.rockdata.net/zh-cn/tags/"
                 />
   </url><url>
     <loc>https://doc.rockdata.net/zh-cn/</loc>
