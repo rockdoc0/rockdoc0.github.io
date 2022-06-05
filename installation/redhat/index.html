@@ -8,8 +8,8 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Install RPM packages Post-installation commands  Data Directory Change Data Directory Initialize Startup   Control service After installation      Install RPM packages     Download the Redrock Postgres Package for Red Hat or CentOS, Log in to the host with your root account, and run the following commands to install:
-# tar xf redrock-12.1-1.el8.x86_64-bundle.tar # cd redrock-12.1-1.el8.x86_64-bundle # rpm -ivh redrock-12." />
+  <meta name="description" content="Install Packages  Prerequisite Install Redrock Postgres   Post-installation commands  Data Directory Change Data Directory Initialize Startup   Control service After installation      Install Packages     Prerequisite     Log in to the host with your root account, and run the following commands to install dependent packages:
+# yum install postgresql-common Install Redrock Postgres     Download the Redrock Postgres Package for Red Hat or CentOS, and run the following commands to install:" />
 
     <title>Installing on Red Hat | Redrock Documentation</title>
 
@@ -36,23 +36,23 @@
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Install RPM packages Post-installation commands  Data Directory Change Data Directory Initialize Startup   Control service After installation      Install RPM packages     Download the Redrock Postgres Package for Red Hat or CentOS, Log in to the host with your root account, and run the following commands to install:
-# tar xf redrock-12.1-1.el8.x86_64-bundle.tar # cd redrock-12.1-1.el8.x86_64-bundle # rpm -ivh redrock-12." />
+  <meta property="og:description" content="Install Packages  Prerequisite Install Redrock Postgres   Post-installation commands  Data Directory Change Data Directory Initialize Startup   Control service After installation      Install Packages     Prerequisite     Log in to the host with your root account, and run the following commands to install dependent packages:
+# yum install postgresql-common Install Redrock Postgres     Download the Redrock Postgres Package for Red Hat or CentOS, and run the following commands to install:" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/installation/redhat/" />
 
 <meta property="article:section" content="Installation" />
     <meta
       property="article:modified_time"
-      content="2022-06-05T12:30:56+08:00"
+      content="2022-06-05T20:02:42+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Installing on Red Hat" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Install RPM packages Post-installation commands  Data Directory Change Data Directory Initialize Startup   Control service After installation      Install RPM packages     Download the Redrock Postgres Package for Red Hat or CentOS, Log in to the host with your root account, and run the following commands to install:
-# tar xf redrock-12.1-1.el8.x86_64-bundle.tar # cd redrock-12.1-1.el8.x86_64-bundle # rpm -ivh redrock-12." />
+  <meta name="twitter:description" content="Install Packages  Prerequisite Install Redrock Postgres   Post-installation commands  Data Directory Change Data Directory Initialize Startup   Control service After installation      Install Packages     Prerequisite     Log in to the host with your root account, and run the following commands to install dependent packages:
+# yum install postgresql-common Install Redrock Postgres     Download the Redrock Postgres Package for Red Hat or CentOS, and run the following commands to install:" />
 
 
   <script type="application/ld+json">
@@ -63,9 +63,9 @@
       "name": "Installing on Red Hat",
       "url" : "https://doc.rockdata.net/installation/redhat/",
       "headline": "Installing on Red Hat",
-      "description": "Install RPM packages Post-installation commands  Data Directory Change Data Directory Initialize Startup   Control service After installation      Install RPM packages     Download the Redrock Postgres Package for Red Hat or CentOS, Log in to the host with your root account, and run the following commands to install:\n# tar xf redrock-12.1-1.el8.x86_64-bundle.tar # cd redrock-12.1-1.el8.x86_64-bundle # rpm -ivh redrock-12.",
+      "description": "Install Packages  Prerequisite Install Redrock Postgres   Post-installation commands  Data Directory Change Data Directory Initialize Startup   Control service After installation      Install Packages     Prerequisite     Log in to the host with your root account, and run the following commands to install dependent packages:\n# yum install postgresql-common Install Redrock Postgres     Download the Redrock Postgres Package for Red Hat or CentOS, and run the following commands to install:",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "474",
+      "wordCount" : "493",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -76,7 +76,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-05T12:30:56.00Z",
+      "dateModified": "2022-06-05T20:02:42.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1602,7 +1602,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     <h1>Installing on Red Hat</h1>
     <div class="gdoc-toc gdoc-toc__level--3">
       <nav id="TableOfContents"><ul>
-        <li><a href="#install-rpm-packages">Install RPM packages</a></li>
+        <li><a href="#install-packages">Install Packages</a>
+          <ul>
+            <li><a href="#prerequisite">Prerequisite</a></li>
+            <li><a href="#install-redrock-postgres">Install Redrock Postgres</a></li>
+          </ul>
+        </li>
         <li><a href="#post-installation-commands">Post-installation commands</a>
           <ul>
             <li><a href="#data-directory">Data Directory</a></li>
@@ -1617,18 +1622,36 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <hr />
     </div>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="install-rpm-packages">
-        Install RPM packages
-        <a data-clipboard-text="https://doc.rockdata.net/installation/redhat/#install-rpm-packages" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Install RPM packages" aria-label="Anchor to: Install RPM packages" href="#install-rpm-packages">
+    <h2 id="install-packages">
+        Install Packages
+        <a data-clipboard-text="https://doc.rockdata.net/installation/redhat/#install-packages" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Install Packages" aria-label="Anchor to: Install Packages" href="#install-packages">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
+</div>
+<div class="gdoc-page__anchorwrap">
+    <h3 id="prerequisite">
+        Prerequisite
+        <a data-clipboard-text="https://doc.rockdata.net/installation/redhat/#prerequisite" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Prerequisite" aria-label="Anchor to: Prerequisite" href="#prerequisite">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p>Log in to the host with your root account, and run the following commands to install dependent packages:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># yum install postgresql-common</span>
+</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
+    <h3 id="install-redrock-postgres">
+        Install Redrock Postgres
+        <a data-clipboard-text="https://doc.rockdata.net/installation/redhat/#install-redrock-postgres" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Install Redrock Postgres" aria-label="Anchor to: Install Redrock Postgres" href="#install-redrock-postgres">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
 </div>
 <p>Download the <a
   class="gdoc-markdown__link"
   href="https://gitee.com/rockdata/redrock/releases"
   
->Redrock Postgres Package for Red Hat or CentOS</a>, Log in to the host with your root account, and run the following commands to install:</p>
+>Redrock Postgres Package for Red Hat or CentOS</a>, and run the following commands to install:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># tar xf redrock-12.1-1.el8.x86_64-bundle.tar</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># cd redrock-12.1-1.el8.x86_64-bundle</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># rpm -ivh redrock-12.1-1.el8.x86_64.rpm redrock-libs-12.1-1.el8.x86_64.rpm redrock-server-12.1-1.el8.x86_64.rpm</span>

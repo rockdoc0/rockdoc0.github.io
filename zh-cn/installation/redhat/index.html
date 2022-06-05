@@ -8,13 +8,9 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="安装 RPM 软件包 安装设置  数据目录 更改数据目录 初始化数据 设置开机启动   服务器控制 安装后配置调整      安装 RPM 软件包     下载 Red Hat 或 CentOS 的安装包，使用root账号登录主机，并执行以下命令进行安装：
-# tar xf redrock-12.1-1.el8.x86_64-bundle.tar # cd redrock-12.1-1.el8.x86_64-bundle # rpm -ivh redrock-12.1-1.el8.x86_64.rpm redrock-libs-12.1-1.el8.x86_64.rpm redrock-server-12.1-1.el8.x86_64.rpm 您还可以根据您的需要安装其他软件包。
-安装设置     安装软件包后，需要初始化和配置数据库。
-在下面的命令中，version 的值表示 PostgreSQL 的主版本号，例如：12
-数据目录     PostgreSQL 数据目录包含数据库的所有数据文件。环境变量 PGDATA 用于指定数据目录路径。
-默认数据目录为：
-/var/lib/pgsql/&lt;version&gt;/data 例如：" />
+  <meta name="description" content="安装软件包  安装准备 安装 Redrock Postgres   安装设置  数据目录 更改数据目录 初始化数据 设置开机启动   服务器控制 安装后配置调整      安装软件包     安装准备     使用您的 root 帐户登录到主机，然后运行以下命令来安装依赖包：
+# yum install postgresql-common 安装 Redrock Postgres     下载 Red Hat 或 CentOS 的安装包，并执行以下命令进行安装：
+# tar xf redrock-12.1-1.el8.x86_64-bundle.tar # cd redrock-12.1-1.el8.x86_64-bundle # rpm -ivh redrock-12.1-1.el8.x86_64.rpm redrock-libs-12.1-1.el8.x86_64.rpm redrock-server-12.1-1.el8.x86_64.rpm 您还可以根据您的需要安装其他软件包。" />
 
     <title>Red Hat/CentOS 安装指导 | Redrock Documentation</title>
 
@@ -41,33 +37,25 @@
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="安装 RPM 软件包 安装设置  数据目录 更改数据目录 初始化数据 设置开机启动   服务器控制 安装后配置调整      安装 RPM 软件包     下载 Red Hat 或 CentOS 的安装包，使用root账号登录主机，并执行以下命令进行安装：
-# tar xf redrock-12.1-1.el8.x86_64-bundle.tar # cd redrock-12.1-1.el8.x86_64-bundle # rpm -ivh redrock-12.1-1.el8.x86_64.rpm redrock-libs-12.1-1.el8.x86_64.rpm redrock-server-12.1-1.el8.x86_64.rpm 您还可以根据您的需要安装其他软件包。
-安装设置     安装软件包后，需要初始化和配置数据库。
-在下面的命令中，version 的值表示 PostgreSQL 的主版本号，例如：12
-数据目录     PostgreSQL 数据目录包含数据库的所有数据文件。环境变量 PGDATA 用于指定数据目录路径。
-默认数据目录为：
-/var/lib/pgsql/&lt;version&gt;/data 例如：" />
+  <meta property="og:description" content="安装软件包  安装准备 安装 Redrock Postgres   安装设置  数据目录 更改数据目录 初始化数据 设置开机启动   服务器控制 安装后配置调整      安装软件包     安装准备     使用您的 root 帐户登录到主机，然后运行以下命令来安装依赖包：
+# yum install postgresql-common 安装 Redrock Postgres     下载 Red Hat 或 CentOS 的安装包，并执行以下命令进行安装：
+# tar xf redrock-12.1-1.el8.x86_64-bundle.tar # cd redrock-12.1-1.el8.x86_64-bundle # rpm -ivh redrock-12.1-1.el8.x86_64.rpm redrock-libs-12.1-1.el8.x86_64.rpm redrock-server-12.1-1.el8.x86_64.rpm 您还可以根据您的需要安装其他软件包。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/zh-cn/installation/redhat/" />
 
 <meta property="article:section" content="Installation" />
     <meta
       property="article:modified_time"
-      content="2022-06-05T12:30:56+08:00"
+      content="2022-06-05T20:02:42+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Red Hat/CentOS 安装指导" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="安装 RPM 软件包 安装设置  数据目录 更改数据目录 初始化数据 设置开机启动   服务器控制 安装后配置调整      安装 RPM 软件包     下载 Red Hat 或 CentOS 的安装包，使用root账号登录主机，并执行以下命令进行安装：
-# tar xf redrock-12.1-1.el8.x86_64-bundle.tar # cd redrock-12.1-1.el8.x86_64-bundle # rpm -ivh redrock-12.1-1.el8.x86_64.rpm redrock-libs-12.1-1.el8.x86_64.rpm redrock-server-12.1-1.el8.x86_64.rpm 您还可以根据您的需要安装其他软件包。
-安装设置     安装软件包后，需要初始化和配置数据库。
-在下面的命令中，version 的值表示 PostgreSQL 的主版本号，例如：12
-数据目录     PostgreSQL 数据目录包含数据库的所有数据文件。环境变量 PGDATA 用于指定数据目录路径。
-默认数据目录为：
-/var/lib/pgsql/&lt;version&gt;/data 例如：" />
+  <meta name="twitter:description" content="安装软件包  安装准备 安装 Redrock Postgres   安装设置  数据目录 更改数据目录 初始化数据 设置开机启动   服务器控制 安装后配置调整      安装软件包     安装准备     使用您的 root 帐户登录到主机，然后运行以下命令来安装依赖包：
+# yum install postgresql-common 安装 Redrock Postgres     下载 Red Hat 或 CentOS 的安装包，并执行以下命令进行安装：
+# tar xf redrock-12.1-1.el8.x86_64-bundle.tar # cd redrock-12.1-1.el8.x86_64-bundle # rpm -ivh redrock-12.1-1.el8.x86_64.rpm redrock-libs-12.1-1.el8.x86_64.rpm redrock-server-12.1-1.el8.x86_64.rpm 您还可以根据您的需要安装其他软件包。" />
 
 
   <script type="application/ld+json">
@@ -78,9 +66,9 @@
       "name": "Red Hat/CentOS 安装指导",
       "url" : "https://doc.rockdata.net/zh-cn/installation/redhat/",
       "headline": "Red Hat/CentOS 安装指导",
-      "description": "安装 RPM 软件包 安装设置  数据目录 更改数据目录 初始化数据 设置开机启动   服务器控制 安装后配置调整      安装 RPM 软件包     下载 Red Hat 或 CentOS 的安装包，使用root账号登录主机，并执行以下命令进行安装：\n# tar xf redrock-12.1-1.el8.x86_64-bundle.tar # cd redrock-12.1-1.el8.x86_64-bundle # rpm -ivh redrock-12.1-1.el8.x86_64.rpm redrock-libs-12.1-1.el8.x86_64.rpm redrock-server-12.1-1.el8.x86_64.rpm 您还可以根据您的需要安装其他软件包。\n安装设置     安装软件包后，需要初始化和配置数据库。\n在下面的命令中，version 的值表示 PostgreSQL 的主版本号，例如：12\n数据目录     PostgreSQL 数据目录包含数据库的所有数据文件。环境变量 PGDATA 用于指定数据目录路径。\n默认数据目录为：\n\/var\/lib\/pgsql\/\u003cversion\u003e\/data 例如：",
+      "description": "安装软件包  安装准备 安装 Redrock Postgres   安装设置  数据目录 更改数据目录 初始化数据 设置开机启动   服务器控制 安装后配置调整      安装软件包     安装准备     使用您的 root 帐户登录到主机，然后运行以下命令来安装依赖包：\n# yum install postgresql-common 安装 Redrock Postgres     下载 Red Hat 或 CentOS 的安装包，并执行以下命令进行安装：\n# tar xf redrock-12.1-1.el8.x86_64-bundle.tar # cd redrock-12.1-1.el8.x86_64-bundle # rpm -ivh redrock-12.1-1.el8.x86_64.rpm redrock-libs-12.1-1.el8.x86_64.rpm redrock-server-12.1-1.el8.x86_64.rpm 您还可以根据您的需要安装其他软件包。",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "180",
+      "wordCount" : "191",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -91,7 +79,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-05T12:30:56.00Z",
+      "dateModified": "2022-06-05T20:02:42.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1617,7 +1605,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     <h1>Red Hat/CentOS 安装指导</h1>
     <div class="gdoc-toc gdoc-toc__level--3">
       <nav id="TableOfContents"><ul>
-        <li><a href="#安装-rpm-软件包">安装 RPM 软件包</a></li>
+        <li><a href="#安装软件包">安装软件包</a>
+          <ul>
+            <li><a href="#安装准备">安装准备</a></li>
+            <li><a href="#安装-redrock-postgres">安装 Redrock Postgres</a></li>
+          </ul>
+        </li>
         <li><a href="#安装设置">安装设置</a>
           <ul>
             <li><a href="#数据目录">数据目录</a></li>
@@ -1632,18 +1625,36 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <hr />
     </div>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="安装-rpm-软件包">
-        安装 RPM 软件包
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/redhat/#安装-rpm-软件包" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 安装 RPM 软件包" aria-label="锚定到： 安装 RPM 软件包" href="#%e5%ae%89%e8%a3%85-rpm-%e8%bd%af%e4%bb%b6%e5%8c%85">
+    <h2 id="安装软件包">
+        安装软件包
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/redhat/#安装软件包" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 安装软件包" aria-label="锚定到： 安装软件包" href="#%e5%ae%89%e8%a3%85%e8%bd%af%e4%bb%b6%e5%8c%85">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
+</div>
+<div class="gdoc-page__anchorwrap">
+    <h3 id="安装准备">
+        安装准备
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/redhat/#安装准备" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 安装准备" aria-label="锚定到： 安装准备" href="#%e5%ae%89%e8%a3%85%e5%87%86%e5%a4%87">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p>使用您的 root 帐户登录到主机，然后运行以下命令来安装依赖包：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># yum install postgresql-common</span>
+</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
+    <h3 id="安装-redrock-postgres">
+        安装 Redrock Postgres
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/redhat/#安装-redrock-postgres" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 安装 Redrock Postgres" aria-label="锚定到： 安装 Redrock Postgres" href="#%e5%ae%89%e8%a3%85-redrock-postgres">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
 </div>
 <p>下载 <a
   class="gdoc-markdown__link"
   href="https://gitee.com/rockdata/redrock/releases"
   
->Red Hat 或 CentOS 的安装包</a>，使用root账号登录主机，并执行以下命令进行安装：</p>
+>Red Hat 或 CentOS 的安装包</a>，并执行以下命令进行安装：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># tar xf redrock-12.1-1.el8.x86_64-bundle.tar</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># cd redrock-12.1-1.el8.x86_64-bundle</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># rpm -ivh redrock-12.1-1.el8.x86_64.rpm redrock-libs-12.1-1.el8.x86_64.rpm redrock-server-12.1-1.el8.x86_64.rpm</span>

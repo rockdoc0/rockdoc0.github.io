@@ -8,14 +8,11 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="安装 DEB 软件包 安装设置  数据目录 更改数据目录 初始化数据 设置开机启动   服务器控制 安装后配置调整      安装 DEB 软件包     下载 Debian 的安装包，使用root账号登录主机，并执行以下命令进行安装：
+  <meta name="description" content="安装软件包  安装准备 安装 Redrock Postgres   服务器控制 安装后配置调整      安装软件包     安装准备     使用您的 root 帐户登录到主机，然后运行以下命令来安装依赖包：
+# apt install postgresql-common postgresql-client-common 安装 Redrock Postgres     下载 Debian 的安装包，并执行以下命令进行安装：
 # tar xf redrock-12.1-1.debian10.x86_64-bundle.tar # cd redrock-12.1-1.debian10.x86_64-bundle # dpkg -i libpq5_12.1-1_amd64.deb redrock-client_12.1-1_amd64.deb redrock_12.1-1_amd64.deb 您还可以根据您的需要安装其他软件包。
-安装设置     安装软件包后，需要初始化和配置数据库。
-在下面的命令中，version 的值表示 PostgreSQL 的主版本号，例如：12
-数据目录     PostgreSQL 数据目录包含数据库的所有数据文件。环境变量 PGDATA 用于指定数据目录路径。
-默认数据目录为：
-/var/lib/pgsql/&lt;version&gt;/data 例如：
-/var/lib/pgsql/12/data 更改数据目录     如果不想使用默认的数据目录，可以进入到自定义的挂载目录（例如：/u01），然后创建一个 postgres 用户为拥有者的文件夹 pgdata ：" />
+服务器控制     要控制数据库服务，请使用：
+# systemctl &lt;command&gt; postgresql 其中的 command 可以为:" />
 
     <title>Debian 安装指导 | Redrock Documentation</title>
 
@@ -42,35 +39,29 @@
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="安装 DEB 软件包 安装设置  数据目录 更改数据目录 初始化数据 设置开机启动   服务器控制 安装后配置调整      安装 DEB 软件包     下载 Debian 的安装包，使用root账号登录主机，并执行以下命令进行安装：
+  <meta property="og:description" content="安装软件包  安装准备 安装 Redrock Postgres   服务器控制 安装后配置调整      安装软件包     安装准备     使用您的 root 帐户登录到主机，然后运行以下命令来安装依赖包：
+# apt install postgresql-common postgresql-client-common 安装 Redrock Postgres     下载 Debian 的安装包，并执行以下命令进行安装：
 # tar xf redrock-12.1-1.debian10.x86_64-bundle.tar # cd redrock-12.1-1.debian10.x86_64-bundle # dpkg -i libpq5_12.1-1_amd64.deb redrock-client_12.1-1_amd64.deb redrock_12.1-1_amd64.deb 您还可以根据您的需要安装其他软件包。
-安装设置     安装软件包后，需要初始化和配置数据库。
-在下面的命令中，version 的值表示 PostgreSQL 的主版本号，例如：12
-数据目录     PostgreSQL 数据目录包含数据库的所有数据文件。环境变量 PGDATA 用于指定数据目录路径。
-默认数据目录为：
-/var/lib/pgsql/&lt;version&gt;/data 例如：
-/var/lib/pgsql/12/data 更改数据目录     如果不想使用默认的数据目录，可以进入到自定义的挂载目录（例如：/u01），然后创建一个 postgres 用户为拥有者的文件夹 pgdata ：" />
+服务器控制     要控制数据库服务，请使用：
+# systemctl &lt;command&gt; postgresql 其中的 command 可以为:" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/zh-cn/installation/debian/" />
 
 <meta property="article:section" content="Installation" />
     <meta
       property="article:modified_time"
-      content="2022-06-05T12:30:56+08:00"
+      content="2022-06-05T20:02:42+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Debian 安装指导" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="安装 DEB 软件包 安装设置  数据目录 更改数据目录 初始化数据 设置开机启动   服务器控制 安装后配置调整      安装 DEB 软件包     下载 Debian 的安装包，使用root账号登录主机，并执行以下命令进行安装：
+  <meta name="twitter:description" content="安装软件包  安装准备 安装 Redrock Postgres   服务器控制 安装后配置调整      安装软件包     安装准备     使用您的 root 帐户登录到主机，然后运行以下命令来安装依赖包：
+# apt install postgresql-common postgresql-client-common 安装 Redrock Postgres     下载 Debian 的安装包，并执行以下命令进行安装：
 # tar xf redrock-12.1-1.debian10.x86_64-bundle.tar # cd redrock-12.1-1.debian10.x86_64-bundle # dpkg -i libpq5_12.1-1_amd64.deb redrock-client_12.1-1_amd64.deb redrock_12.1-1_amd64.deb 您还可以根据您的需要安装其他软件包。
-安装设置     安装软件包后，需要初始化和配置数据库。
-在下面的命令中，version 的值表示 PostgreSQL 的主版本号，例如：12
-数据目录     PostgreSQL 数据目录包含数据库的所有数据文件。环境变量 PGDATA 用于指定数据目录路径。
-默认数据目录为：
-/var/lib/pgsql/&lt;version&gt;/data 例如：
-/var/lib/pgsql/12/data 更改数据目录     如果不想使用默认的数据目录，可以进入到自定义的挂载目录（例如：/u01），然后创建一个 postgres 用户为拥有者的文件夹 pgdata ：" />
+服务器控制     要控制数据库服务，请使用：
+# systemctl &lt;command&gt; postgresql 其中的 command 可以为:" />
 
 
   <script type="application/ld+json">
@@ -81,9 +72,9 @@
       "name": "Debian 安装指导",
       "url" : "https://doc.rockdata.net/zh-cn/installation/debian/",
       "headline": "Debian 安装指导",
-      "description": "安装 DEB 软件包 安装设置  数据目录 更改数据目录 初始化数据 设置开机启动   服务器控制 安装后配置调整      安装 DEB 软件包     下载 Debian 的安装包，使用root账号登录主机，并执行以下命令进行安装：\n# tar xf redrock-12.1-1.debian10.x86_64-bundle.tar # cd redrock-12.1-1.debian10.x86_64-bundle # dpkg -i libpq5_12.1-1_amd64.deb redrock-client_12.1-1_amd64.deb redrock_12.1-1_amd64.deb 您还可以根据您的需要安装其他软件包。\n安装设置     安装软件包后，需要初始化和配置数据库。\n在下面的命令中，version 的值表示 PostgreSQL 的主版本号，例如：12\n数据目录     PostgreSQL 数据目录包含数据库的所有数据文件。环境变量 PGDATA 用于指定数据目录路径。\n默认数据目录为：\n\/var\/lib\/pgsql\/\u003cversion\u003e\/data 例如：\n\/var\/lib\/pgsql\/12\/data 更改数据目录     如果不想使用默认的数据目录，可以进入到自定义的挂载目录（例如：\/u01），然后创建一个 postgres 用户为拥有者的文件夹 pgdata ：",
+      "description": "安装软件包  安装准备 安装 Redrock Postgres   服务器控制 安装后配置调整      安装软件包     安装准备     使用您的 root 帐户登录到主机，然后运行以下命令来安装依赖包：\n# apt install postgresql-common postgresql-client-common 安装 Redrock Postgres     下载 Debian 的安装包，并执行以下命令进行安装：\n# tar xf redrock-12.1-1.debian10.x86_64-bundle.tar # cd redrock-12.1-1.debian10.x86_64-bundle # dpkg -i libpq5_12.1-1_amd64.deb redrock-client_12.1-1_amd64.deb redrock_12.1-1_amd64.deb 您还可以根据您的需要安装其他软件包。\n服务器控制     要控制数据库服务，请使用：\n# systemctl \u003ccommand\u003e postgresql 其中的 command 可以为:",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "177",
+      "wordCount" : "112",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -94,7 +85,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-05T12:30:56.00Z",
+      "dateModified": "2022-06-05T20:02:42.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1620,13 +1611,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     <h1>Debian 安装指导</h1>
     <div class="gdoc-toc gdoc-toc__level--3">
       <nav id="TableOfContents"><ul>
-        <li><a href="#安装-deb-软件包">安装 DEB 软件包</a></li>
-        <li><a href="#安装设置">安装设置</a>
+        <li><a href="#安装软件包">安装软件包</a>
           <ul>
-            <li><a href="#数据目录">数据目录</a></li>
-            <li><a href="#更改数据目录">更改数据目录</a></li>
-            <li><a href="#初始化数据">初始化数据</a></li>
-            <li><a href="#设置开机启动">设置开机启动</a></li>
+            <li><a href="#安装准备">安装准备</a></li>
+            <li><a href="#安装-redrock-postgres">安装 Redrock Postgres</a></li>
           </ul>
         </li>
         <li><a href="#服务器控制">服务器控制</a></li>
@@ -1635,85 +1623,41 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <hr />
     </div>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="安装-deb-软件包">
-        安装 DEB 软件包
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/debian/#安装-deb-软件包" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 安装 DEB 软件包" aria-label="锚定到： 安装 DEB 软件包" href="#%e5%ae%89%e8%a3%85-deb-%e8%bd%af%e4%bb%b6%e5%8c%85">
+    <h2 id="安装软件包">
+        安装软件包
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/debian/#安装软件包" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 安装软件包" aria-label="锚定到： 安装软件包" href="#%e5%ae%89%e8%a3%85%e8%bd%af%e4%bb%b6%e5%8c%85">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
+</div>
+<div class="gdoc-page__anchorwrap">
+    <h3 id="安装准备">
+        安装准备
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/debian/#安装准备" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 安装准备" aria-label="锚定到： 安装准备" href="#%e5%ae%89%e8%a3%85%e5%87%86%e5%a4%87">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p>使用您的 root 帐户登录到主机，然后运行以下命令来安装依赖包：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># apt install postgresql-common postgresql-client-common</span>
+</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
+    <h3 id="安装-redrock-postgres">
+        安装 Redrock Postgres
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/debian/#安装-redrock-postgres" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 安装 Redrock Postgres" aria-label="锚定到： 安装 Redrock Postgres" href="#%e5%ae%89%e8%a3%85-redrock-postgres">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
 </div>
 <p>下载 <a
   class="gdoc-markdown__link"
   href="https://gitee.com/rockdata/redrock/releases"
   
->Debian 的安装包</a>，使用root账号登录主机，并执行以下命令进行安装：</p>
+>Debian 的安装包</a>，并执行以下命令进行安装：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># tar xf redrock-12.1-1.debian10.x86_64-bundle.tar</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># cd redrock-12.1-1.debian10.x86_64-bundle</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># dpkg -i libpq5_12.1-1_amd64.deb redrock-client_12.1-1_amd64.deb redrock_12.1-1_amd64.deb</span>
 </span></span></code></pre></div><p>您还可以根据您的需要安装其他软件包。</p>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="安装设置">
-        安装设置
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/debian/#安装设置" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 安装设置" aria-label="锚定到： 安装设置" href="#%e5%ae%89%e8%a3%85%e8%ae%be%e7%bd%ae">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<p>安装软件包后，需要初始化和配置数据库。</p>
-<p>在下面的命令中，<em>version</em> 的值表示 PostgreSQL 的<em>主版本号</em>，例如：<em>12</em></p>
-<div class="gdoc-page__anchorwrap">
-    <h3 id="数据目录">
-        数据目录
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/debian/#数据目录" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 数据目录" aria-label="锚定到： 数据目录" href="#%e6%95%b0%e6%8d%ae%e7%9b%ae%e5%bd%95">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
-<p>PostgreSQL 数据目录包含数据库的所有数据文件。环境变量 <em>PGDATA</em> 用于指定数据目录路径。</p>
-<p>默认数据目录为：</p>
-<pre tabindex="0"><code>/var/lib/pgsql/&lt;version&gt;/data
-</code></pre><p>例如：</p>
-<pre tabindex="0"><code>/var/lib/pgsql/12/data
-</code></pre><div class="gdoc-page__anchorwrap">
-    <h3 id="更改数据目录">
-        更改数据目录
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/debian/#更改数据目录" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 更改数据目录" aria-label="锚定到： 更改数据目录" href="#%e6%9b%b4%e6%94%b9%e6%95%b0%e6%8d%ae%e7%9b%ae%e5%bd%95">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
-<p>如果不想使用默认的数据目录，可以进入到自定义的挂载目录（例如：/u01），然后创建一个 postgres 用户为拥有者的文件夹 pgdata ：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># cd /u01</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># mkdir pgdata</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># chown postgres:postgres pgdata</span>
-</span></span></code></pre></div><p>然后，编辑 postgresql 服务：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># systemctl edit postgresql-12.service</span>
-</span></span></code></pre></div><p>进入到自定义的数据目录，该目录应该具有主机中大部分的可用磁盘空间，复制该目录路径并粘贴到服务文件中：</p>
-<pre tabindex="0"><code>[Service]
-Environment=PGDATA=/u01/pgdata
-</code></pre><div class="gdoc-page__anchorwrap">
-    <h3 id="初始化数据">
-        初始化数据
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/debian/#初始化数据" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 初始化数据" aria-label="锚定到： 初始化数据" href="#%e5%88%9d%e5%a7%8b%e5%8c%96%e6%95%b0%e6%8d%ae">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
-<p>执行类似如下的命令，在 <em>PGDATA</em> 中初始化数据库：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># /usr/pgsql-&lt;version&gt;/bin/postgresql-&lt;version&gt;-setup initdb</span>
-</span></span></code></pre></div><p>对于版本 12，请使用：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># /usr/pgsql-12/bin/postgresql-12-setup initdb</span>
-</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
-    <h3 id="设置开机启动">
-        设置开机启动
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/debian/#设置开机启动" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 设置开机启动" aria-label="锚定到： 设置开机启动" href="#%e8%ae%be%e7%bd%ae%e5%bc%80%e6%9c%ba%e5%90%af%e5%8a%a8">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
-<p>如果您希望 PostgreSQL 在操作系统开机启动时自动运行，请执行以下操作：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># systemctl enable postgresql-12.service</span>
-</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
     <h2 id="服务器控制">
         服务器控制
         <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/debian/#服务器控制" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 服务器控制" aria-label="锚定到： 服务器控制" href="#%e6%9c%8d%e5%8a%a1%e5%99%a8%e6%8e%a7%e5%88%b6">
@@ -1722,7 +1666,7 @@ Environment=PGDATA=/u01/pgdata
     </h2>
 </div>
 <p>要控制数据库服务，请使用：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># systemctl &lt;command&gt; postgresql-12.service</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># systemctl &lt;command&gt; postgresql</span>
 </span></span></code></pre></div><p>其中的 <em>command</em> 可以为:</p>
 <ul>
 <li><em>enable</em> : 启用开机启动</li>
@@ -1731,10 +1675,7 @@ Environment=PGDATA=/u01/pgdata
 <li><em>restart</em> : 重启数据库; 主要用于重要参数的变更生效</li>
 <li><em>reload</em> : 在数据库运行过程中更新配置参数</li>
 </ul>
-<p>例如，要控制版本 12 的数据库服务，请使用：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># systemctl enable postgresql-12.service</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># systemctl start postgresql-12.service</span>
-</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
+<div class="gdoc-page__anchorwrap">
     <h2 id="安装后配置调整">
         安装后配置调整
         <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/debian/#安装后配置调整" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 安装后配置调整" aria-label="锚定到： 安装后配置调整" href="#%e5%ae%89%e8%a3%85%e5%90%8e%e9%85%8d%e7%bd%ae%e8%b0%83%e6%95%b4">
@@ -1751,7 +1692,7 @@ host    all             all             0.0.0.0/0            md5
 </code></pre><p>修改数据目录下的 postgresql.conf 文件，通过取消注释以下参数行并设置参数值为 * 而不是 localhost 来允许来自所有主机的访问连接：</p>
 <pre tabindex="0"><code>listen_addresses = &#39;*&#39;
 </code></pre><p>重启数据库服务以更新配置参数：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># systemctl restart postgresql-12.service</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># systemctl restart postgresql</span>
 </span></span></code></pre></div><p>在生产环境中，还应设置 TLS 安全通信，并且应考虑配置数据复制或基于快照的备份。有关这些配置，请参阅 PostgreSQL 在线文档。</p>
 
   </article>
