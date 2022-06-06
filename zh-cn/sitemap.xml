@@ -55,7 +55,7 @@
                 />
   </url><url>
     <loc>https://doc.rockdata.net/zh-cn/installation/redhat/</loc>
-    <lastmod>2022-06-05T20:02:42+08:00</lastmod>
+    <lastmod>2022-06-06T15:26:28+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -81,7 +81,7 @@
                 />
   </url><url>
     <loc>https://doc.rockdata.net/zh-cn/installation/debian/</loc>
-    <lastmod>2022-06-05T20:02:42+08:00</lastmod>
+    <lastmod>2022-06-06T15:26:28+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -117,6 +117,19 @@
                 rel="alternate"
                 hreflang="zh-cn"
                 href="https://doc.rockdata.net/zh-cn/advanced/"
+                />
+  </url><url>
+    <loc>https://doc.rockdata.net/zh-cn/advanced/textsearch/</loc>
+    <lastmod>2022-06-06T15:26:28+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://doc.rockdata.net/advanced/textsearch/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://doc.rockdata.net/zh-cn/advanced/textsearch/"
                 />
   </url><url>
     <loc>https://doc.rockdata.net/zh-cn/advanced/plscheme/</loc>

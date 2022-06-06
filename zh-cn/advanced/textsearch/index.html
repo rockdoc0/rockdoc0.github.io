@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="color-toggle-hidden">
+<html lang="zh-cn" class="color-toggle-hidden">
   <head>
     <meta charset="UTF-8" />
 <meta name="referrer" content="no-referrer" />
@@ -8,9 +8,16 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Installation Architectural Fundamentals Accessing Database Whats next?      Installation     Before you can use PostgreSQL you need to install it, of course. It is possible that PostgreSQL is already installed at your site, either because it was included in your operating system distribution or because the system administrator already installed it. If that is the case, you should obtain information from the operating system documentation or your system administrator about how to access PostgreSQL." />
+  <meta name="description" content="全文搜索（或者文本搜索）提供了确定满足一个查询的自然语言文档的能力，并可以选择将它们按照与查询的相关度排序。最常用的搜索类型是找到所有包含给定查询词的文档并按照它们与查询的相似性顺序返回它们。查询和相似性的概念非常灵活并且依赖于特定的应用。最简单的搜索认为查询是一组词而相似性是查询词在文档中的频度。
+解析器     文本搜索解析器负责把未处理的文档文本划分成记号并且标识每一个记号的类型，而可能的类型集合由解析器本身定义。注意一个解析器完全不会修改文本 — 它简单地标识看似有理的词边界。因为这种有限的视野，对于应用相关的自定义解析器的需求就没有自定义字典那么强烈。目前Redrock Postgres只提供了两种内置解析器，它们已经被证实对很多种应用都适用。
+内置的中文解析器被称为pg_catalog.cjkparser。
+配置     全文搜索功能包括做更多事情的能力：跳过索引特定词（停用词）、处理同义词并使用更高级的解析，例如基于空白之外的解析。这个功能由文本搜索配置控制。PostgreSQL中有多种语言的预定义配置，并且你可以很容易地创建你自己的配置（psql的\dF命令显示所有可用的配置）。
+内置的中文搜索配置被称为 pg_catalog.chinese。
+测试和调试文本搜索     一个自定义文本搜索配置的行为很容易变得混乱。本节中描述的函数对于测试文本搜索对象有用。你可以测试一个完整的配置，或者独立测试解析器和词典。
+配置测试     函数ts_debug允许简单地测试一个文本搜索配置。
+SELECT * FROM ts_debug(&#39;chinese&#39;, &#39;关系数据库是一种用于存储相互关联的数据记录并提供数据访问的数据库。&#39;);alias | description | token | dictionaries | dictionary | lexemes------------&#43;--------------&#43;--------&#43;--------------&#43;------------&#43;----------cjk_words | CJK words | 关系 | {chinese} | chinese | {关系}cjk_words | CJK words | 数据库 | {chinese} | chinese | {数据库}cjk_words | CJK words | 是 | {chinese} | chinese | {是}cjk_words | CJK words | 一种 | {chinese} | chinese | {一种}cjk_words | CJK words | 用于 | {chinese} | chinese | {用于}cjk_words | CJK words | 存储 | {chinese} | chinese | {存储}cjk_words | CJK words | 相互 | {chinese} | chinese | {相互}cjk_words | CJK words | 关联 | {chinese} | chinese | {关联}cjk_words | CJK words | 的 | {chinese} | chinese | {的}cjk_words | CJK words | 数据 | {chinese} | chinese | {数据}cjk_words | CJK words | 记录 | {chinese} | chinese | {记录}cjk_words | CJK words | 并 | {chinese} | chinese | {并}cjk_words | CJK words | 提供 | {chinese} | chinese | {提供}cjk_words | CJK words | 数据 | {chinese} | chinese | {数据}cjk_words | CJK words | 访问 | {chinese} | chinese | {访问}cjk_words | CJK words | 的 | {chinese} | chinese | {的}cjk_words | CJK words | 数据库 | {chinese} | chinese | {数据库}punc_words | punctuations | 。 | {chinese} | chinese | {。} 解析器测试     函数ts_parse 允许直接测试一个文本搜索解析器。" />
 
-    <title>Getting Started | Redrock Documentation</title>
+    <title>中文搜索 | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -31,49 +38,63 @@
     
   <meta
     property="og:title"
-    content="Getting Started"
+    content="中文搜索"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Installation Architectural Fundamentals Accessing Database Whats next?      Installation     Before you can use PostgreSQL you need to install it, of course. It is possible that PostgreSQL is already installed at your site, either because it was included in your operating system distribution or because the system administrator already installed it. If that is the case, you should obtain information from the operating system documentation or your system administrator about how to access PostgreSQL." />
+  <meta property="og:description" content="全文搜索（或者文本搜索）提供了确定满足一个查询的自然语言文档的能力，并可以选择将它们按照与查询的相关度排序。最常用的搜索类型是找到所有包含给定查询词的文档并按照它们与查询的相似性顺序返回它们。查询和相似性的概念非常灵活并且依赖于特定的应用。最简单的搜索认为查询是一组词而相似性是查询词在文档中的频度。
+解析器     文本搜索解析器负责把未处理的文档文本划分成记号并且标识每一个记号的类型，而可能的类型集合由解析器本身定义。注意一个解析器完全不会修改文本 — 它简单地标识看似有理的词边界。因为这种有限的视野，对于应用相关的自定义解析器的需求就没有自定义字典那么强烈。目前Redrock Postgres只提供了两种内置解析器，它们已经被证实对很多种应用都适用。
+内置的中文解析器被称为pg_catalog.cjkparser。
+配置     全文搜索功能包括做更多事情的能力：跳过索引特定词（停用词）、处理同义词并使用更高级的解析，例如基于空白之外的解析。这个功能由文本搜索配置控制。PostgreSQL中有多种语言的预定义配置，并且你可以很容易地创建你自己的配置（psql的\dF命令显示所有可用的配置）。
+内置的中文搜索配置被称为 pg_catalog.chinese。
+测试和调试文本搜索     一个自定义文本搜索配置的行为很容易变得混乱。本节中描述的函数对于测试文本搜索对象有用。你可以测试一个完整的配置，或者独立测试解析器和词典。
+配置测试     函数ts_debug允许简单地测试一个文本搜索配置。
+SELECT * FROM ts_debug(&#39;chinese&#39;, &#39;关系数据库是一种用于存储相互关联的数据记录并提供数据访问的数据库。&#39;);alias | description | token | dictionaries | dictionary | lexemes------------&#43;--------------&#43;--------&#43;--------------&#43;------------&#43;----------cjk_words | CJK words | 关系 | {chinese} | chinese | {关系}cjk_words | CJK words | 数据库 | {chinese} | chinese | {数据库}cjk_words | CJK words | 是 | {chinese} | chinese | {是}cjk_words | CJK words | 一种 | {chinese} | chinese | {一种}cjk_words | CJK words | 用于 | {chinese} | chinese | {用于}cjk_words | CJK words | 存储 | {chinese} | chinese | {存储}cjk_words | CJK words | 相互 | {chinese} | chinese | {相互}cjk_words | CJK words | 关联 | {chinese} | chinese | {关联}cjk_words | CJK words | 的 | {chinese} | chinese | {的}cjk_words | CJK words | 数据 | {chinese} | chinese | {数据}cjk_words | CJK words | 记录 | {chinese} | chinese | {记录}cjk_words | CJK words | 并 | {chinese} | chinese | {并}cjk_words | CJK words | 提供 | {chinese} | chinese | {提供}cjk_words | CJK words | 数据 | {chinese} | chinese | {数据}cjk_words | CJK words | 访问 | {chinese} | chinese | {访问}cjk_words | CJK words | 的 | {chinese} | chinese | {的}cjk_words | CJK words | 数据库 | {chinese} | chinese | {数据库}punc_words | punctuations | 。 | {chinese} | chinese | {。} 解析器测试     函数ts_parse 允许直接测试一个文本搜索解析器。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://doc.rockdata.net/usage/getting-started/" />
+<meta property="og:url" content="https://doc.rockdata.net/zh-cn/advanced/textsearch/" />
 
-<meta property="article:section" content="Usage" />
+<meta property="article:section" content="Advanced" />
     <meta
       property="article:modified_time"
-      content="2022-05-30T19:41:27+08:00"
+      content="2022-06-06T15:26:28+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Getting Started" />
+<meta name="twitter:title" content="中文搜索" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Installation Architectural Fundamentals Accessing Database Whats next?      Installation     Before you can use PostgreSQL you need to install it, of course. It is possible that PostgreSQL is already installed at your site, either because it was included in your operating system distribution or because the system administrator already installed it. If that is the case, you should obtain information from the operating system documentation or your system administrator about how to access PostgreSQL." />
+  <meta name="twitter:description" content="全文搜索（或者文本搜索）提供了确定满足一个查询的自然语言文档的能力，并可以选择将它们按照与查询的相关度排序。最常用的搜索类型是找到所有包含给定查询词的文档并按照它们与查询的相似性顺序返回它们。查询和相似性的概念非常灵活并且依赖于特定的应用。最简单的搜索认为查询是一组词而相似性是查询词在文档中的频度。
+解析器     文本搜索解析器负责把未处理的文档文本划分成记号并且标识每一个记号的类型，而可能的类型集合由解析器本身定义。注意一个解析器完全不会修改文本 — 它简单地标识看似有理的词边界。因为这种有限的视野，对于应用相关的自定义解析器的需求就没有自定义字典那么强烈。目前Redrock Postgres只提供了两种内置解析器，它们已经被证实对很多种应用都适用。
+内置的中文解析器被称为pg_catalog.cjkparser。
+配置     全文搜索功能包括做更多事情的能力：跳过索引特定词（停用词）、处理同义词并使用更高级的解析，例如基于空白之外的解析。这个功能由文本搜索配置控制。PostgreSQL中有多种语言的预定义配置，并且你可以很容易地创建你自己的配置（psql的\dF命令显示所有可用的配置）。
+内置的中文搜索配置被称为 pg_catalog.chinese。
+测试和调试文本搜索     一个自定义文本搜索配置的行为很容易变得混乱。本节中描述的函数对于测试文本搜索对象有用。你可以测试一个完整的配置，或者独立测试解析器和词典。
+配置测试     函数ts_debug允许简单地测试一个文本搜索配置。
+SELECT * FROM ts_debug(&#39;chinese&#39;, &#39;关系数据库是一种用于存储相互关联的数据记录并提供数据访问的数据库。&#39;);alias | description | token | dictionaries | dictionary | lexemes------------&#43;--------------&#43;--------&#43;--------------&#43;------------&#43;----------cjk_words | CJK words | 关系 | {chinese} | chinese | {关系}cjk_words | CJK words | 数据库 | {chinese} | chinese | {数据库}cjk_words | CJK words | 是 | {chinese} | chinese | {是}cjk_words | CJK words | 一种 | {chinese} | chinese | {一种}cjk_words | CJK words | 用于 | {chinese} | chinese | {用于}cjk_words | CJK words | 存储 | {chinese} | chinese | {存储}cjk_words | CJK words | 相互 | {chinese} | chinese | {相互}cjk_words | CJK words | 关联 | {chinese} | chinese | {关联}cjk_words | CJK words | 的 | {chinese} | chinese | {的}cjk_words | CJK words | 数据 | {chinese} | chinese | {数据}cjk_words | CJK words | 记录 | {chinese} | chinese | {记录}cjk_words | CJK words | 并 | {chinese} | chinese | {并}cjk_words | CJK words | 提供 | {chinese} | chinese | {提供}cjk_words | CJK words | 数据 | {chinese} | chinese | {数据}cjk_words | CJK words | 访问 | {chinese} | chinese | {访问}cjk_words | CJK words | 的 | {chinese} | chinese | {的}cjk_words | CJK words | 数据库 | {chinese} | chinese | {数据库}punc_words | punctuations | 。 | {chinese} | chinese | {。} 解析器测试     函数ts_parse 允许直接测试一个文本搜索解析器。" />
 
 
   <script type="application/ld+json">
   {
       "@context": "http://schema.org",
       "@type": "TechArticle",
-      "articleSection": "Usage",
-      "name": "Getting Started",
-      "url" : "https://doc.rockdata.net/usage/getting-started/",
-      "headline": "Getting Started",
-      "description": "Installation Architectural Fundamentals Accessing Database Whats next?      Installation     Before you can use PostgreSQL you need to install it, of course. It is possible that PostgreSQL is already installed at your site, either because it was included in your operating system distribution or because the system administrator already installed it. If that is the case, you should obtain information from the operating system documentation or your system administrator about how to access PostgreSQL.",
+      "articleSection": "Advanced",
+      "name": "中文搜索",
+      "url" : "https://doc.rockdata.net/zh-cn/advanced/textsearch/",
+      "headline": "中文搜索",
+      "description": "全文搜索（或者文本搜索）提供了确定满足一个查询的自然语言文档的能力，并可以选择将它们按照与查询的相关度排序。最常用的搜索类型是找到所有包含给定查询词的文档并按照它们与查询的相似性顺序返回它们。查询和相似性的概念非常灵活并且依赖于特定的应用。最简单的搜索认为查询是一组词而相似性是查询词在文档中的频度。\n解析器     文本搜索解析器负责把未处理的文档文本划分成记号并且标识每一个记号的类型，而可能的类型集合由解析器本身定义。注意一个解析器完全不会修改文本 — 它简单地标识看似有理的词边界。因为这种有限的视野，对于应用相关的自定义解析器的需求就没有自定义字典那么强烈。目前Redrock Postgres只提供了两种内置解析器，它们已经被证实对很多种应用都适用。\n内置的中文解析器被称为pg_catalog.cjkparser。\n配置     全文搜索功能包括做更多事情的能力：跳过索引特定词（停用词）、处理同义词并使用更高级的解析，例如基于空白之外的解析。这个功能由文本搜索配置控制。PostgreSQL中有多种语言的预定义配置，并且你可以很容易地创建你自己的配置（psql的\\dF命令显示所有可用的配置）。\n内置的中文搜索配置被称为 pg_catalog.chinese。\n测试和调试文本搜索     一个自定义文本搜索配置的行为很容易变得混乱。本节中描述的函数对于测试文本搜索对象有用。你可以测试一个完整的配置，或者独立测试解析器和词典。\n配置测试     函数ts_debug允许简单地测试一个文本搜索配置。\nSELECT * FROM ts_debug(\u0027chinese\u0027, \u0027关系数据库是一种用于存储相互关联的数据记录并提供数据访问的数据库。\u0027);\ralias | description | token | dictionaries | dictionary | lexemes\r------------\u002b--------------\u002b--------\u002b--------------\u002b------------\u002b----------\rcjk_words | CJK words | 关系 | {chinese} | chinese | {关系}\rcjk_words | CJK words | 数据库 | {chinese} | chinese | {数据库}\rcjk_words | CJK words | 是 | {chinese} | chinese | {是}\rcjk_words | CJK words | 一种 | {chinese} | chinese | {一种}\rcjk_words | CJK words | 用于 | {chinese} | chinese | {用于}\rcjk_words | CJK words | 存储 | {chinese} | chinese | {存储}\rcjk_words | CJK words | 相互 | {chinese} | chinese | {相互}\rcjk_words | CJK words | 关联 | {chinese} | chinese | {关联}\rcjk_words | CJK words | 的 | {chinese} | chinese | {的}\rcjk_words | CJK words | 数据 | {chinese} | chinese | {数据}\rcjk_words | CJK words | 记录 | {chinese} | chinese | {记录}\rcjk_words | CJK words | 并 | {chinese} | chinese | {并}\rcjk_words | CJK words | 提供 | {chinese} | chinese | {提供}\rcjk_words | CJK words | 数据 | {chinese} | chinese | {数据}\rcjk_words | CJK words | 访问 | {chinese} | chinese | {访问}\rcjk_words | CJK words | 的 | {chinese} | chinese | {的}\rcjk_words | CJK words | 数据库 | {chinese} | chinese | {数据库}\rpunc_words | punctuations | 。 | {chinese} | chinese | {。} 解析器测试     函数ts_parse 允许直接测试一个文本搜索解析器。",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "942",
-      "inLanguage": "en",
+      "wordCount" : "313",
+      "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://doc.rockdata.net/usage/getting-started/"
+          "@id": "https://doc.rockdata.net/zh-cn/advanced/textsearch/"
       },
       "copyrightHolder" : "Redrock Documentation",
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-05-30T19:41:27.00Z",
+      "dateModified": "2022-06-06T15:26:28.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -149,7 +170,7 @@
   href="/custom.css"
   media="all"
 />
-  <link href="https://doc.rockdata.net/usage/getting-started/" rel="canonical" type="text/html" />
+  <link href="https://doc.rockdata.net/zh-cn/advanced/textsearch/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -641,11 +662,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
       <label for="menu-control" class="gdoc-nav__control" tabindex="0">
         <svg class="gdoc-icon gdoc_menu">
-          <title>Open Navigation</title>
+          <title>打开导航</title>
           <use xlink:href="#gdoc_menu"></use>
         </svg>
         <svg class="gdoc-icon gdoc_arrow_back">
-          <title>Close Navigation</title>
+          <title>关闭导航</title>
           <use xlink:href="#gdoc_arrow_back"></use>
         </svg>
       </label>
@@ -711,15 +732,15 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
         <span id="gdoc-dark-mode">
           <svg class="gdoc-icon gdoc_brightness_dark">
-            <title>Toggle Dark/Light/Auto mode</title>
+            <title>切换暗/亮/自动模式</title>
             <use xlink:href="#gdoc_brightness_dark"></use>
           </svg>
           <svg class="gdoc-icon gdoc_brightness_light">
-            <title>Toggle Dark/Light/Auto mode</title>
+            <title>切换暗/亮/自动模式</title>
             <use xlink:href="#gdoc_brightness_light"></use>
           </svg>
           <svg class="gdoc-icon gdoc_brightness_auto">
-            <title>Toggle Dark/Light/Auto mode</title>
+            <title>切换暗/亮/自动模式</title>
             <use xlink:href="#gdoc_brightness_auto"></use>
           </svg>
         </span>
@@ -727,7 +748,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         <span class="gdoc-menu-header__home">
           <a href="https://doc.rockdata.net/" class="gdoc-header__link">
             <svg class="gdoc-icon gdoc_home">
-              <title>Back to homepage</title>
+              <title>返回首页</title>
               <use xlink:href="#gdoc_home"></use>
             </svg>
           </a>
@@ -739,12 +760,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <li>
         
           
+        
+          
             <span class="flex align-center">
               <svg class="gdoc-icon gdoc_language"><use xlink:href="#gdoc_language"></use></svg>
-              <span>EN</span>
+              <span>ZH-CN</span>
             </span>
-          
-        
           
         
 
@@ -755,12 +776,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               <li>
                 <a
                   class="flex gdoc-language__entry"
-                  title="简体中文"
-                  href="/zh-cn/usage/getting-started/"
-                  hreflang="zh-cn"
-                  lang="zh-cn"
+                  title="English"
+                  href="/advanced/textsearch/"
+                  hreflang="en"
+                  lang="en"
                 >
-                  简体中文
+                  English
                 </a>
               </li>
             
@@ -777,7 +798,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
           <label for="menu-header-control">
             <svg class="gdoc-icon gdoc_keyboard_arrow_right">
               <use xlink:href="#gdoc_keyboard_arrow_right"></use>
-              <title>Close Menu Bar</title>
+              <title>关闭菜单栏</title>
             </svg>
           </label>
         </span>
@@ -785,7 +806,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <label for="menu-header-control" class="gdoc-menu-header__control">
         <svg class="gdoc-icon gdoc_keyboard_arrow_left">
           <use xlink:href="#gdoc_keyboard_arrow_left"></use>
-          <title>Open Menu Bar</title>
+          <title>打开菜单栏</title>
         </svg>
       </label>
     </div>
@@ -805,11 +826,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       type="text"
       id="gdoc-search-input"
       class="gdoc-search__input"
-      placeholder="Search"
-      aria-label="Search"
+      placeholder="搜索"
+      aria-label="搜索"
       maxlength="64"
       data-site-base-url="https://doc.rockdata.net/"
-      data-site-lang="en"
+      data-site-lang="zh-cn"
     />
     <div class="gdoc-search__spinner spinner hidden"></div>
     <ul id="gdoc-search-results" class="gdoc-search__list"></ul>
@@ -819,7 +840,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
 
   <section class="gdoc-nav--main">
-    <h2>Navigation</h2>
+    <h2>导航</h2>
     
       
 
@@ -856,7 +877,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">Usage</span>
+                <span class="flex">使用介绍</span>
               
               
             </label>
@@ -898,10 +919,415 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/usage/getting-started/"
+                    href="/zh-cn/usage/getting-started/"
+                    class="gdoc-nav__entry"
+                  >
+                    开始上手
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/usage/configuration/"
+                    class="gdoc-nav__entry"
+                  >
+                    参数配置
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+  </ul>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">安装指导</span>
+              
+              
+            </label>
+
+            
+              
+  
+
+
+  <ul class="gdoc-nav__list">
+    
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/installation/windows/"
+                    class="gdoc-nav__entry"
+                  >
+                    Windows 安装指导
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/installation/redhat/"
+                    class="gdoc-nav__entry"
+                  >
+                    Red Hat/CentOS 安装指导
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/installation/debian/"
+                    class="gdoc-nav__entry"
+                  >
+                    Debian 安装指导
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+  </ul>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">基础特性</span>
+              
+              
+            </label>
+
+            
+              
+  
+
+
+  <ul class="gdoc-nav__list">
+    
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/features/undo/"
+                    class="gdoc-nav__entry"
+                  >
+                    回滚段
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+  </ul>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">高级特性</span>
+              
+              
+            </label>
+
+            
+              
+  
+
+
+  <ul class="gdoc-nav__list">
+    
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/advanced/textsearch/"
                     class="gdoc-nav__entry is-active"
                   >
-                    Getting Started
+                    中文搜索
                   </a>
                 </span>
               
@@ -942,412 +1368,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/usage/configuration/"
-                    class="gdoc-nav__entry"
-                  >
-                    Configuration
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-  </ul>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">Installation</span>
-              
-              
-            </label>
-
-            
-              
-  
-
-
-  <ul class="gdoc-nav__list">
-    
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/installation/windows/"
-                    class="gdoc-nav__entry"
-                  >
-                    Installing on Windows
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/installation/redhat/"
-                    class="gdoc-nav__entry"
-                  >
-                    Installing on Red Hat
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/installation/debian/"
-                    class="gdoc-nav__entry"
-                  >
-                    Installing on Debian
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-  </ul>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">Features</span>
-              
-              
-            </label>
-
-            
-              
-  
-
-
-  <ul class="gdoc-nav__list">
-    
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/features/undo/"
-                    class="gdoc-nav__entry"
-                  >
-                    Undo
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-  </ul>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">Advanced</span>
-              
-              
-            </label>
-
-            
-              
-  
-
-
-  <ul class="gdoc-nav__list">
-    
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/advanced/textsearch/"
-                    class="gdoc-nav__entry"
-                  >
-                    Chinese Text Search
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/advanced/plscheme/"
+                    href="/zh-cn/advanced/plscheme/"
                     class="gdoc-nav__entry"
                   >
                     PL/Scheme
@@ -1404,7 +1425,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
   <section class="gdoc-nav--more">
     
-      <h2>More</h2>
+      <h2>更多</h2>
       
 
   
@@ -1445,10 +1466,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                   <svg class="gdoc-icon gdoc_notification"><use xlink:href="#gdoc_notification"></use></svg>
                 
                 <a
-                  href="/posts/"
+                  href="/zh-cn/posts/"
                   class="gdoc-nav__entry"
                 >
-                  News
+                  新闻
                 </a>
               </span>
               
@@ -1495,7 +1516,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     https://gitee.com/rockdata/redrock/releases"
                   class="gdoc-nav__entry"
                 >
-                  Releases
+                  下载
                 </a>
               </span>
               
@@ -1542,7 +1563,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     https://gitee.com/rockdata/redrock"
                   class="gdoc-nav__entry"
                 >
-                  View Source
+                  项目仓库
                 </a>
               </span>
               
@@ -1611,7 +1632,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/usage/' href='/usage/'><span itemprop='name'>Usage</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Getting Started</span><meta itemprop='position' content='3' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/advanced/' href='/zh-cn/advanced/'><span itemprop='name'>高级特性</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>中文搜索</span><meta itemprop='position' content='4' /></li>
   
 
   
@@ -1626,9 +1647,9 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <span class="editpage">
         <svg class="gdoc-icon gdoc_code"><use xlink:href="#gdoc_code"></use></svg>
         <a
-          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/en/usage/getting-started.md"
+          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/zh-cn/advanced/textsearch.md"
         >
-          Edit page
+          编辑页面
         </a>
       </span>
     </div>
@@ -1640,118 +1661,98 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <article
     class="gdoc-markdown gdoc-markdown__align--left"
   >
-    <h1>Getting Started</h1>
-    <div class="gdoc-toc gdoc-toc__level--3">
-      <nav id="TableOfContents"><ul>
-        <li><a href="#installation">Installation</a></li>
-        <li><a href="#architectural-fundamentals">Architectural Fundamentals</a></li>
-        <li><a href="#accessing-database">Accessing Database</a></li>
-        <li><a href="#whats-next">Whats next?</a></li>
-      </ul></nav>
-      <hr />
-    </div>
+    <h1>中文搜索</h1>
+    <p>全文搜索（或者<em>文本搜索</em>）提供了确定满足一个<em>查询</em>的自然语言<em>文档</em>的能力，并可以选择将它们按照与查询的相关度排序。最常用的搜索类型是找到所有包含给定<em>查询词</em>的文档并按照它们与查询的<em>相似性</em>顺序返回它们。<code>查询</code>和<code>相似性</code>的概念非常灵活并且依赖于特定的应用。最简单的搜索认为<code>查询</code>是一组词而<code>相似性</code>是查询词在文档中的频度。</p>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="installation">
-        Installation
-        <a data-clipboard-text="https://doc.rockdata.net/usage/getting-started/#installation" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Installation" aria-label="Anchor to: Installation" href="#installation">
+    <h2 id="解析器">
+        解析器
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/advanced/textsearch/#解析器" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 解析器" aria-label="锚定到： 解析器" href="#%e8%a7%a3%e6%9e%90%e5%99%a8">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>Before you can use PostgreSQL you need to install it, of course. It is possible that PostgreSQL is already installed at your site, either because it was included in your operating system distribution or because the system administrator already installed it. If that is the case, you should obtain information from the operating system documentation or your system administrator about how to access PostgreSQL.</p>
-<p>If you are not sure whether PostgreSQL is already available or whether you can use it for your experimentation then you can install it yourself. Doing so is not hard and it can be a good exercise. PostgreSQL can be installed by any unprivileged user; no superuser (root) access is required.</p>
-<p>If you are installing PostgreSQL yourself, then refer to <a
-  class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/14/installation.html"
-  
->Chapter 17</a> for instructions on installation, and return to this guide when the installation is complete. Be sure to follow closely the section about setting up the appropriate environment variables.</p>
-<p>If your site administrator has not set things up in the default way, you might have some more work to do. For example, if the database server machine is a remote machine, you will need to set the <code>PGHOST</code> environment variable to the name of the database server machine. The environment variable <code>PGPORT</code> might also have to be set. The bottom line is this: if you try to start an application program and it complains that it cannot connect to the database, you should consult your site administrator or, if that is you, the documentation to make sure that your environment is properly set up. If you did not understand the preceding paragraph then read the next section.</p>
+<p>文本搜索解析器负责把未处理的文档文本划分成<em>记号</em>并且标识每一个记号的类型，而可能的类型集合由解析器本身定义。注意一个解析器完全不会修改文本 — 它简单地标识看似有理的词边界。因为这种有限的视野，对于应用相关的自定义解析器的需求就没有自定义字典那么强烈。目前Redrock Postgres只提供了两种内置解析器，它们已经被证实对很多种应用都适用。</p>
+<p>内置的中文解析器被称为<code>pg_catalog.cjkparser</code>。</p>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="architectural-fundamentals">
-        Architectural Fundamentals
-        <a data-clipboard-text="https://doc.rockdata.net/usage/getting-started/#architectural-fundamentals" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Architectural Fundamentals" aria-label="Anchor to: Architectural Fundamentals" href="#architectural-fundamentals">
+    <h2 id="配置">
+        配置
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/advanced/textsearch/#配置" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 配置" aria-label="锚定到： 配置" href="#%e9%85%8d%e7%bd%ae">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>Before we proceed, you should understand the basic PostgreSQL system architecture. Understanding how the parts of PostgreSQL interact will make this chapter somewhat clearer.</p>
-<p>In database jargon, PostgreSQL uses a client/server model. A PostgreSQL session consists of the following cooperating processes (programs):</p>
-<ul>
-<li>A server process, which manages the database files, accepts connections to the database from client applications, and performs database actions on behalf of the clients. The database server program is called <code>postgres</code>.</li>
-<li>The user&rsquo;s client (frontend) application that wants to perform database operations. Client applications can be very diverse in nature: a client could be a text-oriented tool, a graphical application, a web server that accesses the database to display web pages, or a specialized database maintenance tool. Some client applications are supplied with the PostgreSQL distribution; most are developed by users.</li>
-</ul>
-<p>As is typical of client/server applications, the client and the server can be on different hosts. In that case they communicate over a TCP/IP network connection. You should keep this in mind, because the files that can be accessed on a client machine might not be accessible (or might only be accessible using a different file name) on the database server machine.</p>
-<p>The PostgreSQL server can handle multiple concurrent connections from clients. To achieve this it starts (“forks”) a new process for each connection. From that point on, the client and the new server process communicate without intervention by the original <code>postgres</code> process. Thus, the supervisor server process is always running, waiting for client connections, whereas client and associated server processes come and go. (All of this is of course invisible to the user. We only mention it here for completeness.)</p>
+<p>全文搜索功能包括做更多事情的能力：跳过索引特定词（停用词）、处理同义词并使用更高级的解析，例如基于空白之外的解析。这个功能由<em>文本搜索配置</em>控制。PostgreSQL中有多种语言的预定义配置，并且你可以很容易地创建你自己的配置（psql的<code>\dF</code>命令显示所有可用的配置）。</p>
+<p>内置的中文搜索配置被称为 <code>pg_catalog.chinese</code>。</p>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="accessing-database">
-        Accessing Database
-        <a data-clipboard-text="https://doc.rockdata.net/usage/getting-started/#accessing-database" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Accessing Database" aria-label="Anchor to: Accessing Database" href="#accessing-database">
+    <h2 id="测试和调试文本搜索">
+        测试和调试文本搜索
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/advanced/textsearch/#测试和调试文本搜索" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 测试和调试文本搜索" aria-label="锚定到： 测试和调试文本搜索" href="#%e6%b5%8b%e8%af%95%e5%92%8c%e8%b0%83%e8%af%95%e6%96%87%e6%9c%ac%e6%90%9c%e7%b4%a2">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>Once you have created a database, you can access it by:</p>
-<ul>
-<li>Running the PostgreSQL interactive terminal program, called <em>psql</em>, which allows you to interactively enter, edit, and execute SQL commands.</li>
-<li>Using an existing graphical frontend tool like pgAdmin or an office suite with ODBC or JDBC support to create and manipulate a database. These possibilities are not covered in this tutorial.</li>
-<li>Writing a custom application, using one of the several available language bindings. These possibilities are discussed further in <a
-  class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/client-interfaces.html"
-  
->Part IV</a>.</li>
-</ul>
-<p>You probably want to start up <code>psql</code> to try the examples in this tutorial. It can be activated for the <code>postgres</code> database by typing the command:</p>
-<pre tabindex="0"><code>$ psql postgres
-</code></pre><p>If you do not supply the database name then it will default to your user account name.</p>
-<p>In <code>psql</code>, you will be greeted with the following message:</p>
-<pre tabindex="0"><code>psql (12.1)
-Type &#34;help&#34; for help.
-
-postgres=&gt;
-</code></pre><p>The last line could also be:</p>
-<pre tabindex="0"><code>postgres=#
-</code></pre><p>That would mean you are a database superuser, which is most likely the case if you installed the PostgreSQL instance yourself. Being a superuser means that you are not subject to access controls. For the purposes of this tutorial that is not important.</p>
-<p>The last line printed out by <code>psql</code> is the prompt, and it indicates that <code>psql</code> is listening to you and that you can type SQL queries into a work space maintained by <code>psql</code>. Try out these commands:</p>
-<pre tabindex="0"><code>postgres=&gt; SELECT version();
-                                         version
-------------------------------------------------------------------------------------------
- PostgreSQL 12.1 on x86_64-pc-linux-gnu, compiled by gcc (Debian 4.9.2-10) 4.9.2, 64-bit
-(1 row)
-
-postgres=&gt; SELECT current_date;
-    date
-------------
- 2016-01-07
-(1 row)
-
-postgres=&gt; SELECT 2 + 2;
- ?column?
-----------
-        4
-(1 row)
-</code></pre><p>The <code>psql</code> program has a number of internal commands that are not SQL commands. They begin with the backslash character, “<code>\</code>”. For example, you can get help on the syntax of various PostgreSQL SQL commands by typing:</p>
-<pre tabindex="0"><code>postgres=&gt; \h
-</code></pre><p>To get out of <code>psql</code>, type:</p>
-<pre tabindex="0"><code>postgres=&gt; \q
-</code></pre><p>and <code>psql</code> will quit and return you to your command shell. (For more internal commands, type <code>\?</code> at the <code>psql</code> prompt.) The full capabilities of <code>psql</code> are documented in <a
-  class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/app-psql.html"
-  
->psql</a>. In this tutorial we will not use these features explicitly, but you can use them yourself when it is helpful.</p>
+<p>一个自定义文本搜索配置的行为很容易变得混乱。本节中描述的函数对于测试文本搜索对象有用。你可以测试一个完整的配置，或者独立测试解析器和词典。</p>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="whats-next">
-        Whats next?
-        <a data-clipboard-text="https://doc.rockdata.net/usage/getting-started/#whats-next" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Whats next?" aria-label="Anchor to: Whats next?" href="#whats-next">
+    <h3 id="配置测试">
+        配置测试
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/advanced/textsearch/#配置测试" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 配置测试" aria-label="锚定到： 配置测试" href="#%e9%85%8d%e7%bd%ae%e6%b5%8b%e8%af%95">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
-    </h2>
+    </h3>
 </div>
-<p>There are a lot more things to discover. To get more information, please refer to <a
-  class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/index.html"
-  
->PostgreSQL Documentation</a>.</p>
-
+<p>函数<code>ts_debug</code>允许简单地测试一个文本搜索配置。</p>
+<pre tabindex="0"><code>SELECT * FROM ts_debug(&#39;chinese&#39;, &#39;关系数据库是一种用于存储相互关联的数据记录并提供数据访问的数据库。&#39;);
+   alias    | description  | token  | dictionaries | dictionary | lexemes
+------------+--------------+--------+--------------+------------+----------
+ cjk_words  | CJK words    | 关系   | {chinese}    | chinese    | {关系}
+ cjk_words  | CJK words    | 数据库 | {chinese}    | chinese    | {数据库}
+ cjk_words  | CJK words    | 是     | {chinese}    | chinese    | {是}
+ cjk_words  | CJK words    | 一种   | {chinese}    | chinese    | {一种}
+ cjk_words  | CJK words    | 用于   | {chinese}    | chinese    | {用于}
+ cjk_words  | CJK words    | 存储   | {chinese}    | chinese    | {存储}
+ cjk_words  | CJK words    | 相互   | {chinese}    | chinese    | {相互}
+ cjk_words  | CJK words    | 关联   | {chinese}    | chinese    | {关联}
+ cjk_words  | CJK words    | 的     | {chinese}    | chinese    | {的}
+ cjk_words  | CJK words    | 数据   | {chinese}    | chinese    | {数据}
+ cjk_words  | CJK words    | 记录   | {chinese}    | chinese    | {记录}
+ cjk_words  | CJK words    | 并     | {chinese}    | chinese    | {并}
+ cjk_words  | CJK words    | 提供   | {chinese}    | chinese    | {提供}
+ cjk_words  | CJK words    | 数据   | {chinese}    | chinese    | {数据}
+ cjk_words  | CJK words    | 访问   | {chinese}    | chinese    | {访问}
+ cjk_words  | CJK words    | 的     | {chinese}    | chinese    | {的}
+ cjk_words  | CJK words    | 数据库 | {chinese}    | chinese    | {数据库}
+ punc_words | punctuations | 。     | {chinese}    | chinese    | {。}
+</code></pre><div class="gdoc-page__anchorwrap">
+    <h3 id="解析器测试">
+        解析器测试
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/advanced/textsearch/#解析器测试" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 解析器测试" aria-label="锚定到： 解析器测试" href="#%e8%a7%a3%e6%9e%90%e5%99%a8%e6%b5%8b%e8%af%95">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p>函数<code>ts_parse</code> 允许直接测试一个文本搜索解析器。</p>
+<pre tabindex="0"><code>SELECT * FROM ts_parse(&#39;cjkparser&#39;, &#39;关系数据库是一种用于存储相互关联的数据记录并提供数据访问的数据库。&#39;);
+ tokid | token
+-------+--------
+     1 | 关系
+     1 | 数据库
+     1 | 是
+     1 | 一种
+     1 | 用于
+     1 | 存储
+     1 | 相互
+     1 | 关联
+     1 | 的
+     1 | 数据
+     1 | 记录
+     1 | 并
+     1 | 提供
+     1 | 数据
+     1 | 访问
+     1 | 的
+     1 | 数据库
+    18 | 。
+</code></pre>
   </article>
 
 
@@ -1987,14 +1988,14 @@ postgres=&gt; SELECT 2 + 2;
         
           <span class="gdoc-footer__item gdoc-footer__item--row">
             <a href="https://www.rockdata.net/legal-notice/#contact-information" class="gdoc-footer__link">
-              Legal Notice
+              法律声明
             </a>
           </span>
         
         
           <span class="gdoc-footer__item gdoc-footer__item--row">
             <a href="https://www.rockdata.net/legal-notice/#privacy-policy" class="gdoc-footer__link">
-              Privacy Policy
+              隐私政策
             </a>
           </span>
         
@@ -2004,11 +2005,11 @@ postgres=&gt; SELECT 2 + 2;
     
       <div class="flex flex-25 justify-end">
         <span class="gdoc-footer__item text-right">
-          <a class="gdoc-footer__link fake-link" href="#" aria-label="Back to top">
+          <a class="gdoc-footer__link fake-link" href="#" aria-label="回到顶部">
             <svg class="gdoc-icon gdoc_keyboard_arrow_up">
               <use xlink:href="#gdoc_keyboard_arrow_up"></use>
             </svg>
-            <span class="hidden-mobile">Back to top</span>
+            <span class="hidden-mobile">回到顶部</span>
           </a>
         </span>
       </div>

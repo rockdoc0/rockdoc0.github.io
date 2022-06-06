@@ -8,8 +8,7 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Install Packages  Prerequisite Install Redrock Postgres   Post-installation commands  Data Directory Change Data Directory Initialize Startup   Control service After installation      Install Packages     Prerequisite     Log in to the host with your root account, and run the following commands to install dependent packages:
-# yum install postgresql-common Install Redrock Postgres     Download the Redrock Postgres Package for Red Hat or CentOS, and run the following commands to install:" />
+  <meta name="description" content="Install Packages  Prerequisite Install Redrock Postgres   Post-installation commands  Data Directory Change Data Directory Initialize Startup   Control service After installation      Install Packages     Prerequisite     Log in to the host with your root account, and run the following commands to query installed packages, make sure none postgresql related packages already installed:" />
 
     <title>Installing on Red Hat | Redrock Documentation</title>
 
@@ -36,23 +35,21 @@
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Install Packages  Prerequisite Install Redrock Postgres   Post-installation commands  Data Directory Change Data Directory Initialize Startup   Control service After installation      Install Packages     Prerequisite     Log in to the host with your root account, and run the following commands to install dependent packages:
-# yum install postgresql-common Install Redrock Postgres     Download the Redrock Postgres Package for Red Hat or CentOS, and run the following commands to install:" />
+  <meta property="og:description" content="Install Packages  Prerequisite Install Redrock Postgres   Post-installation commands  Data Directory Change Data Directory Initialize Startup   Control service After installation      Install Packages     Prerequisite     Log in to the host with your root account, and run the following commands to query installed packages, make sure none postgresql related packages already installed:" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/installation/redhat/" />
 
 <meta property="article:section" content="Installation" />
     <meta
       property="article:modified_time"
-      content="2022-06-05T20:02:42+08:00"
+      content="2022-06-06T15:26:28+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Installing on Red Hat" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Install Packages  Prerequisite Install Redrock Postgres   Post-installation commands  Data Directory Change Data Directory Initialize Startup   Control service After installation      Install Packages     Prerequisite     Log in to the host with your root account, and run the following commands to install dependent packages:
-# yum install postgresql-common Install Redrock Postgres     Download the Redrock Postgres Package for Red Hat or CentOS, and run the following commands to install:" />
+  <meta name="twitter:description" content="Install Packages  Prerequisite Install Redrock Postgres   Post-installation commands  Data Directory Change Data Directory Initialize Startup   Control service After installation      Install Packages     Prerequisite     Log in to the host with your root account, and run the following commands to query installed packages, make sure none postgresql related packages already installed:" />
 
 
   <script type="application/ld+json">
@@ -63,9 +60,9 @@
       "name": "Installing on Red Hat",
       "url" : "https://doc.rockdata.net/installation/redhat/",
       "headline": "Installing on Red Hat",
-      "description": "Install Packages  Prerequisite Install Redrock Postgres   Post-installation commands  Data Directory Change Data Directory Initialize Startup   Control service After installation      Install Packages     Prerequisite     Log in to the host with your root account, and run the following commands to install dependent packages:\n# yum install postgresql-common Install Redrock Postgres     Download the Redrock Postgres Package for Red Hat or CentOS, and run the following commands to install:",
+      "description": "Install Packages  Prerequisite Install Redrock Postgres   Post-installation commands  Data Directory Change Data Directory Initialize Startup   Control service After installation      Install Packages     Prerequisite     Log in to the host with your root account, and run the following commands to query installed packages, make sure none postgresql related packages already installed:",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "493",
+      "wordCount" : "503",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -76,7 +73,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-05T20:02:42.00Z",
+      "dateModified": "2022-06-06T15:26:28.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1306,6 +1303,50 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
+                    href="/advanced/textsearch/"
+                    class="gdoc-nav__entry"
+                  >
+                    Chinese Text Search
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
                     href="/advanced/plscheme/"
                     class="gdoc-nav__entry"
                   >
@@ -1637,8 +1678,8 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         </a>
     </h3>
 </div>
-<p>Log in to the host with your root account, and run the following commands to install dependent packages:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># yum install postgresql-common</span>
+<p>Log in to the host with your root account, and run the following commands to query installed packages, make sure none postgresql related packages already installed:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># rpm -qa | grep postgresql</span>
 </span></span></code></pre></div><div class="gdoc-page__anchorwrap">
     <h3 id="install-redrock-postgres">
         Install Redrock Postgres
