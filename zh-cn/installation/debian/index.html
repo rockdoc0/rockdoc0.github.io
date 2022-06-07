@@ -50,7 +50,7 @@
 <meta property="article:section" content="Installation" />
     <meta
       property="article:modified_time"
-      content="2022-06-06T15:26:28+08:00"
+      content="2022-06-07T10:54:16+08:00"
     />
 
 
@@ -85,7 +85,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-06T15:26:28.00Z",
+      "dateModified": "2022-06-07T10:54:16.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1727,13 +1727,13 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         </a>
     </h2>
 </div>
-<p>修改数据目录（默认值：/etc/postgresql/12/main/）中的pg_hba.conf文件，以定义从网络中其他主机访问 PostgreSQL 服务器使用的访问控制策略，修改IPv4网络访问控制策略：从 indent 更改为 md5，从本机地址 127.0.0.1 更改为接受所有主机访问请求。找到下面行：</p>
+<p>修改配置目录（默认值：/etc/postgresql/12/main/）中的pg_hba.conf文件，以定义从网络中其他主机访问 PostgreSQL 服务器使用的访问控制策略，修改IPv4网络访问控制策略：从 indent 更改为 md5，从本机地址 127.0.0.1 更改为接受所有主机访问请求。找到下面行：</p>
 <pre tabindex="0"><code># IPv4 local connections:
 host    all             all             127.0.0.1/32            ident
 </code></pre><p>并将其更改为：</p>
 <pre tabindex="0"><code># IPv4 local connections:
 host    all             all             0.0.0.0/0            md5
-</code></pre><p>修改数据目录（默认值：/etc/postgresql/12/main/ ）中的 postgresql.conf 文件，通过取消注释以下参数行并设置参数值为 * 而不是 localhost 来允许来自所有主机的访问连接：</p>
+</code></pre><p>修改配置目录（默认值：/etc/postgresql/12/main/ ）中的 postgresql.conf 文件，通过取消注释以下参数行并设置参数值为 * 而不是 localhost 来允许来自所有主机的访问连接：</p>
 <pre tabindex="0"><code>listen_addresses = &#39;*&#39;
 </code></pre><p>重启数据库服务以更新配置参数：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># systemctl restart postgresql</span>
