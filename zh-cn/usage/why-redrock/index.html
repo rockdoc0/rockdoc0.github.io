@@ -8,9 +8,11 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Redrock is a database forked from community postgres. This page is product documentation and powered by the latest version of Hugo and hugo-geekdoc theme." />
+  <meta name="description" content="为什么选择Postgres？     Postgres是一个高级关系数据库管理系统，支持SQL标准的扩展子集，包括事务，外键，子查询，触发器，用户定义的类型和函数。简而言之，Postgres在数据一致性、稳定性、高性能、功能丰富、开发人员友好等方面已经获得了良好的声誉。
+为什么选择Redrock Postgres？     尽管Postgres在大多数场景下表现良好，但仍有一些需要改进的地方，这正是Redrock Postgres为实现的目标：
+ 更好地控制膨胀。Redrock Postgres将通过在常见情况下允许就地更新以及在执行删除或非就地更新的事务提交后立即重用空间来防止膨胀。简而言之，只要有可能，我们就会从一开始就避免产生膨胀。 通过避免重写堆页，并通过在不更新每个索引的情况下执行相关索引列的更新，减少写入放大。 通过收缩元组头部来减小元组大小。 标记删除索引记录：这将允许在索引列修改时进行就地更新，而且还可以去除那个用来进行零散的空间回收操作的垃圾清理进程。此外，索引扫描计划将会执行得更加稳定。 语句级回滚，同主流关系数据库保持兼容的事务处理行为。 没有vacuum，没有冻结，也没有事务号翻转的问题。  " />
 
-    <title>新闻 | Redrock Documentation</title>
+    <title>为什么选择Redrock Postgres？ | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -31,23 +33,66 @@
     
   <meta
     property="og:title"
-    content="新闻"
+    content="为什么选择Redrock Postgres？"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Redrock is a database forked from community postgres. This page is product documentation and powered by the latest version of Hugo and hugo-geekdoc theme." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://doc.rockdata.net/zh-cn/posts/" />
+  <meta property="og:description" content="为什么选择Postgres？     Postgres是一个高级关系数据库管理系统，支持SQL标准的扩展子集，包括事务，外键，子查询，触发器，用户定义的类型和函数。简而言之，Postgres在数据一致性、稳定性、高性能、功能丰富、开发人员友好等方面已经获得了良好的声誉。
+为什么选择Redrock Postgres？     尽管Postgres在大多数场景下表现良好，但仍有一些需要改进的地方，这正是Redrock Postgres为实现的目标：
+ 更好地控制膨胀。Redrock Postgres将通过在常见情况下允许就地更新以及在执行删除或非就地更新的事务提交后立即重用空间来防止膨胀。简而言之，只要有可能，我们就会从一开始就避免产生膨胀。 通过避免重写堆页，并通过在不更新每个索引的情况下执行相关索引列的更新，减少写入放大。 通过收缩元组头部来减小元组大小。 标记删除索引记录：这将允许在索引列修改时进行就地更新，而且还可以去除那个用来进行零散的空间回收操作的垃圾清理进程。此外，索引扫描计划将会执行得更加稳定。 语句级回滚，同主流关系数据库保持兼容的事务处理行为。 没有vacuum，没有冻结，也没有事务号翻转的问题。  " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://doc.rockdata.net/zh-cn/usage/why-redrock/" />
 
-
+<meta property="article:section" content="Usage" />
+    <meta
+      property="article:modified_time"
+      content="2022-06-08T14:31:15+08:00"
+    />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="新闻" />
+<meta name="twitter:title" content="为什么选择Redrock Postgres？" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Redrock is a database forked from community postgres. This page is product documentation and powered by the latest version of Hugo and hugo-geekdoc theme." />
+  <meta name="twitter:description" content="为什么选择Postgres？     Postgres是一个高级关系数据库管理系统，支持SQL标准的扩展子集，包括事务，外键，子查询，触发器，用户定义的类型和函数。简而言之，Postgres在数据一致性、稳定性、高性能、功能丰富、开发人员友好等方面已经获得了良好的声誉。
+为什么选择Redrock Postgres？     尽管Postgres在大多数场景下表现良好，但仍有一些需要改进的地方，这正是Redrock Postgres为实现的目标：
+ 更好地控制膨胀。Redrock Postgres将通过在常见情况下允许就地更新以及在执行删除或非就地更新的事务提交后立即重用空间来防止膨胀。简而言之，只要有可能，我们就会从一开始就避免产生膨胀。 通过避免重写堆页，并通过在不更新每个索引的情况下执行相关索引列的更新，减少写入放大。 通过收缩元组头部来减小元组大小。 标记删除索引记录：这将允许在索引列修改时进行就地更新，而且还可以去除那个用来进行零散的空间回收操作的垃圾清理进程。此外，索引扫描计划将会执行得更加稳定。 语句级回滚，同主流关系数据库保持兼容的事务处理行为。 没有vacuum，没有冻结，也没有事务号翻转的问题。  " />
 
 
+  <script type="application/ld+json">
+  {
+      "@context": "http://schema.org",
+      "@type": "TechArticle",
+      "articleSection": "Usage",
+      "name": "为什么选择Redrock Postgres？",
+      "url" : "https://doc.rockdata.net/zh-cn/usage/why-redrock/",
+      "headline": "为什么选择Redrock Postgres？",
+      "description": "为什么选择Postgres？     Postgres是一个高级关系数据库管理系统，支持SQL标准的扩展子集，包括事务，外键，子查询，触发器，用户定义的类型和函数。简而言之，Postgres在数据一致性、稳定性、高性能、功能丰富、开发人员友好等方面已经获得了良好的声誉。\n为什么选择Redrock Postgres？     尽管Postgres在大多数场景下表现良好，但仍有一些需要改进的地方，这正是Redrock Postgres为实现的目标：\n 更好地控制膨胀。Redrock Postgres将通过在常见情况下允许就地更新以及在执行删除或非就地更新的事务提交后立即重用空间来防止膨胀。简而言之，只要有可能，我们就会从一开始就避免产生膨胀。 通过避免重写堆页，并通过在不更新每个索引的情况下执行相关索引列的更新，减少写入放大。 通过收缩元组头部来减小元组大小。 标记删除索引记录：这将允许在索引列修改时进行就地更新，而且还可以去除那个用来进行零散的空间回收操作的垃圾清理进程。此外，索引扫描计划将会执行得更加稳定。 语句级回滚，同主流关系数据库保持兼容的事务处理行为。 没有vacuum，没有冻结，也没有事务号翻转的问题。  ",
+      "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
+      "wordCount" : "13",
+      "inLanguage": "zh-cn",
+      "isFamilyFriendly": "true",
+      "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://doc.rockdata.net/zh-cn/usage/why-redrock/"
+      },
+      "copyrightHolder" : "Redrock Documentation",
+      "copyrightYear" : "0001",
+      "dateCreated": "0001-01-01T00:00:00.00Z",
+      "datePublished": "0001-01-01T00:00:00.00Z",
+      "dateModified": "2022-06-08T14:31:15.00Z",
+      "publisher":{
+          "@type":"Organization",
+          "name": "Redrock Documentation",
+          "url": "https://doc.rockdata.net/",
+          "logo": {
+              "@type": "ImageObject",
+              "url": "https://doc.rockdata.net/brand.svg",
+              "width":"32",
+              "height":"32"
+          }
+      }
+  }
+  </script>
 
 
     <script src="/js/main-4f8bb62c.bundle.min.js"></script>
@@ -110,7 +155,7 @@
   href="/custom.css"
   media="all"
 />
-  <link href="https://doc.rockdata.net/zh-cn/posts/" rel="canonical" type="text/html" />
+  <link href="https://doc.rockdata.net/zh-cn/usage/why-redrock/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -717,7 +762,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <a
                   class="flex gdoc-language__entry"
                   title="English"
-                  href="/posts/"
+                  href="/usage/why-redrock/"
                   hreflang="en"
                   lang="en"
                 >
@@ -860,7 +905,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <span class="flex">
                   <a
                     href="/zh-cn/usage/why-redrock/"
-                    class="gdoc-nav__entry"
+                    class="gdoc-nav__entry is-active"
                   >
                     为什么选择Redrock Postgres？
                   </a>
@@ -1449,14 +1494,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   </section>
 
   
-    <section class="gdoc-nav--tags">
-      <h2>标签</h2>
-      <ul class="gdoc-nav__list">
-        
-        
-      </ul>
-    </section>
-  
 
 
   <section class="gdoc-nav--more">
@@ -1503,7 +1540,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 
                 <a
                   href="/zh-cn/posts/"
-                  class="gdoc-nav__entry is-active"
+                  class="gdoc-nav__entry"
                 >
                   新闻
                 </a>
@@ -1628,51 +1665,104 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         <div class="gdoc-page">
           
   
-    <article class="gdoc-markdown gdoc-post">
-      <header class="gdoc-post__header">
-        <h1 class="gdoc-post__title">
-          <a href="/zh-cn/posts/initial-release/">Redrock Postgres 版本 12.1-1 发布</a>
-        </h1>
-      </header>
-      <section>
-        Redrock 开发团队向您郑重发布 Redrock Postgres 12 版本 12.1-1。
-红石数据库是一款基于 PostgreSQL 的关系型数据库管理系统，PostgreSQL 是由 PostgreSQL 全球开发组织开发的一款开源数据库。红石数据库主要为企业生产环境和多云环境部署而设计。
-欲了解更多信息，请访问网站。
-特性概览:
- 回滚段: 记录日志用于回滚数据的修改和事务 多租户: 在服务器上运行单个数据库实例，并为多个租户提供服务 网络表空间: 通过基于网络的表空间特性，实现数据库的计算和存储分离部署 多线程: 多线程数据库模型使服务器进程能够作为操作系统线程在单独的地址空间中执行 回收站: 提供可存放删除对象的回收站，以防止误操作 DDL事件跟踪: 可跟踪、记录、发布和订阅 DDL 操作  
-      </section>
-      <div class="gdoc-post__readmore">
-        
-      </div>
-
-      <footer class="gdoc-post__footer">
-        <div class="flex flex-wrap align-center gdoc-post__meta">
-          <span class="flex align-center no-wrap">
-  <svg class="gdoc-icon gdoc_date"><use xlink:href="#gdoc_date"></use></svg>
-  <span class="gdoc-post__tag">
-    <time datetime="2022-06-03T19:39:59&#43;08:00">
-      
-        更新时间
-      
-      Jun 3, 2022
-    </time>
-  </span>
-</span>
-
-<span class="flex align-center no-wrap">
-  <svg class="gdoc-icon gdoc_timer"><use xlink:href="#gdoc_timer"></use></svg>
-  <span class="gdoc-post__tag">1 分钟阅读时间</span>
-</span>
 
 
-
-
-
-
-        </div>
-      </footer>
-    </article>
   
+
+
+
+
+
+
+<div
+  class="gdoc-page__header flex flex-wrap
+  
+    justify-between
+  
+  
+  "
+  itemprop="breadcrumb"
+>
+  
+    <div>
+      <svg class="gdoc-icon gdoc_path hidden-mobile"><use xlink:href="#gdoc_path"></use></svg>
+      <ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+        
+        
+        
+        
+  
+  
+    
+    
+    
+    
+  
+  
+    
+    
+    
+    
+  
+  
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/usage/' href='/zh-cn/usage/'><span itemprop='name'>使用介绍</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>为什么选择Redrock Postgres？</span><meta itemprop='position' content='4' /></li>
+  
+
+  
+
+  
+
+      </ol>
+    </div>
+  
+  
+    <div>
+      <span class="editpage">
+        <svg class="gdoc-icon gdoc_code"><use xlink:href="#gdoc_code"></use></svg>
+        <a
+          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/zh-cn/usage/why-redrock.md"
+        >
+          编辑页面
+        </a>
+      </span>
+    </div>
+  
+</div>
+
+
+
+  <article
+    class="gdoc-markdown gdoc-markdown__align--left"
+  >
+    <h1>为什么选择Redrock Postgres？</h1>
+    <div class="gdoc-page__anchorwrap">
+    <h2 id="为什么选择postgres">
+        为什么选择Postgres？
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/usage/why-redrock/#为什么选择postgres" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 为什么选择Postgres？" aria-label="锚定到： 为什么选择Postgres？" href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e9%80%89%e6%8b%a9postgres">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>Postgres是一个高级关系数据库管理系统，支持SQL标准的扩展子集，包括事务，外键，子查询，触发器，用户定义的类型和函数。简而言之，Postgres在数据一致性、稳定性、高性能、功能丰富、开发人员友好等方面已经获得了良好的声誉。</p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="为什么选择redrock-postgres">
+        为什么选择Redrock Postgres？
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/usage/why-redrock/#为什么选择redrock-postgres" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 为什么选择Redrock Postgres？" aria-label="锚定到： 为什么选择Redrock Postgres？" href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e9%80%89%e6%8b%a9redrock-postgres">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>尽管Postgres在大多数场景下表现良好，但仍有一些需要改进的地方，这正是Redrock Postgres为实现的目标：</p>
+<ul>
+<li>更好地控制膨胀。Redrock Postgres将通过在常见情况下允许就地更新以及在执行删除或非就地更新的事务提交后立即重用空间来防止膨胀。简而言之，只要有可能，我们就会从一开始就避免产生膨胀。</li>
+<li>通过避免重写堆页，并通过在不更新每个索引的情况下执行相关索引列的更新，减少写入放大。</li>
+<li>通过收缩元组头部来减小元组大小。</li>
+<li>标记删除索引记录：这将允许在索引列修改时进行就地更新，而且还可以去除那个用来进行零散的空间回收操作的垃圾清理进程。此外，索引扫描计划将会执行得更加稳定。</li>
+<li>语句级回滚，同主流关系数据库保持兼容的事务处理行为。</li>
+<li>没有vacuum，没有冻结，也没有事务号翻转的问题。</li>
+</ul>
+
+  </article>
 
 
 

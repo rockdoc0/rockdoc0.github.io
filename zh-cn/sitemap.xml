@@ -2,6 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://doc.rockdata.net/zh-cn/usage/why-redrock/</loc>
+    <lastmod>2022-06-08T14:31:15+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://doc.rockdata.net/usage/why-redrock/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://doc.rockdata.net/zh-cn/usage/why-redrock/"
+                />
+  </url><url>
     <loc>https://doc.rockdata.net/zh-cn/installation/windows/</loc>
     <lastmod>2022-06-04T00:06:15+08:00</lastmod>
     <xhtml:link
@@ -156,6 +169,19 @@
                 rel="alternate"
                 hreflang="zh-cn"
                 href="https://doc.rockdata.net/zh-cn/features/undo/"
+                />
+  </url><url>
+    <loc>https://doc.rockdata.net/zh-cn/advanced/monitor-stats/</loc>
+    <lastmod>2022-06-08T16:23:03+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://doc.rockdata.net/advanced/monitor-stats/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/"
                 />
   </url><url>
     <loc>https://doc.rockdata.net/zh-cn/posts/</loc>

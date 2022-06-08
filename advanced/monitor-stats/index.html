@@ -44,7 +44,7 @@ PostgreSQL also supports reporting dynamic information about exactly what is goi
 <meta property="article:section" content="Advanced" />
     <meta
       property="article:modified_time"
-      content="2022-06-07T16:27:57+08:00"
+      content="2022-06-08T14:31:15+08:00"
     />
 
 
@@ -65,7 +65,7 @@ PostgreSQL also supports reporting dynamic information about exactly what is goi
       "headline": "Statistics Collector",
       "description": "PostgreSQL’s statistics collector is a subsystem that supports collection and reporting of information about server activity. Presently, the collector can count accesses to tables and indexes in both disk-block and individual-row terms. It also tracks the total number of rows in each table, and information about vacuum and analyze actions for each table. It can also count calls to user-defined functions and the total time spent in each one.\nPostgreSQL also supports reporting dynamic information about exactly what is going on in the system right now, such as the exact command currently being executed by other server processes, and which other connections exist in the system.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "7620",
+      "wordCount" : "7631",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -76,7 +76,7 @@ PostgreSQL also supports reporting dynamic information about exactly what is goi
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-07T16:27:57.00Z",
+      "dateModified": "2022-06-08T14:31:15.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -755,18 +755,19 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         <ul class="gdoc-language__list">
           
             
-                <li>
-                  <a
-                    class="flex gdoc-language__entry"
-                    title="Page not translated: 简体中文"
-                    href="/zh-cn"
-                    hreflang="zh-cn"
-                    lang="zh-cn"
-                  >
-                    简体中文*
-                  </a>
-                </li>
-              
+              <li>
+                <a
+                  class="flex gdoc-language__entry"
+                  title="简体中文"
+                  href="/zh-cn/advanced/monitor-stats/"
+                  hreflang="zh-cn"
+                  lang="zh-cn"
+                >
+                  简体中文
+                </a>
+              </li>
+            
+          
         </ul>
       </li>
     </ul>
@@ -870,6 +871,50 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
   <ul class="gdoc-nav__list">
     
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/usage/why-redrock/"
+                    class="gdoc-nav__entry"
+                  >
+                    Why Redrock Postgres?
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
     
       
 
@@ -1722,6 +1767,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   href="https://www.postgresql.org/docs/12/runtime-config-statistics.html#GUC-TRACK-IO-TIMING"
   
 >track_io_timing</a> enables monitoring of block read and write times.</p>
+<p>The parameter <a
+  class="gdoc-markdown__link"
+  href="https://doc.rockdata.net/usage/configuration"
+  
+>track_wait_events</a> controls whether statistics are collected about wait events.</p>
 <p>Normally these parameters are set in <code>postgresql.conf</code> so that they apply to all server processes, but it is possible to turn them on or off in individual sessions using the <a
   class="gdoc-markdown__link"
   href="https://www.postgresql.org/docs/12/sql-set.html"
