@@ -8,8 +8,8 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="PostgreSQL的统计收集器是一个支持收集和报告服务器活动信息的子系统。 目前，这个收集器可以对表和索引的访问计数，计数可以按磁盘块和个体行来进行。它还跟踪每个表中的总行数、每个表的清理和分析动作的信息。它也统计调用用户定义函数的次数以及在每次调用中花费的总时间。
-PostgreSQL也支持报告有关系统正在干什么的 动态信息，例如当前正在被其他服务器进程执行的命令以及系统中存在哪些其他连接。 这个功能是独立于收集器进程存在的。
+  <meta name="description" content="统计收集配置 查看统计信息 pg_stat_activity pg_stat_wait_event pg_stat_replication pg_stat_database pg_stat_all_tables pg_stat_all_undos pg_stat_all_indexes pg_statio_all_tables pg_statio_all_undos pg_statio_all_indexes pg_statio_all_sequences      Redrock Postgres的统计收集器是一个支持收集和报告服务器活动信息的子系统。 目前，这个收集器可以对表和索引的访问计数，计数可以按磁盘块和个体行来进行。它还跟踪每个表中的总行数、每个表的分析动作的信息。它也统计调用用户定义函数的次数以及在每次调用中花费的总时间。
+Redrock Postgres也支持报告有关系统正在干什么的 动态信息，例如当前正在被其他服务器进程执行的命令以及系统中存在哪些其他连接。 这个功能是独立于收集器进程存在的。
 统计收集配置     因为统计收集给查询执行增加了一些负荷，系统可以被配置为收集或不收集信息。这由配置参数控制，它们通常在postgresql.conf中设置（关于设置配置参数的细节请见第 20 章）。
 参数track_activities允许监控当前被任意服务器进程执行的命令。
 参数track_counts控制是否收集关于表和索引访问的统计信息。
@@ -21,12 +21,10 @@ PostgreSQL也支持报告有关系统正在干什么的 动态信息，例如当
 查看统计信息     表 28.1中列出了一些预定义视图 可以用来显示系统的当前状态。 表 28.2中列出了另一些视图可以 显示统计收集的结果。你也可以使用底层统计函数（在 第 28.2.20 节中讨论）来建立自定义的视图。
 在使用统计信息监控收集到的数据时，你必须了解这些信息并非是实时更新的。每个独立的服务器进程只在进入闲置状态之前才向收集器传送新的统计计数；因此正在进行的查询或事务并不影响显示出来的总数。同样，收集器本身也最多每PGSTAT_STAT_INTERVAL毫秒（缺省为 500ms，除非在编译服务器的时候修改过）发送一 次新的报告。因此显示的信息总是落后于实际活动。但是由track_activities收集的当前查询信息总是最新的。
 另一个重点是当一个服务器进程被要求显示任何这些统计信息时，它首先取得收集器进程最近发出的报告并且接着为所有统计视图和函数使用这个快照，直到它的当前事务的结尾。因此只要你继续当前事务，统计数据将会一直显示静态信息。相似地，当任何关于所有会话的当前查询的信息在一个事务中第一次被请求时，这样的信息将被收集。并且在整个事务期间将显示相同的信息。这是一种特性而非缺陷，因为它允许你在该统计信息上执行多个查询并且关联结果而不用担心那些数字会在你不知情的情况下改变。但是如果你希望用每个查询都看到新结果，要确保在任何事务块之外做那些查询。或者，你可以调用pg_stat_clear_snapshot()，那将丢弃当前事务的统计快照（如果有）。下一次对统计性信息的使用将导致获取一个新的快照。
-一个事务也可以在视图pg_stat_xact_all_tables、pg_stat_xact_sys_tables、pg_stat_xact_user_tables和pg_stat_xact_user_functions中看到它自己的统计信息（还没有被传送给收集器）。这些数字并不像上面所述的那样行动，相反它们在事务期间持续被更新。
-表 28.1中显示的动态统计视图中的一些信息是有安全限制的。 普通用户只能看到关于他们自己的会话的所有信息（属于他们是成员的角色的会话）。 在关于其他会话的行中，许多列将为空。 但是，请注意，一个会话的存在和它的一般属性，例如会话用户和数据库，对所有用户都是可见的。 超级用户和内置角色pg_read_all_stats的成员（参见第 22.5 节）可以看到所有会话的所有信息。
-表 28.1. 动态统计视图
-   视图名称 描述     pg_stat_activity 每个服务器进程一行，显示与那个进程的当前活动相关的信息，例如状态和当前查询。详见pg_stat_activity 。   pg_stat_wait_event 每个等待事件一行，显示有关每个发生的等待事件的等待信息的统计信息。有关详细信息，请参阅 pg_stat_wait_event。   pg_stat_replication 每一个 WAL 发送进程一行，显示有关到该发送进程连接的后备服务器的复制的统计信息。 详见pg_stat_replication." />
+一个事务也可以在视图pg_stat_xact_all_tables、pg_stat_xact_all_undos, pg_stat_xact_sys_tables、pg_stat_xact_user_tables和pg_stat_xact_user_functions中看到它自己的统计信息（还没有被传送给收集器）。这些数字并不像上面所述的那样行动，相反它们在事务期间持续被更新。
+表 28.1中显示的动态统计视图中的一些信息是有安全限制的。 普通用户只能看到关于他们自己的会话的所有信息（属于他们是成员的角色的会话）。 在关于其他会话的行中，许多列将为空。 但是，请注意，一个会话的存在和它的一般属性，例如会话用户和数据库，对所有用户都是可见的。 超级用户和内置角色pg_read_all_stats的成员（参见第 22." />
 
-    <title>统计收集器 | Redrock Documentation</title>
+    <title>运行统计视图 | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -47,12 +45,12 @@ PostgreSQL也支持报告有关系统正在干什么的 动态信息，例如当
     
   <meta
     property="og:title"
-    content="统计收集器"
+    content="运行统计视图"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="PostgreSQL的统计收集器是一个支持收集和报告服务器活动信息的子系统。 目前，这个收集器可以对表和索引的访问计数，计数可以按磁盘块和个体行来进行。它还跟踪每个表中的总行数、每个表的清理和分析动作的信息。它也统计调用用户定义函数的次数以及在每次调用中花费的总时间。
-PostgreSQL也支持报告有关系统正在干什么的 动态信息，例如当前正在被其他服务器进程执行的命令以及系统中存在哪些其他连接。 这个功能是独立于收集器进程存在的。
+  <meta property="og:description" content="统计收集配置 查看统计信息 pg_stat_activity pg_stat_wait_event pg_stat_replication pg_stat_database pg_stat_all_tables pg_stat_all_undos pg_stat_all_indexes pg_statio_all_tables pg_statio_all_undos pg_statio_all_indexes pg_statio_all_sequences      Redrock Postgres的统计收集器是一个支持收集和报告服务器活动信息的子系统。 目前，这个收集器可以对表和索引的访问计数，计数可以按磁盘块和个体行来进行。它还跟踪每个表中的总行数、每个表的分析动作的信息。它也统计调用用户定义函数的次数以及在每次调用中花费的总时间。
+Redrock Postgres也支持报告有关系统正在干什么的 动态信息，例如当前正在被其他服务器进程执行的命令以及系统中存在哪些其他连接。 这个功能是独立于收集器进程存在的。
 统计收集配置     因为统计收集给查询执行增加了一些负荷，系统可以被配置为收集或不收集信息。这由配置参数控制，它们通常在postgresql.conf中设置（关于设置配置参数的细节请见第 20 章）。
 参数track_activities允许监控当前被任意服务器进程执行的命令。
 参数track_counts控制是否收集关于表和索引访问的统计信息。
@@ -64,25 +62,23 @@ PostgreSQL也支持报告有关系统正在干什么的 动态信息，例如当
 查看统计信息     表 28.1中列出了一些预定义视图 可以用来显示系统的当前状态。 表 28.2中列出了另一些视图可以 显示统计收集的结果。你也可以使用底层统计函数（在 第 28.2.20 节中讨论）来建立自定义的视图。
 在使用统计信息监控收集到的数据时，你必须了解这些信息并非是实时更新的。每个独立的服务器进程只在进入闲置状态之前才向收集器传送新的统计计数；因此正在进行的查询或事务并不影响显示出来的总数。同样，收集器本身也最多每PGSTAT_STAT_INTERVAL毫秒（缺省为 500ms，除非在编译服务器的时候修改过）发送一 次新的报告。因此显示的信息总是落后于实际活动。但是由track_activities收集的当前查询信息总是最新的。
 另一个重点是当一个服务器进程被要求显示任何这些统计信息时，它首先取得收集器进程最近发出的报告并且接着为所有统计视图和函数使用这个快照，直到它的当前事务的结尾。因此只要你继续当前事务，统计数据将会一直显示静态信息。相似地，当任何关于所有会话的当前查询的信息在一个事务中第一次被请求时，这样的信息将被收集。并且在整个事务期间将显示相同的信息。这是一种特性而非缺陷，因为它允许你在该统计信息上执行多个查询并且关联结果而不用担心那些数字会在你不知情的情况下改变。但是如果你希望用每个查询都看到新结果，要确保在任何事务块之外做那些查询。或者，你可以调用pg_stat_clear_snapshot()，那将丢弃当前事务的统计快照（如果有）。下一次对统计性信息的使用将导致获取一个新的快照。
-一个事务也可以在视图pg_stat_xact_all_tables、pg_stat_xact_sys_tables、pg_stat_xact_user_tables和pg_stat_xact_user_functions中看到它自己的统计信息（还没有被传送给收集器）。这些数字并不像上面所述的那样行动，相反它们在事务期间持续被更新。
-表 28.1中显示的动态统计视图中的一些信息是有安全限制的。 普通用户只能看到关于他们自己的会话的所有信息（属于他们是成员的角色的会话）。 在关于其他会话的行中，许多列将为空。 但是，请注意，一个会话的存在和它的一般属性，例如会话用户和数据库，对所有用户都是可见的。 超级用户和内置角色pg_read_all_stats的成员（参见第 22.5 节）可以看到所有会话的所有信息。
-表 28.1. 动态统计视图
-   视图名称 描述     pg_stat_activity 每个服务器进程一行，显示与那个进程的当前活动相关的信息，例如状态和当前查询。详见pg_stat_activity 。   pg_stat_wait_event 每个等待事件一行，显示有关每个发生的等待事件的等待信息的统计信息。有关详细信息，请参阅 pg_stat_wait_event。   pg_stat_replication 每一个 WAL 发送进程一行，显示有关到该发送进程连接的后备服务器的复制的统计信息。 详见pg_stat_replication." />
+一个事务也可以在视图pg_stat_xact_all_tables、pg_stat_xact_all_undos, pg_stat_xact_sys_tables、pg_stat_xact_user_tables和pg_stat_xact_user_functions中看到它自己的统计信息（还没有被传送给收集器）。这些数字并不像上面所述的那样行动，相反它们在事务期间持续被更新。
+表 28.1中显示的动态统计视图中的一些信息是有安全限制的。 普通用户只能看到关于他们自己的会话的所有信息（属于他们是成员的角色的会话）。 在关于其他会话的行中，许多列将为空。 但是，请注意，一个会话的存在和它的一般属性，例如会话用户和数据库，对所有用户都是可见的。 超级用户和内置角色pg_read_all_stats的成员（参见第 22." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/" />
 
 <meta property="article:section" content="Advanced" />
     <meta
       property="article:modified_time"
-      content="2022-06-08T16:23:03+08:00"
+      content="2022-06-09T19:33:38+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="统计收集器" />
+<meta name="twitter:title" content="运行统计视图" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="PostgreSQL的统计收集器是一个支持收集和报告服务器活动信息的子系统。 目前，这个收集器可以对表和索引的访问计数，计数可以按磁盘块和个体行来进行。它还跟踪每个表中的总行数、每个表的清理和分析动作的信息。它也统计调用用户定义函数的次数以及在每次调用中花费的总时间。
-PostgreSQL也支持报告有关系统正在干什么的 动态信息，例如当前正在被其他服务器进程执行的命令以及系统中存在哪些其他连接。 这个功能是独立于收集器进程存在的。
+  <meta name="twitter:description" content="统计收集配置 查看统计信息 pg_stat_activity pg_stat_wait_event pg_stat_replication pg_stat_database pg_stat_all_tables pg_stat_all_undos pg_stat_all_indexes pg_statio_all_tables pg_statio_all_undos pg_statio_all_indexes pg_statio_all_sequences      Redrock Postgres的统计收集器是一个支持收集和报告服务器活动信息的子系统。 目前，这个收集器可以对表和索引的访问计数，计数可以按磁盘块和个体行来进行。它还跟踪每个表中的总行数、每个表的分析动作的信息。它也统计调用用户定义函数的次数以及在每次调用中花费的总时间。
+Redrock Postgres也支持报告有关系统正在干什么的 动态信息，例如当前正在被其他服务器进程执行的命令以及系统中存在哪些其他连接。 这个功能是独立于收集器进程存在的。
 统计收集配置     因为统计收集给查询执行增加了一些负荷，系统可以被配置为收集或不收集信息。这由配置参数控制，它们通常在postgresql.conf中设置（关于设置配置参数的细节请见第 20 章）。
 参数track_activities允许监控当前被任意服务器进程执行的命令。
 参数track_counts控制是否收集关于表和索引访问的统计信息。
@@ -94,10 +90,8 @@ PostgreSQL也支持报告有关系统正在干什么的 动态信息，例如当
 查看统计信息     表 28.1中列出了一些预定义视图 可以用来显示系统的当前状态。 表 28.2中列出了另一些视图可以 显示统计收集的结果。你也可以使用底层统计函数（在 第 28.2.20 节中讨论）来建立自定义的视图。
 在使用统计信息监控收集到的数据时，你必须了解这些信息并非是实时更新的。每个独立的服务器进程只在进入闲置状态之前才向收集器传送新的统计计数；因此正在进行的查询或事务并不影响显示出来的总数。同样，收集器本身也最多每PGSTAT_STAT_INTERVAL毫秒（缺省为 500ms，除非在编译服务器的时候修改过）发送一 次新的报告。因此显示的信息总是落后于实际活动。但是由track_activities收集的当前查询信息总是最新的。
 另一个重点是当一个服务器进程被要求显示任何这些统计信息时，它首先取得收集器进程最近发出的报告并且接着为所有统计视图和函数使用这个快照，直到它的当前事务的结尾。因此只要你继续当前事务，统计数据将会一直显示静态信息。相似地，当任何关于所有会话的当前查询的信息在一个事务中第一次被请求时，这样的信息将被收集。并且在整个事务期间将显示相同的信息。这是一种特性而非缺陷，因为它允许你在该统计信息上执行多个查询并且关联结果而不用担心那些数字会在你不知情的情况下改变。但是如果你希望用每个查询都看到新结果，要确保在任何事务块之外做那些查询。或者，你可以调用pg_stat_clear_snapshot()，那将丢弃当前事务的统计快照（如果有）。下一次对统计性信息的使用将导致获取一个新的快照。
-一个事务也可以在视图pg_stat_xact_all_tables、pg_stat_xact_sys_tables、pg_stat_xact_user_tables和pg_stat_xact_user_functions中看到它自己的统计信息（还没有被传送给收集器）。这些数字并不像上面所述的那样行动，相反它们在事务期间持续被更新。
-表 28.1中显示的动态统计视图中的一些信息是有安全限制的。 普通用户只能看到关于他们自己的会话的所有信息（属于他们是成员的角色的会话）。 在关于其他会话的行中，许多列将为空。 但是，请注意，一个会话的存在和它的一般属性，例如会话用户和数据库，对所有用户都是可见的。 超级用户和内置角色pg_read_all_stats的成员（参见第 22.5 节）可以看到所有会话的所有信息。
-表 28.1. 动态统计视图
-   视图名称 描述     pg_stat_activity 每个服务器进程一行，显示与那个进程的当前活动相关的信息，例如状态和当前查询。详见pg_stat_activity 。   pg_stat_wait_event 每个等待事件一行，显示有关每个发生的等待事件的等待信息的统计信息。有关详细信息，请参阅 pg_stat_wait_event。   pg_stat_replication 每一个 WAL 发送进程一行，显示有关到该发送进程连接的后备服务器的复制的统计信息。 详见pg_stat_replication." />
+一个事务也可以在视图pg_stat_xact_all_tables、pg_stat_xact_all_undos, pg_stat_xact_sys_tables、pg_stat_xact_user_tables和pg_stat_xact_user_functions中看到它自己的统计信息（还没有被传送给收集器）。这些数字并不像上面所述的那样行动，相反它们在事务期间持续被更新。
+表 28.1中显示的动态统计视图中的一些信息是有安全限制的。 普通用户只能看到关于他们自己的会话的所有信息（属于他们是成员的角色的会话）。 在关于其他会话的行中，许多列将为空。 但是，请注意，一个会话的存在和它的一般属性，例如会话用户和数据库，对所有用户都是可见的。 超级用户和内置角色pg_read_all_stats的成员（参见第 22." />
 
 
   <script type="application/ld+json">
@@ -105,12 +99,12 @@ PostgreSQL也支持报告有关系统正在干什么的 动态信息，例如当
       "@context": "http://schema.org",
       "@type": "TechArticle",
       "articleSection": "Advanced",
-      "name": "统计收集器",
+      "name": "运行统计视图",
       "url" : "https://doc.rockdata.net/zh-cn/advanced/monitor-stats/",
-      "headline": "统计收集器",
-      "description": "PostgreSQL的统计收集器是一个支持收集和报告服务器活动信息的子系统。 目前，这个收集器可以对表和索引的访问计数，计数可以按磁盘块和个体行来进行。它还跟踪每个表中的总行数、每个表的清理和分析动作的信息。它也统计调用用户定义函数的次数以及在每次调用中花费的总时间。\nPostgreSQL也支持报告有关系统正在干什么的 动态信息，例如当前正在被其他服务器进程执行的命令以及系统中存在哪些其他连接。 这个功能是独立于收集器进程存在的。\n统计收集配置     因为统计收集给查询执行增加了一些负荷，系统可以被配置为收集或不收集信息。这由配置参数控制，它们通常在postgresql.conf中设置（关于设置配置参数的细节请见第 20 章）。\n参数track_activities允许监控当前被任意服务器进程执行的命令。\n参数track_counts控制是否收集关于表和索引访问的统计信息。\n参数track_functions启用对用户定义函数使用的跟踪。\n参数track_io_timing启用对块读写次数的监控。\n参数track_wait_events控制是否收集关于等待事件的统计信息。\n通常这些参数被设置在postgresql.conf中，这样它们会应用于所有服务器进程，但是可以在单个会话中使用SET命令打开或关闭它们（为了阻止普通用户对管理员隐藏他们的活动，只有超级用户被允许使用SET来改变这些参数）。\n统计收集器通过临时文件将收集到的信息传送给其他PostgreSQL进程。这些文件被存储在名字由stats_temp_directory参数指定的目录中，默认是pg_stat_tmp。为了得到更好的性能，stats_temp_directory可以被指向一个基于 RAM 的文件系统来降低物理 I\/O 需求。当服务器被干净地关闭时，一份统计数据的永久拷贝被存储在pg_stat子目录中，这样在服务器重启后统计信息能被保持。当在服务器启动时执行恢复时（例如立即关闭、服务器崩溃以及时间点恢复之后），所有统计计数器会被重置。\n查看统计信息     表 28.1中列出了一些预定义视图 可以用来显示系统的当前状态。 表 28.2中列出了另一些视图可以 显示统计收集的结果。你也可以使用底层统计函数（在 第 28.2.20 节中讨论）来建立自定义的视图。\n在使用统计信息监控收集到的数据时，你必须了解这些信息并非是实时更新的。每个独立的服务器进程只在进入闲置状态之前才向收集器传送新的统计计数；因此正在进行的查询或事务并不影响显示出来的总数。同样，收集器本身也最多每PGSTAT_STAT_INTERVAL毫秒（缺省为 500ms，除非在编译服务器的时候修改过）发送一 次新的报告。因此显示的信息总是落后于实际活动。但是由track_activities收集的当前查询信息总是最新的。\n另一个重点是当一个服务器进程被要求显示任何这些统计信息时，它首先取得收集器进程最近发出的报告并且接着为所有统计视图和函数使用这个快照，直到它的当前事务的结尾。因此只要你继续当前事务，统计数据将会一直显示静态信息。相似地，当任何关于所有会话的当前查询的信息在一个事务中第一次被请求时，这样的信息将被收集。并且在整个事务期间将显示相同的信息。这是一种特性而非缺陷，因为它允许你在该统计信息上执行多个查询并且关联结果而不用担心那些数字会在你不知情的情况下改变。但是如果你希望用每个查询都看到新结果，要确保在任何事务块之外做那些查询。或者，你可以调用pg_stat_clear_snapshot()，那将丢弃当前事务的统计快照（如果有）。下一次对统计性信息的使用将导致获取一个新的快照。\n一个事务也可以在视图pg_stat_xact_all_tables、pg_stat_xact_sys_tables、pg_stat_xact_user_tables和pg_stat_xact_user_functions中看到它自己的统计信息（还没有被传送给收集器）。这些数字并不像上面所述的那样行动，相反它们在事务期间持续被更新。\n表 28.1中显示的动态统计视图中的一些信息是有安全限制的。 普通用户只能看到关于他们自己的会话的所有信息（属于他们是成员的角色的会话）。 在关于其他会话的行中，许多列将为空。 但是，请注意，一个会话的存在和它的一般属性，例如会话用户和数据库，对所有用户都是可见的。 超级用户和内置角色pg_read_all_stats的成员（参见第 22.5 节）可以看到所有会话的所有信息。\n表 28.1. 动态统计视图\n   视图名称 描述     pg_stat_activity 每个服务器进程一行，显示与那个进程的当前活动相关的信息，例如状态和当前查询。详见pg_stat_activity 。   pg_stat_wait_event 每个等待事件一行，显示有关每个发生的等待事件的等待信息的统计信息。有关详细信息，请参阅 pg_stat_wait_event。   pg_stat_replication 每一个 WAL 发送进程一行，显示有关到该发送进程连接的后备服务器的复制的统计信息。 详见pg_stat_replication.",
+      "headline": "运行统计视图",
+      "description": "统计收集配置 查看统计信息 pg_stat_activity pg_stat_wait_event pg_stat_replication pg_stat_database pg_stat_all_tables pg_stat_all_undos pg_stat_all_indexes pg_statio_all_tables pg_statio_all_undos pg_statio_all_indexes pg_statio_all_sequences      Redrock Postgres的统计收集器是一个支持收集和报告服务器活动信息的子系统。 目前，这个收集器可以对表和索引的访问计数，计数可以按磁盘块和个体行来进行。它还跟踪每个表中的总行数、每个表的分析动作的信息。它也统计调用用户定义函数的次数以及在每次调用中花费的总时间。\nRedrock Postgres也支持报告有关系统正在干什么的 动态信息，例如当前正在被其他服务器进程执行的命令以及系统中存在哪些其他连接。 这个功能是独立于收集器进程存在的。\n统计收集配置     因为统计收集给查询执行增加了一些负荷，系统可以被配置为收集或不收集信息。这由配置参数控制，它们通常在postgresql.conf中设置（关于设置配置参数的细节请见第 20 章）。\n参数track_activities允许监控当前被任意服务器进程执行的命令。\n参数track_counts控制是否收集关于表和索引访问的统计信息。\n参数track_functions启用对用户定义函数使用的跟踪。\n参数track_io_timing启用对块读写次数的监控。\n参数track_wait_events控制是否收集关于等待事件的统计信息。\n通常这些参数被设置在postgresql.conf中，这样它们会应用于所有服务器进程，但是可以在单个会话中使用SET命令打开或关闭它们（为了阻止普通用户对管理员隐藏他们的活动，只有超级用户被允许使用SET来改变这些参数）。\n统计收集器通过临时文件将收集到的信息传送给其他PostgreSQL进程。这些文件被存储在名字由stats_temp_directory参数指定的目录中，默认是pg_stat_tmp。为了得到更好的性能，stats_temp_directory可以被指向一个基于 RAM 的文件系统来降低物理 I\/O 需求。当服务器被干净地关闭时，一份统计数据的永久拷贝被存储在pg_stat子目录中，这样在服务器重启后统计信息能被保持。当在服务器启动时执行恢复时（例如立即关闭、服务器崩溃以及时间点恢复之后），所有统计计数器会被重置。\n查看统计信息     表 28.1中列出了一些预定义视图 可以用来显示系统的当前状态。 表 28.2中列出了另一些视图可以 显示统计收集的结果。你也可以使用底层统计函数（在 第 28.2.20 节中讨论）来建立自定义的视图。\n在使用统计信息监控收集到的数据时，你必须了解这些信息并非是实时更新的。每个独立的服务器进程只在进入闲置状态之前才向收集器传送新的统计计数；因此正在进行的查询或事务并不影响显示出来的总数。同样，收集器本身也最多每PGSTAT_STAT_INTERVAL毫秒（缺省为 500ms，除非在编译服务器的时候修改过）发送一 次新的报告。因此显示的信息总是落后于实际活动。但是由track_activities收集的当前查询信息总是最新的。\n另一个重点是当一个服务器进程被要求显示任何这些统计信息时，它首先取得收集器进程最近发出的报告并且接着为所有统计视图和函数使用这个快照，直到它的当前事务的结尾。因此只要你继续当前事务，统计数据将会一直显示静态信息。相似地，当任何关于所有会话的当前查询的信息在一个事务中第一次被请求时，这样的信息将被收集。并且在整个事务期间将显示相同的信息。这是一种特性而非缺陷，因为它允许你在该统计信息上执行多个查询并且关联结果而不用担心那些数字会在你不知情的情况下改变。但是如果你希望用每个查询都看到新结果，要确保在任何事务块之外做那些查询。或者，你可以调用pg_stat_clear_snapshot()，那将丢弃当前事务的统计快照（如果有）。下一次对统计性信息的使用将导致获取一个新的快照。\n一个事务也可以在视图pg_stat_xact_all_tables、pg_stat_xact_all_undos, pg_stat_xact_sys_tables、pg_stat_xact_user_tables和pg_stat_xact_user_functions中看到它自己的统计信息（还没有被传送给收集器）。这些数字并不像上面所述的那样行动，相反它们在事务期间持续被更新。\n表 28.1中显示的动态统计视图中的一些信息是有安全限制的。 普通用户只能看到关于他们自己的会话的所有信息（属于他们是成员的角色的会话）。 在关于其他会话的行中，许多列将为空。 但是，请注意，一个会话的存在和它的一般属性，例如会话用户和数据库，对所有用户都是可见的。 超级用户和内置角色pg_read_all_stats的成员（参见第 22.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "1356",
+      "wordCount" : "1357",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -121,7 +115,7 @@ PostgreSQL也支持报告有关系统正在干什么的 动态信息，例如当
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-08T16:23:03.00Z",
+      "dateModified": "2022-06-09T19:33:38.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1486,7 +1480,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     href="/zh-cn/advanced/monitor-stats/"
                     class="gdoc-nav__entry is-active"
                   >
-                    统计收集器
+                    运行统计视图
                   </a>
                 </span>
               
@@ -1747,7 +1741,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/advanced/' href='/zh-cn/advanced/'><span itemprop='name'>高级特性</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>统计收集器</span><meta itemprop='position' content='4' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/advanced/' href='/zh-cn/advanced/'><span itemprop='name'>高级特性</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>运行统计视图</span><meta itemprop='position' content='4' /></li>
   
 
   
@@ -1776,9 +1770,27 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <article
     class="gdoc-markdown gdoc-markdown__align--left"
   >
-    <h1>统计收集器</h1>
-    <p>PostgreSQL的<em>统计收集器</em>是一个支持收集和报告服务器活动信息的子系统。 目前，这个收集器可以对表和索引的访问计数，计数可以按磁盘块和个体行来进行。它还跟踪每个表中的总行数、每个表的清理和分析动作的信息。它也统计调用用户定义函数的次数以及在每次调用中花费的总时间。</p>
-<p>PostgreSQL也支持报告有关系统正在干什么的 动态信息，例如当前正在被其他服务器进程执行的命令以及系统中存在哪些其他连接。 这个功能是独立于收集器进程存在的。</p>
+    <h1>运行统计视图</h1>
+    <div class="gdoc-toc gdoc-toc__level--3">
+      <nav id="TableOfContents"><ul>
+        <li><a href="#统计收集配置">统计收集配置</a></li>
+        <li><a href="#查看统计信息">查看统计信息</a></li>
+        <li><a href="#pg_stat_activity">pg_stat_activity</a></li>
+        <li><a href="#pg_stat_wait_event">pg_stat_wait_event</a></li>
+        <li><a href="#pg_stat_replication">pg_stat_replication</a></li>
+        <li><a href="#pg_stat_database">pg_stat_database</a></li>
+        <li><a href="#pg_stat_all_tables">pg_stat_all_tables</a></li>
+        <li><a href="#pg_stat_all_undos">pg_stat_all_undos</a></li>
+        <li><a href="#pg_stat_all_indexes">pg_stat_all_indexes</a></li>
+        <li><a href="#pg_statio_all_tables">pg_statio_all_tables</a></li>
+        <li><a href="#pg_statio_all_undos">pg_statio_all_undos</a></li>
+        <li><a href="#pg_statio_all_indexes">pg_statio_all_indexes</a></li>
+        <li><a href="#pg_statio_all_sequences">pg_statio_all_sequences</a></li>
+      </ul></nav>
+      <hr />
+    </div>
+<p>Redrock Postgres的<em>统计收集器</em>是一个支持收集和报告服务器活动信息的子系统。 目前，这个收集器可以对表和索引的访问计数，计数可以按磁盘块和个体行来进行。它还跟踪每个表中的总行数、每个表的分析动作的信息。它也统计调用用户定义函数的次数以及在每次调用中花费的总时间。</p>
+<p>Redrock Postgres也支持报告有关系统正在干什么的 动态信息，例如当前正在被其他服务器进程执行的命令以及系统中存在哪些其他连接。 这个功能是独立于收集器进程存在的。</p>
 <div class="gdoc-page__anchorwrap">
     <h2 id="统计收集配置">
         统计收集配置
@@ -1850,7 +1862,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 >第 28.2.20 节</a>中讨论）来建立自定义的视图。</p>
 <p>在使用统计信息监控收集到的数据时，你必须了解这些信息并非是实时更新的。每个独立的服务器进程只在进入闲置状态之前才向收集器传送新的统计计数；因此正在进行的查询或事务并不影响显示出来的总数。同样，收集器本身也最多每<code>PGSTAT_STAT_INTERVAL</code>毫秒（缺省为 500ms，除非在编译服务器的时候修改过）发送一 次新的报告。因此显示的信息总是落后于实际活动。但是由<code>track_activities</code>收集的当前查询信息总是最新的。</p>
 <p>另一个重点是当一个服务器进程被要求显示任何这些统计信息时，它首先取得收集器进程最近发出的报告并且接着为所有统计视图和函数使用这个快照，直到它的当前事务的结尾。因此只要你继续当前事务，统计数据将会一直显示静态信息。相似地，当任何关于所有会话的当前查询的信息在一个事务中第一次被请求时，这样的信息将被收集。并且在整个事务期间将显示相同的信息。这是一种特性而非缺陷，因为它允许你在该统计信息上执行多个查询并且关联结果而不用担心那些数字会在你不知情的情况下改变。但是如果你希望用每个查询都看到新结果，要确保在任何事务块之外做那些查询。或者，你可以调用<code>pg_stat_clear_snapshot</code>()，那将丢弃当前事务的统计快照（如果有）。下一次对统计性信息的使用将导致获取一个新的快照。</p>
-<p>一个事务也可以在视图<code>pg_stat_xact_all_tables</code>、<code>pg_stat_xact_sys_tables</code>、<code>pg_stat_xact_user_tables</code>和<code>pg_stat_xact_user_functions</code>中看到它自己的统计信息（还没有被传送给收集器）。这些数字并不像上面所述的那样行动，相反它们在事务期间持续被更新。</p>
+<p>一个事务也可以在视图<code>pg_stat_xact_all_tables</code>、<code>pg_stat_xact_all_undos</code>, <code>pg_stat_xact_sys_tables</code>、<code>pg_stat_xact_user_tables</code>和<code>pg_stat_xact_user_functions</code>中看到它自己的统计信息（还没有被传送给收集器）。这些数字并不像上面所述的那样行动，相反它们在事务期间持续被更新。</p>
 <p><a
   class="gdoc-markdown__link"
   href="http://www.postgres.cn/docs/14/monitoring-stats.html#MONITORING-STATS-DYNAMIC-VIEWS-TABLE"
@@ -1860,7 +1872,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   href="http://www.postgres.cn/docs/14/default-roles.html"
   
 >第 22.5 节</a>）可以看到所有会话的所有信息。</p>
-<p><strong>表 28.1. 动态统计视图</strong></p>
+<p><strong>表 1. 动态统计视图</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -1895,7 +1907,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 </tbody>
 </table> </div>
-<p><strong>表 28.2. 已收集统计信息的视图</strong></p>
+<p><strong>表 2. 已收集统计信息的视图</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -1930,7 +1942,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 <tr>
 <td><code>pg_stat_xact_all_tables</code></td>
-<td>和<code>pg_stat_all_tables</code>相似，但计数动作只在当前事务内发生（还***没有***被包括在<code>pg_stat_all_tables</code>和相关视图中）。用于生存和死亡行数量的列以及清理和分析动作在此视图中不出现。</td>
+<td>和<code>pg_stat_all_tables</code>相似，但计数动作只在当前事务内发生（还<strong>没有</strong>被包括在<code>pg_stat_all_tables</code>和相关视图中）。用于生存和死亡行数量的列以及分析动作在此视图中不出现。</td>
+</tr>
+<tr>
+<td><code>pg_stat_xact_all_undos</code></td>
+<td>和<code>pg_stat_all_undos</code>相似，但计数动作只在当前事务内发生（还<strong>没有</strong>被包括在<code>pg_stat_all_undos</code>和相关视图中）。用于生存和死亡行数量的列在此视图中不出现。</td>
 </tr>
 <tr>
 <td><code>pg_stat_xact_sys_tables</code></td>
@@ -2008,7 +2024,16 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </table> </div>
 <p>针对每个索引的统计信息对于判断哪个索引正被使用以及它们的效果特别有用。</p>
 <p><code>pg_statio_</code>系列视图主要用于判断缓冲区的效果。当实际磁盘读取数远小于缓冲区命中时，这个缓冲能满足大部分读请求而无需进行内核调用。但是，这些统计信息并没有给出所有的事情：由于PostgreSQL处理磁盘 I/O 的方式，不在PostgreSQL缓冲区中的数据库仍然驻留在内核的 I/O 缓存中，并且因此可以被再次读取而不需要物理磁盘读取。我们建议希望了解PostgreSQL I/O 行为更多细节的用户将PostgreSQL统计收集器和操作系统中允许观察内核处理 I/O 的工具一起使用。</p>
-<p><strong>表 27.3. <code>pg_stat_activity</code> 视图</strong></p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="pg_stat_activity">
+        pg_stat_activity
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#pg_stat_activity" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： pg_stat_activity" aria-label="锚定到： pg_stat_activity" href="#pg_stat_activity">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p><code>pg_stat_activity</code>视图将为每一个服务器进程有一行，显示与该进程的当前活动相关的信息。</p>
+<p><strong>表 3. <code>pg_stat_activity</code> 视图</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -2061,7 +2086,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <tr>
 <td><code>client_addr</code></td>
 <td><code>inet</code></td>
-<td>连接到这个后端的客户端的 IP 地址。如果这个域为空，它表示客户端通过服务器机器上的一个 Unix 套接字连接或者这是一个内部进程（如自动清理）。</td>
+<td>连接到这个后端的客户端的 IP 地址。如果这个域为空，它表示客户端通过服务器机器上的一个 Unix 套接字连接或者这是一个内部进程（如自动分析）。</td>
 </tr>
 <tr>
 <td><code>client_hostname</code></td>
@@ -2100,7 +2125,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <tr>
 <td><code>wait_event_type</code></td>
 <td><code>text</code></td>
-<td>后端正在等待的事件类型，如果不存在则为 NULL。可能的值有：<code>LWLock</code>：后端正在等待一个轻量级锁。每一个这样的锁保护着共享内存中的一个特殊数据结构。<code>wait_event</code>将含有一个标识该轻量级锁目的的名称（一些锁具有特定的名称，其他是一组具有类似目的的锁中的一部分）。<code>Lock</code>：后端正在等待一个重量级锁。重量级锁，也称为锁管理器锁或者简单锁，主要保护 SQL 可见的对象，例如表。不过，它们也被用于确保特定内部操作的互斥，例如关系扩展。<code>wait_event</code>将标识等待的锁的类型。<code>BufferPin</code>：服务器进程正在等待访问一个数据缓冲区，而此时没有其他进程正在检查该缓冲区。如果另一个进程持有一个最终从要访问的缓冲区中读取数据的打开的游标，缓冲区 pin 等待可能会被拖延。<code>Activity</code>：服务器进程处于闲置状态。这被用于在其主处理循环中等待活动的系统进程。<code>wait_event</code>将标识特定的等待点。<code>Extension</code>：服务器进程正在一个扩展模块中等待活动。这一个分类被用于要跟踪自定义等待点的模块。<code>Client</code>：服务器进程正在一个套接字上等待来自用户应用的某种活动，并且该服务器预期某种与其内部处理无关的事情发生。<code>wait_event</code>将标识特定的等待点。<code>IPC</code>：服务器进程正在等待来自服务器中另一个进程的某种活动。<code>wait_event</code>将标识特定的等待点。<code>Timeout</code>：服务器进程正在等待一次超时发生。<code>wait_event</code>将标识特定的等待点。<code>IO</code>：服务器进程正在等待一次IO完成。<code>wait_event</code>将标识特定的等待点。</td>
+<td>后端正在等待的事件类型，如果不存在则为 NULL。可能的值有：<br/><code>LWLock</code>：后端正在等待一个轻量级锁。每一个这样的锁保护着共享内存中的一个特殊数据结构。<code>wait_event</code>将含有一个标识该轻量级锁目的的名称（一些锁具有特定的名称，其他是一组具有类似目的的锁中的一部分）。<br/><code>Lock</code>：后端正在等待一个重量级锁。重量级锁，也称为锁管理器锁或者简单锁，主要保护 SQL 可见的对象，例如表。不过，它们也被用于确保特定内部操作的互斥，例如关系扩展。<code>wait_event</code>将标识等待的锁的类型。<br/><code>BufferPin</code>：服务器进程正在等待访问一个数据缓冲区，而此时没有其他进程正在检查该缓冲区。如果另一个进程持有一个最终从要访问的缓冲区中读取数据的打开的游标，缓冲区 pin 等待可能会被拖延。<br/><code>Activity</code>：服务器进程处于闲置状态。这被用于在其主处理循环中等待活动的系统进程。<code>wait_event</code>将标识特定的等待点。<br/><code>Extension</code>：服务器进程正在一个扩展模块中等待活动。这一个分类被用于要跟踪自定义等待点的模块。<br/><code>Client</code>：服务器进程正在一个套接字上等待来自用户应用的某种活动，并且该服务器预期某种与其内部处理无关的事情发生。<code>wait_event</code>将标识特定的等待点。<br/><code>IPC</code>：服务器进程正在等待来自服务器中另一个进程的某种活动。<code>wait_event</code>将标识特定的等待点。<br/><code>Timeout</code>：服务器进程正在等待一次超时发生。<code>wait_event</code>将标识特定的等待点。<br/><code>IO</code>：服务器进程正在等待一次IO完成。<code>wait_event</code>将标识特定的等待点。</td>
 </tr>
 <tr>
 <td><code>wait_event</code></td>
@@ -2119,7 +2144,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <tr>
 <td><code>state</code></td>
 <td><code>text</code></td>
-<td>这个后端的当前总体状态。可能的值是：<code>active</code>：后端正在执行一个查询。<code>idle</code>：后端正在等待一个新的客户端命令。<code>idle in transaction</code>：后端在一个事务中，但是当前没有正在执行一个查询。<code>idle in transaction (aborted)</code>：这个状态与<code>idle in transaction</code>相似，不过在该事务中的一个语句导致了一个错误。<code>fastpath function call</code>：后端正在执行一个 fast-path 函数。<code>disabled</code>：如果在这个后端中<a
+<td>这个后端的当前总体状态。可能的值是：<br/><code>active</code>：后端正在执行一个查询。<br/><code>idle</code>：后端正在等待一个新的客户端命令。<br/><code>idle in transaction</code>：后端在一个事务中，但是当前没有正在执行一个查询。<br/><code>idle in transaction (aborted)</code>：这个状态与<code>idle in transaction</code>相似，不过在该事务中的一个语句导致了一个错误。<br/><code>fastpath function call</code>：后端正在执行一个 fast-path 函数。<br/><code>disabled</code>：如果在这个后端中<a
   class="gdoc-markdown__link"
   href="http://www.postgres.cn/docs/12/runtime-config-statistics.html#GUC-TRACK-ACTIVITIES"
   
@@ -2147,21 +2172,13 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <tr>
 <td><code>backend_type</code></td>
 <td><code>text</code></td>
-<td>当前后端的类型。可能的类型是 <code>autovacuum launcher</code>, <code>autovacuum worker</code>, <code>logical replication launcher</code>, <code>logical replication worker</code>, <code>parallel worker</code>, <code>background writer</code>, <code>client backend</code>, <code>checkpointer</code>, <code>startup</code>, <code>walreceiver</code>, <code>walsender</code> 以及 <code>walwriter</code>。 除此以外，由扩展注册的后台Worker可能有额外的类型。</td>
+<td>当前后端的类型。可能的类型是 <code>autoanalyze launcher</code>, <code>autoanalyze worker</code>, <code>logical replication launcher</code>, <code>logical replication worker</code>, <code>parallel worker</code>, <code>background writer</code>, <code>client backend</code>, <code>checkpointer</code>, <code>startup</code>, <code>walreceiver</code>, <code>walsender</code> 以及 <code>walwriter</code>。 除此以外，由扩展注册的后台Worker可能有额外的类型。</td>
 </tr>
 </tbody>
 </table> </div>
-<p><code>pg_stat_activity</code>视图将为每一个服务器进程有一行，显示与该进程的当前活动相关的信息。</p>
-<div class="gdoc-page__anchorwrap">
-    <h3 id="注意">
-        注意
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#注意" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 注意" aria-label="锚定到： 注意" href="#%e6%b3%a8%e6%84%8f">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
+<p><strong>注意</strong></p>
 <p><code>wait_event</code>和<code>state</code>列是独立的。如果一个后端处于<code>active</code>状态，它可能是也可能不是某个事件上的<code>waiting</code>。如果状态是<code>active</code>并且<code>wait_event</code>为非空，它意味着一个查询正在被执行，但是它被阻塞在系统中某处。</p>
-<p><strong>表 28.4. 等待事件类型</strong></p>
+<p><strong>表 4. 等待事件类型</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -2244,7 +2261,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 </tbody>
 </table> </div>
-<p><strong>表 28.5. <code>Activity</code>类型的等待事件</strong></p>
+<p><strong>表 5. <code>Activity</code>类型的等待事件</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -2307,7 +2324,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 </tbody>
 </table> </div>
-<p><strong>表 28.6. <code>BufferPin</code>类型的等待事件</strong></p>
+<p><strong>表 6. <code>BufferPin</code>类型的等待事件</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -2322,7 +2339,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 </tbody>
 </table> </div>
-<p><strong>表 28.7. <code>Client</code>类型的等待事件</strong></p>
+<p><strong>表 7. <code>Client</code>类型的等待事件</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -2352,6 +2369,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>在WAL接收器中等待从远程服务器接收数据。</td>
 </tr>
 <tr>
+<td><code>LibPQStorageConnect</code></td>
+<td>在计算服务器等待与远程存储服务器建立连接。</td>
+</tr>
+<tr>
+<td><code>LibPQStorageReceive</code></td>
+<td>在计算服务器等待从远程存储服务器接收数据。</td>
+</tr>
+<tr>
 <td><code>SSLOpenServer</code></td>
 <td>在尝试连接时等待SSL。</td>
 </tr>
@@ -2369,7 +2394,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 </tbody>
 </table> </div>
-<p><strong>表 28.8. <code>Extension</code>类型的等待事件</strong></p>
+<p><strong>表 8. <code>Extension</code>类型的等待事件</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -2384,7 +2409,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 </tbody>
 </table> </div>
-<p><strong>表 28.9. <code>IO</code>类型的等待事件</strong></p>
+<p><strong>表 9. <code>IO</code>类型的等待事件</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -2606,18 +2631,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>等待写入新创建的时间线历史文件。</td>
 </tr>
 <tr>
-<td><code>TwophaseFileRead</code></td>
-<td>等待读取两阶段状态文件。</td>
-</tr>
-<tr>
-<td><code>TwophaseFileSync</code></td>
-<td>等待两阶段状态文件到达持久存储。</td>
-</tr>
-<tr>
-<td><code>TwophaseFileWrite</code></td>
-<td>等待对两阶段状态文件的写入。</td>
-</tr>
-<tr>
 <td><code>WALBootstrapSync</code></td>
 <td>在引导过程中等待WAL达到持久存储。</td>
 </tr>
@@ -2667,7 +2680,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 </tbody>
 </table> </div>
-<p><strong>表 28.10. <code>IPC</code>类型的等待事件</strong></p>
+<p><strong>表 10. <code>IPC</code>类型的等待事件</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -2703,66 +2716,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <tr>
 <td><code>ExecuteGather</code></td>
 <td>在执行<code>Gather</code> 计划节点时，等待子进程的活动。</td>
-</tr>
-<tr>
-<td><code>HashBatchAllocate</code></td>
-<td>等待一个选定的并行哈希参与者分配哈希表。</td>
-</tr>
-<tr>
-<td><code>HashBatchElect</code></td>
-<td>等待选择一个并行哈希参与者来分配哈希表。</td>
-</tr>
-<tr>
-<td><code>HashBatchLoad</code></td>
-<td>等待其他并行哈希参与者完成哈希表的加载。</td>
-</tr>
-<tr>
-<td><code>HashBuildAllocate</code></td>
-<td>等待一个选定的并行哈希参与者分配初始哈希表。</td>
-</tr>
-<tr>
-<td><code>HashBuildElect</code></td>
-<td>等待选择一个并行哈希参与者来分配初始哈希表。</td>
-</tr>
-<tr>
-<td><code>HashBuildHashInner</code></td>
-<td>等待其他并行哈希参与者完成内部关系的散列。</td>
-</tr>
-<tr>
-<td><code>HashBuildHashOuter</code></td>
-<td>等待其他Parallel 哈希参与者完成对外部关系的分区。</td>
-</tr>
-<tr>
-<td><code>HashGrowBatchesAllocate</code></td>
-<td>等待选定的并行哈希参与者分配更多批处理。</td>
-</tr>
-<tr>
-<td><code>HashGrowBatchesDecide</code></td>
-<td>等待选择一个并行哈希参与者来决定未来的批处理增长。</td>
-</tr>
-<tr>
-<td><code>HashGrowBatchesElect</code></td>
-<td>等待选择一个Parallel 哈希参与者来分配更多批处理。</td>
-</tr>
-<tr>
-<td><code>HashGrowBatchesFinish</code></td>
-<td>Waiting for an elected Parallel Hash participant to decide on future batch growth.</td>
-</tr>
-<tr>
-<td><code>HashGrowBatchesRepartition</code></td>
-<td>等待一个选定的并行哈希参与者决定未来的批处理增长。</td>
-</tr>
-<tr>
-<td><code>HashGrowBucketsAllocate</code></td>
-<td>等待选定的并行哈希参与者完成更多bucket的分配。</td>
-</tr>
-<tr>
-<td><code>HashGrowBucketsElect</code></td>
-<td>等待选择一个并行哈希参与者来分配更多的buckets。</td>
-</tr>
-<tr>
-<td><code>HashGrowBucketsReinsert</code></td>
-<td>等待其他Parallel 哈希参与者完成将元组插入到新buckets中。</td>
 </tr>
 <tr>
 <td><code>LogicalSyncData</code></td>
@@ -2813,14 +2766,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>等待备用系统提升。</td>
 </tr>
 <tr>
-<td><code>RecoveryConflictSnapshot</code></td>
-<td>等待vacuum清理的恢复冲突解决。</td>
-</tr>
-<tr>
-<td><code>RecoveryConflictTablespace</code></td>
-<td>等待恢复冲突解决删除表空间。</td>
-</tr>
-<tr>
 <td><code>RecoveryPause</code></td>
 <td>等待恢复继续进行。</td>
 </tr>
@@ -2841,12 +2786,20 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>在同步复制期间等待远程服务器的确认。</td>
 </tr>
 <tr>
+<td><code>WalReceiverExit</code></td>
+<td>等待 WAL 接收器退出。</td>
+</tr>
+<tr>
+<td><code>WalReceiverWaitStart</code></td>
+<td>等待启动过程发送用于流式复制的初始数据。</td>
+</tr>
+<tr>
 <td><code>XactGroupUpdate</code></td>
 <td>等待分组组长在并行操作结束时更新事务状态。</td>
 </tr>
 </tbody>
 </table> </div>
-<p><strong>表 28.11. <code>Lock</code>类型的等待事件</strong></p>
+<p><strong>表 11. <code>Lock</code>类型的等待事件</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -2864,10 +2817,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>等待扩展一个关系。</td>
 </tr>
 <tr>
-<td><code>frozenid</code></td>
-<td>等待升级 <code>pg_database</code>.<code>datfrozenxid</code> 和 <code>pg_database</code>.<code>datminmxid</code>.</td>
-</tr>
-<tr>
 <td><code>object</code></td>
 <td>等待获取非关系数据库对象上的锁。</td>
 </tr>
@@ -2878,10 +2827,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <tr>
 <td><code>relation</code></td>
 <td>等待获得一个关系的锁。</td>
-</tr>
-<tr>
-<td><code>spectoken</code></td>
-<td>等待获取推测的插入锁。</td>
 </tr>
 <tr>
 <td><code>transactionid</code></td>
@@ -2901,7 +2846,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 </tbody>
 </table> </div>
-<p><strong>表 28.12. <code>LWLock</code>类型的等待事件</strong></p>
+<p><strong>表 12. <code>LWLock</code>类型的等待事件</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -2916,23 +2861,19 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 <tr>
 <td><code>AutoFile</code></td>
-<td>等待更新<code>postgresql.auto.conf</code>文件。</td>
+<td>等待更新<code>pgsql.auto.conf</code>文件。</td>
 </tr>
 <tr>
-<td><code>Autovacuum</code></td>
-<td>等待读取或更新自动清理工作者的当前状态。</td>
+<td><code>Autoanalyze</code></td>
+<td>等待读取或更新自动分析工作者的当前状态。</td>
 </tr>
 <tr>
-<td><code>AutovacuumSchedule</code></td>
-<td>等待确保选择为自动清理的表仍然需要清理。</td>
+<td><code>AutoanalyzeSchedule</code></td>
+<td>等待确保选择为自动分析的表仍然需要清理。</td>
 </tr>
 <tr>
 <td><code>BackgroundWorker</code></td>
 <td>等待读取或更新后台工作者状态。</td>
-</tr>
-<tr>
-<td><code>BtreeVacuum</code></td>
-<td>等待读取或更新b-树索引的清理相关信息。</td>
 </tr>
 <tr>
 <td><code>BufferContent</code></td>
@@ -2955,20 +2896,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>等待管理fsync请求。</td>
 </tr>
 <tr>
-<td><code>CommitTs</code></td>
-<td>等待读取或更新事务提交时间戳的最后一个值集。</td>
-</tr>
-<tr>
-<td><code>CommitTsBuffer</code></td>
-<td>在提交时间戳SLRU缓冲区上等待I/O。</td>
-</tr>
-<tr>
-<td><code>CommitTsSLRU</code></td>
-<td>等待访问提交时间戳SLRU缓存。</td>
-</tr>
-<tr>
 <td><code>ControlFile</code></td>
 <td>等待读取或更新<code>pg_control</code>文件或创建一个新的WAL文件。</td>
+</tr>
+<tr>
+<td><code>DatabaseState</code></td>
+<td>等待更新数据库的状态。</td>
 </tr>
 <tr>
 <td><code>DynamicSharedMemoryControl</code></td>
@@ -2985,30 +2918,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <tr>
 <td><code>LogicalRepWorker</code></td>
 <td>等待读取或更新逻辑复制工作器的状态。</td>
-</tr>
-<tr>
-<td><code>MultiXactGen</code></td>
-<td>等待读取或更新共享的multixact状态。</td>
-</tr>
-<tr>
-<td><code>MultiXactMemberBuffer</code></td>
-<td>在multixact成员SLRU缓冲区上等待I/O。</td>
-</tr>
-<tr>
-<td><code>MultiXactMemberSLRU</code></td>
-<td>等待访问multixact成员SLRU缓存。</td>
-</tr>
-<tr>
-<td><code>MultiXactOffsetBuffer</code></td>
-<td>在multixact 偏移 SLRU缓冲区上等待I/O。</td>
-</tr>
-<tr>
-<td><code>MultiXactOffsetSLRU</code></td>
-<td>等待访问multixact 偏移 SLRU缓存。</td>
-</tr>
-<tr>
-<td><code>MultiXactTruncation</code></td>
-<td>等待读取或截断multixact信息。</td>
 </tr>
 <tr>
 <td><code>NotifyBuffer</code></td>
@@ -3035,32 +2944,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>等待读取或更新旧的快照控制信息。</td>
 </tr>
 <tr>
-<td><code>ParallelAppend</code></td>
-<td>在并行附加计划执行期间等待选择下一个子计划。</td>
+<td><code>PLogSpace</code></td>
+<td>等待更新网络表空间的状态。</td>
 </tr>
 <tr>
-<td><code>ParallelHashJoin</code></td>
-<td>在并行哈希连接计划执行期间等待同步工作器。</td>
-</tr>
-<tr>
-<td><code>ParallelQueryDSA</code></td>
-<td>等待并行查询动态共享内存分配。</td>
-</tr>
-<tr>
-<td><code>PerSessionDSA</code></td>
-<td>等待并行查询动态共享内存分配。</td>
-</tr>
-<tr>
-<td><code>PerSessionRecordType</code></td>
-<td>等待访问有关复合类型的并行查询信息。</td>
-</tr>
-<tr>
-<td><code>PerSessionRecordTypmod</code></td>
-<td>等待访问有关标识匿名记录类型的类型修饰符的并行查询信息。</td>
-</tr>
-<tr>
-<td><code>PerXactPredicateList</code></td>
-<td>在并行查询期间等待访问当前可序列化事务持有的谓词锁列表。</td>
+<td><code>PLogWrite</code></td>
+<td>等待 PLOG 缓冲区写入磁盘。</td>
 </tr>
 <tr>
 <td><code>PredicateLockManager</code></td>
@@ -3069,10 +2958,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <tr>
 <td><code>ProcArray</code></td>
 <td>等待访问每个进程共享的数据结构(通常情况，是获取快照或报告会话的事务ID)。</td>
-</tr>
-<tr>
-<td><code>RelationMapping</code></td>
-<td>等待读取或更新<code>pg_filenode.map</code>文件(用于跟踪某些系统目录的文件节点分配)。</td>
 </tr>
 <tr>
 <td><code>RelCacheInit</code></td>
@@ -3099,10 +2984,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>在复制槽位上等待I/O。</td>
 </tr>
 <tr>
-<td><code>SerialBuffer</code></td>
-<td>在可串行事务冲突的SLRU缓冲区上等待I/O。</td>
-</tr>
-<tr>
 <td><code>SerializableFinishedList</code></td>
 <td>等待访问已完成的可序列化事务列表。</td>
 </tr>
@@ -3113,18 +2994,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <tr>
 <td><code>SerializableXactHash</code></td>
 <td>等待读取或更新关于可序列化事务的信息。</td>
-</tr>
-<tr>
-<td><code>SerialSLRU</code></td>
-<td>等待访问可序列化事务冲突SLRU缓存。</td>
-</tr>
-<tr>
-<td><code>SharedTidBitmap</code></td>
-<td>在并行位图索引扫描期间等待访问共享的TID位图。</td>
-</tr>
-<tr>
-<td><code>SharedTupleStore</code></td>
-<td>在并行查询期间等待访问共享元组存储。</td>
 </tr>
 <tr>
 <td><code>ShmemIndex</code></td>
@@ -3139,14 +3008,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>等待向共享编目失效队列添加消息。</td>
 </tr>
 <tr>
-<td><code>SubtransBuffer</code></td>
-<td>在子事务SLRU缓冲区上等待I/O。</td>
-</tr>
-<tr>
-<td><code>SubtransSLRU</code></td>
-<td>等待访问子事务SLRU缓存。</td>
-</tr>
-<tr>
 <td><code>SyncRep</code></td>
 <td>等待读取或更新有关同步复制状态的信息。</td>
 </tr>
@@ -3155,7 +3016,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>等待选择同步表扫描的起始位置。</td>
 </tr>
 <tr>
-<td><code>TablespaceCreate</code></td>
+<td><code>TablespaceMap</code></td>
 <td>等待创建或删除表空间。</td>
 </tr>
 <tr>
@@ -3174,42 +3035,15 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>WALWrite</code></td>
 <td>等待WAL缓冲区写入磁盘。</td>
 </tr>
-<tr>
-<td><code>WrapLimitsVacuum</code></td>
-<td>等待更新事务id和multixact消费的限制。</td>
-</tr>
-<tr>
-<td><code>XactBuffer</code></td>
-<td>在事务状态的SLRU缓冲区上等待I/O。</td>
-</tr>
-<tr>
-<td><code>XactSLRU</code></td>
-<td>等待访问事务状态的SLRU缓存。</td>
-</tr>
-<tr>
-<td><code>XactTruncation</code></td>
-<td>等待执行<code>pg_xact_status</code>或更新它可用的最早的事务ID。</td>
-</tr>
-<tr>
-<td><code>XidGen</code></td>
-<td>等待分配新的事务ID。</td>
-</tr>
 </tbody>
 </table> </div>
-<div class="gdoc-page__anchorwrap">
-    <h3 id="注意-1">
-        注意
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#注意-1" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 注意" aria-label="锚定到： 注意" href="#%e6%b3%a8%e6%84%8f-1">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
+<p><strong>注意</strong></p>
 <p>扩展可以将<code>LWLock</code>类型添加到<a
   class="gdoc-markdown__link"
   href="http://www.postgres.cn/docs/14/monitoring-stats.html#WAIT-EVENT-LWLOCK-TABLE"
   
 >表 28.12</a>所示的列表中。 在某些情况下，扩展名分配的名称不能在所有服务器进程中使用;因此<code>LWLock</code>等待事件可能只被报告为“<code>extension</code>”，而不是扩展名分配的名称。</p>
-<p><strong>表 28.13. <code>Timeout</code>类型的等待事件</strong></p>
+<p><strong>表 13. <code>Timeout</code>类型的等待事件</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -3234,10 +3068,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>RecoveryRetrieveRetryInterval</code></td>
 <td>当WAL数据无法从任何来源(<code>pg_wal</code>，存档或流)获得时，在恢复期间等待。</td>
 </tr>
-<tr>
-<td><code>VacuumDelay</code></td>
-<td>在一个基于代价的清理延迟点。</td>
-</tr>
 </tbody>
 </table> </div>
 <p>下面的例子展示了如何查看等待事件：</p>
@@ -3247,7 +3077,16 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
  2540 | Lock            | relation
  6644 | LWLock          | ProcArray
 (2 rows)
-</code></pre><p><strong>表 27.15. <code>pg_stat_wait_event</code> 视图</strong></p>
+</code></pre><div class="gdoc-page__anchorwrap">
+    <h2 id="pg_stat_wait_event">
+        pg_stat_wait_event
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#pg_stat_wait_event" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： pg_stat_wait_event" aria-label="锚定到： pg_stat_wait_event" href="#pg_stat_wait_event">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p><code>pg_stat_wait_event</code>视图将包含当前数据库中的每个等待事件的一行，显示有关每个已发生等待事件的等待信息的统计信息。</p>
+<p><strong>表 14. <code>pg_stat_wait_event</code> 视图</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -3298,8 +3137,16 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 </tbody>
 </table> </div>
-<p><code>pg_stat_wait_event</code>视图将包含当前数据库中的每个等待事件的一行，显示有关每个已发生等待事件的等待信息的统计信息。</p>
-<p><strong>表 27.5. <code>pg_stat_replication</code> 视图</strong></p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="pg_stat_replication">
+        pg_stat_replication
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#pg_stat_replication" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： pg_stat_replication" aria-label="锚定到： pg_stat_replication" href="#pg_stat_replication">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p><code>pg_stat_replication</code>视图中将为每一个 WAL 发送进程包含一行，用来显示与该发送进程连接的后备服务器的复制统计信息。 这个视图中只会列出直接连接的后备机，下游后备服务器的信息不包含在此。</p>
+<p><strong>表 15. <code>pg_stat_replication</code> 视图</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -3419,19 +3266,20 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 </tbody>
 </table> </div>
-<p><code>pg_stat_replication</code>视图中将为每一个 WAL 发送进程包含一行，用来显示与该发送进程连接的后备服务器的复制统计信息。 这个视图中只会列出直接连接的后备机，下游后备服务器的信息不包含在此。</p>
 <p><code>pg_stat_replication</code>视图中报告的滞后时间近期的WAL被写入、刷写并且重放以及发送器知道这一切所花的时间的度量。如果远程服务器被配置为一台同步后备，这些时间表示由每一种同步提交级别所带来（或者是可能带来）的提交延迟。对于一台异步后备，<code>replay_lag</code>列是最近的事务变得对查询可见的延迟时间的近似值。如果后备服务器已经完全追上了发送服务器并且没有WAL活动，在短时间内将继续显示最近测到的滞后时间，再然后就会显示为NULL。</p>
 <p>对于物理复制会自动测量滞后时间。逻辑解码插件可能会选择性地发出跟踪消息，如果它们没有这样做，跟踪机制将把滞后显示为NULL。</p>
+<p><strong>注意</strong></p>
+<p>报告的滞后时间并非按照当前的重放速率该后备还有多久才能追上发送服务器的预测。在新的WAL被生成期间，这样一种系统将显示类似的时间，但是当发送器变为闲置时会显示不同的值。特别是当后备服务器完全追上时，<code>pg_stat_replication</code>显示的是写入、刷写及重放最近报告的WAL位置所花的时间而不是一些用户可能预期的零。这种做法与为近期的写事务测量同步提交和事务可见性延迟的目的一致。为了降低用户预期一种不同的滞后模型带来的混淆，在一个完全重放完的闲置系统上，lag列会在一段比较短的时间后回复成NULL。监控系统应该选择将这种情况表示为缺失数据、零或者继续显示最近的已知值。</p>
 <div class="gdoc-page__anchorwrap">
-    <h3 id="注意-2">
-        注意
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#注意-2" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 注意" aria-label="锚定到： 注意" href="#%e6%b3%a8%e6%84%8f-2">
+    <h2 id="pg_stat_database">
+        pg_stat_database
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#pg_stat_database" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： pg_stat_database" aria-label="锚定到： pg_stat_database" href="#pg_stat_database">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
-    </h3>
+    </h2>
 </div>
-<p>报告的滞后时间并非按照当前的重放速率该后备还有多久才能追上发送服务器的预测。在新的WAL被生成期间，这样一种系统将显示类似的时间，但是当发送器变为闲置时会显示不同的值。特别是当后备服务器完全追上时，<code>pg_stat_replication</code>显示的是写入、刷写及重放最近报告的WAL位置所花的时间而不是一些用户可能预期的零。这种做法与为近期的写事务测量同步提交和事务可见性延迟的目的一致。为了降低用户预期一种不同的滞后模型带来的混淆，在一个完全重放完的闲置系统上，lag列会在一段比较短的时间后回复成NULL。监控系统应该选择将这种情况表示为缺失数据、零或者继续显示最近的已知值。</p>
-<p><strong>表 27.12. <code>pg_stat_database</code>视图</strong></p>
+<p><code>pg_stat_database</code>视图将为集簇中的每一个数据库包含有一行，再加上一个共享对象，显示出全数据库的统计信息。</p>
+<p><strong>表 16. <code>pg_stat_database</code>视图</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -3470,6 +3318,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>blks_read</code></td>
 <td><code>bigint</code></td>
 <td>在这个数据库中被读取的磁盘块的数量</td>
+</tr>
+<tr>
+<td><code>blks_cloned</code></td>
+<td><code>bigint</code></td>
+<td>在这个数据库中构造用于一致性读的缓冲页的数量</td>
 </tr>
 <tr>
 <td><code>blks_hit</code></td>
@@ -3549,6 +3402,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>在这个数据库中后端花费在读取数据文件块的时间，以毫秒计</td>
 </tr>
 <tr>
+<td><code>blk_clone_time</code></td>
+<td><code>double precision</code></td>
+<td>在这个数据库中后端花费在构造用于一致性读的缓冲页的时间，以毫秒计</td>
+</tr>
+<tr>
 <td><code>blk_write_time</code></td>
 <td><code>double precision</code></td>
 <td>在这个数据库中后端花费在写数据文件块的时间，以毫秒计</td>
@@ -3560,8 +3418,16 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 </tbody>
 </table> </div>
-<p><code>pg_stat_database</code>视图将为集簇中的每一个数据库包含有一行，再加上一个共享对象，显示出全数据库的统计信息。</p>
-<p><strong>表 27.14. <code>pg_stat_all_tables</code>视图</strong></p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="pg_stat_all_tables">
+        pg_stat_all_tables
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#pg_stat_all_tables" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： pg_stat_all_tables" aria-label="锚定到： pg_stat_all_tables" href="#pg_stat_all_tables">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p><code>pg_stat_all_tables</code>视图将为当前数据库中的每一个表（包括 TOAST 表）包含一行，该行显示与对该表的访问相关的统计信息。<code>pg_stat_user_tables</code>和<code>pg_stat_sys_tables</code>视图包含相同的信息，但是被过滤得分别只显示用户和系统表。</p>
+<p><strong>表 17. <code>pg_stat_all_tables</code>视图</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -3642,16 +3508,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>从这个表最后一次被分析后备修改的行的估计数量</td>
 </tr>
 <tr>
-<td><code>last_vacuum</code></td>
-<td><code>timestamp with time zone</code></td>
-<td>上次这个表被手动清理的时间（不统计<code>VACUUM FULL</code>）</td>
-</tr>
-<tr>
-<td><code>last_autovacuum</code></td>
-<td><code>timestamp with time zone</code></td>
-<td>上次这个表被自动清理守护进程清理的时间</td>
-</tr>
-<tr>
 <td><code>last_analyze</code></td>
 <td><code>timestamp with time zone</code></td>
 <td>上次这个表被手动分析的时间</td>
@@ -3659,17 +3515,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <tr>
 <td><code>last_autoanalyze</code></td>
 <td><code>timestamp with time zone</code></td>
-<td>上次这个表被自动清理守护进程分析的时间</td>
-</tr>
-<tr>
-<td><code>vacuum_count</code></td>
-<td><code>bigint</code></td>
-<td>这个表已被手工清理的次数（不统计<code>VACUUM FULL</code>）</td>
-</tr>
-<tr>
-<td><code>autovacuum_count</code></td>
-<td><code>bigint</code></td>
-<td>这个表已被自动清理守护进程清理的次数</td>
+<td>上次这个表被自动分析守护进程分析的时间</td>
 </tr>
 <tr>
 <td><code>analyze_count</code></td>
@@ -3679,12 +3525,91 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <tr>
 <td><code>autoanalyze_count</code></td>
 <td><code>bigint</code></td>
-<td>这个表已被自动清理守护进程分析的次数</td>
+<td>这个表已被自动分析守护进程分析的次数</td>
 </tr>
 </tbody>
 </table> </div>
-<p><code>pg_stat_all_tables</code>视图将为当前数据库中的每一个表（包括 TOAST 表）包含一行，该行显示与对该表的访问相关的统计信息。<code>pg_stat_user_tables</code>和<code>pg_stat_sys_tables</code>视图包含相同的信息，但是被过滤得分别只显示用户和系统表。</p>
-<p><strong>表 27.15. <code>pg_stat_all_indexes</code>视图</strong></p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="pg_stat_all_undos">
+        pg_stat_all_undos
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#pg_stat_all_undos" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： pg_stat_all_undos" aria-label="锚定到： pg_stat_all_undos" href="#pg_stat_all_undos">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p><code>pg_stat_all_undos</code> 视图将为当前数据库中的每一个回滚段包含一行，该行显示与对该回滚段的访问相关的统计信息。</p>
+<p><strong>表 18. <code>pg_stat_all_undos</code> 视图</strong></p>
+<div class="table-wrap"> <table>
+<thead>
+<tr>
+<th>列</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>relid</code></td>
+<td><code>oid</code></td>
+<td>一个表的 OID</td>
+</tr>
+<tr>
+<td><code>schemaname</code></td>
+<td><code>name</code></td>
+<td>这个表所在的模式的名称</td>
+</tr>
+<tr>
+<td><code>relname</code></td>
+<td><code>name</code></td>
+<td>这个表的名称</td>
+</tr>
+<tr>
+<td><code>n_tup_fetch</code></td>
+<td><code>bigint</code></td>
+<td>被获取的活着的记录的数量</td>
+</tr>
+<tr>
+<td><code>n_tup_ins</code></td>
+<td><code>bigint</code></td>
+<td>被插入的记录数</td>
+</tr>
+<tr>
+<td><code>n_tup_upd</code></td>
+<td><code>bigint</code></td>
+<td>被更新的记录数</td>
+</tr>
+<tr>
+<td><code>n_tup_del</code></td>
+<td><code>bigint</code></td>
+<td>被删除的记录数</td>
+</tr>
+<tr>
+<td><code>n_tup_hot_upd</code></td>
+<td><code>bigint</code></td>
+<td>被更新的 HOT 记录数</td>
+</tr>
+<tr>
+<td><code>n_live_tup</code></td>
+<td><code>bigint</code></td>
+<td>活着的记录的估计数量</td>
+</tr>
+<tr>
+<td><code>n_dead_tup</code></td>
+<td><code>bigint</code></td>
+<td>死亡记录的估计数量</td>
+</tr>
+</tbody>
+</table> </div>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="pg_stat_all_indexes">
+        pg_stat_all_indexes
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#pg_stat_all_indexes" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： pg_stat_all_indexes" aria-label="锚定到： pg_stat_all_indexes" href="#pg_stat_all_indexes">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p><code>pg_stat_all_indexes</code>视图将为当前数据库中的每个索引包含一行，该行显示关于对该索引访问的统计信息。<code>pg_stat_user_indexes</code>和<code>pg_stat_sys_indexes</code>视图包含相同的信息，但是被过滤得只分别显示用户和系统索引。</p>
+<p><strong>表 19. <code>pg_stat_all_indexes</code>视图</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -3736,18 +3661,19 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 </tbody>
 </table> </div>
-<p><code>pg_stat_all_indexes</code>视图将为当前数据库中的每个索引包含一行，该行显示关于对该索引访问的统计信息。<code>pg_stat_user_indexes</code>和<code>pg_stat_sys_indexes</code>视图包含相同的信息，但是被过滤得只分别显示用户和系统索引。</p>
 <p>索引可以被简单索引扫描、“位图”索引扫描以及优化器使用。在一次位图扫描中，多个索引的输出可以被通过 AND 或 OR 规则组合，因此当使用一次位图扫描时难以将取得的个体堆行与特定的索引关联起来。因此，一次位图扫描会增加它使用的索引的<code>pg_stat_all_indexes</code>.<code>idx_tup_read</code>计数，并且为每个表增加<code>pg_stat_all_tables</code>.<code>idx_tup_fetch</code>计数，但是它不影响<code>pg_stat_all_indexes</code>.<code>idx_tup_fetch</code>。如果所提供的常量值不在优化器统计信息记录的范围之内，优化器也会访问索引来检查，因为优化器统计信息可能已经“不新鲜”了。</p>
+<p><strong>注意</strong></p>
+<p>即使不用位图扫描，<code>idx_tup_read</code>和<code>idx_tup_fetch</code>计数也可能不同，因为<code>idx_tup_read</code>统计从该索引取得的索引项而<code>idx_tup_fetch</code>统计从表取得的活着的行。如果使用该索引取得了任何死亡行或还未提交的行，或者如果通过一次只用索引扫描的方式避免了任何堆获取，后者将较小。</p>
 <div class="gdoc-page__anchorwrap">
-    <h3 id="注意-3">
-        注意
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#注意-3" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 注意" aria-label="锚定到： 注意" href="#%e6%b3%a8%e6%84%8f-3">
+    <h2 id="pg_statio_all_tables">
+        pg_statio_all_tables
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#pg_statio_all_tables" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： pg_statio_all_tables" aria-label="锚定到： pg_statio_all_tables" href="#pg_statio_all_tables">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
-    </h3>
+    </h2>
 </div>
-<p>即使不用位图扫描，<code>idx_tup_read</code>和<code>idx_tup_fetch</code>计数也可能不同，因为<code>idx_tup_read</code>统计从该索引取得的索引项而<code>idx_tup_fetch</code>统计从表取得的活着的行。如果使用该索引取得了任何死亡行或还未提交的行，或者如果通过一次只用索引扫描的方式避免了任何堆获取，后者将较小。</p>
-<p><strong>表 27.16. <code>pg_statio_all_tables</code>视图</strong></p>
+<p><code>pg_statio_all_tables</code>视图将为当前数据库中的每个表（包括 TOAST 表）包含一行，该行显示指定表上有关 I/O 的统计信息。<code>pg_statio_user_tables</code>和<code>pg_statio_sys_tables</code>视图包含相同的信息，但是被过滤得分别只显示用户表和系统表。</p>
+<p><strong>表 20. <code>pg_statio_all_tables</code>视图</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -3778,6 +3704,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>从这个表读取的磁盘块数量</td>
 </tr>
 <tr>
+<td><code>heap_blks_clone</code></td>
+<td><code>bigint</code></td>
+<td>从这个表构造用于一致性读的缓冲页数量</td>
+</tr>
+<tr>
 <td><code>heap_blks_hit</code></td>
 <td><code>bigint</code></td>
 <td>在这个表中的缓冲区命中数量</td>
@@ -3786,6 +3717,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>idx_blks_read</code></td>
 <td><code>bigint</code></td>
 <td>从这个表上所有索引中读取的磁盘块数</td>
+</tr>
+<tr>
+<td><code>idx_blks_clone</code></td>
+<td><code>bigint</code></td>
+<td>从这个表上所有索引中构造用于一致性读的缓冲页数</td>
 </tr>
 <tr>
 <td><code>idx_blks_hit</code></td>
@@ -3798,6 +3734,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>从这个表的 TOAST 表（如果有）读取的磁盘块数</td>
 </tr>
 <tr>
+<td><code>toast_blks_clone</code></td>
+<td><code>bigint</code></td>
+<td>从这个表的 TOAST 表（如果有）构造用于一致性读的缓冲页数</td>
+</tr>
+<tr>
 <td><code>toast_blks_hit</code></td>
 <td><code>bigint</code></td>
 <td>在这个表的 TOAST 表（如果有）中的缓冲区命中数量</td>
@@ -3808,14 +3749,78 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>从这个表的 TOAST 表索引（如果有）中读取的磁盘块数</td>
 </tr>
 <tr>
+<td><code>tidx_blks_clone</code></td>
+<td><code>bigint</code></td>
+<td>从这个表的 TOAST 表索引（如果有）中构造用于一致性读的缓冲页数</td>
+</tr>
+<tr>
 <td><code>tidx_blks_hit</code></td>
 <td><code>bigint</code></td>
 <td>在这个表的 TOAST 表索引（如果有）中的缓冲区命中数量</td>
 </tr>
 </tbody>
 </table> </div>
-<p><code>pg_statio_all_tables</code>视图将为当前数据库中的每个表（包括 TOAST 表）包含一行，该行显示指定表上有关 I/O 的统计信息。<code>pg_statio_user_tables</code>和<code>pg_statio_sys_tables</code>视图包含相同的信息，但是被过滤得分别只显示用户表和系统表。</p>
-<p><strong>表 27.17. <code>pg_statio_all_indexes</code>视图</strong></p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="pg_statio_all_undos">
+        pg_statio_all_undos
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#pg_statio_all_undos" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： pg_statio_all_undos" aria-label="锚定到： pg_statio_all_undos" href="#pg_statio_all_undos">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p><code>pg_statio_all_undos</code>视图将为当前数据库中的每个回滚段包含一行，该行显示指定回滚段上有关 I/O 的统计信息。</p>
+<p><strong>表 21. <code>pg_statio_all_undos</code> 视图</strong></p>
+<div class="table-wrap"> <table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>relid</code></td>
+<td><code>oid</code></td>
+<td>一个回滚段的 OID</td>
+</tr>
+<tr>
+<td><code>schemaname</code></td>
+<td><code>name</code></td>
+<td>这个回滚段所在的模式的名称</td>
+</tr>
+<tr>
+<td><code>relname</code></td>
+<td><code>name</code></td>
+<td>这个回滚段的名称</td>
+</tr>
+<tr>
+<td><code>undo_blks_read</code></td>
+<td><code>bigint</code></td>
+<td>从这个回滚段读取的磁盘块数量</td>
+</tr>
+<tr>
+<td><code>undo_blks_cloned</code></td>
+<td><code>bigint</code></td>
+<td>从这个回滚段构造用于一致性读的缓冲页数量，主要涉及回滚段中的事务表访问</td>
+</tr>
+<tr>
+<td><code>undo_blks_hit</code></td>
+<td><code>bigint</code></td>
+<td>在这个回滚段中的缓冲区命中数量</td>
+</tr>
+</tbody>
+</table> </div>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="pg_statio_all_indexes">
+        pg_statio_all_indexes
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#pg_statio_all_indexes" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： pg_statio_all_indexes" aria-label="锚定到： pg_statio_all_indexes" href="#pg_statio_all_indexes">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p><code>pg_statio_all_indexes</code>视图将为当前数据库中的每个索引包含一行，该行显示指定索引上有关 I/O 的统计信息。<code>pg_statio_user_indexes</code>和<code>pg_statio_sys_indexes</code>视图包含相同的信息，但是被过滤得分别只显示用户索引和系统索引。</p>
+<p><strong>表 22. <code>pg_statio_all_indexes</code>视图</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -3856,14 +3861,27 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>从这个索引读取的磁盘块数</td>
 </tr>
 <tr>
+<td><code>idx_blks_clone</code></td>
+<td><code>bigint</code></td>
+<td>从这个索引构造用于一致性读的缓冲页数</td>
+</tr>
+<tr>
 <td><code>idx_blks_hit</code></td>
 <td><code>bigint</code></td>
 <td>在这个索引中的缓冲区命中数量</td>
 </tr>
 </tbody>
 </table> </div>
-<p><code>pg_statio_all_indexes</code>视图将为当前数据库中的每个索引包含一行，该行显示指定索引上有关 I/O 的统计信息。<code>pg_statio_user_indexes</code>和<code>pg_statio_sys_indexes</code>视图包含相同的信息，但是被过滤得分别只显示用户索引和系统索引。</p>
-<p><strong>表 27.18. <code>pg_statio_all_sequences</code>视图</strong></p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="pg_statio_all_sequences">
+        pg_statio_all_sequences
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#pg_statio_all_sequences" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： pg_statio_all_sequences" aria-label="锚定到： pg_statio_all_sequences" href="#pg_statio_all_sequences">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p><code>pg_statio_all_sequences</code>视图将为当前数据库中的每个序列包含一行，该行显示在指定序列上有关 I/O 的统计信息。</p>
+<p><strong>表 23. <code>pg_statio_all_sequences</code>视图</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -3894,13 +3912,17 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>从这个序列中读取的磁盘块数</td>
 </tr>
 <tr>
+<td><code>blks_clone</code></td>
+<td><code>bigint</code></td>
+<td>从这个序列中构造用于一致性读的缓冲页数</td>
+</tr>
+<tr>
 <td><code>blks_hit</code></td>
 <td><code>bigint</code></td>
 <td>在这个序列中的缓冲区命中数量</td>
 </tr>
 </tbody>
 </table> </div>
-<p><code>pg_statio_all_sequences</code>视图将为当前数据库中的每个序列包含一行，该行显示在指定序列上有关 I/O 的统计信息。</p>
 
   </article>
 

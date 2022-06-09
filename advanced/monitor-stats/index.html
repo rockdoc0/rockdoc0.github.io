@@ -8,10 +8,9 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="PostgreSQL&rsquo;s statistics collector is a subsystem that supports collection and reporting of information about server activity. Presently, the collector can count accesses to tables and indexes in both disk-block and individual-row terms. It also tracks the total number of rows in each table, and information about vacuum and analyze actions for each table. It can also count calls to user-defined functions and the total time spent in each one.
-PostgreSQL also supports reporting dynamic information about exactly what is going on in the system right now, such as the exact command currently being executed by other server processes, and which other connections exist in the system." />
+  <meta name="description" content="Statistics Collection Configuration Viewing Statistics pg_stat_activity pg_stat_wait_event pg_stat_replication pg_stat_database pg_stat_all_tables pg_stat_all_undos pg_stat_all_indexes pg_statio_all_tables pg_statio_all_undos pg_statio_all_indexes pg_statio_all_sequences      Redrock Postgres&rsquo;s statistics collector is a subsystem that supports collection and reporting of information about server activity. Presently, the collector can count accesses to tables and indexes in both disk-block and individual-row terms. It also tracks the total number of rows in each table, and information about analyze actions for each table." />
 
-    <title>Statistics Collector | Redrock Documentation</title>
+    <title>Statistics Views | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -32,27 +31,25 @@ PostgreSQL also supports reporting dynamic information about exactly what is goi
     
   <meta
     property="og:title"
-    content="Statistics Collector"
+    content="Statistics Views"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="PostgreSQL’s statistics collector is a subsystem that supports collection and reporting of information about server activity. Presently, the collector can count accesses to tables and indexes in both disk-block and individual-row terms. It also tracks the total number of rows in each table, and information about vacuum and analyze actions for each table. It can also count calls to user-defined functions and the total time spent in each one.
-PostgreSQL also supports reporting dynamic information about exactly what is going on in the system right now, such as the exact command currently being executed by other server processes, and which other connections exist in the system." />
+  <meta property="og:description" content="Statistics Collection Configuration Viewing Statistics pg_stat_activity pg_stat_wait_event pg_stat_replication pg_stat_database pg_stat_all_tables pg_stat_all_undos pg_stat_all_indexes pg_statio_all_tables pg_statio_all_undos pg_statio_all_indexes pg_statio_all_sequences      Redrock Postgres’s statistics collector is a subsystem that supports collection and reporting of information about server activity. Presently, the collector can count accesses to tables and indexes in both disk-block and individual-row terms. It also tracks the total number of rows in each table, and information about analyze actions for each table." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/advanced/monitor-stats/" />
 
 <meta property="article:section" content="Advanced" />
     <meta
       property="article:modified_time"
-      content="2022-06-08T14:31:15+08:00"
+      content="2022-06-09T19:33:38+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Statistics Collector" />
+<meta name="twitter:title" content="Statistics Views" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="PostgreSQL’s statistics collector is a subsystem that supports collection and reporting of information about server activity. Presently, the collector can count accesses to tables and indexes in both disk-block and individual-row terms. It also tracks the total number of rows in each table, and information about vacuum and analyze actions for each table. It can also count calls to user-defined functions and the total time spent in each one.
-PostgreSQL also supports reporting dynamic information about exactly what is going on in the system right now, such as the exact command currently being executed by other server processes, and which other connections exist in the system." />
+  <meta name="twitter:description" content="Statistics Collection Configuration Viewing Statistics pg_stat_activity pg_stat_wait_event pg_stat_replication pg_stat_database pg_stat_all_tables pg_stat_all_undos pg_stat_all_indexes pg_statio_all_tables pg_statio_all_undos pg_statio_all_indexes pg_statio_all_sequences      Redrock Postgres’s statistics collector is a subsystem that supports collection and reporting of information about server activity. Presently, the collector can count accesses to tables and indexes in both disk-block and individual-row terms. It also tracks the total number of rows in each table, and information about analyze actions for each table." />
 
 
   <script type="application/ld+json">
@@ -60,12 +57,12 @@ PostgreSQL also supports reporting dynamic information about exactly what is goi
       "@context": "http://schema.org",
       "@type": "TechArticle",
       "articleSection": "Advanced",
-      "name": "Statistics Collector",
+      "name": "Statistics Views",
       "url" : "https://doc.rockdata.net/advanced/monitor-stats/",
-      "headline": "Statistics Collector",
-      "description": "PostgreSQL’s statistics collector is a subsystem that supports collection and reporting of information about server activity. Presently, the collector can count accesses to tables and indexes in both disk-block and individual-row terms. It also tracks the total number of rows in each table, and information about vacuum and analyze actions for each table. It can also count calls to user-defined functions and the total time spent in each one.\nPostgreSQL also supports reporting dynamic information about exactly what is going on in the system right now, such as the exact command currently being executed by other server processes, and which other connections exist in the system.",
+      "headline": "Statistics Views",
+      "description": "Statistics Collection Configuration Viewing Statistics pg_stat_activity pg_stat_wait_event pg_stat_replication pg_stat_database pg_stat_all_tables pg_stat_all_undos pg_stat_all_indexes pg_statio_all_tables pg_statio_all_undos pg_statio_all_indexes pg_statio_all_sequences      Redrock Postgres’s statistics collector is a subsystem that supports collection and reporting of information about server activity. Presently, the collector can count accesses to tables and indexes in both disk-block and individual-row terms. It also tracks the total number of rows in each table, and information about analyze actions for each table.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "7631",
+      "wordCount" : "7378",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -76,7 +73,7 @@ PostgreSQL also supports reporting dynamic information about exactly what is goi
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-08T14:31:15.00Z",
+      "dateModified": "2022-06-09T19:33:38.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1441,7 +1438,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     href="/advanced/monitor-stats/"
                     class="gdoc-nav__entry is-active"
                   >
-                    Statistics Collector
+                    Statistics Views
                   </a>
                 </span>
               
@@ -1702,7 +1699,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/advanced/' href='/advanced/'><span itemprop='name'>Advanced</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Statistics Collector</span><meta itemprop='position' content='3' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/advanced/' href='/advanced/'><span itemprop='name'>Advanced</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Statistics Views</span><meta itemprop='position' content='3' /></li>
   
 
   
@@ -1731,9 +1728,27 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <article
     class="gdoc-markdown gdoc-markdown__align--left"
   >
-    <h1>Statistics Collector</h1>
-    <p>PostgreSQL&rsquo;s <em>statistics collector</em> is a subsystem that supports collection and reporting of information about server activity. Presently, the collector can count accesses to tables and indexes in both disk-block and individual-row terms. It also tracks the total number of rows in each table, and information about vacuum and analyze actions for each table. It can also count calls to user-defined functions and the total time spent in each one.</p>
-<p>PostgreSQL also supports reporting dynamic information about exactly what is going on in the system right now, such as the exact command currently being executed by other server processes, and which other connections exist in the system. This facility is independent of the collector process.</p>
+    <h1>Statistics Views</h1>
+    <div class="gdoc-toc gdoc-toc__level--3">
+      <nav id="TableOfContents"><ul>
+        <li><a href="#statistics-collection-configuration">Statistics Collection Configuration</a></li>
+        <li><a href="#viewing-statistics">Viewing Statistics</a></li>
+        <li><a href="#pg_stat_activity">pg_stat_activity</a></li>
+        <li><a href="#pg_stat_wait_event">pg_stat_wait_event</a></li>
+        <li><a href="#pg_stat_replication">pg_stat_replication</a></li>
+        <li><a href="#pg_stat_database">pg_stat_database</a></li>
+        <li><a href="#pg_stat_all_tables">pg_stat_all_tables</a></li>
+        <li><a href="#pg_stat_all_undos">pg_stat_all_undos</a></li>
+        <li><a href="#pg_stat_all_indexes">pg_stat_all_indexes</a></li>
+        <li><a href="#pg_statio_all_tables">pg_statio_all_tables</a></li>
+        <li><a href="#pg_statio_all_undos">pg_statio_all_undos</a></li>
+        <li><a href="#pg_statio_all_indexes">pg_statio_all_indexes</a></li>
+        <li><a href="#pg_statio_all_sequences">pg_statio_all_sequences</a></li>
+      </ul></nav>
+      <hr />
+    </div>
+<p>Redrock Postgres&rsquo;s <em>statistics collector</em> is a subsystem that supports collection and reporting of information about server activity. Presently, the collector can count accesses to tables and indexes in both disk-block and individual-row terms. It also tracks the total number of rows in each table, and information about analyze actions for each table. It can also count calls to user-defined functions and the total time spent in each one.</p>
+<p>Redrock Postgres also supports reporting dynamic information about exactly what is going on in the system right now, such as the exact command currently being executed by other server processes, and which other connections exist in the system. This facility is independent of the collector process.</p>
 <div class="gdoc-page__anchorwrap">
     <h2 id="statistics-collection-configuration">
         Statistics Collection Configuration
@@ -1810,7 +1825,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 >Section 27.2.3</a>.</p>
 <p>When using the statistics to monitor collected data, it is important to realize that the information does not update instantaneously. Each individual server process transmits new statistical counts to the collector just before going idle; so a query or transaction still in progress does not affect the displayed totals. Also, the collector itself emits a new report at most once per <code>PGSTAT_STAT_INTERVAL</code> milliseconds (500 ms unless altered while building the server). So the displayed information lags behind actual activity. However, current-query information collected by <code>track_activities</code> is always up-to-date.</p>
 <p>Another important point is that when a server process is asked to display any of these statistics, it first fetches the most recent report emitted by the collector process and then continues to use this snapshot for all statistical views and functions until the end of its current transaction. So the statistics will show static information as long as you continue the current transaction. Similarly, information about the current queries of all sessions is collected when any such information is first requested within a transaction, and the same information will be displayed throughout the transaction. This is a feature, not a bug, because it allows you to perform several queries on the statistics and correlate the results without worrying that the numbers are changing underneath you. But if you want to see new results with each query, be sure to do the queries outside any transaction block. Alternatively, you can invoke <code>pg_stat_clear_snapshot</code>(), which will discard the current transaction&rsquo;s statistics snapshot (if any). The next use of statistical information will cause a new snapshot to be fetched.</p>
-<p>A transaction can also see its own statistics (as yet untransmitted to the collector) in the views <code>pg_stat_xact_all_tables</code>, <code>pg_stat_xact_sys_tables</code>, <code>pg_stat_xact_user_tables</code>, and <code>pg_stat_xact_user_functions</code>. These numbers do not act as stated above; instead they update continuously throughout the transaction.</p>
+<p>A transaction can also see its own statistics (as yet untransmitted to the collector) in the views <code>pg_stat_xact_all_tables</code>, <code>pg_stat_xact_all_undos</code>, <code>pg_stat_xact_sys_tables</code>, <code>pg_stat_xact_user_tables</code>, and <code>pg_stat_xact_user_functions</code>. These numbers do not act as stated above; instead they update continuously throughout the transaction.</p>
 <p>Some of the information in the dynamic statistics views shown in <a
   class="gdoc-markdown__link"
   href="https://www.postgresql.org/docs/12/monitoring-stats.html#MONITORING-STATS-DYNAMIC-VIEWS-TABLE"
@@ -1820,7 +1835,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   href="https://www.postgresql.org/docs/12/default-roles.html"
   
 >Section 21.5</a>) can see all the information about all sessions.</p>
-<p><strong>Table 27.1. Dynamic Statistics Views</strong></p>
+<p><strong>Table 1. Dynamic Statistics Views</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -1855,7 +1870,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 </tbody>
 </table> </div>
-<p><strong>Table 27.2. Collected Statistics Views</strong></p>
+<p><strong>Table 2. Collected Statistics Views</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -1890,7 +1905,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 <tr>
 <td><code>pg_stat_xact_all_tables</code></td>
-<td>Similar to <code>pg_stat_all_tables</code>, but counts actions taken so far within the current transaction (which are <em>not</em> yet included in <code>pg_stat_all_tables</code> and related views). The columns for numbers of live and dead rows and vacuum and analyze actions are not present in this view.</td>
+<td>Similar to <code>pg_stat_all_tables</code>, but counts actions taken so far within the current transaction (which are <em>not</em> yet included in <code>pg_stat_all_tables</code> and related views). The columns for numbers of live and dead rows and analyze actions are not present in this view.</td>
+</tr>
+<tr>
+<td><code>pg_stat_xact_all_undos</code></td>
+<td>Similar to <code>pg_stat_all_undos</code>, but counts actions taken so far within the current transaction (which are <em>not</em> yet included in <code>pg_stat_all_undos</code> and related views). The columns for numbers of live and dead records are not present in this view.</td>
 </tr>
 <tr>
 <td><code>pg_stat_xact_sys_tables</code></td>
@@ -1968,7 +1987,16 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </table> </div>
 <p>The per-index statistics are particularly useful to determine which indexes are being used and how effective they are.</p>
 <p>The <code>pg_statio_</code> views are primarily useful to determine the effectiveness of the buffer cache. When the number of actual disk reads is much smaller than the number of buffer hits, then the cache is satisfying most read requests without invoking a kernel call. However, these statistics do not give the entire story: due to the way in which PostgreSQL handles disk I/O, data that is not in the PostgreSQL buffer cache might still reside in the kernel&rsquo;s I/O cache, and might therefore still be fetched without requiring a physical read. Users interested in obtaining more detailed information on PostgreSQL I/O behavior are advised to use the PostgreSQL statistics collector in combination with operating system utilities that allow insight into the kernel&rsquo;s handling of I/O.</p>
-<p><strong>Table 27.3. <code>pg_stat_activity</code> View</strong></p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="pg_stat_activity">
+        pg_stat_activity
+        <a data-clipboard-text="https://doc.rockdata.net/advanced/monitor-stats/#pg_stat_activity" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: pg_stat_activity" aria-label="Anchor to: pg_stat_activity" href="#pg_stat_activity">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>The <code>pg_stat_activity</code> view will have one row per server process, showing information related to the current activity of that process.</p>
+<p><strong>Table 3. <code>pg_stat_activity</code> View</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -2021,7 +2049,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <tr>
 <td><code>client_addr</code></td>
 <td><code>inet</code></td>
-<td>IP address of the client connected to this backend. If this field is null, it indicates either that the client is connected via a Unix socket on the server machine or that this is an internal process such as autovacuum.</td>
+<td>IP address of the client connected to this backend. If this field is null, it indicates either that the client is connected via a Unix socket on the server machine or that this is an internal process such as autoanalyze.</td>
 </tr>
 <tr>
 <td><code>client_hostname</code></td>
@@ -2060,7 +2088,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <tr>
 <td><code>wait_event_type</code></td>
 <td><code>text</code></td>
-<td>The type of event for which the backend is waiting, if any; otherwise NULL. Possible values are:<code>LWLock</code>: The backend is waiting for a lightweight lock. Each such lock protects a particular data structure in shared memory. <code>wait_event</code> will contain a name identifying the purpose of the lightweight lock. (Some locks have specific names; others are part of a group of locks each with a similar purpose.)<code>Lock</code>: The backend is waiting for a heavyweight lock. Heavyweight locks, also known as lock manager locks or simply locks, primarily protect SQL-visible objects such as tables. However, they are also used to ensure mutual exclusion for certain internal operations such as relation extension. <code>wait_event</code> will identify the type of lock awaited.<code>BufferPin</code>: The server process is waiting to access to a data buffer during a period when no other process can be examining that buffer. Buffer pin waits can be protracted if another process holds an open cursor which last read data from the buffer in question.<code>Activity</code>: The server process is idle. This is used by system processes waiting for activity in their main processing loop. <code>wait_event</code> will identify the specific wait point.<code>Extension</code>: The server process is waiting for activity in an extension module. This category is useful for modules to track custom waiting points.<code>Client</code>: The server process is waiting for some activity on a socket from user applications, and that the server expects something to happen that is independent from its internal processes. <code>wait_event</code> will identify the specific wait point.<code>IPC</code>: The server process is waiting for some activity from another process in the server. <code>wait_event</code> will identify the specific wait point.<code>Timeout</code>: The server process is waiting for a timeout to expire. <code>wait_event</code> will identify the specific wait point.<code>IO</code>: The server process is waiting for a IO to complete. <code>wait_event</code> will identify the specific wait point.</td>
+<td>The type of event for which the backend is waiting, if any; otherwise NULL. Possible values are:<br/><code>LWLock</code>: The backend is waiting for a lightweight lock. Each such lock protects a particular data structure in shared memory. <code>wait_event</code> will contain a name identifying the purpose of the lightweight lock. (Some locks have specific names; others are part of a group of locks each with a similar purpose.)<br/><code>Lock</code>: The backend is waiting for a heavyweight lock. Heavyweight locks, also known as lock manager locks or simply locks, primarily protect SQL-visible objects such as tables. However, they are also used to ensure mutual exclusion for certain internal operations such as relation extension. <code>wait_event</code> will identify the type of lock awaited.<br/><code>BufferPin</code>: The server process is waiting to access to a data buffer during a period when no other process can be examining that buffer. Buffer pin waits can be protracted if another process holds an open cursor which last read data from the buffer in question.<br/><code>Activity</code>: The server process is idle. This is used by system processes waiting for activity in their main processing loop. <code>wait_event</code> will identify the specific wait point.<br/><code>Extension</code>: The server process is waiting for activity in an extension module. This category is useful for modules to track custom waiting points.<br/><code>Client</code>: The server process is waiting for some activity on a socket from user applications, and that the server expects something to happen that is independent from its internal processes. <code>wait_event</code> will identify the specific wait point.<br/><code>IPC</code>: The server process is waiting for some activity from another process in the server. <code>wait_event</code> will identify the specific wait point.<br/><code>Timeout</code>: The server process is waiting for a timeout to expire. <code>wait_event</code> will identify the specific wait point.<br/><code>IO</code>: The server process is waiting for a IO to complete. <code>wait_event</code> will identify the specific wait point.</td>
 </tr>
 <tr>
 <td><code>wait_event</code></td>
@@ -2079,7 +2107,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <tr>
 <td><code>state</code></td>
 <td><code>text</code></td>
-<td>Current overall state of this backend. Possible values are:<code>active</code>: The backend is executing a query.<code>idle</code>: The backend is waiting for a new client command.<code>idle in transaction</code>: The backend is in a transaction, but is not currently executing a query.<code>idle in transaction (aborted)</code>: This state is similar to <code>idle in transaction</code>, except one of the statements in the transaction caused an error.<code>fastpath function call</code>: The backend is executing a fast-path function.<code>disabled</code>: This state is reported if <a
+<td>Current overall state of this backend. Possible values are:<br/><code>active</code>: The backend is executing a query.<br/><code>idle</code>: The backend is waiting for a new client command.<br/><code>idle in transaction</code>: The backend is in a transaction, but is not currently executing a query.<br/><code>idle in transaction (aborted)</code>: This state is similar to <code>idle in transaction</code>, except one of the statements in the transaction caused an error.<br/><code>fastpath function call</code>: The backend is executing a fast-path function.<br/><code>disabled</code>: This state is reported if <a
   class="gdoc-markdown__link"
   href="https://www.postgresql.org/docs/12/runtime-config-statistics.html#GUC-TRACK-ACTIVITIES"
   
@@ -2111,17 +2139,9 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 </tbody>
 </table> </div>
-<p>The <code>pg_stat_activity</code> view will have one row per server process, showing information related to the current activity of that process.</p>
-<div class="gdoc-page__anchorwrap">
-    <h3 id="note">
-        Note
-        <a data-clipboard-text="https://doc.rockdata.net/advanced/monitor-stats/#note" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Note" aria-label="Anchor to: Note" href="#note">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
+<p><strong>Note</strong></p>
 <p>The <code>wait_event</code> and <code>state</code> columns are independent. If a backend is in the <code>active</code> state, it may or may not be <code>waiting</code> on some event. If the state is <code>active</code> and <code>wait_event</code> is non-null, it means that a query is being executed, but is being blocked somewhere in the system.</p>
-<p><strong>Table 28.4. Wait Event Types</strong></p>
+<p><strong>Table 4. Wait Event Types</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -2204,7 +2224,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 </tbody>
 </table> </div>
-<p><strong>Table 28.5. Wait Events of Type <code>Activity</code></strong></p>
+<p><strong>Table 5. Wait Events of Type <code>Activity</code></strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -2267,7 +2287,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 </tbody>
 </table> </div>
-<p><strong>Table 28.6. Wait Events of Type <code>BufferPin</code></strong></p>
+<p><strong>Table 6. Wait Events of Type <code>BufferPin</code></strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -2282,7 +2302,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 </tbody>
 </table> </div>
-<p><strong>Table 28.7. Wait Events of Type <code>Client</code></strong></p>
+<p><strong>Table 7. Wait Events of Type <code>Client</code></strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -2312,6 +2332,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>Waiting in WAL receiver to receive data from remote server.</td>
 </tr>
 <tr>
+<td><code>LibPQStorageConnect</code></td>
+<td>Waiting in compute server to establish connection to remote storage server.</td>
+</tr>
+<tr>
+<td><code>LibPQStorageReceive</code></td>
+<td>Waiting in compute server to receive data from remote storage server.</td>
+</tr>
+<tr>
 <td><code>SSLOpenServer</code></td>
 <td>Waiting for SSL while attempting connection.</td>
 </tr>
@@ -2325,7 +2353,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 </tbody>
 </table> </div>
-<p><strong>Table 28.8. Wait Events of Type <code>Extension</code></strong></p>
+<p><strong>Table 8. Wait Events of Type <code>Extension</code></strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -2340,7 +2368,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 </tbody>
 </table> </div>
-<p><strong>Table 28.9. Wait Events of Type <code>IO</code></strong></p>
+<p><strong>Table 9. Wait Events of Type <code>IO</code></strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -2570,18 +2598,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>Waiting for a write of a newly created timeline history file.</td>
 </tr>
 <tr>
-<td><code>TwophaseFileRead</code></td>
-<td>Waiting for a read of a two phase state file.</td>
-</tr>
-<tr>
-<td><code>TwophaseFileSync</code></td>
-<td>Waiting for a two phase state file to reach durable storage.</td>
-</tr>
-<tr>
-<td><code>TwophaseFileWrite</code></td>
-<td>Waiting for a write of a two phase state file.</td>
-</tr>
-<tr>
 <td><code>WALBootstrapSync</code></td>
 <td>Waiting for WAL to reach durable storage during bootstrapping.</td>
 </tr>
@@ -2647,7 +2663,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 </tbody>
 </table> </div>
-<p><strong>Table 28.10. Wait Events of Type <code>IPC</code></strong></p>
+<p><strong>Table 10. Wait Events of Type <code>IPC</code></strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -2695,66 +2711,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <tr>
 <td><code>ExecuteGather</code></td>
 <td>Waiting for activity from a child process while executing a <code>Gather</code> plan node.</td>
-</tr>
-<tr>
-<td><code>HashBatchAllocate</code></td>
-<td>Waiting for an elected Parallel Hash participant to allocate a hash table.</td>
-</tr>
-<tr>
-<td><code>HashBatchElect</code></td>
-<td>Waiting to elect a Parallel Hash participant to allocate a hash table.</td>
-</tr>
-<tr>
-<td><code>HashBatchLoad</code></td>
-<td>Waiting for other Parallel Hash participants to finish loading a hash table.</td>
-</tr>
-<tr>
-<td><code>HashBuildAllocate</code></td>
-<td>Waiting for an elected Parallel Hash participant to allocate the initial hash table.</td>
-</tr>
-<tr>
-<td><code>HashBuildElect</code></td>
-<td>Waiting to elect a Parallel Hash participant to allocate the initial hash table.</td>
-</tr>
-<tr>
-<td><code>HashBuildHashInner</code></td>
-<td>Waiting for other Parallel Hash participants to finish hashing the inner relation.</td>
-</tr>
-<tr>
-<td><code>HashBuildHashOuter</code></td>
-<td>Waiting for other Parallel Hash participants to finish partitioning the outer relation.</td>
-</tr>
-<tr>
-<td><code>HashGrowBatchesAllocate</code></td>
-<td>Waiting for an elected Parallel Hash participant to allocate more batches.</td>
-</tr>
-<tr>
-<td><code>HashGrowBatchesDecide</code></td>
-<td>Waiting to elect a Parallel Hash participant to decide on future batch growth.</td>
-</tr>
-<tr>
-<td><code>HashGrowBatchesElect</code></td>
-<td>Waiting to elect a Parallel Hash participant to allocate more batches.</td>
-</tr>
-<tr>
-<td><code>HashGrowBatchesFinish</code></td>
-<td>Waiting for an elected Parallel Hash participant to decide on future batch growth.</td>
-</tr>
-<tr>
-<td><code>HashGrowBatchesRepartition</code></td>
-<td>Waiting for other Parallel Hash participants to finish repartitioning.</td>
-</tr>
-<tr>
-<td><code>HashGrowBucketsAllocate</code></td>
-<td>Waiting for an elected Parallel Hash participant to finish allocating more buckets.</td>
-</tr>
-<tr>
-<td><code>HashGrowBucketsElect</code></td>
-<td>Waiting to elect a Parallel Hash participant to allocate more buckets.</td>
-</tr>
-<tr>
-<td><code>HashGrowBucketsReinsert</code></td>
-<td>Waiting for other Parallel Hash participants to finish inserting tuples into new buckets.</td>
 </tr>
 <tr>
 <td><code>LogicalSyncData</code></td>
@@ -2805,14 +2761,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>Waiting for standby promotion.</td>
 </tr>
 <tr>
-<td><code>RecoveryConflictSnapshot</code></td>
-<td>Waiting for recovery conflict resolution for a vacuum cleanup.</td>
-</tr>
-<tr>
-<td><code>RecoveryConflictTablespace</code></td>
-<td>Waiting for recovery conflict resolution for dropping a tablespace.</td>
-</tr>
-<tr>
 <td><code>RecoveryPause</code></td>
 <td>Waiting for recovery to be resumed.</td>
 </tr>
@@ -2846,7 +2794,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 </tbody>
 </table> </div>
-<p><strong>Table 28.11. Wait Events of Type <code>Lock</code></strong></p>
+<p><strong>Table 11. Wait Events of Type <code>Lock</code></strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -2864,10 +2812,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>Waiting to extend a relation.</td>
 </tr>
 <tr>
-<td><code>frozenid</code></td>
-<td>Waiting to update <code>pg_database</code>.<code>datfrozenxid</code> and <code>pg_database</code>.<code>datminmxid</code>.</td>
-</tr>
-<tr>
 <td><code>object</code></td>
 <td>Waiting to acquire a lock on a non-relation database object.</td>
 </tr>
@@ -2878,10 +2822,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <tr>
 <td><code>relation</code></td>
 <td>Waiting to acquire a lock on a relation.</td>
-</tr>
-<tr>
-<td><code>spectoken</code></td>
-<td>Waiting to acquire a speculative insertion lock.</td>
 </tr>
 <tr>
 <td><code>transactionid</code></td>
@@ -2901,7 +2841,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 </tbody>
 </table> </div>
-<p><strong>Table 28.12. Wait Events of Type <code>LWLock</code></strong></p>
+<p><strong>Table 12. Wait Events of Type <code>LWLock</code></strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -2916,27 +2856,27 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 <tr>
 <td><code>AutoFile</code></td>
-<td>Waiting to update the <code>postgresql.auto.conf</code> file.</td>
+<td>Waiting to update the <code>pgsql.auto.conf</code> file.</td>
 </tr>
 <tr>
-<td><code>Autovacuum</code></td>
-<td>Waiting to read or update the current state of autovacuum workers.</td>
+<td><code>Autoanalyze</code></td>
+<td>Waiting to read or update the current state of autoanalyze workers.</td>
 </tr>
 <tr>
-<td><code>AutovacuumSchedule</code></td>
-<td>Waiting to ensure that a table selected for autovacuum still needs vacuuming.</td>
+<td><code>AutoanalyzeSchedule</code></td>
+<td>Waiting to ensure that a table selected for autoanalyze still needs analyzing.</td>
 </tr>
 <tr>
 <td><code>BackgroundWorker</code></td>
 <td>Waiting to read or update background worker state.</td>
 </tr>
 <tr>
-<td><code>BtreeVacuum</code></td>
-<td>Waiting to read or update vacuum-related information for a B-tree index.</td>
-</tr>
-<tr>
 <td><code>BufferContent</code></td>
 <td>Waiting to access a data page in memory.</td>
+</tr>
+<tr>
+<td><code>BufferIO</code></td>
+<td>Waiting to read or write a data page in disk.</td>
 </tr>
 <tr>
 <td><code>BufferMapping</code></td>
@@ -2947,20 +2887,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>Waiting to manage fsync requests.</td>
 </tr>
 <tr>
-<td><code>CommitTs</code></td>
-<td>Waiting to read or update the last value set for a transaction commit timestamp.</td>
-</tr>
-<tr>
-<td><code>CommitTsBuffer</code></td>
-<td>Waiting for I/O on a commit timestamp SLRU buffer.</td>
-</tr>
-<tr>
-<td><code>CommitTsSLRU</code></td>
-<td>Waiting to access the commit timestamp SLRU cache.</td>
-</tr>
-<tr>
 <td><code>ControlFile</code></td>
 <td>Waiting to read or update the <code>pg_control</code> file or create a new WAL file.</td>
+</tr>
+<tr>
+<td><code>DatabaseState</code></td>
+<td>Waiting to update state of databases.</td>
 </tr>
 <tr>
 <td><code>DynamicSharedMemoryControl</code></td>
@@ -2977,30 +2909,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <tr>
 <td><code>LogicalRepWorker</code></td>
 <td>Waiting to read or update the state of logical replication workers.</td>
-</tr>
-<tr>
-<td><code>MultiXactGen</code></td>
-<td>Waiting to read or update shared multixact state.</td>
-</tr>
-<tr>
-<td><code>MultiXactMemberBuffer</code></td>
-<td>Waiting for I/O on a multixact member SLRU buffer.</td>
-</tr>
-<tr>
-<td><code>MultiXactMemberSLRU</code></td>
-<td>Waiting to access the multixact member SLRU cache.</td>
-</tr>
-<tr>
-<td><code>MultiXactOffsetBuffer</code></td>
-<td>Waiting for I/O on a multixact offset SLRU buffer.</td>
-</tr>
-<tr>
-<td><code>MultiXactOffsetSLRU</code></td>
-<td>Waiting to access the multixact offset SLRU cache.</td>
-</tr>
-<tr>
-<td><code>MultiXactTruncation</code></td>
-<td>Waiting to read or truncate multixact information.</td>
 </tr>
 <tr>
 <td><code>NotifyBuffer</code></td>
@@ -3027,32 +2935,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>Waiting to read or update old snapshot control information.</td>
 </tr>
 <tr>
-<td><code>ParallelAppend</code></td>
-<td>Waiting to choose the next subplan during Parallel Append plan execution.</td>
+<td><code>PLogSpace</code></td>
+<td>Waiting to update state of network tablespaces.</td>
 </tr>
 <tr>
-<td><code>ParallelHashJoin</code></td>
-<td>Waiting to synchronize workers during Parallel Hash Join plan execution.</td>
-</tr>
-<tr>
-<td><code>ParallelQueryDSA</code></td>
-<td>Waiting for parallel query dynamic shared memory allocation.</td>
-</tr>
-<tr>
-<td><code>PerSessionDSA</code></td>
-<td>Waiting for parallel query dynamic shared memory allocation.</td>
-</tr>
-<tr>
-<td><code>PerSessionRecordType</code></td>
-<td>Waiting to access a parallel query&rsquo;s information about composite types.</td>
-</tr>
-<tr>
-<td><code>PerSessionRecordTypmod</code></td>
-<td>Waiting to access a parallel query&rsquo;s information about type modifiers that identify anonymous record types.</td>
-</tr>
-<tr>
-<td><code>PerXactPredicateList</code></td>
-<td>Waiting to access the list of predicate locks held by the current serializable transaction during a parallel query.</td>
+<td><code>PLogWrite</code></td>
+<td>Waiting for PLOG buffers to be written to disk.</td>
 </tr>
 <tr>
 <td><code>PredicateLockManager</code></td>
@@ -3061,10 +2949,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <tr>
 <td><code>ProcArray</code></td>
 <td>Waiting to access the shared per-process data structures (typically, to get a snapshot or report a session&rsquo;s transaction ID).</td>
-</tr>
-<tr>
-<td><code>RelationMapping</code></td>
-<td>Waiting to read or update a <code>pg_filenode.map</code> file (used to track the filenode assignments of certain system catalogs).</td>
 </tr>
 <tr>
 <td><code>RelCacheInit</code></td>
@@ -3091,10 +2975,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>Waiting for I/O on a replication slot.</td>
 </tr>
 <tr>
-<td><code>SerialBuffer</code></td>
-<td>Waiting for I/O on a serializable transaction conflict SLRU buffer.</td>
-</tr>
-<tr>
 <td><code>SerializableFinishedList</code></td>
 <td>Waiting to access the list of finished serializable transactions.</td>
 </tr>
@@ -3105,18 +2985,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <tr>
 <td><code>SerializableXactHash</code></td>
 <td>Waiting to read or update information about serializable transactions.</td>
-</tr>
-<tr>
-<td><code>SerialSLRU</code></td>
-<td>Waiting to access the serializable transaction conflict SLRU cache.</td>
-</tr>
-<tr>
-<td><code>SharedTidBitmap</code></td>
-<td>Waiting to access a shared TID bitmap during a parallel bitmap index scan.</td>
-</tr>
-<tr>
-<td><code>SharedTupleStore</code></td>
-<td>Waiting to access a shared tuple store during parallel query.</td>
 </tr>
 <tr>
 <td><code>ShmemIndex</code></td>
@@ -3131,14 +2999,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>Waiting to add a message to the shared catalog invalidation queue.</td>
 </tr>
 <tr>
-<td><code>SubtransBuffer</code></td>
-<td>Waiting for I/O on a sub-transaction SLRU buffer.</td>
-</tr>
-<tr>
-<td><code>SubtransSLRU</code></td>
-<td>Waiting to access the sub-transaction SLRU cache.</td>
-</tr>
-<tr>
 <td><code>SyncRep</code></td>
 <td>Waiting to read or update information about the state of synchronous replication.</td>
 </tr>
@@ -3147,7 +3007,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>Waiting to select the starting location of a synchronized table scan.</td>
 </tr>
 <tr>
-<td><code>TablespaceCreate</code></td>
+<td><code>TablespaceMap</code></td>
 <td>Waiting to create or drop a tablespace.</td>
 </tr>
 <tr>
@@ -3166,42 +3026,15 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>WALWrite</code></td>
 <td>Waiting for WAL buffers to be written to disk.</td>
 </tr>
-<tr>
-<td><code>WrapLimitsVacuum</code></td>
-<td>Waiting to update limits on transaction id and multixact consumption.</td>
-</tr>
-<tr>
-<td><code>XactBuffer</code></td>
-<td>Waiting for I/O on a transaction status SLRU buffer.</td>
-</tr>
-<tr>
-<td><code>XactSLRU</code></td>
-<td>Waiting to access the transaction status SLRU cache.</td>
-</tr>
-<tr>
-<td><code>XactTruncation</code></td>
-<td>Waiting to execute <code>pg_xact_status</code> or update the oldest transaction ID available to it.</td>
-</tr>
-<tr>
-<td><code>XidGen</code></td>
-<td>Waiting to allocate a new transaction ID.</td>
-</tr>
 </tbody>
 </table> </div>
-<div class="gdoc-page__anchorwrap">
-    <h3 id="note-1">
-        Note
-        <a data-clipboard-text="https://doc.rockdata.net/advanced/monitor-stats/#note-1" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Note" aria-label="Anchor to: Note" href="#note-1">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
+<p><strong>Note</strong></p>
 <p>Extensions can add <code>LWLock</code> types to the list shown in <a
   class="gdoc-markdown__link"
   href="https://www.postgresql.org/docs/current/monitoring-stats.html#WAIT-EVENT-LWLOCK-TABLE"
   
 >Table 28.12</a>. In some cases, the name assigned by an extension will not be available in all server processes; so an <code>LWLock</code> wait event might be reported as just “<code>extension</code>” rather than the extension-assigned name.</p>
-<p><strong>Table 28.13. Wait Events of Type <code>Timeout</code></strong></p>
+<p><strong>Table 13. Wait Events of Type <code>Timeout</code></strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -3234,10 +3067,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>RegisterSyncRequest</code></td>
 <td>Waiting while sending synchronization requests to the checkpointer, because the request queue is full.</td>
 </tr>
-<tr>
-<td><code>VacuumDelay</code></td>
-<td>Waiting in a cost-based vacuum delay point.</td>
-</tr>
 </tbody>
 </table> </div>
 <p>Here is an example of how wait events can be viewed:</p>
@@ -3247,7 +3076,16 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
  2540 | Lock            | relation
  6644 | LWLock          | ProcArray
 (2 rows)
-</code></pre><p><strong>Table 27.15. <code>pg_stat_wait_event</code> View</strong></p>
+</code></pre><div class="gdoc-page__anchorwrap">
+    <h2 id="pg_stat_wait_event">
+        pg_stat_wait_event
+        <a data-clipboard-text="https://doc.rockdata.net/advanced/monitor-stats/#pg_stat_wait_event" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: pg_stat_wait_event" aria-label="Anchor to: pg_stat_wait_event" href="#pg_stat_wait_event">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>The <code>pg_stat_wait_event</code> view will contain one row for each wait event in the current database, showing statistics about wait information of every occured wait events.</p>
+<p><strong>Table 14. <code>pg_stat_wait_event</code> View</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -3298,8 +3136,16 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 </tbody>
 </table> </div>
-<p>The <code>pg_stat_wait_event</code> view will contain one row for each wait event in the current database, showing statistics about wait information of every occured wait events.</p>
-<p><strong>Table 27.5. <code>pg_stat_replication</code> View</strong></p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="pg_stat_replication">
+        pg_stat_replication
+        <a data-clipboard-text="https://doc.rockdata.net/advanced/monitor-stats/#pg_stat_replication" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: pg_stat_replication" aria-label="Anchor to: pg_stat_replication" href="#pg_stat_replication">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>The <code>pg_stat_replication</code> view will contain one row per WAL sender process, showing statistics about replication to that sender&rsquo;s connected standby server. Only directly connected standbys are listed; no information is available about downstream standby servers.</p>
+<p><strong>Table 15. <code>pg_stat_replication</code> View</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -3419,19 +3265,20 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 </tbody>
 </table> </div>
-<p>The <code>pg_stat_replication</code> view will contain one row per WAL sender process, showing statistics about replication to that sender&rsquo;s connected standby server. Only directly connected standbys are listed; no information is available about downstream standby servers.</p>
 <p>The lag times reported in the <code>pg_stat_replication</code> view are measurements of the time taken for recent WAL to be written, flushed and replayed and for the sender to know about it. These times represent the commit delay that was (or would have been) introduced by each synchronous commit level, if the remote server was configured as a synchronous standby. For an asynchronous standby, the <code>replay_lag</code> column approximates the delay before recent transactions became visible to queries. If the standby server has entirely caught up with the sending server and there is no more WAL activity, the most recently measured lag times will continue to be displayed for a short time and then show NULL.</p>
 <p>Lag times work automatically for physical replication. Logical decoding plugins may optionally emit tracking messages; if they do not, the tracking mechanism will simply display NULL lag.</p>
+<p><strong>Note</strong></p>
+<p>The reported lag times are not predictions of how long it will take for the standby to catch up with the sending server assuming the current rate of replay. Such a system would show similar times while new WAL is being generated, but would differ when the sender becomes idle. In particular, when the standby has caught up completely, <code>pg_stat_replication</code> shows the time taken to write, flush and replay the most recent reported WAL location rather than zero as some users might expect. This is consistent with the goal of measuring synchronous commit and transaction visibility delays for recent write transactions. To reduce confusion for users expecting a different model of lag, the lag columns revert to NULL after a short time on a fully replayed idle system. Monitoring systems should choose whether to represent this as missing data, zero or continue to display the last known value.</p>
 <div class="gdoc-page__anchorwrap">
-    <h3 id="note-2">
-        Note
-        <a data-clipboard-text="https://doc.rockdata.net/advanced/monitor-stats/#note-2" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Note" aria-label="Anchor to: Note" href="#note-2">
+    <h2 id="pg_stat_database">
+        pg_stat_database
+        <a data-clipboard-text="https://doc.rockdata.net/advanced/monitor-stats/#pg_stat_database" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: pg_stat_database" aria-label="Anchor to: pg_stat_database" href="#pg_stat_database">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
-    </h3>
+    </h2>
 </div>
-<p>The reported lag times are not predictions of how long it will take for the standby to catch up with the sending server assuming the current rate of replay. Such a system would show similar times while new WAL is being generated, but would differ when the sender becomes idle. In particular, when the standby has caught up completely, <code>pg_stat_replication</code> shows the time taken to write, flush and replay the most recent reported WAL location rather than zero as some users might expect. This is consistent with the goal of measuring synchronous commit and transaction visibility delays for recent write transactions. To reduce confusion for users expecting a different model of lag, the lag columns revert to NULL after a short time on a fully replayed idle system. Monitoring systems should choose whether to represent this as missing data, zero or continue to display the last known value.</p>
-<p><strong>Table 27.12. <code>pg_stat_database</code> View</strong></p>
+<p>The <code>pg_stat_database</code> view will contain one row for each database in the cluster, plus one for the shared objects, showing database-wide statistics.</p>
+<p><strong>Table 16. <code>pg_stat_database</code> View</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -3470,6 +3317,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>blks_read</code></td>
 <td><code>bigint</code></td>
 <td>Number of disk blocks read in this database</td>
+</tr>
+<tr>
+<td><code>blks_cloned</code></td>
+<td><code>bigint</code></td>
+<td>Number of data buffers cloned in this database</td>
 </tr>
 <tr>
 <td><code>blks_hit</code></td>
@@ -3549,6 +3401,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>Time spent reading data file blocks by backends in this database, in milliseconds</td>
 </tr>
 <tr>
+<td><code>blk_clone_time</code></td>
+<td><code>double precision</code></td>
+<td>Time spent cloning data buffers by backends in this database, in milliseconds</td>
+</tr>
+<tr>
 <td><code>blk_write_time</code></td>
 <td><code>double precision</code></td>
 <td>Time spent writing data file blocks by backends in this database, in milliseconds</td>
@@ -3560,8 +3417,16 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 </tbody>
 </table> </div>
-<p>The <code>pg_stat_database</code> view will contain one row for each database in the cluster, plus one for the shared objects, showing database-wide statistics.</p>
-<p><strong>Table 27.14. <code>pg_stat_all_tables</code> View</strong></p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="pg_stat_all_tables">
+        pg_stat_all_tables
+        <a data-clipboard-text="https://doc.rockdata.net/advanced/monitor-stats/#pg_stat_all_tables" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: pg_stat_all_tables" aria-label="Anchor to: pg_stat_all_tables" href="#pg_stat_all_tables">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>The <code>pg_stat_all_tables</code> view will contain one row for each table in the current database (including TOAST tables), showing statistics about accesses to that specific table. The <code>pg_stat_user_tables</code> and <code>pg_stat_sys_tables</code> views contain the same information, but filtered to only show user and system tables respectively.</p>
+<p><strong>Table 17. <code>pg_stat_all_tables</code> View</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -3642,16 +3507,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>Estimated number of rows modified since this table was last analyzed</td>
 </tr>
 <tr>
-<td><code>last_vacuum</code></td>
-<td><code>timestamp with time zone</code></td>
-<td>Last time at which this table was manually vacuumed (not counting <code>VACUUM FULL</code>)</td>
-</tr>
-<tr>
-<td><code>last_autovacuum</code></td>
-<td><code>timestamp with time zone</code></td>
-<td>Last time at which this table was vacuumed by the autovacuum daemon</td>
-</tr>
-<tr>
 <td><code>last_analyze</code></td>
 <td><code>timestamp with time zone</code></td>
 <td>Last time at which this table was manually analyzed</td>
@@ -3659,17 +3514,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <tr>
 <td><code>last_autoanalyze</code></td>
 <td><code>timestamp with time zone</code></td>
-<td>Last time at which this table was analyzed by the autovacuum daemon</td>
-</tr>
-<tr>
-<td><code>vacuum_count</code></td>
-<td><code>bigint</code></td>
-<td>Number of times this table has been manually vacuumed (not counting <code>VACUUM FULL</code>)</td>
-</tr>
-<tr>
-<td><code>autovacuum_count</code></td>
-<td><code>bigint</code></td>
-<td>Number of times this table has been vacuumed by the autovacuum daemon</td>
+<td>Last time at which this table was analyzed by the autoanalyze daemon</td>
 </tr>
 <tr>
 <td><code>analyze_count</code></td>
@@ -3679,12 +3524,91 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <tr>
 <td><code>autoanalyze_count</code></td>
 <td><code>bigint</code></td>
-<td>Number of times this table has been analyzed by the autovacuum daemon</td>
+<td>Number of times this table has been analyzed by the autoanalyze daemon</td>
 </tr>
 </tbody>
 </table> </div>
-<p>The <code>pg_stat_all_tables</code> view will contain one row for each table in the current database (including TOAST tables), showing statistics about accesses to that specific table. The <code>pg_stat_user_tables</code> and <code>pg_stat_sys_tables</code> views contain the same information, but filtered to only show user and system tables respectively.</p>
-<p><strong>Table 27.15. <code>pg_stat_all_indexes</code> View</strong></p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="pg_stat_all_undos">
+        pg_stat_all_undos
+        <a data-clipboard-text="https://doc.rockdata.net/advanced/monitor-stats/#pg_stat_all_undos" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: pg_stat_all_undos" aria-label="Anchor to: pg_stat_all_undos" href="#pg_stat_all_undos">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>The <code>pg_stat_all_undos</code> view will contain one row for each undo in the current database, showing statistics about accesses to that specific undo.</p>
+<p><strong>Table 18. <code>pg_stat_all_undos</code> View</strong></p>
+<div class="table-wrap"> <table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>relid</code></td>
+<td><code>oid</code></td>
+<td>OID of a table</td>
+</tr>
+<tr>
+<td><code>schemaname</code></td>
+<td><code>name</code></td>
+<td>Name of the schema that this table is in</td>
+</tr>
+<tr>
+<td><code>relname</code></td>
+<td><code>name</code></td>
+<td>Name of this table</td>
+</tr>
+<tr>
+<td><code>n_tup_fetch</code></td>
+<td><code>bigint</code></td>
+<td>Number of records fetched</td>
+</tr>
+<tr>
+<td><code>n_tup_ins</code></td>
+<td><code>bigint</code></td>
+<td>Number of records inserted</td>
+</tr>
+<tr>
+<td><code>n_tup_upd</code></td>
+<td><code>bigint</code></td>
+<td>Number of records updated</td>
+</tr>
+<tr>
+<td><code>n_tup_del</code></td>
+<td><code>bigint</code></td>
+<td>Number of records deleted</td>
+</tr>
+<tr>
+<td><code>n_tup_hot_upd</code></td>
+<td><code>bigint</code></td>
+<td>Number of records HOT updated</td>
+</tr>
+<tr>
+<td><code>n_live_tup</code></td>
+<td><code>bigint</code></td>
+<td>Estimated number of live records</td>
+</tr>
+<tr>
+<td><code>n_dead_tup</code></td>
+<td><code>bigint</code></td>
+<td>Estimated number of dead records</td>
+</tr>
+</tbody>
+</table> </div>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="pg_stat_all_indexes">
+        pg_stat_all_indexes
+        <a data-clipboard-text="https://doc.rockdata.net/advanced/monitor-stats/#pg_stat_all_indexes" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: pg_stat_all_indexes" aria-label="Anchor to: pg_stat_all_indexes" href="#pg_stat_all_indexes">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>The <code>pg_stat_all_indexes</code> view will contain one row for each index in the current database, showing statistics about accesses to that specific index. The <code>pg_stat_user_indexes</code> and <code>pg_stat_sys_indexes</code> views contain the same information, but filtered to only show user and system indexes respectively.</p>
+<p><strong>Table 19. <code>pg_stat_all_indexes</code> View</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -3736,18 +3660,19 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 </tbody>
 </table> </div>
-<p>The <code>pg_stat_all_indexes</code> view will contain one row for each index in the current database, showing statistics about accesses to that specific index. The <code>pg_stat_user_indexes</code> and <code>pg_stat_sys_indexes</code> views contain the same information, but filtered to only show user and system indexes respectively.</p>
 <p>Indexes can be used by simple index scans, “bitmap” index scans, and the optimizer. In a bitmap scan the output of several indexes can be combined via AND or OR rules, so it is difficult to associate individual heap row fetches with specific indexes when a bitmap scan is used. Therefore, a bitmap scan increments the <code>pg_stat_all_indexes</code>.<code>idx_tup_read</code> count(s) for the index(es) it uses, and it increments the <code>pg_stat_all_tables</code>.<code>idx_tup_fetch</code> count for the table, but it does not affect <code>pg_stat_all_indexes</code>.<code>idx_tup_fetch</code>. The optimizer also accesses indexes to check for supplied constants whose values are outside the recorded range of the optimizer statistics because the optimizer statistics might be stale.</p>
+<p><strong>Note</strong></p>
+<p>The <code>idx_tup_read</code> and <code>idx_tup_fetch</code> counts can be different even without any use of bitmap scans, because <code>idx_tup_read</code> counts index entries retrieved from the index while <code>idx_tup_fetch</code> counts live rows fetched from the table. The latter will be less if any dead or not-yet-committed rows are fetched using the index, or if any heap fetches are avoided by means of an index-only scan.</p>
 <div class="gdoc-page__anchorwrap">
-    <h3 id="note-3">
-        Note
-        <a data-clipboard-text="https://doc.rockdata.net/advanced/monitor-stats/#note-3" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Note" aria-label="Anchor to: Note" href="#note-3">
+    <h2 id="pg_statio_all_tables">
+        pg_statio_all_tables
+        <a data-clipboard-text="https://doc.rockdata.net/advanced/monitor-stats/#pg_statio_all_tables" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: pg_statio_all_tables" aria-label="Anchor to: pg_statio_all_tables" href="#pg_statio_all_tables">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
-    </h3>
+    </h2>
 </div>
-<p>The <code>idx_tup_read</code> and <code>idx_tup_fetch</code> counts can be different even without any use of bitmap scans, because <code>idx_tup_read</code> counts index entries retrieved from the index while <code>idx_tup_fetch</code> counts live rows fetched from the table. The latter will be less if any dead or not-yet-committed rows are fetched using the index, or if any heap fetches are avoided by means of an index-only scan.</p>
-<p><strong>Table 27.16. <code>pg_statio_all_tables</code> View</strong></p>
+<p>The <code>pg_statio_all_tables</code> view will contain one row for each table in the current database (including TOAST tables), showing statistics about I/O on that specific table. The <code>pg_statio_user_tables</code> and <code>pg_statio_sys_tables</code> views contain the same information, but filtered to only show user and system tables respectively.</p>
+<p><strong>Table 20. <code>pg_statio_all_tables</code> View</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -3778,6 +3703,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>Number of disk blocks read from this table</td>
 </tr>
 <tr>
+<td><code>heap_blks_cloned</code></td>
+<td><code>bigint</code></td>
+<td>Number of data buffers cloned from this table</td>
+</tr>
+<tr>
 <td><code>heap_blks_hit</code></td>
 <td><code>bigint</code></td>
 <td>Number of buffer hits in this table</td>
@@ -3786,6 +3716,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>idx_blks_read</code></td>
 <td><code>bigint</code></td>
 <td>Number of disk blocks read from all indexes on this table</td>
+</tr>
+<tr>
+<td><code>idx_blks_cloned</code></td>
+<td><code>bigint</code></td>
+<td>Number of data buffers cloned from all indexes on this table</td>
 </tr>
 <tr>
 <td><code>idx_blks_hit</code></td>
@@ -3798,6 +3733,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>Number of disk blocks read from this table&rsquo;s TOAST table (if any)</td>
 </tr>
 <tr>
+<td><code>toast_blks_cloned</code></td>
+<td><code>bigint</code></td>
+<td>Number of data buffers cloned from this table&rsquo;s TOAST table (if any)</td>
+</tr>
+<tr>
 <td><code>toast_blks_hit</code></td>
 <td><code>bigint</code></td>
 <td>Number of buffer hits in this table&rsquo;s TOAST table (if any)</td>
@@ -3808,14 +3748,78 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>Number of disk blocks read from this table&rsquo;s TOAST table indexes (if any)</td>
 </tr>
 <tr>
+<td><code>tidx_blks_cloned</code></td>
+<td><code>bigint</code></td>
+<td>Number of data buffers cloned from this table&rsquo;s TOAST table indexes (if any)</td>
+</tr>
+<tr>
 <td><code>tidx_blks_hit</code></td>
 <td><code>bigint</code></td>
 <td>Number of buffer hits in this table&rsquo;s TOAST table indexes (if any)</td>
 </tr>
 </tbody>
 </table> </div>
-<p>The <code>pg_statio_all_tables</code> view will contain one row for each table in the current database (including TOAST tables), showing statistics about I/O on that specific table. The <code>pg_statio_user_tables</code> and <code>pg_statio_sys_tables</code> views contain the same information, but filtered to only show user and system tables respectively.</p>
-<p><strong>Table 27.17. <code>pg_statio_all_indexes</code> View</strong></p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="pg_statio_all_undos">
+        pg_statio_all_undos
+        <a data-clipboard-text="https://doc.rockdata.net/advanced/monitor-stats/#pg_statio_all_undos" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: pg_statio_all_undos" aria-label="Anchor to: pg_statio_all_undos" href="#pg_statio_all_undos">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>The <code>pg_statio_all_undos</code> view will contain one row for each undo in the current database, showing statistics about I/O on that specific undo.</p>
+<p><strong>Table 21. <code>pg_statio_all_undos</code> View</strong></p>
+<div class="table-wrap"> <table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>relid</code></td>
+<td><code>oid</code></td>
+<td>OID of the table for this index</td>
+</tr>
+<tr>
+<td><code>schemaname</code></td>
+<td><code>name</code></td>
+<td>Name of the schema this undois in</td>
+</tr>
+<tr>
+<td><code>relname</code></td>
+<td><code>name</code></td>
+<td>Name of the table for this undo</td>
+</tr>
+<tr>
+<td><code>undo_blks_read</code></td>
+<td><code>bigint</code></td>
+<td>Number of disk blocks read from this undo</td>
+</tr>
+<tr>
+<td><code>undo_blks_cloned</code></td>
+<td><code>bigint</code></td>
+<td>Number of data buffers cloned from this undo</td>
+</tr>
+<tr>
+<td><code>undo_blks_hit</code></td>
+<td><code>bigint</code></td>
+<td>Number of buffer hits in this undo</td>
+</tr>
+</tbody>
+</table> </div>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="pg_statio_all_indexes">
+        pg_statio_all_indexes
+        <a data-clipboard-text="https://doc.rockdata.net/advanced/monitor-stats/#pg_statio_all_indexes" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: pg_statio_all_indexes" aria-label="Anchor to: pg_statio_all_indexes" href="#pg_statio_all_indexes">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>The <code>pg_statio_all_indexes</code> view will contain one row for each index in the current database, showing statistics about I/O on that specific index. The <code>pg_statio_user_indexes</code> and <code>pg_statio_sys_indexes</code> views contain the same information, but filtered to only show user and system indexes respectively.</p>
+<p><strong>Table 22. <code>pg_statio_all_indexes</code> View</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -3856,14 +3860,27 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>Number of disk blocks read from this index</td>
 </tr>
 <tr>
+<td><code>idx_blks_cloned</code></td>
+<td><code>bigint</code></td>
+<td>Number of data buffers cloned from this index</td>
+</tr>
+<tr>
 <td><code>idx_blks_hit</code></td>
 <td><code>bigint</code></td>
 <td>Number of buffer hits in this index</td>
 </tr>
 </tbody>
 </table> </div>
-<p>The <code>pg_statio_all_indexes</code> view will contain one row for each index in the current database, showing statistics about I/O on that specific index. The <code>pg_statio_user_indexes</code> and <code>pg_statio_sys_indexes</code> views contain the same information, but filtered to only show user and system indexes respectively.</p>
-<p><strong>Table 27.18. <code>pg_statio_all_sequences</code> View</strong></p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="pg_statio_all_sequences">
+        pg_statio_all_sequences
+        <a data-clipboard-text="https://doc.rockdata.net/advanced/monitor-stats/#pg_statio_all_sequences" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: pg_statio_all_sequences" aria-label="Anchor to: pg_statio_all_sequences" href="#pg_statio_all_sequences">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>The <code>pg_statio_all_sequences</code> view will contain one row for each sequence in the current database, showing statistics about I/O on that specific sequence.</p>
+<p><strong>Table 23. <code>pg_statio_all_sequences</code> View</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -3894,13 +3911,17 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>Number of disk blocks read from this sequence</td>
 </tr>
 <tr>
+<td><code>blks_cloned</code></td>
+<td><code>bigint</code></td>
+<td>Number of data buffers cloned from this sequence</td>
+</tr>
+<tr>
 <td><code>blks_hit</code></td>
 <td><code>bigint</code></td>
 <td>Number of buffer hits in this sequence</td>
 </tr>
 </tbody>
 </table> </div>
-<p>The <code>pg_statio_all_sequences</code> view will contain one row for each sequence in the current database, showing statistics about I/O on that specific sequence.</p>
 
   </article>
 
