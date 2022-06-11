@@ -10,19 +10,19 @@
 
   <meta name="description" content="统计收集配置 查看统计信息 pg_stat_activity pg_stat_wait_event pg_stat_replication pg_stat_database pg_stat_all_tables pg_stat_all_undos pg_stat_all_indexes pg_statio_all_tables pg_statio_all_undos pg_statio_all_indexes pg_statio_all_sequences      Redrock Postgres的统计收集器是一个支持收集和报告服务器活动信息的子系统。 目前，这个收集器可以对表和索引的访问计数，计数可以按磁盘块和个体行来进行。它还跟踪每个表中的总行数、每个表的分析动作的信息。它也统计调用用户定义函数的次数以及在每次调用中花费的总时间。
 Redrock Postgres也支持报告有关系统正在干什么的 动态信息，例如当前正在被其他服务器进程执行的命令以及系统中存在哪些其他连接。 这个功能是独立于收集器进程存在的。
-统计收集配置     因为统计收集给查询执行增加了一些负荷，系统可以被配置为收集或不收集信息。这由配置参数控制，它们通常在postgresql.conf中设置（关于设置配置参数的细节请见第 20 章）。
+统计收集配置     因为统计收集给查询执行增加了一些负荷，系统可以被配置为收集或不收集信息。这由配置参数控制，它们通常在postgresql.conf中设置（关于设置配置参数的细节请见第 19 章）。
 参数track_activities允许监控当前被任意服务器进程执行的命令。
 参数track_counts控制是否收集关于表和索引访问的统计信息。
 参数track_functions启用对用户定义函数使用的跟踪。
 参数track_io_timing启用对块读写次数的监控。
 参数track_wait_events控制是否收集关于等待事件的统计信息。
 通常这些参数被设置在postgresql.conf中，这样它们会应用于所有服务器进程，但是可以在单个会话中使用SET命令打开或关闭它们（为了阻止普通用户对管理员隐藏他们的活动，只有超级用户被允许使用SET来改变这些参数）。
-统计收集器通过临时文件将收集到的信息传送给其他PostgreSQL进程。这些文件被存储在名字由stats_temp_directory参数指定的目录中，默认是pg_stat_tmp。为了得到更好的性能，stats_temp_directory可以被指向一个基于 RAM 的文件系统来降低物理 I/O 需求。当服务器被干净地关闭时，一份统计数据的永久拷贝被存储在pg_stat子目录中，这样在服务器重启后统计信息能被保持。当在服务器启动时执行恢复时（例如立即关闭、服务器崩溃以及时间点恢复之后），所有统计计数器会被重置。
-查看统计信息     表 28.1中列出了一些预定义视图 可以用来显示系统的当前状态。 表 28.2中列出了另一些视图可以 显示统计收集的结果。你也可以使用底层统计函数（在 第 28.2.20 节中讨论）来建立自定义的视图。
+统计收集器通过临时文件将收集到的信息传送给其他PostgreSQL进程。这些文件被存储在名字由stats_temp_directory参数指定的目录中，默认是pg_tmp/stats。为了得到更好的性能，stats_temp_directory可以被指向一个基于 RAM 的文件系统来降低物理 I/O 需求。当服务器被干净地关闭时，一份统计数据的永久拷贝被存储在pg_stat子目录中，这样在服务器重启后统计信息能被保持。当在服务器启动时执行恢复时（例如立即关闭、服务器崩溃以及时间点恢复之后），所有统计计数器会被重置。
+查看统计信息     表 1中列出了一些预定义视图 可以用来显示系统的当前状态。 表 2中列出了另一些视图可以 显示统计收集的结果。你也可以使用底层统计函数（在 第 27.2.3 节中讨论）来建立自定义的视图。
 在使用统计信息监控收集到的数据时，你必须了解这些信息并非是实时更新的。每个独立的服务器进程只在进入闲置状态之前才向收集器传送新的统计计数；因此正在进行的查询或事务并不影响显示出来的总数。同样，收集器本身也最多每PGSTAT_STAT_INTERVAL毫秒（缺省为 500ms，除非在编译服务器的时候修改过）发送一 次新的报告。因此显示的信息总是落后于实际活动。但是由track_activities收集的当前查询信息总是最新的。
 另一个重点是当一个服务器进程被要求显示任何这些统计信息时，它首先取得收集器进程最近发出的报告并且接着为所有统计视图和函数使用这个快照，直到它的当前事务的结尾。因此只要你继续当前事务，统计数据将会一直显示静态信息。相似地，当任何关于所有会话的当前查询的信息在一个事务中第一次被请求时，这样的信息将被收集。并且在整个事务期间将显示相同的信息。这是一种特性而非缺陷，因为它允许你在该统计信息上执行多个查询并且关联结果而不用担心那些数字会在你不知情的情况下改变。但是如果你希望用每个查询都看到新结果，要确保在任何事务块之外做那些查询。或者，你可以调用pg_stat_clear_snapshot()，那将丢弃当前事务的统计快照（如果有）。下一次对统计性信息的使用将导致获取一个新的快照。
 一个事务也可以在视图pg_stat_xact_all_tables、pg_stat_xact_all_undos, pg_stat_xact_sys_tables、pg_stat_xact_user_tables和pg_stat_xact_user_functions中看到它自己的统计信息（还没有被传送给收集器）。这些数字并不像上面所述的那样行动，相反它们在事务期间持续被更新。
-表 28.1中显示的动态统计视图中的一些信息是有安全限制的。 普通用户只能看到关于他们自己的会话的所有信息（属于他们是成员的角色的会话）。 在关于其他会话的行中，许多列将为空。 但是，请注意，一个会话的存在和它的一般属性，例如会话用户和数据库，对所有用户都是可见的。 超级用户和内置角色pg_read_all_stats的成员（参见第 22." />
+表 1中显示的动态统计视图中的一些信息是有安全限制的。 普通用户只能看到关于他们自己的会话的所有信息（属于他们是成员的角色的会话）。 在关于其他会话的行中，许多列将为空。 但是，请注意，一个会话的存在和它的一般属性，例如会话用户和数据库，对所有用户都是可见的。 超级用户和内置角色pg_read_all_stats的成员（参见第 21." />
 
     <title>运行统计视图 | Redrock Documentation</title>
 
@@ -51,26 +51,26 @@ Redrock Postgres也支持报告有关系统正在干什么的 动态信息，例
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
   <meta property="og:description" content="统计收集配置 查看统计信息 pg_stat_activity pg_stat_wait_event pg_stat_replication pg_stat_database pg_stat_all_tables pg_stat_all_undos pg_stat_all_indexes pg_statio_all_tables pg_statio_all_undos pg_statio_all_indexes pg_statio_all_sequences      Redrock Postgres的统计收集器是一个支持收集和报告服务器活动信息的子系统。 目前，这个收集器可以对表和索引的访问计数，计数可以按磁盘块和个体行来进行。它还跟踪每个表中的总行数、每个表的分析动作的信息。它也统计调用用户定义函数的次数以及在每次调用中花费的总时间。
 Redrock Postgres也支持报告有关系统正在干什么的 动态信息，例如当前正在被其他服务器进程执行的命令以及系统中存在哪些其他连接。 这个功能是独立于收集器进程存在的。
-统计收集配置     因为统计收集给查询执行增加了一些负荷，系统可以被配置为收集或不收集信息。这由配置参数控制，它们通常在postgresql.conf中设置（关于设置配置参数的细节请见第 20 章）。
+统计收集配置     因为统计收集给查询执行增加了一些负荷，系统可以被配置为收集或不收集信息。这由配置参数控制，它们通常在postgresql.conf中设置（关于设置配置参数的细节请见第 19 章）。
 参数track_activities允许监控当前被任意服务器进程执行的命令。
 参数track_counts控制是否收集关于表和索引访问的统计信息。
 参数track_functions启用对用户定义函数使用的跟踪。
 参数track_io_timing启用对块读写次数的监控。
 参数track_wait_events控制是否收集关于等待事件的统计信息。
 通常这些参数被设置在postgresql.conf中，这样它们会应用于所有服务器进程，但是可以在单个会话中使用SET命令打开或关闭它们（为了阻止普通用户对管理员隐藏他们的活动，只有超级用户被允许使用SET来改变这些参数）。
-统计收集器通过临时文件将收集到的信息传送给其他PostgreSQL进程。这些文件被存储在名字由stats_temp_directory参数指定的目录中，默认是pg_stat_tmp。为了得到更好的性能，stats_temp_directory可以被指向一个基于 RAM 的文件系统来降低物理 I/O 需求。当服务器被干净地关闭时，一份统计数据的永久拷贝被存储在pg_stat子目录中，这样在服务器重启后统计信息能被保持。当在服务器启动时执行恢复时（例如立即关闭、服务器崩溃以及时间点恢复之后），所有统计计数器会被重置。
-查看统计信息     表 28.1中列出了一些预定义视图 可以用来显示系统的当前状态。 表 28.2中列出了另一些视图可以 显示统计收集的结果。你也可以使用底层统计函数（在 第 28.2.20 节中讨论）来建立自定义的视图。
+统计收集器通过临时文件将收集到的信息传送给其他PostgreSQL进程。这些文件被存储在名字由stats_temp_directory参数指定的目录中，默认是pg_tmp/stats。为了得到更好的性能，stats_temp_directory可以被指向一个基于 RAM 的文件系统来降低物理 I/O 需求。当服务器被干净地关闭时，一份统计数据的永久拷贝被存储在pg_stat子目录中，这样在服务器重启后统计信息能被保持。当在服务器启动时执行恢复时（例如立即关闭、服务器崩溃以及时间点恢复之后），所有统计计数器会被重置。
+查看统计信息     表 1中列出了一些预定义视图 可以用来显示系统的当前状态。 表 2中列出了另一些视图可以 显示统计收集的结果。你也可以使用底层统计函数（在 第 27.2.3 节中讨论）来建立自定义的视图。
 在使用统计信息监控收集到的数据时，你必须了解这些信息并非是实时更新的。每个独立的服务器进程只在进入闲置状态之前才向收集器传送新的统计计数；因此正在进行的查询或事务并不影响显示出来的总数。同样，收集器本身也最多每PGSTAT_STAT_INTERVAL毫秒（缺省为 500ms，除非在编译服务器的时候修改过）发送一 次新的报告。因此显示的信息总是落后于实际活动。但是由track_activities收集的当前查询信息总是最新的。
 另一个重点是当一个服务器进程被要求显示任何这些统计信息时，它首先取得收集器进程最近发出的报告并且接着为所有统计视图和函数使用这个快照，直到它的当前事务的结尾。因此只要你继续当前事务，统计数据将会一直显示静态信息。相似地，当任何关于所有会话的当前查询的信息在一个事务中第一次被请求时，这样的信息将被收集。并且在整个事务期间将显示相同的信息。这是一种特性而非缺陷，因为它允许你在该统计信息上执行多个查询并且关联结果而不用担心那些数字会在你不知情的情况下改变。但是如果你希望用每个查询都看到新结果，要确保在任何事务块之外做那些查询。或者，你可以调用pg_stat_clear_snapshot()，那将丢弃当前事务的统计快照（如果有）。下一次对统计性信息的使用将导致获取一个新的快照。
 一个事务也可以在视图pg_stat_xact_all_tables、pg_stat_xact_all_undos, pg_stat_xact_sys_tables、pg_stat_xact_user_tables和pg_stat_xact_user_functions中看到它自己的统计信息（还没有被传送给收集器）。这些数字并不像上面所述的那样行动，相反它们在事务期间持续被更新。
-表 28.1中显示的动态统计视图中的一些信息是有安全限制的。 普通用户只能看到关于他们自己的会话的所有信息（属于他们是成员的角色的会话）。 在关于其他会话的行中，许多列将为空。 但是，请注意，一个会话的存在和它的一般属性，例如会话用户和数据库，对所有用户都是可见的。 超级用户和内置角色pg_read_all_stats的成员（参见第 22." />
+表 1中显示的动态统计视图中的一些信息是有安全限制的。 普通用户只能看到关于他们自己的会话的所有信息（属于他们是成员的角色的会话）。 在关于其他会话的行中，许多列将为空。 但是，请注意，一个会话的存在和它的一般属性，例如会话用户和数据库，对所有用户都是可见的。 超级用户和内置角色pg_read_all_stats的成员（参见第 21." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/" />
 
 <meta property="article:section" content="Advanced" />
     <meta
       property="article:modified_time"
-      content="2022-06-09T19:33:38+08:00"
+      content="2022-06-11T10:48:52+08:00"
     />
 
 
@@ -79,19 +79,19 @@ Redrock Postgres也支持报告有关系统正在干什么的 动态信息，例
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
   <meta name="twitter:description" content="统计收集配置 查看统计信息 pg_stat_activity pg_stat_wait_event pg_stat_replication pg_stat_database pg_stat_all_tables pg_stat_all_undos pg_stat_all_indexes pg_statio_all_tables pg_statio_all_undos pg_statio_all_indexes pg_statio_all_sequences      Redrock Postgres的统计收集器是一个支持收集和报告服务器活动信息的子系统。 目前，这个收集器可以对表和索引的访问计数，计数可以按磁盘块和个体行来进行。它还跟踪每个表中的总行数、每个表的分析动作的信息。它也统计调用用户定义函数的次数以及在每次调用中花费的总时间。
 Redrock Postgres也支持报告有关系统正在干什么的 动态信息，例如当前正在被其他服务器进程执行的命令以及系统中存在哪些其他连接。 这个功能是独立于收集器进程存在的。
-统计收集配置     因为统计收集给查询执行增加了一些负荷，系统可以被配置为收集或不收集信息。这由配置参数控制，它们通常在postgresql.conf中设置（关于设置配置参数的细节请见第 20 章）。
+统计收集配置     因为统计收集给查询执行增加了一些负荷，系统可以被配置为收集或不收集信息。这由配置参数控制，它们通常在postgresql.conf中设置（关于设置配置参数的细节请见第 19 章）。
 参数track_activities允许监控当前被任意服务器进程执行的命令。
 参数track_counts控制是否收集关于表和索引访问的统计信息。
 参数track_functions启用对用户定义函数使用的跟踪。
 参数track_io_timing启用对块读写次数的监控。
 参数track_wait_events控制是否收集关于等待事件的统计信息。
 通常这些参数被设置在postgresql.conf中，这样它们会应用于所有服务器进程，但是可以在单个会话中使用SET命令打开或关闭它们（为了阻止普通用户对管理员隐藏他们的活动，只有超级用户被允许使用SET来改变这些参数）。
-统计收集器通过临时文件将收集到的信息传送给其他PostgreSQL进程。这些文件被存储在名字由stats_temp_directory参数指定的目录中，默认是pg_stat_tmp。为了得到更好的性能，stats_temp_directory可以被指向一个基于 RAM 的文件系统来降低物理 I/O 需求。当服务器被干净地关闭时，一份统计数据的永久拷贝被存储在pg_stat子目录中，这样在服务器重启后统计信息能被保持。当在服务器启动时执行恢复时（例如立即关闭、服务器崩溃以及时间点恢复之后），所有统计计数器会被重置。
-查看统计信息     表 28.1中列出了一些预定义视图 可以用来显示系统的当前状态。 表 28.2中列出了另一些视图可以 显示统计收集的结果。你也可以使用底层统计函数（在 第 28.2.20 节中讨论）来建立自定义的视图。
+统计收集器通过临时文件将收集到的信息传送给其他PostgreSQL进程。这些文件被存储在名字由stats_temp_directory参数指定的目录中，默认是pg_tmp/stats。为了得到更好的性能，stats_temp_directory可以被指向一个基于 RAM 的文件系统来降低物理 I/O 需求。当服务器被干净地关闭时，一份统计数据的永久拷贝被存储在pg_stat子目录中，这样在服务器重启后统计信息能被保持。当在服务器启动时执行恢复时（例如立即关闭、服务器崩溃以及时间点恢复之后），所有统计计数器会被重置。
+查看统计信息     表 1中列出了一些预定义视图 可以用来显示系统的当前状态。 表 2中列出了另一些视图可以 显示统计收集的结果。你也可以使用底层统计函数（在 第 27.2.3 节中讨论）来建立自定义的视图。
 在使用统计信息监控收集到的数据时，你必须了解这些信息并非是实时更新的。每个独立的服务器进程只在进入闲置状态之前才向收集器传送新的统计计数；因此正在进行的查询或事务并不影响显示出来的总数。同样，收集器本身也最多每PGSTAT_STAT_INTERVAL毫秒（缺省为 500ms，除非在编译服务器的时候修改过）发送一 次新的报告。因此显示的信息总是落后于实际活动。但是由track_activities收集的当前查询信息总是最新的。
 另一个重点是当一个服务器进程被要求显示任何这些统计信息时，它首先取得收集器进程最近发出的报告并且接着为所有统计视图和函数使用这个快照，直到它的当前事务的结尾。因此只要你继续当前事务，统计数据将会一直显示静态信息。相似地，当任何关于所有会话的当前查询的信息在一个事务中第一次被请求时，这样的信息将被收集。并且在整个事务期间将显示相同的信息。这是一种特性而非缺陷，因为它允许你在该统计信息上执行多个查询并且关联结果而不用担心那些数字会在你不知情的情况下改变。但是如果你希望用每个查询都看到新结果，要确保在任何事务块之外做那些查询。或者，你可以调用pg_stat_clear_snapshot()，那将丢弃当前事务的统计快照（如果有）。下一次对统计性信息的使用将导致获取一个新的快照。
 一个事务也可以在视图pg_stat_xact_all_tables、pg_stat_xact_all_undos, pg_stat_xact_sys_tables、pg_stat_xact_user_tables和pg_stat_xact_user_functions中看到它自己的统计信息（还没有被传送给收集器）。这些数字并不像上面所述的那样行动，相反它们在事务期间持续被更新。
-表 28.1中显示的动态统计视图中的一些信息是有安全限制的。 普通用户只能看到关于他们自己的会话的所有信息（属于他们是成员的角色的会话）。 在关于其他会话的行中，许多列将为空。 但是，请注意，一个会话的存在和它的一般属性，例如会话用户和数据库，对所有用户都是可见的。 超级用户和内置角色pg_read_all_stats的成员（参见第 22." />
+表 1中显示的动态统计视图中的一些信息是有安全限制的。 普通用户只能看到关于他们自己的会话的所有信息（属于他们是成员的角色的会话）。 在关于其他会话的行中，许多列将为空。 但是，请注意，一个会话的存在和它的一般属性，例如会话用户和数据库，对所有用户都是可见的。 超级用户和内置角色pg_read_all_stats的成员（参见第 21." />
 
 
   <script type="application/ld+json">
@@ -102,9 +102,9 @@ Redrock Postgres也支持报告有关系统正在干什么的 动态信息，例
       "name": "运行统计视图",
       "url" : "https://doc.rockdata.net/zh-cn/advanced/monitor-stats/",
       "headline": "运行统计视图",
-      "description": "统计收集配置 查看统计信息 pg_stat_activity pg_stat_wait_event pg_stat_replication pg_stat_database pg_stat_all_tables pg_stat_all_undos pg_stat_all_indexes pg_statio_all_tables pg_statio_all_undos pg_statio_all_indexes pg_statio_all_sequences      Redrock Postgres的统计收集器是一个支持收集和报告服务器活动信息的子系统。 目前，这个收集器可以对表和索引的访问计数，计数可以按磁盘块和个体行来进行。它还跟踪每个表中的总行数、每个表的分析动作的信息。它也统计调用用户定义函数的次数以及在每次调用中花费的总时间。\nRedrock Postgres也支持报告有关系统正在干什么的 动态信息，例如当前正在被其他服务器进程执行的命令以及系统中存在哪些其他连接。 这个功能是独立于收集器进程存在的。\n统计收集配置     因为统计收集给查询执行增加了一些负荷，系统可以被配置为收集或不收集信息。这由配置参数控制，它们通常在postgresql.conf中设置（关于设置配置参数的细节请见第 20 章）。\n参数track_activities允许监控当前被任意服务器进程执行的命令。\n参数track_counts控制是否收集关于表和索引访问的统计信息。\n参数track_functions启用对用户定义函数使用的跟踪。\n参数track_io_timing启用对块读写次数的监控。\n参数track_wait_events控制是否收集关于等待事件的统计信息。\n通常这些参数被设置在postgresql.conf中，这样它们会应用于所有服务器进程，但是可以在单个会话中使用SET命令打开或关闭它们（为了阻止普通用户对管理员隐藏他们的活动，只有超级用户被允许使用SET来改变这些参数）。\n统计收集器通过临时文件将收集到的信息传送给其他PostgreSQL进程。这些文件被存储在名字由stats_temp_directory参数指定的目录中，默认是pg_stat_tmp。为了得到更好的性能，stats_temp_directory可以被指向一个基于 RAM 的文件系统来降低物理 I\/O 需求。当服务器被干净地关闭时，一份统计数据的永久拷贝被存储在pg_stat子目录中，这样在服务器重启后统计信息能被保持。当在服务器启动时执行恢复时（例如立即关闭、服务器崩溃以及时间点恢复之后），所有统计计数器会被重置。\n查看统计信息     表 28.1中列出了一些预定义视图 可以用来显示系统的当前状态。 表 28.2中列出了另一些视图可以 显示统计收集的结果。你也可以使用底层统计函数（在 第 28.2.20 节中讨论）来建立自定义的视图。\n在使用统计信息监控收集到的数据时，你必须了解这些信息并非是实时更新的。每个独立的服务器进程只在进入闲置状态之前才向收集器传送新的统计计数；因此正在进行的查询或事务并不影响显示出来的总数。同样，收集器本身也最多每PGSTAT_STAT_INTERVAL毫秒（缺省为 500ms，除非在编译服务器的时候修改过）发送一 次新的报告。因此显示的信息总是落后于实际活动。但是由track_activities收集的当前查询信息总是最新的。\n另一个重点是当一个服务器进程被要求显示任何这些统计信息时，它首先取得收集器进程最近发出的报告并且接着为所有统计视图和函数使用这个快照，直到它的当前事务的结尾。因此只要你继续当前事务，统计数据将会一直显示静态信息。相似地，当任何关于所有会话的当前查询的信息在一个事务中第一次被请求时，这样的信息将被收集。并且在整个事务期间将显示相同的信息。这是一种特性而非缺陷，因为它允许你在该统计信息上执行多个查询并且关联结果而不用担心那些数字会在你不知情的情况下改变。但是如果你希望用每个查询都看到新结果，要确保在任何事务块之外做那些查询。或者，你可以调用pg_stat_clear_snapshot()，那将丢弃当前事务的统计快照（如果有）。下一次对统计性信息的使用将导致获取一个新的快照。\n一个事务也可以在视图pg_stat_xact_all_tables、pg_stat_xact_all_undos, pg_stat_xact_sys_tables、pg_stat_xact_user_tables和pg_stat_xact_user_functions中看到它自己的统计信息（还没有被传送给收集器）。这些数字并不像上面所述的那样行动，相反它们在事务期间持续被更新。\n表 28.1中显示的动态统计视图中的一些信息是有安全限制的。 普通用户只能看到关于他们自己的会话的所有信息（属于他们是成员的角色的会话）。 在关于其他会话的行中，许多列将为空。 但是，请注意，一个会话的存在和它的一般属性，例如会话用户和数据库，对所有用户都是可见的。 超级用户和内置角色pg_read_all_stats的成员（参见第 22.",
+      "description": "统计收集配置 查看统计信息 pg_stat_activity pg_stat_wait_event pg_stat_replication pg_stat_database pg_stat_all_tables pg_stat_all_undos pg_stat_all_indexes pg_statio_all_tables pg_statio_all_undos pg_statio_all_indexes pg_statio_all_sequences      Redrock Postgres的统计收集器是一个支持收集和报告服务器活动信息的子系统。 目前，这个收集器可以对表和索引的访问计数，计数可以按磁盘块和个体行来进行。它还跟踪每个表中的总行数、每个表的分析动作的信息。它也统计调用用户定义函数的次数以及在每次调用中花费的总时间。\nRedrock Postgres也支持报告有关系统正在干什么的 动态信息，例如当前正在被其他服务器进程执行的命令以及系统中存在哪些其他连接。 这个功能是独立于收集器进程存在的。\n统计收集配置     因为统计收集给查询执行增加了一些负荷，系统可以被配置为收集或不收集信息。这由配置参数控制，它们通常在postgresql.conf中设置（关于设置配置参数的细节请见第 19 章）。\n参数track_activities允许监控当前被任意服务器进程执行的命令。\n参数track_counts控制是否收集关于表和索引访问的统计信息。\n参数track_functions启用对用户定义函数使用的跟踪。\n参数track_io_timing启用对块读写次数的监控。\n参数track_wait_events控制是否收集关于等待事件的统计信息。\n通常这些参数被设置在postgresql.conf中，这样它们会应用于所有服务器进程，但是可以在单个会话中使用SET命令打开或关闭它们（为了阻止普通用户对管理员隐藏他们的活动，只有超级用户被允许使用SET来改变这些参数）。\n统计收集器通过临时文件将收集到的信息传送给其他PostgreSQL进程。这些文件被存储在名字由stats_temp_directory参数指定的目录中，默认是pg_tmp\/stats。为了得到更好的性能，stats_temp_directory可以被指向一个基于 RAM 的文件系统来降低物理 I\/O 需求。当服务器被干净地关闭时，一份统计数据的永久拷贝被存储在pg_stat子目录中，这样在服务器重启后统计信息能被保持。当在服务器启动时执行恢复时（例如立即关闭、服务器崩溃以及时间点恢复之后），所有统计计数器会被重置。\n查看统计信息     表 1中列出了一些预定义视图 可以用来显示系统的当前状态。 表 2中列出了另一些视图可以 显示统计收集的结果。你也可以使用底层统计函数（在 第 27.2.3 节中讨论）来建立自定义的视图。\n在使用统计信息监控收集到的数据时，你必须了解这些信息并非是实时更新的。每个独立的服务器进程只在进入闲置状态之前才向收集器传送新的统计计数；因此正在进行的查询或事务并不影响显示出来的总数。同样，收集器本身也最多每PGSTAT_STAT_INTERVAL毫秒（缺省为 500ms，除非在编译服务器的时候修改过）发送一 次新的报告。因此显示的信息总是落后于实际活动。但是由track_activities收集的当前查询信息总是最新的。\n另一个重点是当一个服务器进程被要求显示任何这些统计信息时，它首先取得收集器进程最近发出的报告并且接着为所有统计视图和函数使用这个快照，直到它的当前事务的结尾。因此只要你继续当前事务，统计数据将会一直显示静态信息。相似地，当任何关于所有会话的当前查询的信息在一个事务中第一次被请求时，这样的信息将被收集。并且在整个事务期间将显示相同的信息。这是一种特性而非缺陷，因为它允许你在该统计信息上执行多个查询并且关联结果而不用担心那些数字会在你不知情的情况下改变。但是如果你希望用每个查询都看到新结果，要确保在任何事务块之外做那些查询。或者，你可以调用pg_stat_clear_snapshot()，那将丢弃当前事务的统计快照（如果有）。下一次对统计性信息的使用将导致获取一个新的快照。\n一个事务也可以在视图pg_stat_xact_all_tables、pg_stat_xact_all_undos, pg_stat_xact_sys_tables、pg_stat_xact_user_tables和pg_stat_xact_user_functions中看到它自己的统计信息（还没有被传送给收集器）。这些数字并不像上面所述的那样行动，相反它们在事务期间持续被更新。\n表 1中显示的动态统计视图中的一些信息是有安全限制的。 普通用户只能看到关于他们自己的会话的所有信息（属于他们是成员的角色的会话）。 在关于其他会话的行中，许多列将为空。 但是，请注意，一个会话的存在和它的一般属性，例如会话用户和数据库，对所有用户都是可见的。 超级用户和内置角色pg_read_all_stats的成员（参见第 21.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "1357",
+      "wordCount" : "1361",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -115,7 +115,7 @@ Redrock Postgres也支持报告有关系统正在干什么的 动态信息，例
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-09T19:33:38.00Z",
+      "dateModified": "2022-06-11T10:48:52.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1803,25 +1803,25 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   class="gdoc-markdown__link"
   href="http://www.postgres.cn/docs/12/runtime-config.html"
   
->第 20 章</a>）。</p>
+>第 19 章</a>）。</p>
 <p>参数<a
   class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/14/runtime-config-statistics.html#GUC-TRACK-ACTIVITIES"
+  href="http://www.postgres.cn/docs/12/runtime-config-statistics.html#GUC-TRACK-ACTIVITIES"
   
 >track_activities</a>允许监控当前被任意服务器进程执行的命令。</p>
 <p>参数<a
   class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/14/runtime-config-statistics.html#GUC-TRACK-COUNTS"
+  href="http://www.postgres.cn/docs/12/runtime-config-statistics.html#GUC-TRACK-COUNTS"
   
 >track_counts</a>控制是否收集关于表和索引访问的统计信息。</p>
 <p>参数<a
   class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/14/runtime-config-statistics.html#GUC-TRACK-FUNCTIONS"
+  href="http://www.postgres.cn/docs/12/runtime-config-statistics.html#GUC-TRACK-FUNCTIONS"
   
 >track_functions</a>启用对用户定义函数使用的跟踪。</p>
 <p>参数<a
   class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/14/runtime-config-statistics.html#GUC-TRACK-IO-TIMING"
+  href="http://www.postgres.cn/docs/12/runtime-config-statistics.html#GUC-TRACK-IO-TIMING"
   
 >track_io_timing</a>启用对块读写次数的监控。</p>
 <p>参数<a
@@ -1831,14 +1831,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 >track_wait_events</a>控制是否收集关于等待事件的统计信息。</p>
 <p>通常这些参数被设置在<code>postgresql.conf</code>中，这样它们会应用于所有服务器进程，但是可以在单个会话中使用<a
   class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/14/sql-set.html"
+  href="http://www.postgres.cn/docs/12/sql-set.html"
   
 >SET</a>命令打开或关闭它们（为了阻止普通用户对管理员隐藏他们的活动，只有超级用户被允许使用<code>SET</code>来改变这些参数）。</p>
 <p>统计收集器通过临时文件将收集到的信息传送给其他PostgreSQL进程。这些文件被存储在名字由<a
   class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/14/runtime-config-statistics.html#GUC-STATS-TEMP-DIRECTORY"
+  href="http://www.postgres.cn/docs/12/runtime-config-statistics.html#GUC-STATS-TEMP-DIRECTORY"
   
->stats_temp_directory</a>参数指定的目录中，默认是<code>pg_stat_tmp</code>。为了得到更好的性能，<code>stats_temp_directory</code>可以被指向一个基于 RAM 的文件系统来降低物理 I/O 需求。当服务器被干净地关闭时，一份统计数据的永久拷贝被存储在<code>pg_stat</code>子目录中，这样在服务器重启后统计信息能被保持。当在服务器启动时执行恢复时（例如立即关闭、服务器崩溃以及时间点恢复之后），所有统计计数器会被重置。</p>
+>stats_temp_directory</a>参数指定的目录中，默认是<code>pg_tmp/stats</code>。为了得到更好的性能，<code>stats_temp_directory</code>可以被指向一个基于 RAM 的文件系统来降低物理 I/O 需求。当服务器被干净地关闭时，一份统计数据的永久拷贝被存储在<code>pg_stat</code>子目录中，这样在服务器重启后统计信息能被保持。当在服务器启动时执行恢复时（例如立即关闭、服务器崩溃以及时间点恢复之后），所有统计计数器会被重置。</p>
 <div class="gdoc-page__anchorwrap">
     <h2 id="查看统计信息">
         查看统计信息
@@ -1849,29 +1849,29 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </div>
 <p><a
   class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/14/monitoring-stats.html#MONITORING-STATS-DYNAMIC-VIEWS-TABLE"
+  href="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#%E6%9F%A5%E7%9C%8B%E7%BB%9F%E8%AE%A1%E4%BF%A1%E6%81%AF"
   
->表 28.1</a>中列出了一些预定义视图 可以用来显示系统的当前状态。 <a
+>表 1</a>中列出了一些预定义视图 可以用来显示系统的当前状态。 <a
   class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/14/monitoring-stats.html#MONITORING-STATS-VIEWS-TABLE"
+  href="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#%E6%9F%A5%E7%9C%8B%E7%BB%9F%E8%AE%A1%E4%BF%A1%E6%81%AF"
   
->表 28.2</a>中列出了另一些视图可以 显示统计收集的结果。你也可以使用底层统计函数（在 <a
+>表 2</a>中列出了另一些视图可以 显示统计收集的结果。你也可以使用底层统计函数（在 <a
   class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/14/monitoring-stats.html#MONITORING-STATS-FUNCTIONS"
+  href="http://www.postgres.cn/docs/12/monitoring-stats.html#MONITORING-STATS-FUNCTIONS"
   
->第 28.2.20 节</a>中讨论）来建立自定义的视图。</p>
+>第 27.2.3 节</a>中讨论）来建立自定义的视图。</p>
 <p>在使用统计信息监控收集到的数据时，你必须了解这些信息并非是实时更新的。每个独立的服务器进程只在进入闲置状态之前才向收集器传送新的统计计数；因此正在进行的查询或事务并不影响显示出来的总数。同样，收集器本身也最多每<code>PGSTAT_STAT_INTERVAL</code>毫秒（缺省为 500ms，除非在编译服务器的时候修改过）发送一 次新的报告。因此显示的信息总是落后于实际活动。但是由<code>track_activities</code>收集的当前查询信息总是最新的。</p>
 <p>另一个重点是当一个服务器进程被要求显示任何这些统计信息时，它首先取得收集器进程最近发出的报告并且接着为所有统计视图和函数使用这个快照，直到它的当前事务的结尾。因此只要你继续当前事务，统计数据将会一直显示静态信息。相似地，当任何关于所有会话的当前查询的信息在一个事务中第一次被请求时，这样的信息将被收集。并且在整个事务期间将显示相同的信息。这是一种特性而非缺陷，因为它允许你在该统计信息上执行多个查询并且关联结果而不用担心那些数字会在你不知情的情况下改变。但是如果你希望用每个查询都看到新结果，要确保在任何事务块之外做那些查询。或者，你可以调用<code>pg_stat_clear_snapshot</code>()，那将丢弃当前事务的统计快照（如果有）。下一次对统计性信息的使用将导致获取一个新的快照。</p>
 <p>一个事务也可以在视图<code>pg_stat_xact_all_tables</code>、<code>pg_stat_xact_all_undos</code>, <code>pg_stat_xact_sys_tables</code>、<code>pg_stat_xact_user_tables</code>和<code>pg_stat_xact_user_functions</code>中看到它自己的统计信息（还没有被传送给收集器）。这些数字并不像上面所述的那样行动，相反它们在事务期间持续被更新。</p>
 <p><a
   class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/14/monitoring-stats.html#MONITORING-STATS-DYNAMIC-VIEWS-TABLE"
+  href="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#%E6%9F%A5%E7%9C%8B%E7%BB%9F%E8%AE%A1%E4%BF%A1%E6%81%AF"
   
->表 28.1</a>中显示的动态统计视图中的一些信息是有安全限制的。 普通用户只能看到关于他们自己的会话的所有信息（属于他们是成员的角色的会话）。 在关于其他会话的行中，许多列将为空。 但是，请注意，一个会话的存在和它的一般属性，例如会话用户和数据库，对所有用户都是可见的。 超级用户和内置角色<code>pg_read_all_stats</code>的成员（参见<a
+>表 1</a>中显示的动态统计视图中的一些信息是有安全限制的。 普通用户只能看到关于他们自己的会话的所有信息（属于他们是成员的角色的会话）。 在关于其他会话的行中，许多列将为空。 但是，请注意，一个会话的存在和它的一般属性，例如会话用户和数据库，对所有用户都是可见的。 超级用户和内置角色<code>pg_read_all_stats</code>的成员（参见<a
   class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/14/default-roles.html"
+  href="http://www.postgres.cn/docs/12/default-roles.html"
   
->第 22.5 节</a>）可以看到所有会话的所有信息。</p>
+>第 21.5 节</a>）可以看到所有会话的所有信息。</p>
 <p><strong>表 1. 动态统计视图</strong></p>
 <div class="table-wrap"> <table>
 <thead>
@@ -1885,7 +1885,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>pg_stat_activity</code></td>
 <td>每个服务器进程一行，显示与那个进程的当前活动相关的信息，例如状态和当前查询。详见<a
   class="gdoc-markdown__link--code"
-  href="http://www.postgres.cn/docs/14/monitoring-stats.html#MONITORING-PG-STAT-ACTIVITY-VIEW"
+  href="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#pg_stat_activity"
   
 ><code>pg_stat_activity</code></a> 。</td>
 </tr>
@@ -1893,7 +1893,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>pg_stat_wait_event</code></td>
 <td>每个等待事件一行，显示有关每个发生的等待事件的等待信息的统计信息。有关详细信息，请参阅 <a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/monitoring-stats.html#PG-STAT-ACTIVITY-VIEW"
+  href="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#pg_stat_wait_event"
   
 >pg_stat_wait_event</a>。</td>
 </tr>
@@ -1901,7 +1901,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>pg_stat_replication</code></td>
 <td>每一个 WAL 发送进程一行，显示有关到该发送进程连接的后备服务器的复制的统计信息。 详见<a
   class="gdoc-markdown__link--code"
-  href="http://www.postgres.cn/docs/14/monitoring-stats.html#MONITORING-PG-STAT-REPLICATION-VIEW"
+  href="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#pg_stat_replication"
   
 ><code>pg_stat_replication</code></a>.</td>
 </tr>
@@ -1920,7 +1920,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>pg_stat_database</code></td>
 <td>每个数据库一行，显示数据库范围的统计信息。详见<a
   class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/14/monitoring-stats.html#MONITORING-PG-STAT-DATABASE-VIEW"
+  href="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#pg_stat_database"
   
 > <code>pg_stat_database</code></a>。</td>
 </tr>
@@ -1928,7 +1928,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>pg_stat_all_tables</code></td>
 <td>当前数据库中每个表一行，显示有关访问指定表的统计信息。详见<a
   class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/14/monitoring-stats.html#MONITORING-PG-STAT-ALL-TABLES-VIEW"
+  href="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#pg_stat_all_tables"
   
 > <code>pg_stat_all_tables</code></a>。</td>
 </tr>
@@ -1960,7 +1960,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>pg_stat_all_indexes</code></td>
 <td>当前数据库中的每个索引一行，显示：表OID、索引OID、模式名、表名、索引名、 使用了该索引的索引扫描总数、索引扫描返回的索引记录数、使用该索引的简 单索引扫描抓取的活表(livetable)中数据行数。 当前数据库中的每个索引一行，显示与访问指定索引有关的统计信息。详见<a
   class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/14/monitoring-stats.html#MONITORING-PG-STAT-ALL-INDEXES-VIEW"
+  href="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#pg_stat_all_indexes"
   
 > <code>pg_stat_all_indexes</code></a>。</td>
 </tr>
@@ -1976,7 +1976,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>pg_statio_all_tables</code></td>
 <td>当前数据库中每个表一行(包括TOAST表)，显示：表OID、模式名、表名、 从该表中读取的磁盘块总数、缓冲区命中次数、该表上所有索引的磁盘块读取总数、 该表上所有索引的缓冲区命中总数、在该表的辅助TOAST表(如果存在)上的磁盘块读取总数、 在该表的辅助TOAST表(如果存在)上的缓冲区命中总数、TOAST表的索引的磁盘块读 取总数、TOAST表的索引的缓冲区命中总数。 当前数据库中的每个表一行，显示有关在指定表上 I/O 的统计信息。详见<a
   class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/14/monitoring-stats.html#MONITORING-PG-STATIO-ALL-TABLES-VIEW"
+  href="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#pg_statio_all_tables"
   
 > <code>pg_statio_all_tables</code></a>。</td>
 </tr>
@@ -1992,7 +1992,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>pg_statio_all_indexes</code></td>
 <td>当前数据库中每个索引一行，显示：表OID、索引OID、模式名、 表名、索引名、该索引的磁盘块读取总数、该索引的缓冲区命中总数。 当前数据库中的每个索引一行，显示与指定索引上的 I/O 有关的统计信息。详见<a
   class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/14/monitoring-stats.html#MONITORING-PG-STATIO-ALL-INDEXES-VIEW"
+  href="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#pg_statio_all_indexes"
   
 > <code>pg_statio_all_indexes</code></a>。</td>
 </tr>
@@ -2008,7 +2008,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>pg_statio_all_sequences</code></td>
 <td>当前数据库中每个序列对象一行，显示：序列OID、模式名、序列名、序列的磁盘读取总数、序列的缓冲区命中总数。 当前数据库中的每个序列一行，显示与指定序列上的 I/O 有关的统计信息。详见<a
   class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/14/monitoring-stats.html#MONITORING-PG-STATIO-ALL-SEQUENCES-VIEW"
+  href="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#pg_statio_all_sequences"
   
 > <code>pg_statio_all_sequences</code></a>。</td>
 </tr>
@@ -2157,7 +2157,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 <tr>
 <td><code>backend_mintime</code></td>
-<td><code>xid</code></td>
+<td><code>logicaltime</code></td>
 <td>当前后端的<code>mintime</code>范围。</td>
 </tr>
 <tr>
@@ -2189,75 +2189,39 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <tbody>
 <tr>
 <td><code>Activity</code></td>
-<td>服务器进程空闲。此事件类型表示在其主处理循环中等待活动的进程。 <code>wait_event</code>将识别特定的等待点;参见<a
-  class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/14/monitoring-stats.html#WAIT-EVENT-ACTIVITY-TABLE"
-  
->表 28.5</a>。</td>
+<td>服务器进程空闲。此事件类型表示在其主处理循环中等待活动的进程。 <code>wait_event</code>将识别特定的等待点;参见<em>表 5</em>。</td>
 </tr>
 <tr>
 <td><code>BufferPin</code></td>
-<td>服务器进程正在等待对数据缓冲的独占访问。 如果另一个进程持有一个打开的游标，该游标最后一次从相关缓冲区读取数据，则缓冲区销等待可能是漫长的。 参见<a
-  class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/14/monitoring-stats.html#WAIT-EVENT-BUFFERPIN-TABLE"
-  
->表 28.6</a>。</td>
+<td>服务器进程正在等待对数据缓冲的独占访问。 如果另一个进程持有一个打开的游标，该游标最后一次从相关缓冲区读取数据，则缓冲区销等待可能是漫长的。 参见<em>表 6</em>。</td>
 </tr>
 <tr>
 <td><code>Client</code></td>
-<td>服务器进程正在等待连接到用户应用程序的套接字上的活动。 因此，服务器预计发生一些独立于其内部进程的事情。<code>wait_event</code>将识别特定的等待点；参见<a
-  class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/14/monitoring-stats.html#WAIT-EVENT-CLIENT-TABLE"
-  
->表 28.7</a>。</td>
+<td>服务器进程正在等待连接到用户应用程序的套接字上的活动。 因此，服务器预计发生一些独立于其内部进程的事情。<code>wait_event</code>将识别特定的等待点；参见<em>表 7</em>。</td>
 </tr>
 <tr>
 <td><code>Extension</code></td>
-<td>服务器进程正在等待扩展模块定义的某个条件。参见<a
-  class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/14/monitoring-stats.html#WAIT-EVENT-EXTENSION-TABLE"
-  
->表 28.8</a>。</td>
+<td>服务器进程正在等待扩展模块定义的某个条件。参见<em>表 8</em>。</td>
 </tr>
 <tr>
 <td><code>IO</code></td>
-<td>服务器进程正在等待一个I/O操作完成。<code>wait_event</code>将识别特定的等待点；参见<a
-  class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/14/monitoring-stats.html#WAIT-EVENT-IO-TABLE"
-  
->表 28.9</a>。</td>
+<td>服务器进程正在等待一个I/O操作完成。<code>wait_event</code>将识别特定的等待点；参见<em>表 9</em>。</td>
 </tr>
 <tr>
 <td><code>IPC</code></td>
-<td>服务器进程正在等待与另一个服务器进程进行交互。<code>wait_event</code>将识别特定的等待点;参见<a
-  class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/14/monitoring-stats.html#WAIT-EVENT-IPC-TABLE"
-  
->表 28.10</a>。</td>
+<td>服务器进程正在等待与另一个服务器进程进行交互。<code>wait_event</code>将识别特定的等待点;参见<em>表 10</em>。</td>
 </tr>
 <tr>
 <td><code>Lock</code></td>
-<td>服务器进程正在等待一个重量级锁。重量级锁，也称为锁管理器锁或简单锁，主要保护表等SQL可见对象。 然而，它们也用于确保某些内部操作的互斥，例如关系扩展。<code>wait_event</code>将识别等待的锁的类型；参见<a
-  class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/14/monitoring-stats.html#WAIT-EVENT-LOCK-TABLE"
-  
->表 28.11</a>。</td>
+<td>服务器进程正在等待一个重量级锁。重量级锁，也称为锁管理器锁或简单锁，主要保护表等SQL可见对象。 然而，它们也用于确保某些内部操作的互斥，例如关系扩展。<code>wait_event</code>将识别等待的锁的类型；参见<em>表 11</em>。</td>
 </tr>
 <tr>
 <td><code>LWLock</code></td>
-<td>服务器进程正在等待一个轻量级锁。大多数这样的锁保护共享内存中的特定数据结构。 <code>wait_event</code>将包含标识轻量级锁用途的名称。 (有些锁有特定的名称；其他锁是一组锁的一部分，每个锁具有类似的目的。)参见<a
-  class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/14/monitoring-stats.html#WAIT-EVENT-LWLOCK-TABLE"
-  
->表 28.12</a>。</td>
+<td>服务器进程正在等待一个轻量级锁。大多数这样的锁保护共享内存中的特定数据结构。 <code>wait_event</code>将包含标识轻量级锁用途的名称。 (有些锁有特定的名称；其他锁是一组锁的一部分，每个锁具有类似的目的。)参见<em>表 12</em>。</td>
 </tr>
 <tr>
 <td><code>Timeout</code></td>
-<td>服务器进程正在等待超时过期。<code>wait_event</code>将识别特定的等待点；参见<a
-  class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/14/monitoring-stats.html#WAIT-EVENT-TIMEOUT-TABLE"
-  
->表 28.13</a>。</td>
+<td>服务器进程正在等待超时过期。<code>wait_event</code>将识别特定的等待点；参见<em>表 13</em>。</td>
 </tr>
 </tbody>
 </table> </div>
@@ -3038,11 +3002,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tbody>
 </table> </div>
 <p><strong>注意</strong></p>
-<p>扩展可以将<code>LWLock</code>类型添加到<a
-  class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/14/monitoring-stats.html#WAIT-EVENT-LWLOCK-TABLE"
-  
->表 28.12</a>所示的列表中。 在某些情况下，扩展名分配的名称不能在所有服务器进程中使用;因此<code>LWLock</code>等待事件可能只被报告为“<code>extension</code>”，而不是扩展名分配的名称。</p>
+<p>扩展可以将<code>LWLock</code>类型添加到<em>表 12</em>所示的列表中。 在某些情况下，扩展名分配的名称不能在所有服务器进程中使用;因此<code>LWLock</code>等待事件可能只被报告为“<code>extension</code>”，而不是扩展名分配的名称。</p>
 <p><strong>表 13. <code>Timeout</code>类型的等待事件</strong></p>
 <div class="table-wrap"> <table>
 <thead>
@@ -3099,16 +3059,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <tr>
 <td><code>wait_event_type</code></td>
 <td><code>text</code></td>
-<td>后端正在等待的事件类型（如果有）; 否则为空。</td>
+<td>后端正在等待的事件类型（如果有）; 否则为空。有关详细信息，请参阅 <em>表 4</em>。</td>
 </tr>
 <tr>
 <td><code>wait_event</code></td>
 <td><code>text</code></td>
-<td>如果后端当前正在等待，则等待事件名称，否则为 NULL。有关详细信息，请参阅 <a
-  class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/monitoring-stats.html#WAIT-EVENT-TABLE"
-  
->表 27.4</a>。</td>
+<td>如果后端当前正在等待，则等待事件名称，否则为 NULL。有关详细信息，请参阅 <em>表 4 ~ 13</em>。</td>
 </tr>
 <tr>
 <td><code>waits</code></td>
@@ -3201,13 +3157,13 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>这个进程开始的时间，即客户端是何时连接到这个 WAL 发送进程的</td>
 </tr>
 <tr>
-<td><code>backend_xmin</code></td>
-<td><code>xid</code></td>
+<td><code>backend_mintime</code></td>
+<td><code>logicaltime</code></td>
 <td>由<a
   class="gdoc-markdown__link"
   href="http://www.postgres.cn/docs/12/runtime-config-replication.html#GUC-HOT-STANDBY-FEEDBACK"
   
->hot_standby_feedback</a>报告 的这个后备机的<code>xmin</code>水平线。</td>
+>hot_standby_feedback</a>报告 的这个后备机的<code>mintime</code>水平线。</td>
 </tr>
 <tr>
 <td><code>state</code></td>

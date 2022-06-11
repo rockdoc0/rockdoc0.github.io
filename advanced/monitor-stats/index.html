@@ -42,7 +42,7 @@
 <meta property="article:section" content="Advanced" />
     <meta
       property="article:modified_time"
-      content="2022-06-09T19:33:38+08:00"
+      content="2022-06-11T10:48:52+08:00"
     />
 
 
@@ -62,7 +62,7 @@
       "headline": "Statistics Views",
       "description": "Statistics Collection Configuration Viewing Statistics pg_stat_activity pg_stat_wait_event pg_stat_replication pg_stat_database pg_stat_all_tables pg_stat_all_undos pg_stat_all_indexes pg_statio_all_tables pg_statio_all_undos pg_statio_all_indexes pg_statio_all_sequences      Redrock Postgres’s statistics collector is a subsystem that supports collection and reporting of information about server activity. Presently, the collector can count accesses to tables and indexes in both disk-block and individual-row terms. It also tracks the total number of rows in each table, and information about analyze actions for each table.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "7378",
+      "wordCount" : "7343",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -73,7 +73,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-09T19:33:38.00Z",
+      "dateModified": "2022-06-11T10:48:52.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1796,7 +1796,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   class="gdoc-markdown__link"
   href="https://www.postgresql.org/docs/12/runtime-config-statistics.html#GUC-STATS-TEMP-DIRECTORY"
   
->stats_temp_directory</a> parameter, <code>pg_stat_tmp</code> by default. For better performance, <code>stats_temp_directory</code> can be pointed at a RAM-based file system, decreasing physical I/O requirements. When the server shuts down cleanly, a permanent copy of the statistics data is stored in the <code>pg_stat</code> subdirectory, so that statistics can be retained across server restarts. When recovery is performed at server start (e.g., after immediate shutdown, server crash, and point-in-time recovery), all statistics counters are reset.</p>
+>stats_temp_directory</a> parameter, <code>pg_tmp/stats</code> by default. For better performance, <code>stats_temp_directory</code> can be pointed at a RAM-based file system, decreasing physical I/O requirements. When the server shuts down cleanly, a permanent copy of the statistics data is stored in the <code>pg_stat</code> subdirectory, so that statistics can be retained across server restarts. When recovery is performed at server start (e.g., after immediate shutdown, server crash, and point-in-time recovery), all statistics counters are reset.</p>
 <div class="gdoc-page__anchorwrap">
     <h2 id="viewing-statistics">
         Viewing Statistics
@@ -1805,20 +1805,15 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         </a>
     </h2>
 </div>
-<p>Since collection of statistics adds some overhead to query execution, the system can be configured to collect or not collect information. This is controlled by configuration parameters that are normally set in <code>postgresql.conf</code>. (See <a
-  class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/runtime-config.html"
-  
->Chapter 19</a> for details about setting configuration parameters.)</p>
 <p>Several predefined views, listed in <a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/monitoring-stats.html#MONITORING-STATS-DYNAMIC-VIEWS-TABLE"
+  href="https://doc.rockdata.net/advanced/monitor-stats/#viewing-statistics"
   
->Table 27.1</a>, are available to show the current state of the system. There are also several other views, listed in <a
+>Table 1</a>, are available to show the current state of the system. There are also several other views, listed in <a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/monitoring-stats.html#MONITORING-STATS-VIEWS-TABLE"
+  href="https://doc.rockdata.net/advanced/monitor-stats/#viewing-statistics"
   
->Table 27.2</a>, available to show the results of statistics collection. Alternatively, one can build custom views using the underlying statistics functions, as discussed in <a
+>Table 2</a>, available to show the results of statistics collection. Alternatively, one can build custom views using the underlying statistics functions, as discussed in <a
   class="gdoc-markdown__link"
   href="https://www.postgresql.org/docs/12/monitoring-stats.html#MONITORING-STATS-FUNCTIONS"
   
@@ -1828,9 +1823,9 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <p>A transaction can also see its own statistics (as yet untransmitted to the collector) in the views <code>pg_stat_xact_all_tables</code>, <code>pg_stat_xact_all_undos</code>, <code>pg_stat_xact_sys_tables</code>, <code>pg_stat_xact_user_tables</code>, and <code>pg_stat_xact_user_functions</code>. These numbers do not act as stated above; instead they update continuously throughout the transaction.</p>
 <p>Some of the information in the dynamic statistics views shown in <a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/monitoring-stats.html#MONITORING-STATS-DYNAMIC-VIEWS-TABLE"
+  href="https://doc.rockdata.net/advanced/monitor-stats/#viewing-statistics"
   
->Table 27.1</a> is security restricted. Ordinary users can only see all the information about their own sessions (sessions belonging to a role that they are a member of). In rows about other sessions, many columns will be null. Note, however, that the existence of a session and its general properties such as its sessions user and database are visible to all users. Superusers and members of the built-in role <code>pg_read_all_stats</code> (see also <a
+>Table 1</a> is security restricted. Ordinary users can only see all the information about their own sessions (sessions belonging to a role that they are a member of). In rows about other sessions, many columns will be null. Note, however, that the existence of a session and its general properties such as its sessions user and database are visible to all users. Superusers and members of the built-in role <code>pg_read_all_stats</code> (see also <a
   class="gdoc-markdown__link"
   href="https://www.postgresql.org/docs/12/default-roles.html"
   
@@ -1848,7 +1843,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>pg_stat_activity</code></td>
 <td>One row per server process, showing information related to the current activity of that process, such as state and current query. See <a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/monitoring-stats.html#PG-STAT-ACTIVITY-VIEW"
+  href="https://doc.rockdata.net/advanced/monitor-stats/#pg_stat_activity"
   
 >pg_stat_activity</a> for details.</td>
 </tr>
@@ -1856,7 +1851,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>pg_stat_wait_event</code></td>
 <td>One row per wait event, showing statistics about wait information of every occured wait events. See <a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/monitoring-stats.html#PG-STAT-ACTIVITY-VIEW"
+  href="https://doc.rockdata.net/advanced/monitor-stats/#pg_stat_wait_event"
   
 >pg_stat_wait_event</a> for details.</td>
 </tr>
@@ -1864,7 +1859,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>pg_stat_replication</code></td>
 <td>One row per WAL sender process, showing statistics about replication to that sender&rsquo;s connected standby server. See <a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/monitoring-stats.html#PG-STAT-REPLICATION-VIEW"
+  href="https://doc.rockdata.net/advanced/monitor-stats/#pg_stat_replication"
   
 >pg_stat_replication</a> for details.</td>
 </tr>
@@ -1883,7 +1878,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>pg_stat_database</code></td>
 <td>One row per database, showing database-wide statistics. See <a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/monitoring-stats.html#PG-STAT-DATABASE-VIEW"
+  href="https://doc.rockdata.net/advanced/monitor-stats/#pg_stat_database"
   
 >pg_stat_database</a> for details.</td>
 </tr>
@@ -1891,7 +1886,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>pg_stat_all_tables</code></td>
 <td>One row for each table in the current database, showing statistics about accesses to that specific table. See <a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/monitoring-stats.html#PG-STAT-ALL-TABLES-VIEW"
+  href="https://doc.rockdata.net/advanced/monitor-stats/#pg_stat_all_tables"
   
 >pg_stat_all_tables</a> for details.</td>
 </tr>
@@ -1923,7 +1918,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>pg_stat_all_indexes</code></td>
 <td>One row for each index in the current database, showing statistics about accesses to that specific index. See <a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/monitoring-stats.html#PG-STAT-ALL-INDEXES-VIEW"
+  href="https://doc.rockdata.net/advanced/monitor-stats/#pg_stat_all_indexes"
   
 >pg_stat_all_indexes</a> for details.</td>
 </tr>
@@ -1939,7 +1934,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>pg_statio_all_tables</code></td>
 <td>One row for each table in the current database, showing statistics about I/O on that specific table. See <a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/monitoring-stats.html#PG-STATIO-ALL-TABLES-VIEW"
+  href="https://doc.rockdata.net/advanced/monitor-stats/#pg_statio_all_tables"
   
 >pg_statio_all_tables</a> for details.</td>
 </tr>
@@ -1955,7 +1950,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>pg_statio_all_indexes</code></td>
 <td>One row for each index in the current database, showing statistics about I/O on that specific index. See <a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/monitoring-stats.html#PG-STATIO-ALL-INDEXES-VIEW"
+  href="https://doc.rockdata.net/advanced/monitor-stats/#pg_statio_all_indexes"
   
 >pg_statio_all_indexes</a> for details.</td>
 </tr>
@@ -1971,7 +1966,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>pg_statio_all_sequences</code></td>
 <td>One row for each sequence in the current database, showing statistics about I/O on that specific sequence. See <a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/monitoring-stats.html#PG-STATIO-ALL-SEQUENCES-VIEW"
+  href="https://doc.rockdata.net/advanced/monitor-stats/#pg_statio_all_sequences"
   
 >pg_statio_all_sequences</a> for details.</td>
 </tr>
@@ -2120,7 +2115,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 <tr>
 <td><code>backend_mintime</code></td>
-<td><code>xid</code></td>
+<td><code>logicaltime</code></td>
 <td>The current backend&rsquo;s <code>mintime</code> horizon.</td>
 </tr>
 <tr>
@@ -2152,75 +2147,39 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <tbody>
 <tr>
 <td><code>Activity</code></td>
-<td>The server process is idle. This event type indicates a process waiting for activity in its main processing loop. <code>wait_event</code> will identify the specific wait point; see <a
-  class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/current/monitoring-stats.html#WAIT-EVENT-ACTIVITY-TABLE"
-  
->Table 28.5</a>.</td>
+<td>The server process is idle. This event type indicates a process waiting for activity in its main processing loop. <code>wait_event</code> will identify the specific wait point; see <em>Table 5</em>.</td>
 </tr>
 <tr>
 <td><code>BufferPin</code></td>
-<td>The server process is waiting for exclusive access to a data buffer. Buffer pin waits can be protracted if another process holds an open cursor that last read data from the buffer in question. See <a
-  class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/current/monitoring-stats.html#WAIT-EVENT-BUFFERPIN-TABLE"
-  
->Table 28.6</a>.</td>
+<td>The server process is waiting for exclusive access to a data buffer. Buffer pin waits can be protracted if another process holds an open cursor that last read data from the buffer in question. See <em>Table 6</em>.</td>
 </tr>
 <tr>
 <td><code>Client</code></td>
-<td>The server process is waiting for activity on a socket connected to a user application. Thus, the server expects something to happen that is independent of its internal processes. <code>wait_event</code> will identify the specific wait point; see <a
-  class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/current/monitoring-stats.html#WAIT-EVENT-CLIENT-TABLE"
-  
->Table 28.7</a>.</td>
+<td>The server process is waiting for activity on a socket connected to a user application. Thus, the server expects something to happen that is independent of its internal processes. <code>wait_event</code> will identify the specific wait point; see <em>Table 7</em>.</td>
 </tr>
 <tr>
 <td><code>Extension</code></td>
-<td>The server process is waiting for some condition defined by an extension module. See <a
-  class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/current/monitoring-stats.html#WAIT-EVENT-EXTENSION-TABLE"
-  
->Table 28.8</a>.</td>
+<td>The server process is waiting for some condition defined by an extension module. See <em>Table 8</em>.</td>
 </tr>
 <tr>
 <td><code>IO</code></td>
-<td>The server process is waiting for an I/O operation to complete. <code>wait_event</code> will identify the specific wait point; see <a
-  class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/current/monitoring-stats.html#WAIT-EVENT-IO-TABLE"
-  
->Table 28.9</a>.</td>
+<td>The server process is waiting for an I/O operation to complete. <code>wait_event</code> will identify the specific wait point; see <em>Table 9</em>.</td>
 </tr>
 <tr>
 <td><code>IPC</code></td>
-<td>The server process is waiting for some interaction with another server process. <code>wait_event</code> will identify the specific wait point; see <a
-  class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/current/monitoring-stats.html#WAIT-EVENT-IPC-TABLE"
-  
->Table 28.10</a>.</td>
+<td>The server process is waiting for some interaction with another server process. <code>wait_event</code> will identify the specific wait point; see <em>Table 10</em>.</td>
 </tr>
 <tr>
 <td><code>Lock</code></td>
-<td>The server process is waiting for a heavyweight lock. Heavyweight locks, also known as lock manager locks or simply locks, primarily protect SQL-visible objects such as tables. However, they are also used to ensure mutual exclusion for certain internal operations such as relation extension. <code>wait_event</code> will identify the type of lock awaited; see <a
-  class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/current/monitoring-stats.html#WAIT-EVENT-LOCK-TABLE"
-  
->Table 28.11</a>.</td>
+<td>The server process is waiting for a heavyweight lock. Heavyweight locks, also known as lock manager locks or simply locks, primarily protect SQL-visible objects such as tables. However, they are also used to ensure mutual exclusion for certain internal operations such as relation extension. <code>wait_event</code> will identify the type of lock awaited; see <em>Table 11</em>.</td>
 </tr>
 <tr>
 <td><code>LWLock</code></td>
-<td>The server process is waiting for a lightweight lock. Most such locks protect a particular data structure in shared memory. <code>wait_event</code> will contain a name identifying the purpose of the lightweight lock. (Some locks have specific names; others are part of a group of locks each with a similar purpose.) See <a
-  class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/current/monitoring-stats.html#WAIT-EVENT-LWLOCK-TABLE"
-  
->Table 28.12</a>.</td>
+<td>The server process is waiting for a lightweight lock. Most such locks protect a particular data structure in shared memory. <code>wait_event</code> will contain a name identifying the purpose of the lightweight lock. (Some locks have specific names; others are part of a group of locks each with a similar purpose.) See <em>Table 12</em>.</td>
 </tr>
 <tr>
 <td><code>Timeout</code></td>
-<td>The server process is waiting for a timeout to expire. <code>wait_event</code> will identify the specific wait point; see <a
-  class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/current/monitoring-stats.html#WAIT-EVENT-TIMEOUT-TABLE"
-  
->Table 28.13</a>.</td>
+<td>The server process is waiting for a timeout to expire. <code>wait_event</code> will identify the specific wait point; see <em>Table 13</em>.</td>
 </tr>
 </tbody>
 </table> </div>
@@ -3029,11 +2988,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tbody>
 </table> </div>
 <p><strong>Note</strong></p>
-<p>Extensions can add <code>LWLock</code> types to the list shown in <a
-  class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/current/monitoring-stats.html#WAIT-EVENT-LWLOCK-TABLE"
-  
->Table 28.12</a>. In some cases, the name assigned by an extension will not be available in all server processes; so an <code>LWLock</code> wait event might be reported as just “<code>extension</code>” rather than the extension-assigned name.</p>
+<p>Extensions can add <code>LWLock</code> types to the list shown in <em>Table 12</em>. In some cases, the name assigned by an extension will not be available in all server processes; so an <code>LWLock</code> wait event might be reported as just “<code>extension</code>” rather than the extension-assigned name.</p>
 <p><strong>Table 13. Wait Events of Type <code>Timeout</code></strong></p>
 <div class="table-wrap"> <table>
 <thead>
@@ -3098,16 +3053,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <tr>
 <td><code>wait_event_type</code></td>
 <td><code>text</code></td>
-<td>The type of event for which the backend is waiting, if any; otherwise NULL.</td>
+<td>The type of event for which the backend is waiting, if any; otherwise NULL. See <em>Table 4</em> for details.</td>
 </tr>
 <tr>
 <td><code>wait_event</code></td>
 <td><code>text</code></td>
-<td>Wait event name if backend is currently waiting, otherwise NULL. See <a
-  class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/monitoring-stats.html#WAIT-EVENT-TABLE"
-  
->Table 27.4</a> for details.</td>
+<td>Wait event name if backend is currently waiting, otherwise NULL. See <em>Table 4 ~ 13</em> for details.</td>
 </tr>
 <tr>
 <td><code>waits</code></td>
@@ -3200,9 +3151,9 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>Time when this process was started, i.e., when the client connected to this WAL sender</td>
 </tr>
 <tr>
-<td><code>backend_xmin</code></td>
-<td><code>xid</code></td>
-<td>This standby&rsquo;s <code>xmin</code> horizon reported by <a
+<td><code>backend_mintime</code></td>
+<td><code>logicaltime</code></td>
+<td>This standby&rsquo;s <code>mintime</code> horizon reported by <a
   class="gdoc-markdown__link"
   href="https://www.postgresql.org/docs/12/runtime-config-replication.html#GUC-HOT-STANDBY-FEEDBACK"
   
