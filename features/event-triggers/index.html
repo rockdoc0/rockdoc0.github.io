@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn" class="color-toggle-hidden">
+<html lang="en" class="color-toggle-hidden">
   <head>
     <meta charset="UTF-8" />
 <meta name="referrer" content="no-referrer" />
@@ -8,13 +8,9 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Redrock 开发团队向您郑重发布 Redrock Postgres 12 版本 12.1-1。
-红石数据库是一款基于 PostgreSQL 的关系型数据库管理系统，PostgreSQL 是由 PostgreSQL 全球开发组织开发的一款开源数据库。红石数据库主要为企业生产环境和多云环境部署而设计。
-欲了解更多信息，请访问网站。
-特性概览:
- 回滚段: 记录日志用于回滚数据的修改和事务 多租户: 在服务器上运行单个数据库实例，并为多个租户提供服务 网络表空间: 通过基于网络的表空间特性，实现数据库的计算和存储分离部署 多线程: 多线程数据库模型使服务器进程能够作为操作系统线程在单独的地址空间中执行 回收站: 提供可存放删除对象的回收站，以防止误操作 DDL事件跟踪: 可跟踪、记录、发布和订阅 DDL 操作  " />
+  <meta name="description" content="Overview of Event Trigger Behavior Event Trigger Firing Matrix Event Trigger Functions  Capturing Changes at Command End Processing Objects Dropped by a DDL Command Handling a Table Rewrite Event Deparsing a DDL command        Redrock Postgres provides event triggers. Unlike regular triggers, which are attached to a single table and capture only DML events, event triggers are global to a particular database and are capable of capturing DDL events." />
 
-    <title>Redrock Postgres 版本 12.1-1 发布 | Redrock Documentation</title>
+    <title>Event Triggers | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -35,61 +31,49 @@
     
   <meta
     property="og:title"
-    content="Redrock Postgres 版本 12.1-1 发布"
+    content="Event Triggers"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Redrock 开发团队向您郑重发布 Redrock Postgres 12 版本 12.1-1。
-红石数据库是一款基于 PostgreSQL 的关系型数据库管理系统，PostgreSQL 是由 PostgreSQL 全球开发组织开发的一款开源数据库。红石数据库主要为企业生产环境和多云环境部署而设计。
-欲了解更多信息，请访问网站。
-特性概览:
- 回滚段: 记录日志用于回滚数据的修改和事务 多租户: 在服务器上运行单个数据库实例，并为多个租户提供服务 网络表空间: 通过基于网络的表空间特性，实现数据库的计算和存储分离部署 多线程: 多线程数据库模型使服务器进程能够作为操作系统线程在单独的地址空间中执行 回收站: 提供可存放删除对象的回收站，以防止误操作 DDL事件跟踪: 可跟踪、记录、发布和订阅 DDL 操作  " />
+  <meta property="og:description" content="Overview of Event Trigger Behavior Event Trigger Firing Matrix Event Trigger Functions  Capturing Changes at Command End Processing Objects Dropped by a DDL Command Handling a Table Rewrite Event Deparsing a DDL command        Redrock Postgres provides event triggers. Unlike regular triggers, which are attached to a single table and capture only DML events, event triggers are global to a particular database and are capable of capturing DDL events." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://doc.rockdata.net/zh-cn/posts/initial-release/" />
+<meta property="og:url" content="https://doc.rockdata.net/features/event-triggers/" />
 
-<meta property="article:section" content="Posts" />
-    <meta
-      property="article:published_time"
-      content="2022-06-01T00:00:00+00:00"
-    />
+<meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-06-03T19:39:59+08:00"
+      content="2022-06-11T17:17:18+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Redrock Postgres 版本 12.1-1 发布" />
+<meta name="twitter:title" content="Event Triggers" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Redrock 开发团队向您郑重发布 Redrock Postgres 12 版本 12.1-1。
-红石数据库是一款基于 PostgreSQL 的关系型数据库管理系统，PostgreSQL 是由 PostgreSQL 全球开发组织开发的一款开源数据库。红石数据库主要为企业生产环境和多云环境部署而设计。
-欲了解更多信息，请访问网站。
-特性概览:
- 回滚段: 记录日志用于回滚数据的修改和事务 多租户: 在服务器上运行单个数据库实例，并为多个租户提供服务 网络表空间: 通过基于网络的表空间特性，实现数据库的计算和存储分离部署 多线程: 多线程数据库模型使服务器进程能够作为操作系统线程在单独的地址空间中执行 回收站: 提供可存放删除对象的回收站，以防止误操作 DDL事件跟踪: 可跟踪、记录、发布和订阅 DDL 操作  " />
+  <meta name="twitter:description" content="Overview of Event Trigger Behavior Event Trigger Firing Matrix Event Trigger Functions  Capturing Changes at Command End Processing Objects Dropped by a DDL Command Handling a Table Rewrite Event Deparsing a DDL command        Redrock Postgres provides event triggers. Unlike regular triggers, which are attached to a single table and capture only DML events, event triggers are global to a particular database and are capable of capturing DDL events." />
 
 
   <script type="application/ld+json">
   {
       "@context": "http://schema.org",
       "@type": "TechArticle",
-      "articleSection": "Posts",
-      "name": "Redrock Postgres 版本 12.1-1 发布",
-      "url" : "https://doc.rockdata.net/zh-cn/posts/initial-release/",
-      "headline": "Redrock Postgres 版本 12.1-1 发布",
-      "description": "Redrock 开发团队向您郑重发布 Redrock Postgres 12 版本 12.1-1。\n红石数据库是一款基于 PostgreSQL 的关系型数据库管理系统，PostgreSQL 是由 PostgreSQL 全球开发组织开发的一款开源数据库。红石数据库主要为企业生产环境和多云环境部署而设计。\n欲了解更多信息，请访问网站。\n特性概览:\n 回滚段: 记录日志用于回滚数据的修改和事务 多租户: 在服务器上运行单个数据库实例，并为多个租户提供服务 网络表空间: 通过基于网络的表空间特性，实现数据库的计算和存储分离部署 多线程: 多线程数据库模型使服务器进程能够作为操作系统线程在单独的地址空间中执行 回收站: 提供可存放删除对象的回收站，以防止误操作 DDL事件跟踪: 可跟踪、记录、发布和订阅 DDL 操作  ",
+      "articleSection": "Features",
+      "name": "Event Triggers",
+      "url" : "https://doc.rockdata.net/features/event-triggers/",
+      "headline": "Event Triggers",
+      "description": "Overview of Event Trigger Behavior Event Trigger Firing Matrix Event Trigger Functions  Capturing Changes at Command End Processing Objects Dropped by a DDL Command Handling a Table Rewrite Event Deparsing a DDL command        Redrock Postgres provides event triggers. Unlike regular triggers, which are attached to a single table and capture only DML events, event triggers are global to a particular database and are capable of capturing DDL events.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "29",
-      "inLanguage": "zh-cn",
+      "wordCount" : "2105",
+      "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://doc.rockdata.net/zh-cn/posts/initial-release/"
+          "@id": "https://doc.rockdata.net/features/event-triggers/"
       },
       "copyrightHolder" : "Redrock Documentation",
-      "copyrightYear" : "2022",
-      "dateCreated": "2022-06-01T00:00:00.00Z",
-      "datePublished": "2022-06-01T00:00:00.00Z",
-      "dateModified": "2022-06-03T19:39:59.00Z",
+      "copyrightYear" : "0001",
+      "dateCreated": "0001-01-01T00:00:00.00Z",
+      "datePublished": "0001-01-01T00:00:00.00Z",
+      "dateModified": "2022-06-11T17:17:18.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -165,7 +149,7 @@
   href="/custom.css"
   media="all"
 />
-  <link href="https://doc.rockdata.net/zh-cn/posts/initial-release/" rel="canonical" type="text/html" />
+  <link href="https://doc.rockdata.net/features/event-triggers/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -657,11 +641,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
       <label for="menu-control" class="gdoc-nav__control" tabindex="0">
         <svg class="gdoc-icon gdoc_menu">
-          <title>打开导航</title>
+          <title>Open Navigation</title>
           <use xlink:href="#gdoc_menu"></use>
         </svg>
         <svg class="gdoc-icon gdoc_arrow_back">
-          <title>关闭导航</title>
+          <title>Close Navigation</title>
           <use xlink:href="#gdoc_arrow_back"></use>
         </svg>
       </label>
@@ -727,15 +711,15 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
         <span id="gdoc-dark-mode">
           <svg class="gdoc-icon gdoc_brightness_dark">
-            <title>切换暗/亮/自动模式</title>
+            <title>Toggle Dark/Light/Auto mode</title>
             <use xlink:href="#gdoc_brightness_dark"></use>
           </svg>
           <svg class="gdoc-icon gdoc_brightness_light">
-            <title>切换暗/亮/自动模式</title>
+            <title>Toggle Dark/Light/Auto mode</title>
             <use xlink:href="#gdoc_brightness_light"></use>
           </svg>
           <svg class="gdoc-icon gdoc_brightness_auto">
-            <title>切换暗/亮/自动模式</title>
+            <title>Toggle Dark/Light/Auto mode</title>
             <use xlink:href="#gdoc_brightness_auto"></use>
           </svg>
         </span>
@@ -743,7 +727,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         <span class="gdoc-menu-header__home">
           <a href="https://doc.rockdata.net/" class="gdoc-header__link">
             <svg class="gdoc-icon gdoc_home">
-              <title>返回首页</title>
+              <title>Back to homepage</title>
               <use xlink:href="#gdoc_home"></use>
             </svg>
           </a>
@@ -755,12 +739,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <li>
         
           
-        
-          
             <span class="flex align-center">
               <svg class="gdoc-icon gdoc_language"><use xlink:href="#gdoc_language"></use></svg>
-              <span>ZH-CN</span>
+              <span>EN</span>
             </span>
+          
+        
           
         
 
@@ -771,12 +755,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               <li>
                 <a
                   class="flex gdoc-language__entry"
-                  title="English"
-                  href="/posts/initial-release/"
-                  hreflang="en"
-                  lang="en"
+                  title="简体中文"
+                  href="/zh-cn/features/event-triggers/"
+                  hreflang="zh-cn"
+                  lang="zh-cn"
                 >
-                  English
+                  简体中文
                 </a>
               </li>
             
@@ -793,7 +777,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
           <label for="menu-header-control">
             <svg class="gdoc-icon gdoc_keyboard_arrow_right">
               <use xlink:href="#gdoc_keyboard_arrow_right"></use>
-              <title>关闭菜单栏</title>
+              <title>Close Menu Bar</title>
             </svg>
           </label>
         </span>
@@ -801,7 +785,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <label for="menu-header-control" class="gdoc-menu-header__control">
         <svg class="gdoc-icon gdoc_keyboard_arrow_left">
           <use xlink:href="#gdoc_keyboard_arrow_left"></use>
-          <title>打开菜单栏</title>
+          <title>Open Menu Bar</title>
         </svg>
       </label>
     </div>
@@ -821,11 +805,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       type="text"
       id="gdoc-search-input"
       class="gdoc-search__input"
-      placeholder="搜索"
-      aria-label="搜索"
+      placeholder="Search"
+      aria-label="Search"
       maxlength="64"
       data-site-base-url="https://doc.rockdata.net/"
-      data-site-lang="zh-cn"
+      data-site-lang="en"
     />
     <div class="gdoc-search__spinner spinner hidden"></div>
     <ul id="gdoc-search-results" class="gdoc-search__list"></ul>
@@ -835,7 +819,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
 
   <section class="gdoc-nav--main">
-    <h2>导航</h2>
+    <h2>Navigation</h2>
     
       
 
@@ -872,7 +856,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">使用介绍</span>
+                <span class="flex">Usage</span>
               
               
             </label>
@@ -914,10 +898,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/usage/why-redrock/"
+                    href="/usage/why-redrock/"
                     class="gdoc-nav__entry"
                   >
-                    为什么选择Redrock Postgres？
+                    Why Redrock Postgres?
                   </a>
                 </span>
               
@@ -958,10 +942,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/usage/getting-started/"
+                    href="/usage/getting-started/"
                     class="gdoc-nav__entry"
                   >
-                    开始上手
+                    Getting Started
                   </a>
                 </span>
               
@@ -1002,10 +986,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/usage/configuration/"
+                    href="/usage/configuration/"
                     class="gdoc-nav__entry"
                   >
-                    参数配置
+                    Configuration
                   </a>
                 </span>
               
@@ -1051,7 +1035,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">安装指导</span>
+                <span class="flex">Installation</span>
               
               
             </label>
@@ -1093,10 +1077,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/installation/windows/"
+                    href="/installation/windows/"
                     class="gdoc-nav__entry"
                   >
-                    Windows 安装指导
+                    Installing on Windows
                   </a>
                 </span>
               
@@ -1137,10 +1121,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/installation/redhat/"
+                    href="/installation/redhat/"
                     class="gdoc-nav__entry"
                   >
-                    Red Hat/CentOS 安装指导
+                    Installing on Red Hat
                   </a>
                 </span>
               
@@ -1181,10 +1165,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/installation/debian/"
+                    href="/installation/debian/"
                     class="gdoc-nav__entry"
                   >
-                    Debian 安装指导
+                    Installing on Debian
                   </a>
                 </span>
               
@@ -1230,7 +1214,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">基础特性</span>
+                <span class="flex">Features</span>
               
               
             </label>
@@ -1272,10 +1256,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/features/undo/"
+                    href="/features/undo/"
                     class="gdoc-nav__entry"
                   >
-                    回滚段
+                    Undo
                   </a>
                 </span>
               
@@ -1316,10 +1300,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/features/event-triggers/"
-                    class="gdoc-nav__entry"
+                    href="/features/event-triggers/"
+                    class="gdoc-nav__entry is-active"
                   >
-                    事件触发器
+                    Event Triggers
                   </a>
                 </span>
               
@@ -1365,7 +1349,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">高级特性</span>
+                <span class="flex">Advanced</span>
               
               
             </label>
@@ -1407,10 +1391,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/advanced/textsearch/"
+                    href="/advanced/textsearch/"
                     class="gdoc-nav__entry"
                   >
-                    中文搜索
+                    Chinese Text Search
                   </a>
                 </span>
               
@@ -1451,7 +1435,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/advanced/plscheme/"
+                    href="/advanced/plscheme/"
                     class="gdoc-nav__entry"
                   >
                     PL/Scheme
@@ -1495,10 +1479,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/advanced/monitor-stats/"
+                    href="/advanced/monitor-stats/"
                     class="gdoc-nav__entry"
                   >
-                    运行统计视图
+                    Statistics Views
                   </a>
                 </span>
               
@@ -1548,19 +1532,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   </section>
 
   
-    <section class="gdoc-nav--tags">
-      <h2>标签</h2>
-      <ul class="gdoc-nav__list">
-        
-        
-      </ul>
-    </section>
-  
 
 
   <section class="gdoc-nav--more">
     
-      <h2>更多</h2>
+      <h2>More</h2>
       
 
   
@@ -1601,10 +1577,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                   <svg class="gdoc-icon gdoc_notification"><use xlink:href="#gdoc_notification"></use></svg>
                 
                 <a
-                  href="/zh-cn/posts/"
+                  href="/posts/"
                   class="gdoc-nav__entry"
                 >
-                  新闻
+                  News
                 </a>
               </span>
               
@@ -1651,7 +1627,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     https://gitee.com/rockdata/redrock/releases"
                   class="gdoc-nav__entry"
                 >
-                  下载
+                  Releases
                 </a>
               </span>
               
@@ -1698,7 +1674,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     https://gitee.com/rockdata/redrock"
                   class="gdoc-nav__entry"
                 >
-                  项目仓库
+                  View Source
                 </a>
               </span>
               
@@ -1726,53 +1702,1298 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
         <div class="gdoc-page">
           
-  <article class="gdoc-post">
-    <header class="gdoc-post__header">
-      <h1 class="gdoc-post__title">Redrock Postgres 版本 12.1-1 发布</h1>
-      <div class="flex flex-wrap align-center gdoc-post__meta gdoc-post__meta--head">
-        <span class="flex align-center no-wrap">
-  <svg class="gdoc-icon gdoc_date"><use xlink:href="#gdoc_date"></use></svg>
-  <span class="gdoc-post__tag">
-    <time datetime="2022-06-03T19:39:59&#43;08:00">
-      
-        更新时间
-      
-      Jun 3, 2022
-    </time>
-  </span>
-</span>
-
-<span class="flex align-center no-wrap">
-  <svg class="gdoc-icon gdoc_timer"><use xlink:href="#gdoc_timer"></use></svg>
-  <span class="gdoc-post__tag">1 分钟阅读时间</span>
-</span>
-
-
-
-
-
-
-      </div>
-    </header>
-    <section class="gdoc-markdown">
-      <p>Redrock 开发团队向您郑重发布 Redrock Postgres 12 版本 12.1-1。</p>
-<p>红石数据库是一款基于 PostgreSQL 的关系型数据库管理系统，PostgreSQL 是由 PostgreSQL 全球开发组织开发的一款开源数据库。红石数据库主要为企业生产环境和多云环境部署而设计。</p>
-<p>欲了解更多信息，请访问<a
-  class="gdoc-markdown__link"
-  href="https://doc.rockdata.net"
   
->网站</a>。</p>
-<p><strong>特性概览:</strong></p>
-<ul>
-<li>回滚段: 记录日志用于回滚数据的修改和事务</li>
-<li>多租户: 在服务器上运行单个数据库实例，并为多个租户提供服务</li>
-<li>网络表空间: 通过基于网络的表空间特性，实现数据库的计算和存储分离部署</li>
-<li>多线程: 多线程数据库模型使服务器进程能够作为操作系统线程在单独的地址空间中执行</li>
-<li>回收站: 提供可存放删除对象的回收站，以防止误操作</li>
-<li>DDL事件跟踪: 可跟踪、记录、发布和订阅 DDL 操作</li>
-</ul>
 
-    </section>
+
+  
+
+
+
+
+
+
+<div
+  class="gdoc-page__header flex flex-wrap
+  
+    justify-between
+  
+  
+  "
+  itemprop="breadcrumb"
+>
+  
+    <div>
+      <svg class="gdoc-icon gdoc_path hidden-mobile"><use xlink:href="#gdoc_path"></use></svg>
+      <ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+        
+        
+        
+        
+  
+  
+    
+    
+    
+    
+  
+  
+    
+    
+    
+    
+  
+  
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/features/' href='/features/'><span itemprop='name'>Features</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Event Triggers</span><meta itemprop='position' content='3' /></li>
+  
+
+  
+
+  
+
+      </ol>
+    </div>
+  
+  
+    <div>
+      <span class="editpage">
+        <svg class="gdoc-icon gdoc_code"><use xlink:href="#gdoc_code"></use></svg>
+        <a
+          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/en/features/event-triggers.md"
+        >
+          Edit page
+        </a>
+      </span>
+    </div>
+  
+</div>
+
+
+
+  <article
+    class="gdoc-markdown gdoc-markdown__align--left"
+  >
+    <h1>Event Triggers</h1>
+    <div class="gdoc-toc gdoc-toc__level--3">
+      <nav id="TableOfContents"><ul>
+        <li><a href="#overview-of-event-trigger-behavior">Overview of Event Trigger Behavior</a></li>
+        <li><a href="#event-trigger-firing-matrix">Event Trigger Firing Matrix</a></li>
+        <li><a href="#event-trigger-functions">Event Trigger Functions</a>
+          <ul>
+            <li><a href="#capturing-changes-at-command-end">Capturing Changes at Command End</a></li>
+            <li><a href="#processing-objects-dropped-by-a-ddl-command">Processing Objects Dropped by a DDL Command</a></li>
+            <li><a href="#handling-a-table-rewrite-event">Handling a Table Rewrite Event</a></li>
+            <li><a href="#deparsing-a-ddl-command">Deparsing a DDL command</a></li>
+          </ul>
+        </li>
+      </ul></nav>
+      <hr />
+    </div>
+<p>Redrock Postgres provides event triggers. Unlike regular triggers, which are attached to a single table and capture only DML events, event triggers are global to a particular database and are capable of capturing DDL events.</p>
+<p>Like regular triggers, event triggers can be written in any procedural language that includes event trigger support, or in C, but not in plain SQL.</p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="overview-of-event-trigger-behavior">
+        Overview of Event Trigger Behavior
+        <a data-clipboard-text="https://doc.rockdata.net/features/event-triggers/#overview-of-event-trigger-behavior" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Overview of Event Trigger Behavior" aria-label="Anchor to: Overview of Event Trigger Behavior" href="#overview-of-event-trigger-behavior">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>An event trigger fires whenever the event with which it is associated occurs in the database in which it is defined. Currently, the only supported events are <code>ddl_command_start</code>, <code>ddl_command_end</code>, <code>table_rewrite</code> and <code>sql_drop</code>. Support for additional events may be added in future releases.</p>
+<p>The <code>ddl_command_start</code> event occurs just before the execution of a <code>CREATE</code>, <code>ALTER</code>, <code>DROP</code>, <code>SECURITY LABEL</code>, <code>COMMENT</code>, <code>GRANT</code> or <code>REVOKE</code> command. No check whether the affected object exists or doesn&rsquo;t exist is performed before the event trigger fires. As an exception, however, this event does not occur for DDL commands targeting shared objects — databases, roles, and tablespaces — or for commands targeting event triggers themselves. The event trigger mechanism does not support these object types. <code>ddl_command_start</code> also occurs just before the execution of a <code>SELECT INTO</code> command, since this is equivalent to <code>CREATE TABLE AS</code>.</p>
+<p>The <code>ddl_command_end</code> event occurs just after the execution of this same set of commands. To obtain more details on the DDL operations that took place, use the set-returning function <code>pg_event_trigger_ddl_commands()</code> from the <code>ddl_command_end</code> event trigger code (see <a
+  class="gdoc-markdown__link"
+  href="https://doc.rockdata.net/features/event-triggers/#event-trigger-functions"
+  
+>Event Trigger Functions</a>). Note that the trigger fires after the actions have taken place (but before the transaction commits), and thus the system catalogs can be read as already changed.</p>
+<p>The <code>sql_drop</code> event occurs just before the <code>ddl_command_end</code> event trigger for any operation that drops database objects. To list the objects that have been dropped, use the set-returning function <code>pg_event_trigger_dropped_objects()</code> from the <code>sql_drop</code> event trigger code (see <a
+  class="gdoc-markdown__link"
+  href="https://doc.rockdata.net/features/event-triggers/#event-trigger-functions"
+  
+>Event Trigger Functions</a>). Note that the trigger is executed after the objects have been deleted from the system catalogs, so it&rsquo;s not possible to look them up anymore.</p>
+<p>The <code>table_rewrite</code> event occurs just before a table is rewritten by some actions of the commands <code>ALTER TABLE</code> and <code>ALTER TYPE</code>. While other control statements are available to rewrite a table, like <code>CLUSTER</code> and <code>VACUUM</code>, the <code>table_rewrite</code> event is not triggered by them.</p>
+<p>Event triggers (like other functions) cannot be executed in an aborted transaction. Thus, if a DDL command fails with an error, any associated <code>ddl_command_end</code> triggers will not be executed. Conversely, if a <code>ddl_command_start</code> trigger fails with an error, no further event triggers will fire, and no attempt will be made to execute the command itself. Similarly, if a <code>ddl_command_end</code> trigger fails with an error, the effects of the DDL statement will be rolled back, just as they would be in any other case where the containing transaction aborts.</p>
+<p>For a complete list of commands supported by the event trigger mechanism, see <a
+  class="gdoc-markdown__link"
+  href="https://doc.rockdata.net/features/event-triggers/#event-trigger-firing-matrix"
+  
+>Event Trigger Firing Matrix</a>.</p>
+<p>Event triggers are created using the command <a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/sql-createeventtrigger.html"
+  
+>CREATE EVENT TRIGGER</a>. In order to create an event trigger, you must first create a function with the special return type <code>event_trigger</code>. This function need not (and may not) return a value; the return type serves merely as a signal that the function is to be invoked as an event trigger.</p>
+<p>If more than one event trigger is defined for a particular event, they will fire in alphabetical order by trigger name.</p>
+<p>A trigger definition can also specify a <code>WHEN</code> condition so that, for example, a <code>ddl_command_start</code> trigger can be fired only for particular commands which the user wishes to intercept. A common use of such triggers is to restrict the range of DDL operations which users may perform.</p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="event-trigger-firing-matrix">
+        Event Trigger Firing Matrix
+        <a data-clipboard-text="https://doc.rockdata.net/features/event-triggers/#event-trigger-firing-matrix" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Event Trigger Firing Matrix" aria-label="Anchor to: Event Trigger Firing Matrix" href="#event-trigger-firing-matrix">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p><em>Table 1</em> lists all commands for which event triggers are supported.</p>
+<p><strong>Table 1. Event Trigger Support by Command Tag</strong></p>
+<div class="table-wrap"> <table>
+<thead>
+<tr>
+<th>Command Tag</th>
+<th><code>ddl_command_start</code></th>
+<th><code>ddl_command_end</code></th>
+<th><code>sql_drop</code></th>
+<th><code>table_rewrite</code></th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ALTER AGGREGATE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER COLLATION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER CONVERSION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER DOMAIN</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER DEFAULT PRIVILEGES</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER EXTENSION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER FOREIGN DATA WRAPPER</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER FOREIGN TABLE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER FUNCTION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER LANGUAGE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER LARGE OBJECT</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER MATERIALIZED VIEW</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER OPERATOR</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER OPERATOR CLASS</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER OPERATOR FAMILY</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER POLICY</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER PROCEDURE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER PUBLICATION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER ROUTINE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER SCHEMA</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER SEQUENCE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER SERVER</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER STATISTICS</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER SUBSCRIPTION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER TABLE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER TEXT SEARCH CONFIGURATION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER TEXT SEARCH DICTIONARY</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER TEXT SEARCH PARSER</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER TEXT SEARCH TEMPLATE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER TRIGGER</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER TYPE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>X</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER USER MAPPING</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER VIEW</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>COMMENT</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td>Only for local objects</td>
+</tr>
+<tr>
+<td><code>CREATE ACCESS METHOD</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE AGGREGATE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE CAST</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE COLLATION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE CONVERSION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE DOMAIN</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE EXTENSION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE FOREIGN DATA WRAPPER</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE FOREIGN TABLE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE FUNCTION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE INDEX</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE LANGUAGE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE MATERIALIZED VIEW</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE OPERATOR</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE OPERATOR CLASS</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE OPERATOR FAMILY</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE POLICY</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE PROCEDURE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE PUBLICATION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE RULE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE SCHEMA</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE SEQUENCE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE SERVER</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE STATISTICS</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE SUBSCRIPTION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE TABLE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE TABLE AS</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE TEXT SEARCH CONFIGURATION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE TEXT SEARCH DICTIONARY</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE TEXT SEARCH PARSER</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE TEXT SEARCH TEMPLATE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE TRIGGER</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE TYPE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE USER MAPPING</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE VIEW</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP ACCESS METHOD</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP AGGREGATE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP CAST</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP COLLATION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP CONVERSION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP DOMAIN</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP EXTENSION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP FOREIGN DATA WRAPPER</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP FOREIGN TABLE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP FUNCTION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP INDEX</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP LANGUAGE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP MATERIALIZED VIEW</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP OPERATOR</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP OPERATOR CLASS</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP OPERATOR FAMILY</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP OWNED</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP POLICY</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP PROCEDURE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP PUBLICATION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP ROUTINE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP RULE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP SCHEMA</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP SEQUENCE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP SERVER</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP STATISTICS</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP SUBSCRIPTION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP TABLE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP TEXT SEARCH CONFIGURATION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP TEXT SEARCH DICTIONARY</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP TEXT SEARCH PARSER</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP TEXT SEARCH TEMPLATE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP TRIGGER</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP TYPE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP USER MAPPING</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP VIEW</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>GRANT</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td>Only for local objects</td>
+</tr>
+<tr>
+<td><code>IMPORT FOREIGN SCHEMA</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>REFRESH MATERIALIZED VIEW</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>REVOKE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td>Only for local objects</td>
+</tr>
+<tr>
+<td><code>SECURITY LABEL</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td>Only for local objects</td>
+</tr>
+<tr>
+<td><code>SELECT INTO</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+</tbody>
+</table> </div>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="event-trigger-functions">
+        Event Trigger Functions
+        <a data-clipboard-text="https://doc.rockdata.net/features/event-triggers/#event-trigger-functions" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Event Trigger Functions" aria-label="Anchor to: Event Trigger Functions" href="#event-trigger-functions">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>PostgreSQL provides these helper functions to retrieve information from event triggers.</p>
+<div class="gdoc-page__anchorwrap">
+    <h3 id="capturing-changes-at-command-end">
+        Capturing Changes at Command End
+        <a data-clipboard-text="https://doc.rockdata.net/features/event-triggers/#capturing-changes-at-command-end" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Capturing Changes at Command End" aria-label="Anchor to: Capturing Changes at Command End" href="#capturing-changes-at-command-end">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p><code>pg_event_trigger_ddl_commands</code> returns a list of DDL commands executed by each user action, when invoked in a function attached to a <code>ddl_command_end</code> event trigger. If called in any other context, an error is raised. <code>pg_event_trigger_ddl_commands</code> returns one row for each base command executed; some commands that are a single SQL sentence may return more than one row. This function returns the following columns:</p>
+<div class="table-wrap"> <table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>classid</code></td>
+<td><code>oid</code></td>
+<td>OID of catalog the object belongs in</td>
+</tr>
+<tr>
+<td><code>objid</code></td>
+<td><code>oid</code></td>
+<td>OID of the object itself</td>
+</tr>
+<tr>
+<td><code>objsubid</code></td>
+<td><code>integer</code></td>
+<td>Sub-object ID (e.g., attribute number for a column)</td>
+</tr>
+<tr>
+<td><code>command_tag</code></td>
+<td><code>text</code></td>
+<td>Command tag</td>
+</tr>
+<tr>
+<td><code>object_type</code></td>
+<td><code>text</code></td>
+<td>Type of the object</td>
+</tr>
+<tr>
+<td><code>schema_name</code></td>
+<td><code>text</code></td>
+<td>Name of the schema the object belongs in, if any; otherwise <code>NULL</code>. No quoting is applied.</td>
+</tr>
+<tr>
+<td><code>object_identity</code></td>
+<td><code>text</code></td>
+<td>Text rendering of the object identity, schema-qualified. Each identifier included in the identity is quoted if necessary.</td>
+</tr>
+<tr>
+<td><code>in_extension</code></td>
+<td><code>bool</code></td>
+<td>True if the command is part of an extension script</td>
+</tr>
+<tr>
+<td><code>command</code></td>
+<td><code>pg_ddl_command</code></td>
+<td>A complete representation of the command, in internal format. This cannot be output directly, but it can be passed to other functions to obtain different pieces of information about the command.</td>
+</tr>
+</tbody>
+</table> </div>
+<div class="gdoc-page__anchorwrap">
+    <h3 id="processing-objects-dropped-by-a-ddl-command">
+        Processing Objects Dropped by a DDL Command
+        <a data-clipboard-text="https://doc.rockdata.net/features/event-triggers/#processing-objects-dropped-by-a-ddl-command" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Processing Objects Dropped by a DDL Command" aria-label="Anchor to: Processing Objects Dropped by a DDL Command" href="#processing-objects-dropped-by-a-ddl-command">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p><code>pg_event_trigger_dropped_objects</code> returns a list of all objects dropped by the command in whose <code>sql_drop</code> event it is called. If called in any other context, <code>pg_event_trigger_dropped_objects</code> raises an error. <code>pg_event_trigger_dropped_objects</code> returns the following columns:</p>
+<div class="table-wrap"> <table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>classid</code></td>
+<td><code>oid</code></td>
+<td>OID of catalog the object belonged in</td>
+</tr>
+<tr>
+<td><code>objid</code></td>
+<td><code>oid</code></td>
+<td>OID of the object itself</td>
+</tr>
+<tr>
+<td><code>objsubid</code></td>
+<td><code>integer</code></td>
+<td>Sub-object ID (e.g., attribute number for a column)</td>
+</tr>
+<tr>
+<td><code>original</code></td>
+<td><code>bool</code></td>
+<td>True if this was one of the root object(s) of the deletion</td>
+</tr>
+<tr>
+<td><code>normal</code></td>
+<td><code>bool</code></td>
+<td>True if there was a normal dependency relationship in the dependency graph leading to this object</td>
+</tr>
+<tr>
+<td><code>is_temporary</code></td>
+<td><code>bool</code></td>
+<td>True if this was a temporary object</td>
+</tr>
+<tr>
+<td><code>object_type</code></td>
+<td><code>text</code></td>
+<td>Type of the object</td>
+</tr>
+<tr>
+<td><code>schema_name</code></td>
+<td><code>text</code></td>
+<td>Name of the schema the object belonged in, if any; otherwise <code>NULL</code>. No quoting is applied.</td>
+</tr>
+<tr>
+<td><code>object_name</code></td>
+<td><code>text</code></td>
+<td>Name of the object, if the combination of schema and name can be used as a unique identifier for the object; otherwise <code>NULL</code>. No quoting is applied, and name is never schema-qualified.</td>
+</tr>
+<tr>
+<td><code>object_identity</code></td>
+<td><code>text</code></td>
+<td>Text rendering of the object identity, schema-qualified. Each identifier included in the identity is quoted if necessary.</td>
+</tr>
+<tr>
+<td><code>address_names</code></td>
+<td><code>text[]</code></td>
+<td>An array that, together with <code>object_type</code> and <code>address_args</code>, can be used by the <code>pg_get_object_address()</code> function to recreate the object address in a remote server containing an identically named object of the same kind</td>
+</tr>
+<tr>
+<td><code>address_args</code></td>
+<td><code>text[]</code></td>
+<td>Complement for <code>address_names</code></td>
+</tr>
+</tbody>
+</table> </div>
+<p>The <code>pg_event_trigger_dropped_objects</code> function can be used in an event trigger like this:</p>
+<pre tabindex="0"><code>CREATE FUNCTION test_event_trigger_for_drops()
+        RETURNS event_trigger LANGUAGE plpgsql AS $$
+DECLARE
+    obj record;
+BEGIN
+    FOR obj IN SELECT * FROM pg_event_trigger_dropped_objects()
+    LOOP
+        RAISE NOTICE &#39;% dropped object: % %.% %&#39;,
+                     tg_tag,
+                     obj.object_type,
+                     obj.schema_name,
+                     obj.object_name,
+                     obj.object_identity;
+    END LOOP;
+END;
+$$;
+CREATE EVENT TRIGGER test_event_trigger_for_drops
+   ON sql_drop
+   EXECUTE PROCEDURE test_event_trigger_for_drops();
+</code></pre><div class="gdoc-page__anchorwrap">
+    <h3 id="handling-a-table-rewrite-event">
+        Handling a Table Rewrite Event
+        <a data-clipboard-text="https://doc.rockdata.net/features/event-triggers/#handling-a-table-rewrite-event" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Handling a Table Rewrite Event" aria-label="Anchor to: Handling a Table Rewrite Event" href="#handling-a-table-rewrite-event">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p>The functions shown in <em>Table 2</em> provide information about a table for which a <code>table_rewrite</code> event has just been called. If called in any other context, an error is raised.</p>
+<p><strong>Table 2. Table Rewrite Information</strong></p>
+<div class="table-wrap"> <table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Return Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pg_event_trigger_table_rewrite_oid()</code></td>
+<td><code>Oid</code></td>
+<td>The OID of the table about to be rewritten.</td>
+</tr>
+<tr>
+<td><code>pg_event_trigger_table_rewrite_reason()</code></td>
+<td><code>int</code></td>
+<td>The reason code(s) explaining the reason for rewriting. The exact meaning of the codes is release dependent.</td>
+</tr>
+</tbody>
+</table> </div>
+<p>The <code>pg_event_trigger_table_rewrite_oid</code> function can be used in an event trigger like this:</p>
+<pre tabindex="0"><code>CREATE FUNCTION test_event_trigger_table_rewrite_oid()
+ RETURNS event_trigger
+ LANGUAGE plpgsql AS
+$$
+BEGIN
+  RAISE NOTICE &#39;rewriting table % for reason %&#39;,
+                pg_event_trigger_table_rewrite_oid()::regclass,
+                pg_event_trigger_table_rewrite_reason();
+END;
+$$;
+
+CREATE EVENT TRIGGER test_table_rewrite_oid
+                  ON table_rewrite
+   EXECUTE PROCEDURE test_event_trigger_table_rewrite_oid();
+</code></pre><div class="gdoc-page__anchorwrap">
+    <h3 id="deparsing-a-ddl-command">
+        Deparsing a DDL command
+        <a data-clipboard-text="https://doc.rockdata.net/features/event-triggers/#deparsing-a-ddl-command" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Deparsing a DDL command" aria-label="Anchor to: Deparsing a DDL command" href="#deparsing-a-ddl-command">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p><code>pg_ddl_command_deparse</code> deparses a command from internal format of type <code>pg_ddl_command</code>, and returns a command string in textual representation of typeand <code>text</code>.</p>
+<p>The <code>pg_ddl_command_deparse</code> function can be used in an event trigger like this:</p>
+<pre tabindex="0"><code>CREATE TABLE ddl_history(
+  ord             int,
+  op_time         timestamp,
+  username        text,
+  command_tag     text,
+  object_type     text,
+  schema_name     text,
+  object_identity text,
+  command         text
+);
+
+CREATE OR REPLACE FUNCTION ddl_trigger_func()
+RETURNS event_trigger
+SECURITY DEFINER
+AS $$
+BEGIN
+  INSERT INTO ddl_history
+    SELECT ordinality, now(), current_user, command_tag,
+           object_type, schema_name, object_identity,
+           pg_ddl_command_deparse(command)
+      FROM pg_event_trigger_ddl_commands() WITH ORDINALITY;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE EVENT TRIGGER deparse_event_trigger
+    ON ddl_command_end
+    EXECUTE PROCEDURE ddl_trigger_func();
+</code></pre>
   </article>
 
 
@@ -2008,14 +3229,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         
           <span class="gdoc-footer__item gdoc-footer__item--row">
             <a href="https://www.rockdata.net/legal-notice/#contact-information" class="gdoc-footer__link">
-              法律声明
+              Legal Notice
             </a>
           </span>
         
         
           <span class="gdoc-footer__item gdoc-footer__item--row">
             <a href="https://www.rockdata.net/legal-notice/#privacy-policy" class="gdoc-footer__link">
-              隐私政策
+              Privacy Policy
             </a>
           </span>
         
@@ -2025,11 +3246,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
       <div class="flex flex-25 justify-end">
         <span class="gdoc-footer__item text-right">
-          <a class="gdoc-footer__link fake-link" href="#" aria-label="回到顶部">
+          <a class="gdoc-footer__link fake-link" href="#" aria-label="Back to top">
             <svg class="gdoc-icon gdoc_keyboard_arrow_up">
               <use xlink:href="#gdoc_keyboard_arrow_up"></use>
             </svg>
-            <span class="hidden-mobile">回到顶部</span>
+            <span class="hidden-mobile">Back to top</span>
           </a>
         </span>
       </div>

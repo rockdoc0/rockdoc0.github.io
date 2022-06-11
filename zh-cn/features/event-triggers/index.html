@@ -8,13 +8,13 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Redrock 开发团队向您郑重发布 Redrock Postgres 12 版本 12.1-1。
-红石数据库是一款基于 PostgreSQL 的关系型数据库管理系统，PostgreSQL 是由 PostgreSQL 全球开发组织开发的一款开源数据库。红石数据库主要为企业生产环境和多云环境部署而设计。
-欲了解更多信息，请访问网站。
-特性概览:
- 回滚段: 记录日志用于回滚数据的修改和事务 多租户: 在服务器上运行单个数据库实例，并为多个租户提供服务 网络表空间: 通过基于网络的表空间特性，实现数据库的计算和存储分离部署 多线程: 多线程数据库模型使服务器进程能够作为操作系统线程在单独的地址空间中执行 回收站: 提供可存放删除对象的回收站，以防止误操作 DDL事件跟踪: 可跟踪、记录、发布和订阅 DDL 操作  " />
+  <meta name="description" content="事件触发器行为总览 事件触发器触发矩阵 事件触发器函数  在命令结束处捕捉更改 处理被 DDL 命令删除的对象 处理表重写事件 反解析 DDL 命令        Redrock Postgres 提供了事件触发器。和常规触发器（附着在 一个表上并且只捕捉 DML 事件）不同，事件触发器对一个特定数据库来说是全局 的，并且可以捕捉 DDL 事件。
+和常规触发器相似，可以用任何包括了事件触发器支持的过程语言或者 C 编写 事件触发器，但是不能用纯 SQL 编写。
+事件触发器行为总览     只要与一个事件触发器相关的事件在事件触发器所在的数据库中发生， 该事件触发器就会被引发。当前支持的事件是 ddl_command_start、ddl_command_end、 table_rewrite和sql_drop。未来的发行版 中可能会增加对更多事件的支持。
+ddl_command_start事件就在CREATE、 ALTER、DROP、SECURITY LABEL、 COMMENT、GRANT或者REVOKE 命令的执行之前发生。在事件触发器引发前不会做受影响对象是否存在的检查。 不过，一个例外是，这个事件不会为目标是共享对象 — 数据库、角色 以及表空间 — 的 DDL 命令发生，也不会为目标是事件触发器的 DDL 命令发生。事件触发器机制不支持这些对象类型。 ddl_command_start也会在SELECT INTO 命令的执行之前发生，因为这等价于 CREATE TABLE AS。
+ddl_command_end事件就在同一组命令的执行之后发生。为了 得到发生的DDL操作的更多细节，可以从 ddl_command_end事件触发器代码中使用集合返回函数 pg_event_trigger_ddl_commands()（见 事件触发器函数）。注意该触发器是在那些动作 已经发生之后（但是在事务提交前）引发，并且因此系统目录会被读作已更改。" />
 
-    <title>Redrock Postgres 版本 12.1-1 发布 | Redrock Documentation</title>
+    <title>事件触发器 | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -35,61 +35,57 @@
     
   <meta
     property="og:title"
-    content="Redrock Postgres 版本 12.1-1 发布"
+    content="事件触发器"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Redrock 开发团队向您郑重发布 Redrock Postgres 12 版本 12.1-1。
-红石数据库是一款基于 PostgreSQL 的关系型数据库管理系统，PostgreSQL 是由 PostgreSQL 全球开发组织开发的一款开源数据库。红石数据库主要为企业生产环境和多云环境部署而设计。
-欲了解更多信息，请访问网站。
-特性概览:
- 回滚段: 记录日志用于回滚数据的修改和事务 多租户: 在服务器上运行单个数据库实例，并为多个租户提供服务 网络表空间: 通过基于网络的表空间特性，实现数据库的计算和存储分离部署 多线程: 多线程数据库模型使服务器进程能够作为操作系统线程在单独的地址空间中执行 回收站: 提供可存放删除对象的回收站，以防止误操作 DDL事件跟踪: 可跟踪、记录、发布和订阅 DDL 操作  " />
+  <meta property="og:description" content="事件触发器行为总览 事件触发器触发矩阵 事件触发器函数  在命令结束处捕捉更改 处理被 DDL 命令删除的对象 处理表重写事件 反解析 DDL 命令        Redrock Postgres 提供了事件触发器。和常规触发器（附着在 一个表上并且只捕捉 DML 事件）不同，事件触发器对一个特定数据库来说是全局 的，并且可以捕捉 DDL 事件。
+和常规触发器相似，可以用任何包括了事件触发器支持的过程语言或者 C 编写 事件触发器，但是不能用纯 SQL 编写。
+事件触发器行为总览     只要与一个事件触发器相关的事件在事件触发器所在的数据库中发生， 该事件触发器就会被引发。当前支持的事件是 ddl_command_start、ddl_command_end、 table_rewrite和sql_drop。未来的发行版 中可能会增加对更多事件的支持。
+ddl_command_start事件就在CREATE、 ALTER、DROP、SECURITY LABEL、 COMMENT、GRANT或者REVOKE 命令的执行之前发生。在事件触发器引发前不会做受影响对象是否存在的检查。 不过，一个例外是，这个事件不会为目标是共享对象 — 数据库、角色 以及表空间 — 的 DDL 命令发生，也不会为目标是事件触发器的 DDL 命令发生。事件触发器机制不支持这些对象类型。 ddl_command_start也会在SELECT INTO 命令的执行之前发生，因为这等价于 CREATE TABLE AS。
+ddl_command_end事件就在同一组命令的执行之后发生。为了 得到发生的DDL操作的更多细节，可以从 ddl_command_end事件触发器代码中使用集合返回函数 pg_event_trigger_ddl_commands()（见 事件触发器函数）。注意该触发器是在那些动作 已经发生之后（但是在事务提交前）引发，并且因此系统目录会被读作已更改。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://doc.rockdata.net/zh-cn/posts/initial-release/" />
+<meta property="og:url" content="https://doc.rockdata.net/zh-cn/features/event-triggers/" />
 
-<meta property="article:section" content="Posts" />
-    <meta
-      property="article:published_time"
-      content="2022-06-01T00:00:00+00:00"
-    />
+<meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-06-03T19:39:59+08:00"
+      content="2022-06-11T17:17:18+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Redrock Postgres 版本 12.1-1 发布" />
+<meta name="twitter:title" content="事件触发器" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Redrock 开发团队向您郑重发布 Redrock Postgres 12 版本 12.1-1。
-红石数据库是一款基于 PostgreSQL 的关系型数据库管理系统，PostgreSQL 是由 PostgreSQL 全球开发组织开发的一款开源数据库。红石数据库主要为企业生产环境和多云环境部署而设计。
-欲了解更多信息，请访问网站。
-特性概览:
- 回滚段: 记录日志用于回滚数据的修改和事务 多租户: 在服务器上运行单个数据库实例，并为多个租户提供服务 网络表空间: 通过基于网络的表空间特性，实现数据库的计算和存储分离部署 多线程: 多线程数据库模型使服务器进程能够作为操作系统线程在单独的地址空间中执行 回收站: 提供可存放删除对象的回收站，以防止误操作 DDL事件跟踪: 可跟踪、记录、发布和订阅 DDL 操作  " />
+  <meta name="twitter:description" content="事件触发器行为总览 事件触发器触发矩阵 事件触发器函数  在命令结束处捕捉更改 处理被 DDL 命令删除的对象 处理表重写事件 反解析 DDL 命令        Redrock Postgres 提供了事件触发器。和常规触发器（附着在 一个表上并且只捕捉 DML 事件）不同，事件触发器对一个特定数据库来说是全局 的，并且可以捕捉 DDL 事件。
+和常规触发器相似，可以用任何包括了事件触发器支持的过程语言或者 C 编写 事件触发器，但是不能用纯 SQL 编写。
+事件触发器行为总览     只要与一个事件触发器相关的事件在事件触发器所在的数据库中发生， 该事件触发器就会被引发。当前支持的事件是 ddl_command_start、ddl_command_end、 table_rewrite和sql_drop。未来的发行版 中可能会增加对更多事件的支持。
+ddl_command_start事件就在CREATE、 ALTER、DROP、SECURITY LABEL、 COMMENT、GRANT或者REVOKE 命令的执行之前发生。在事件触发器引发前不会做受影响对象是否存在的检查。 不过，一个例外是，这个事件不会为目标是共享对象 — 数据库、角色 以及表空间 — 的 DDL 命令发生，也不会为目标是事件触发器的 DDL 命令发生。事件触发器机制不支持这些对象类型。 ddl_command_start也会在SELECT INTO 命令的执行之前发生，因为这等价于 CREATE TABLE AS。
+ddl_command_end事件就在同一组命令的执行之后发生。为了 得到发生的DDL操作的更多细节，可以从 ddl_command_end事件触发器代码中使用集合返回函数 pg_event_trigger_ddl_commands()（见 事件触发器函数）。注意该触发器是在那些动作 已经发生之后（但是在事务提交前）引发，并且因此系统目录会被读作已更改。" />
 
 
   <script type="application/ld+json">
   {
       "@context": "http://schema.org",
       "@type": "TechArticle",
-      "articleSection": "Posts",
-      "name": "Redrock Postgres 版本 12.1-1 发布",
-      "url" : "https://doc.rockdata.net/zh-cn/posts/initial-release/",
-      "headline": "Redrock Postgres 版本 12.1-1 发布",
-      "description": "Redrock 开发团队向您郑重发布 Redrock Postgres 12 版本 12.1-1。\n红石数据库是一款基于 PostgreSQL 的关系型数据库管理系统，PostgreSQL 是由 PostgreSQL 全球开发组织开发的一款开源数据库。红石数据库主要为企业生产环境和多云环境部署而设计。\n欲了解更多信息，请访问网站。\n特性概览:\n 回滚段: 记录日志用于回滚数据的修改和事务 多租户: 在服务器上运行单个数据库实例，并为多个租户提供服务 网络表空间: 通过基于网络的表空间特性，实现数据库的计算和存储分离部署 多线程: 多线程数据库模型使服务器进程能够作为操作系统线程在单独的地址空间中执行 回收站: 提供可存放删除对象的回收站，以防止误操作 DDL事件跟踪: 可跟踪、记录、发布和订阅 DDL 操作  ",
+      "articleSection": "Features",
+      "name": "事件触发器",
+      "url" : "https://doc.rockdata.net/zh-cn/features/event-triggers/",
+      "headline": "事件触发器",
+      "description": "事件触发器行为总览 事件触发器触发矩阵 事件触发器函数  在命令结束处捕捉更改 处理被 DDL 命令删除的对象 处理表重写事件 反解析 DDL 命令        Redrock Postgres 提供了事件触发器。和常规触发器（附着在 一个表上并且只捕捉 DML 事件）不同，事件触发器对一个特定数据库来说是全局 的，并且可以捕捉 DDL 事件。\n和常规触发器相似，可以用任何包括了事件触发器支持的过程语言或者 C 编写 事件触发器，但是不能用纯 SQL 编写。\n事件触发器行为总览     只要与一个事件触发器相关的事件在事件触发器所在的数据库中发生， 该事件触发器就会被引发。当前支持的事件是 ddl_command_start、ddl_command_end、 table_rewrite和sql_drop。未来的发行版 中可能会增加对更多事件的支持。\nddl_command_start事件就在CREATE、 ALTER、DROP、SECURITY LABEL、 COMMENT、GRANT或者REVOKE 命令的执行之前发生。在事件触发器引发前不会做受影响对象是否存在的检查。 不过，一个例外是，这个事件不会为目标是共享对象 — 数据库、角色 以及表空间 — 的 DDL 命令发生，也不会为目标是事件触发器的 DDL 命令发生。事件触发器机制不支持这些对象类型。 ddl_command_start也会在SELECT INTO 命令的执行之前发生，因为这等价于 CREATE TABLE AS。\nddl_command_end事件就在同一组命令的执行之后发生。为了 得到发生的DDL操作的更多细节，可以从 ddl_command_end事件触发器代码中使用集合返回函数 pg_event_trigger_ddl_commands()（见 事件触发器函数）。注意该触发器是在那些动作 已经发生之后（但是在事务提交前）引发，并且因此系统目录会被读作已更改。",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "29",
+      "wordCount" : "1085",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://doc.rockdata.net/zh-cn/posts/initial-release/"
+          "@id": "https://doc.rockdata.net/zh-cn/features/event-triggers/"
       },
       "copyrightHolder" : "Redrock Documentation",
-      "copyrightYear" : "2022",
-      "dateCreated": "2022-06-01T00:00:00.00Z",
-      "datePublished": "2022-06-01T00:00:00.00Z",
-      "dateModified": "2022-06-03T19:39:59.00Z",
+      "copyrightYear" : "0001",
+      "dateCreated": "0001-01-01T00:00:00.00Z",
+      "datePublished": "0001-01-01T00:00:00.00Z",
+      "dateModified": "2022-06-11T17:17:18.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -165,7 +161,7 @@
   href="/custom.css"
   media="all"
 />
-  <link href="https://doc.rockdata.net/zh-cn/posts/initial-release/" rel="canonical" type="text/html" />
+  <link href="https://doc.rockdata.net/zh-cn/features/event-triggers/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -772,7 +768,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <a
                   class="flex gdoc-language__entry"
                   title="English"
-                  href="/posts/initial-release/"
+                  href="/features/event-triggers/"
                   hreflang="en"
                   lang="en"
                 >
@@ -1317,7 +1313,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <span class="flex">
                   <a
                     href="/zh-cn/features/event-triggers/"
-                    class="gdoc-nav__entry"
+                    class="gdoc-nav__entry is-active"
                   >
                     事件触发器
                   </a>
@@ -1548,14 +1544,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   </section>
 
   
-    <section class="gdoc-nav--tags">
-      <h2>标签</h2>
-      <ul class="gdoc-nav__list">
-        
-        
-      </ul>
-    </section>
-  
 
 
   <section class="gdoc-nav--more">
@@ -1726,53 +1714,1282 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
         <div class="gdoc-page">
           
-  <article class="gdoc-post">
-    <header class="gdoc-post__header">
-      <h1 class="gdoc-post__title">Redrock Postgres 版本 12.1-1 发布</h1>
-      <div class="flex flex-wrap align-center gdoc-post__meta gdoc-post__meta--head">
-        <span class="flex align-center no-wrap">
-  <svg class="gdoc-icon gdoc_date"><use xlink:href="#gdoc_date"></use></svg>
-  <span class="gdoc-post__tag">
-    <time datetime="2022-06-03T19:39:59&#43;08:00">
-      
-        更新时间
-      
-      Jun 3, 2022
-    </time>
-  </span>
-</span>
-
-<span class="flex align-center no-wrap">
-  <svg class="gdoc-icon gdoc_timer"><use xlink:href="#gdoc_timer"></use></svg>
-  <span class="gdoc-post__tag">1 分钟阅读时间</span>
-</span>
-
-
-
-
-
-
-      </div>
-    </header>
-    <section class="gdoc-markdown">
-      <p>Redrock 开发团队向您郑重发布 Redrock Postgres 12 版本 12.1-1。</p>
-<p>红石数据库是一款基于 PostgreSQL 的关系型数据库管理系统，PostgreSQL 是由 PostgreSQL 全球开发组织开发的一款开源数据库。红石数据库主要为企业生产环境和多云环境部署而设计。</p>
-<p>欲了解更多信息，请访问<a
-  class="gdoc-markdown__link"
-  href="https://doc.rockdata.net"
   
->网站</a>。</p>
-<p><strong>特性概览:</strong></p>
-<ul>
-<li>回滚段: 记录日志用于回滚数据的修改和事务</li>
-<li>多租户: 在服务器上运行单个数据库实例，并为多个租户提供服务</li>
-<li>网络表空间: 通过基于网络的表空间特性，实现数据库的计算和存储分离部署</li>
-<li>多线程: 多线程数据库模型使服务器进程能够作为操作系统线程在单独的地址空间中执行</li>
-<li>回收站: 提供可存放删除对象的回收站，以防止误操作</li>
-<li>DDL事件跟踪: 可跟踪、记录、发布和订阅 DDL 操作</li>
-</ul>
 
-    </section>
+
+  
+
+
+
+
+
+
+<div
+  class="gdoc-page__header flex flex-wrap
+  
+    justify-between
+  
+  
+  "
+  itemprop="breadcrumb"
+>
+  
+    <div>
+      <svg class="gdoc-icon gdoc_path hidden-mobile"><use xlink:href="#gdoc_path"></use></svg>
+      <ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+        
+        
+        
+        
+  
+  
+    
+    
+    
+    
+  
+  
+    
+    
+    
+    
+  
+  
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/features/' href='/zh-cn/features/'><span itemprop='name'>基础特性</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>事件触发器</span><meta itemprop='position' content='4' /></li>
+  
+
+  
+
+  
+
+      </ol>
+    </div>
+  
+  
+    <div>
+      <span class="editpage">
+        <svg class="gdoc-icon gdoc_code"><use xlink:href="#gdoc_code"></use></svg>
+        <a
+          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/zh-cn/features/event-triggers.md"
+        >
+          编辑页面
+        </a>
+      </span>
+    </div>
+  
+</div>
+
+
+
+  <article
+    class="gdoc-markdown gdoc-markdown__align--left"
+  >
+    <h1>事件触发器</h1>
+    <div class="gdoc-toc gdoc-toc__level--3">
+      <nav id="TableOfContents"><ul>
+        <li><a href="#事件触发器行为总览">事件触发器行为总览</a></li>
+        <li><a href="#事件触发器触发矩阵">事件触发器触发矩阵</a></li>
+        <li><a href="#事件触发器函数">事件触发器函数</a>
+          <ul>
+            <li><a href="#在命令结束处捕捉更改">在命令结束处捕捉更改</a></li>
+            <li><a href="#处理被-ddl-命令删除的对象">处理被 DDL 命令删除的对象</a></li>
+            <li><a href="#处理表重写事件">处理表重写事件</a></li>
+            <li><a href="#反解析-ddl-命令">反解析 DDL 命令</a></li>
+          </ul>
+        </li>
+      </ul></nav>
+      <hr />
+    </div>
+<p>Redrock Postgres 提供了事件触发器。和常规触发器（附着在 一个表上并且只捕捉 DML 事件）不同，事件触发器对一个特定数据库来说是全局 的，并且可以捕捉 DDL 事件。</p>
+<p>和常规触发器相似，可以用任何包括了事件触发器支持的过程语言或者 C 编写 事件触发器，但是不能用纯 SQL 编写。</p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="事件触发器行为总览">
+        事件触发器行为总览
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/event-triggers/#事件触发器行为总览" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 事件触发器行为总览" aria-label="锚定到： 事件触发器行为总览" href="#%e4%ba%8b%e4%bb%b6%e8%a7%a6%e5%8f%91%e5%99%a8%e8%a1%8c%e4%b8%ba%e6%80%bb%e8%a7%88">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>只要与一个事件触发器相关的事件在事件触发器所在的数据库中发生， 该事件触发器就会被引发。当前支持的事件是 <code>ddl_command_start</code>、<code>ddl_command_end</code>、 <code>table_rewrite</code>和<code>sql_drop</code>。未来的发行版 中可能会增加对更多事件的支持。</p>
+<p><code>ddl_command_start</code>事件就在<code>CREATE</code>、 <code>ALTER</code>、<code>DROP</code>、<code>SECURITY LABEL</code>、 <code>COMMENT</code>、<code>GRANT</code>或者<code>REVOKE</code> 命令的执行之前发生。在事件触发器引发前不会做受影响对象是否存在的检查。 不过，一个例外是，这个事件不会为目标是共享对象 — 数据库、角色 以及表空间 — 的 DDL 命令发生，也不会为目标是事件触发器的 DDL 命令发生。事件触发器机制不支持这些对象类型。 <code>ddl_command_start</code>也会在<code>SELECT INTO</code> 命令的执行之前发生，因为这等价于 <code>CREATE TABLE AS</code>。</p>
+<p><code>ddl_command_end</code>事件就在同一组命令的执行之后发生。为了 得到发生的DDL操作的更多细节，可以从 <code>ddl_command_end</code>事件触发器代码中使用集合返回函数 <code>pg_event_trigger_ddl_commands()</code>（见 <a
+  class="gdoc-markdown__link"
+  href="https://doc.rockdata.net/zh-cn/features/event-triggers/#%e4%ba%8b%e4%bb%b6%e8%a7%a6%e5%8f%91%e5%99%a8%e5%87%bd%e6%95%b0"
+  
+>事件触发器函数</a>）。注意该触发器是在那些动作 已经发生之后（但是在事务提交前）引发，并且因此系统目录会被读作已更改。</p>
+<p><code>sql_drop</code>事件为任何删除数据库对象的操作在 <code>ddl_command_end</code>事件触发器之前发生。要列出已经被删除的 对象，可以从<code>sql_drop</code>事件触发器代码中使用集合返回函数 <code>pg_event_trigger_dropped_objects()</code>见 <a
+  class="gdoc-markdown__link"
+  href="https://doc.rockdata.net/zh-cn/features/event-triggers/#%e4%ba%8b%e4%bb%b6%e8%a7%a6%e5%8f%91%e5%99%a8%e5%87%bd%e6%95%b0"
+  
+>事件触发器函数</a>）。注意该触发器是在对象已经 从系统目录删除以后执行，因此不能再查看它们。</p>
+<p><code>table_rewrite</code>事件在表被命令<code>ALTER TABLE</code>和 <code>ALTER TYPE</code>的某些动作重写之前发生。虽然其他控制语句（例如 <code>CLUSTER</code>和<code>VACUUM</code>）也可以用来重 写表，但是它们不会触发<code>table_rewrite</code>事件。</p>
+<p>不能在一个中止的事务中执行事件触发器（其他函数也一样）。因此，如果一个 DDL 命令出现错误失败，将不会执行任何相关的 <code>ddl_command_end</code>触发器。反过来，如果一个 <code>ddl_command_start</code>触发器出现错误失败，将不会引发进一步的 事件触发器，并且不会尝试执行该命令本身。类似地，如果一个 <code>ddl_command_end</code>触发器出现错误失败，DDL 命令的效果将被 回滚，就像其他包含事务中止的情况中那样。</p>
+<p><a
+  class="gdoc-markdown__link"
+  href="https://doc.rockdata.net/zh-cn/features/event-triggers/#%e4%ba%8b%e4%bb%b6%e8%a7%a6%e5%8f%91%e5%99%a8%e8%a7%a6%e5%8f%91%e7%9f%a9%e9%98%b5"
+  
+>事件触发器触发矩阵</a> 中有事件触发器机制所支持的完整 命令列表。</p>
+<p>事件触发器通过命令<a
+  class="gdoc-markdown__link"
+  href="http://postgres.cn/docs/12/sql-createeventtrigger.html"
+  
+>CREATE EVENT TRIGGER</a>创建。为了 创建一个事件触发器，你必须首先创建一个有特殊返回类型 <code>event_trigger</code>的函数。这个函数不一定需要返回一个值， 该返回类型仅仅是作为一种信号表示该函数要被作为一个事件触发器调用。</p>
+<p>如果对于一个特定的事件定义了多于一个事件触发器，它们将按照触发器名称 的字母表顺序被引发。</p>
+<p>一个触发器定义也可以指定一个<code>WHEN</code>条件，这样事件触 发器（例如<code>ddl_command_start</code>触发器）就可以只对用户 希望介入的特定命令触发。这类触发器的通常用法是用于限制用户可能执行的 DDL 操作的范围。</p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="事件触发器触发矩阵">
+        事件触发器触发矩阵
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/event-triggers/#事件触发器触发矩阵" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 事件触发器触发矩阵" aria-label="锚定到： 事件触发器触发矩阵" href="#%e4%ba%8b%e4%bb%b6%e8%a7%a6%e5%8f%91%e5%99%a8%e8%a7%a6%e5%8f%91%e7%9f%a9%e9%98%b5">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p><em>表 1</em> 列出了所有命令的 事件触发器支持情况。</p>
+<p><strong>表 1. 支持事件触发器的命令标签</strong></p>
+<div class="table-wrap"> <table>
+<thead>
+<tr>
+<th>命令标签</th>
+<th><code>ddl_command_start</code></th>
+<th><code>ddl_command_end</code></th>
+<th><code>sql_drop</code></th>
+<th><code>table_rewrite</code></th>
+<th>注解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ALTER AGGREGATE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER COLLATION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER CONVERSION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER DOMAIN</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER DEFAULT PRIVILEGES</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER EXTENSION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER FOREIGN DATA WRAPPER</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER FOREIGN TABLE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER FUNCTION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER LANGUAGE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER LARGE OBJECT</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER MATERIALIZED VIEW</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER OPERATOR</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER OPERATOR CLASS</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER OPERATOR FAMILY</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER POLICY</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER PROCEDURE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER PUBLICATION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER SCHEMA</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER SEQUENCE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER SERVER</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER STATISTICS</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER SUBSCRIPTION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER TABLE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER TEXT SEARCH CONFIGURATION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER TEXT SEARCH DICTIONARY</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER TEXT SEARCH PARSER</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER TEXT SEARCH TEMPLATE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER TRIGGER</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER TYPE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>X</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER USER MAPPING</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER VIEW</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>COMMENT</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td>只对本地对象</td>
+</tr>
+<tr>
+<td><code>CREATE ACCESS METHOD</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE AGGREGATE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE CAST</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE COLLATION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE CONVERSION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE DOMAIN</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE EXTENSION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE FOREIGN DATA WRAPPER</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE FOREIGN TABLE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE FUNCTION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE INDEX</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE LANGUAGE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE MATERIALIZED VIEW</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE OPERATOR</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE OPERATOR CLASS</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE OPERATOR FAMILY</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE POLICY</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE PROCEDURE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE PUBLICATION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE RULE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE SCHEMA</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE SEQUENCE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE SERVER</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE STATISTICS</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE SUBSCRIPTION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE TABLE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE TABLE AS</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE TEXT SEARCH CONFIGURATION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE TEXT SEARCH DICTIONARY</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE TEXT SEARCH PARSER</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE TEXT SEARCH TEMPLATE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE TRIGGER</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE TYPE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE USER MAPPING</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE VIEW</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP ACCESS METHOD</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP AGGREGATE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP CAST</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP COLLATION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP CONVERSION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP DOMAIN</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP EXTENSION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP FOREIGN DATA WRAPPER</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP FOREIGN TABLE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP FUNCTION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP INDEX</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP LANGUAGE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP MATERIALIZED VIEW</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP OPERATOR</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP OPERATOR CLASS</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP OPERATOR FAMILY</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP OWNED</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP POLICY</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP PROCEDURE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP PUBLICATION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP RULE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP SCHEMA</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP SEQUENCE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP SERVER</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP STATISTICS</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP SUBSCRIPTION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP TABLE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP TEXT SEARCH CONFIGURATION</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP TEXT SEARCH DICTIONARY</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP TEXT SEARCH PARSER</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP TEXT SEARCH TEMPLATE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP TRIGGER</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP TYPE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP USER MAPPING</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP VIEW</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>GRANT</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td>只对本地对象</td>
+</tr>
+<tr>
+<td><code>IMPORT FOREIGN SCHEMA</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>REFRESH MATERIALIZED VIEW</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>REVOKE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td>只对本地对象</td>
+</tr>
+<tr>
+<td><code>SECURITY LABEL</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td>只对本地对象</td>
+</tr>
+<tr>
+<td><code>SELECT INTO</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+</tbody>
+</table> </div>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="事件触发器函数">
+        事件触发器函数
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/event-triggers/#事件触发器函数" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 事件触发器函数" aria-label="锚定到： 事件触发器函数" href="#%e4%ba%8b%e4%bb%b6%e8%a7%a6%e5%8f%91%e5%99%a8%e5%87%bd%e6%95%b0">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>PostgreSQL提供了这些助手函数来从 事件触发器检索信息。</p>
+<div class="gdoc-page__anchorwrap">
+    <h3 id="在命令结束处捕捉更改">
+        在命令结束处捕捉更改
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/event-triggers/#在命令结束处捕捉更改" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 在命令结束处捕捉更改" aria-label="锚定到： 在命令结束处捕捉更改" href="#%e5%9c%a8%e5%91%bd%e4%bb%a4%e7%bb%93%e6%9d%9f%e5%a4%84%e6%8d%95%e6%8d%89%e6%9b%b4%e6%94%b9">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p>当在一个<code>ddl_command_end</code>事件触发器的函数中调用时， <code>pg_event_trigger_ddl_commands</code>返回被每一个用户动作 执行的DDL命令的列表。如果在其他任何环境中 调用这个函数，会发生错误。 <code>pg_event_trigger_ddl_commands</code>为每一个被执行的基本 命令返回一行，某些只有一个单一 SQL 句子的命令可能会返回多于一行。 这个函数返回下面的列：</p>
+<div class="table-wrap"> <table>
+<thead>
+<tr>
+<th>名称</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>classid</code></td>
+<td><code>oid</code></td>
+<td>对象所属的目录的 OID</td>
+</tr>
+<tr>
+<td><code>objid</code></td>
+<td><code>oid</code></td>
+<td>对象本身的 OID</td>
+</tr>
+<tr>
+<td><code>objsubid</code></td>
+<td><code>integer</code></td>
+<td>对象的子-id（例如列的属性号）</td>
+</tr>
+<tr>
+<td><code>command_tag</code></td>
+<td><code>text</code></td>
+<td>命令标签</td>
+</tr>
+<tr>
+<td><code>object_type</code></td>
+<td><code>text</code></td>
+<td>对象的类型</td>
+</tr>
+<tr>
+<td><code>schema_name</code></td>
+<td><code>text</code></td>
+<td>该对象所属的模式的名称（如果有），如果没有则为<code>NULL</code>。 没有引号。</td>
+</tr>
+<tr>
+<td><code>object_identity</code></td>
+<td><code>text</code></td>
+<td>对象标识的文本表现形式，用模式限定。如果必要，出现在 该标识中的每一个标识符都会被引用。</td>
+</tr>
+<tr>
+<td><code>in_extension</code></td>
+<td><code>bool</code></td>
+<td>如果该命令是一个扩展脚本的一部分则为真</td>
+</tr>
+<tr>
+<td><code>command</code></td>
+<td><code>pg_ddl_command</code></td>
+<td>以内部格式表达的该命令的一个完整表现形式。这不能被直接输出， 但是可以把它传递给其他函数来得到有关于该命令不同部分的信息。</td>
+</tr>
+</tbody>
+</table> </div>
+<div class="gdoc-page__anchorwrap">
+    <h3 id="处理被-ddl-命令删除的对象">
+        处理被 DDL 命令删除的对象
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/event-triggers/#处理被-ddl-命令删除的对象" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 处理被 DDL 命令删除的对象" aria-label="锚定到： 处理被 DDL 命令删除的对象" href="#%e5%a4%84%e7%90%86%e8%a2%ab-ddl-%e5%91%bd%e4%bb%a4%e5%88%a0%e9%99%a4%e7%9a%84%e5%af%b9%e8%b1%a1">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p><code>pg_event_trigger_dropped_objects</code>返回其<code>sql_drop</code>事件中命令所删除的所有对象的列表。如果在任何其他环境中被调用，<code>pg_event_trigger_dropped_objects</code>将抛出一个错误。<code>pg_event_trigger_dropped_objects</code>返回下列列：</p>
+<div class="table-wrap"> <table>
+<thead>
+<tr>
+<th>名称</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>classid</code></td>
+<td><code>oid</code></td>
+<td>对象所属的目录的 OID</td>
+</tr>
+<tr>
+<td><code>objid</code></td>
+<td><code>oid</code></td>
+<td>对象本身的 OID</td>
+</tr>
+<tr>
+<td><code>objsubid</code></td>
+<td><code>integer</code></td>
+<td>对象的子ID（如列的属性号）</td>
+</tr>
+<tr>
+<td><code>original</code></td>
+<td><code>bool</code></td>
+<td>如果这是删除中的一个根对象则为真</td>
+</tr>
+<tr>
+<td><code>normal</code></td>
+<td><code>bool</code></td>
+<td>指示在依赖图中有一个普通依赖关系指向该对象的标志</td>
+</tr>
+<tr>
+<td><code>is_temporary</code></td>
+<td><code>bool</code></td>
+<td>如果该对象是一个临时对象则为真</td>
+</tr>
+<tr>
+<td><code>object_type</code></td>
+<td><code>text</code></td>
+<td>对象的类型</td>
+</tr>
+<tr>
+<td><code>schema_name</code></td>
+<td><code>text</code></td>
+<td>对象所属模式的名称（如果存在）；否则为<code>NULL</code>。不应用引用。</td>
+</tr>
+<tr>
+<td><code>object_name</code></td>
+<td><code>text</code></td>
+<td>如果模式和名称的组合能被用于对象的一个唯一标识符，则是对象的名称；否则是<code>NULL</code>。不应用引用，并且名称不是模式限定的。</td>
+</tr>
+<tr>
+<td><code>object_identity</code></td>
+<td><code>text</code></td>
+<td>对象身份的文本表现，模式限定的。每一个以及所有身份中出现的标识符在必要时加引号。</td>
+</tr>
+<tr>
+<td><code>address_names</code></td>
+<td><code>text[]</code></td>
+<td>一个数组，它可以和<code>object_type</code>及 <code>address_args</code> 一起通过<code>pg_get_object_address()</code>函数在一台包含有 同类相同名称对象的远程服务器上重建该对象地址。</td>
+</tr>
+<tr>
+<td><code>address_args</code></td>
+<td><code>text[]</code></td>
+<td>上述<code>address_names</code>的补充。</td>
+</tr>
+</tbody>
+</table> </div>
+<p><code>pg_event_trigger_dropped_objects</code>可以被这样用在一个事件触发器中：</p>
+<pre tabindex="0"><code>CREATE FUNCTION test_event_trigger_for_drops()
+        RETURNS event_trigger LANGUAGE plpgsql AS $$
+DECLARE
+    obj record;
+BEGIN
+    FOR obj IN SELECT * FROM pg_event_trigger_dropped_objects()
+    LOOP
+        RAISE NOTICE &#39;% dropped object: % %.% %&#39;,
+                     tg_tag,
+                     obj.object_type,
+                     obj.schema_name,
+                     obj.object_name,
+                     obj.object_identity;
+    END LOOP;
+END
+$$;
+CREATE EVENT TRIGGER test_event_trigger_for_drops
+   ON sql_drop
+   EXECUTE PROCEDURE test_event_trigger_for_drops();
+</code></pre><div class="gdoc-page__anchorwrap">
+    <h3 id="处理表重写事件">
+        处理表重写事件
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/event-triggers/#处理表重写事件" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 处理表重写事件" aria-label="锚定到： 处理表重写事件" href="#%e5%a4%84%e7%90%86%e8%a1%a8%e9%87%8d%e5%86%99%e4%ba%8b%e4%bb%b6">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p><em>表 2</em> 中所示的函数提供刚刚被调用过<code>table_rewrite</code> 事件的表的信息。如果在任何其他环境中调用，会发生错误。</p>
+<p><strong>表 2. 表重写信息</strong></p>
+<div class="table-wrap"> <table>
+<thead>
+<tr>
+<th>名称</th>
+<th>返回类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pg_event_trigger_table_rewrite_oid()</code></td>
+<td><code>oid</code></td>
+<td>要被重写的表的 OID。</td>
+</tr>
+<tr>
+<td><code>pg_event_trigger_table_rewrite_reason()</code></td>
+<td><code>int</code></td>
+<td>解释重写原因的原因代码。这些代码的确切含义在单独的文档中。</td>
+</tr>
+</tbody>
+</table> </div>
+<p>可以在一个这样的事件触发器中使用 <code>pg_event_trigger_table_rewrite_oid</code>函数：</p>
+<pre tabindex="0"><code>CREATE FUNCTION test_event_trigger_table_rewrite_oid()
+ RETURNS event_trigger
+ LANGUAGE plpgsql AS
+$$
+BEGIN
+  RAISE NOTICE &#39;rewriting table % for reason %&#39;,
+                pg_event_trigger_table_rewrite_oid()::regclass,
+                pg_event_trigger_table_rewrite_reason();
+END;
+$$;
+
+CREATE EVENT TRIGGER test_table_rewrite_oid
+                  ON table_rewrite
+   EXECUTE PROCEDURE test_event_trigger_table_rewrite_oid();
+</code></pre><div class="gdoc-page__anchorwrap">
+    <h3 id="反解析-ddl-命令">
+        反解析 DDL 命令
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/event-triggers/#反解析-ddl-命令" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 反解析 DDL 命令" aria-label="锚定到： 反解析 DDL 命令" href="#%e5%8f%8d%e8%a7%a3%e6%9e%90-ddl-%e5%91%bd%e4%bb%a4">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p>函数 <code>pg_ddl_command_deparse</code> 将一条DDL命令从 <code>pg_ddl_command</code> 类型的内部格式进行反向解析，并以 <code>text</code>类型的文本表示形式返回命令字符串。</p>
+<p>函数 <code>pg_ddl_command_deparse</code> 可用于事件触发器，如下所示：</p>
+<pre tabindex="0"><code>CREATE TABLE ddl_history(
+  ord             int,
+  op_time         timestamp,
+  username        text,
+  command_tag     text,
+  object_type     text,
+  schema_name     text,
+  object_identity text,
+  command         text
+);
+
+CREATE OR REPLACE FUNCTION ddl_trigger_func()
+RETURNS event_trigger
+SECURITY DEFINER
+AS $$
+BEGIN
+  INSERT INTO ddl_history
+    SELECT ordinality, now(), current_user, command_tag,
+           object_type, schema_name, object_identity,
+           pg_ddl_command_deparse(command)
+      FROM pg_event_trigger_ddl_commands() WITH ORDINALITY;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE EVENT TRIGGER deparse_event_trigger
+    ON ddl_command_end
+    EXECUTE PROCEDURE ddl_trigger_func();
+</code></pre>
   </article>
 
 

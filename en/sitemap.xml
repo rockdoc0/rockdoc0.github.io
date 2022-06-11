@@ -171,8 +171,21 @@
                 href="https://doc.rockdata.net/features/undo/"
                 />
   </url><url>
+    <loc>https://doc.rockdata.net/features/event-triggers/</loc>
+    <lastmod>2022-06-11T17:17:18+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://doc.rockdata.net/zh-cn/features/event-triggers/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://doc.rockdata.net/features/event-triggers/"
+                />
+  </url><url>
     <loc>https://doc.rockdata.net/advanced/monitor-stats/</loc>
-    <lastmod>2022-06-11T10:48:52+08:00</lastmod>
+    <lastmod>2022-06-11T16:02:59+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
