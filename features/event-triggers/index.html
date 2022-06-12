@@ -42,7 +42,7 @@
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-06-11T17:17:18+08:00"
+      content="2022-06-12T10:59:26+08:00"
     />
 
 
@@ -62,7 +62,7 @@
       "headline": "Event Triggers",
       "description": "Overview of Event Trigger Behavior Event Trigger Firing Matrix Event Trigger Functions  Capturing Changes at Command End Processing Objects Dropped by a DDL Command Handling a Table Rewrite Event Deparsing a DDL command        Redrock Postgres provides event triggers. Unlike regular triggers, which are attached to a single table and capture only DML events, event triggers are global to a particular database and are capable of capturing DDL events.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "2105",
+      "wordCount" : "2157",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -73,7 +73,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-11T17:17:18.00Z",
+      "dateModified": "2022-06-12T10:59:26.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1799,7 +1799,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     </h2>
 </div>
 <p>An event trigger fires whenever the event with which it is associated occurs in the database in which it is defined. Currently, the only supported events are <code>ddl_command_start</code>, <code>ddl_command_end</code>, <code>table_rewrite</code> and <code>sql_drop</code>. Support for additional events may be added in future releases.</p>
-<p>The <code>ddl_command_start</code> event occurs just before the execution of a <code>CREATE</code>, <code>ALTER</code>, <code>DROP</code>, <code>SECURITY LABEL</code>, <code>COMMENT</code>, <code>GRANT</code> or <code>REVOKE</code> command. No check whether the affected object exists or doesn&rsquo;t exist is performed before the event trigger fires. As an exception, however, this event does not occur for DDL commands targeting shared objects — databases, roles, and tablespaces — or for commands targeting event triggers themselves. The event trigger mechanism does not support these object types. <code>ddl_command_start</code> also occurs just before the execution of a <code>SELECT INTO</code> command, since this is equivalent to <code>CREATE TABLE AS</code>.</p>
+<p>The <code>ddl_command_start</code> event occurs just before the execution of a <code>CREATE</code>, <code>ALTER</code>, <code>DROP</code>, <code>SECURITY LABEL</code>, <code>COMMENT</code>, <code>GRANT</code> or <code>REVOKE</code> command. No check whether the affected object exists or doesn&rsquo;t exist is performed before the event trigger fires. As an exception, however, this event does not occur for DDL commands targeting shared objects — databases — or for commands targeting event triggers themselves. The event trigger mechanism does not support these object types. <code>ddl_command_start</code> also occurs just before the execution of a <code>SELECT INTO</code> command, since this is equivalent to <code>CREATE TABLE AS</code>.</p>
 <p>The <code>ddl_command_end</code> event occurs just after the execution of this same set of commands. To obtain more details on the DDL operations that took place, use the set-returning function <code>pg_event_trigger_ddl_commands()</code> from the <code>ddl_command_end</code> event trigger code (see <a
   class="gdoc-markdown__link"
   href="https://doc.rockdata.net/features/event-triggers/#event-trigger-functions"
@@ -1991,6 +1991,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td></td>
 </tr>
 <tr>
+<td><code>ALTER ROLE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
 <td><code>ALTER ROUTINE</code></td>
 <td><code>X</code></td>
 <td><code>X</code></td>
@@ -2047,6 +2055,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td></td>
 </tr>
 <tr>
+<td><code>ALTER TABLESPACE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
 <td><code>ALTER TEXT SEARCH CONFIGURATION</code></td>
 <td><code>X</code></td>
 <td><code>X</code></td>
@@ -2092,6 +2108,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>X</code></td>
 <td><code>-</code></td>
 <td><code>X</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTER USER</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
 <td></td>
 </tr>
 <tr>
@@ -2271,6 +2295,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td></td>
 </tr>
 <tr>
+<td><code>CREATE ROLE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
 <td><code>CREATE RULE</code></td>
 <td><code>X</code></td>
 <td><code>X</code></td>
@@ -2335,6 +2367,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td></td>
 </tr>
 <tr>
+<td><code>CREATE TABLESPACE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
 <td><code>CREATE TEXT SEARCH CONFIGURATION</code></td>
 <td><code>X</code></td>
 <td><code>X</code></td>
@@ -2376,6 +2416,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 <tr>
 <td><code>CREATE TYPE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CREATE USER</code></td>
 <td><code>X</code></td>
 <td><code>X</code></td>
 <td><code>-</code></td>
@@ -2559,6 +2607,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td></td>
 </tr>
 <tr>
+<td><code>DROP ROLE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
 <td><code>DROP ROUTINE</code></td>
 <td><code>X</code></td>
 <td><code>X</code></td>
@@ -2623,6 +2679,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td></td>
 </tr>
 <tr>
+<td><code>DROP TABLESPACE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
 <td><code>DROP TEXT SEARCH CONFIGURATION</code></td>
 <td><code>X</code></td>
 <td><code>X</code></td>
@@ -2664,6 +2728,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 <tr>
 <td><code>DROP TYPE</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>X</code></td>
+<td><code>-</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DROP USER</code></td>
 <td><code>X</code></td>
 <td><code>X</code></td>
 <td><code>X</code></td>
@@ -2744,7 +2816,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         </a>
     </h2>
 </div>
-<p>PostgreSQL provides these helper functions to retrieve information from event triggers.</p>
+<p>Redrock Postgres provides these helper functions to retrieve information from event triggers.</p>
 <div class="gdoc-page__anchorwrap">
     <h3 id="capturing-changes-at-command-end">
         Capturing Changes at Command End
@@ -2964,7 +3036,7 @@ CREATE EVENT TRIGGER test_table_rewrite_oid
         </a>
     </h3>
 </div>
-<p><code>pg_ddl_command_deparse</code> deparses a command from internal format of type <code>pg_ddl_command</code>, and returns a command string in textual representation of typeand <code>text</code>.</p>
+<p><code>pg_ddl_command_deparse</code> deparses a command from internal format of type <code>pg_ddl_command</code>, and returns a command string in textual representation of type <code>text</code>.</p>
 <p>The <code>pg_ddl_command_deparse</code> function can be used in an event trigger like this:</p>
 <pre tabindex="0"><code>CREATE TABLE ddl_history(
   ord             int,
