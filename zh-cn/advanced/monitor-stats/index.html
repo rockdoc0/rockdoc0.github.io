@@ -70,7 +70,7 @@ Redrock Postgres也支持报告有关系统正在干什么的动态信息，例�
 <meta property="article:section" content="Advanced" />
     <meta
       property="article:modified_time"
-      content="2022-06-12T10:59:26+08:00"
+      content="2022-06-12T20:30:38+08:00"
     />
 
 
@@ -115,7 +115,7 @@ Redrock Postgres也支持报告有关系统正在干什么的动态信息，例�
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-12T10:59:26.00Z",
+      "dateModified": "2022-06-12T20:30:38.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1860,7 +1860,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 >track_io_timing</a>启用对块读写次数的监控。</p>
 <p>参数<a
   class="gdoc-markdown__link"
-  href="https://doc.rockdata.net/usage/configuration"
+  href="/zh-cn/usage/configuration/#%e8%bf%90%e8%a1%8c%e6%97%b6%e7%bb%9f%e8%ae%a1%e4%bf%a1%e6%81%af"
   
 >track_wait_events</a>控制是否收集关于等待事件的统计信息。</p>
 <p>通常这些参数被设置在<code>postgresql.conf</code>中，这样它们会应用于所有服务器进程，但是可以在单个会话中使用<a
@@ -1883,11 +1883,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </div>
 <p><a
   class="gdoc-markdown__link"
-  href="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#%E6%9F%A5%E7%9C%8B%E7%BB%9F%E8%AE%A1%E4%BF%A1%E6%81%AF"
+  href="/zh-cn/advanced/monitor-stats/#%E6%9F%A5%E7%9C%8B%E7%BB%9F%E8%AE%A1%E4%BF%A1%E6%81%AF"
   
 >表 1</a>中列出了一些预定义视图 可以用来显示系统的当前状态。 <a
   class="gdoc-markdown__link"
-  href="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#%E6%9F%A5%E7%9C%8B%E7%BB%9F%E8%AE%A1%E4%BF%A1%E6%81%AF"
+  href="/zh-cn/advanced/monitor-stats/#%E6%9F%A5%E7%9C%8B%E7%BB%9F%E8%AE%A1%E4%BF%A1%E6%81%AF"
   
 >表 2</a>中列出了另一些视图可以 显示统计收集的结果。你也可以使用底层统计函数（在 <a
   class="gdoc-markdown__link"
@@ -1899,7 +1899,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <p>一个事务也可以在视图<code>pg_stat_xact_all_tables</code>、<code>pg_stat_xact_all_undos</code>, <code>pg_stat_xact_sys_tables</code>、<code>pg_stat_xact_user_tables</code>和<code>pg_stat_xact_user_functions</code>中看到它自己的统计信息（还没有被传送给收集器）。这些数字并不像上面所述的那样行动，相反它们在事务期间持续被更新。</p>
 <p><a
   class="gdoc-markdown__link"
-  href="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#%E6%9F%A5%E7%9C%8B%E7%BB%9F%E8%AE%A1%E4%BF%A1%E6%81%AF"
+  href="/zh-cn/advanced/monitor-stats/#%E6%9F%A5%E7%9C%8B%E7%BB%9F%E8%AE%A1%E4%BF%A1%E6%81%AF"
   
 >表 1</a>中显示的动态统计视图中的一些信息是有安全限制的。 普通用户只能看到关于他们自己的会话的所有信息（属于他们是成员的角色的会话）。 在关于其他会话的行中，许多列将为空。 但是，请注意，一个会话的存在和它的一般属性，例如会话用户和数据库，对所有用户都是可见的。超级用户和内置角色<code>pg_read_all_stats</code>的成员（参见<a
   class="gdoc-markdown__link"
@@ -1919,7 +1919,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>pg_stat_activity</code></td>
 <td>每个服务器进程一行，显示与那个进程的当前活动相关的信息，例如状态和当前查询。详见<a
   class="gdoc-markdown__link--code"
-  href="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#pg_stat_activity"
+  href="/zh-cn/advanced/monitor-stats/#pg_stat_activity"
   
 ><code>pg_stat_activity</code></a> 。</td>
 </tr>
@@ -1927,7 +1927,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>pg_stat_wait_event</code></td>
 <td>每个等待事件一行，显示有关每个发生的等待事件的等待信息的统计信息。有关详细信息，请参阅 <a
   class="gdoc-markdown__link"
-  href="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#pg_stat_wait_event"
+  href="/zh-cn/advanced/monitor-stats/#pg_stat_wait_event"
   
 >pg_stat_wait_event</a>。</td>
 </tr>
@@ -1935,7 +1935,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>pg_stat_replication</code></td>
 <td>每一个 WAL 发送进程一行，显示有关到该发送进程连接的后备服务器的复制的统计信息。 详见<a
   class="gdoc-markdown__link--code"
-  href="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#pg_stat_replication"
+  href="/zh-cn/advanced/monitor-stats/#pg_stat_replication"
   
 ><code>pg_stat_replication</code></a>.</td>
 </tr>
@@ -1954,7 +1954,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>pg_stat_database</code></td>
 <td>每个数据库一行，显示数据库范围的统计信息。详见<a
   class="gdoc-markdown__link"
-  href="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#pg_stat_database"
+  href="/zh-cn/advanced/monitor-stats/#pg_stat_database"
   
 > <code>pg_stat_database</code></a>。</td>
 </tr>
@@ -1962,7 +1962,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>pg_stat_all_tables</code></td>
 <td>当前数据库中每个表一行，显示有关访问指定表的统计信息。详见<a
   class="gdoc-markdown__link"
-  href="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#pg_stat_all_tables"
+  href="/zh-cn/advanced/monitor-stats/#pg_stat_all_tables"
   
 > <code>pg_stat_all_tables</code></a>。</td>
 </tr>
@@ -1994,7 +1994,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>pg_stat_all_indexes</code></td>
 <td>当前数据库中的每个索引一行，显示：表OID、索引OID、模式名、表名、索引名、 使用了该索引的索引扫描总数、索引扫描返回的索引记录数、使用该索引的简 单索引扫描抓取的活表(livetable)中数据行数。 当前数据库中的每个索引一行，显示与访问指定索引有关的统计信息。详见<a
   class="gdoc-markdown__link"
-  href="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#pg_stat_all_indexes"
+  href="/zh-cn/advanced/monitor-stats/#pg_stat_all_indexes"
   
 > <code>pg_stat_all_indexes</code></a>。</td>
 </tr>
@@ -2010,7 +2010,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>pg_statio_all_tables</code></td>
 <td>当前数据库中每个表一行(包括TOAST表)，显示：表OID、模式名、表名、 从该表中读取的磁盘块总数、缓冲区命中次数、该表上所有索引的磁盘块读取总数、 该表上所有索引的缓冲区命中总数、在该表的辅助TOAST表(如果存在)上的磁盘块读取总数、 在该表的辅助TOAST表(如果存在)上的缓冲区命中总数、TOAST表的索引的磁盘块读 取总数、TOAST表的索引的缓冲区命中总数。 当前数据库中的每个表一行，显示有关在指定表上 I/O 的统计信息。详见<a
   class="gdoc-markdown__link"
-  href="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#pg_statio_all_tables"
+  href="/zh-cn/advanced/monitor-stats/#pg_statio_all_tables"
   
 > <code>pg_statio_all_tables</code></a>。</td>
 </tr>
@@ -2026,7 +2026,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>pg_statio_all_indexes</code></td>
 <td>当前数据库中每个索引一行，显示：表OID、索引OID、模式名、 表名、索引名、该索引的磁盘块读取总数、该索引的缓冲区命中总数。 当前数据库中的每个索引一行，显示与指定索引上的 I/O 有关的统计信息。详见<a
   class="gdoc-markdown__link"
-  href="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#pg_statio_all_indexes"
+  href="/zh-cn/advanced/monitor-stats/#pg_statio_all_indexes"
   
 > <code>pg_statio_all_indexes</code></a>。</td>
 </tr>
@@ -2042,7 +2042,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td><code>pg_statio_all_sequences</code></td>
 <td>当前数据库中每个序列对象一行，显示：序列OID、模式名、序列名、序列的磁盘读取总数、序列的缓冲区命中总数。 当前数据库中的每个序列一行，显示与指定序列上的 I/O 有关的统计信息。详见<a
   class="gdoc-markdown__link"
-  href="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/#pg_statio_all_sequences"
+  href="/zh-cn/advanced/monitor-stats/#pg_statio_all_sequences"
   
 > <code>pg_statio_all_sequences</code></a>。</td>
 </tr>

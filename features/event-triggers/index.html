@@ -42,7 +42,7 @@
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-06-12T10:59:26+08:00"
+      content="2022-06-12T20:30:38+08:00"
     />
 
 
@@ -73,7 +73,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-12T10:59:26.00Z",
+      "dateModified": "2022-06-12T20:30:38.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1792,19 +1792,19 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <p>The <code>ddl_command_start</code> event occurs just before the execution of a <code>CREATE</code>, <code>ALTER</code>, <code>DROP</code>, <code>SECURITY LABEL</code>, <code>COMMENT</code>, <code>GRANT</code> or <code>REVOKE</code> command. No check whether the affected object exists or doesn&rsquo;t exist is performed before the event trigger fires. As an exception, however, this event does not occur for DDL commands targeting shared objects — databases — or for commands targeting event triggers themselves. The event trigger mechanism does not support these object types. <code>ddl_command_start</code> also occurs just before the execution of a <code>SELECT INTO</code> command, since this is equivalent to <code>CREATE TABLE AS</code>.</p>
 <p>The <code>ddl_command_end</code> event occurs just after the execution of this same set of commands. To obtain more details on the DDL operations that took place, use the set-returning function <code>pg_event_trigger_ddl_commands()</code> from the <code>ddl_command_end</code> event trigger code (see <a
   class="gdoc-markdown__link"
-  href="https://doc.rockdata.net/features/event-triggers/#event-trigger-functions"
+  href="/features/event-triggers/#event-trigger-functions"
   
 >Event Trigger Functions</a>). Note that the trigger fires after the actions have taken place (but before the transaction commits), and thus the system catalogs can be read as already changed.</p>
 <p>The <code>sql_drop</code> event occurs just before the <code>ddl_command_end</code> event trigger for any operation that drops database objects. To list the objects that have been dropped, use the set-returning function <code>pg_event_trigger_dropped_objects()</code> from the <code>sql_drop</code> event trigger code (see <a
   class="gdoc-markdown__link"
-  href="https://doc.rockdata.net/features/event-triggers/#event-trigger-functions"
+  href="/features/event-triggers/#event-trigger-functions"
   
 >Event Trigger Functions</a>). Note that the trigger is executed after the objects have been deleted from the system catalogs, so it&rsquo;s not possible to look them up anymore.</p>
 <p>The <code>table_rewrite</code> event occurs just before a table is rewritten by some actions of the commands <code>ALTER TABLE</code> and <code>ALTER TYPE</code>. While other control statements are available to rewrite a table, like <code>CLUSTER</code> and <code>VACUUM</code>, the <code>table_rewrite</code> event is not triggered by them.</p>
 <p>Event triggers (like other functions) cannot be executed in an aborted transaction. Thus, if a DDL command fails with an error, any associated <code>ddl_command_end</code> triggers will not be executed. Conversely, if a <code>ddl_command_start</code> trigger fails with an error, no further event triggers will fire, and no attempt will be made to execute the command itself. Similarly, if a <code>ddl_command_end</code> trigger fails with an error, the effects of the DDL statement will be rolled back, just as they would be in any other case where the containing transaction aborts.</p>
 <p>For a complete list of commands supported by the event trigger mechanism, see <a
   class="gdoc-markdown__link"
-  href="https://doc.rockdata.net/features/event-triggers/#event-trigger-firing-matrix"
+  href="/features/event-triggers/#event-trigger-firing-matrix"
   
 >Event Trigger Firing Matrix</a>.</p>
 <p>Event triggers are created using the command <a

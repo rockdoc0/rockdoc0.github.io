@@ -62,7 +62,7 @@
 <meta property="article:section" content="Usage" />
     <meta
       property="article:modified_time"
-      content="2022-06-12T13:08:04+08:00"
+      content="2022-06-12T20:30:38+08:00"
     />
 
 
@@ -92,7 +92,7 @@
       "headline": "参数配置",
       "description": "在PostgreSQL的基础上，Redrock Postgres修改或新增的服务器配置选项的概述。\n   资源消耗 自动分析 运行时统计信息      资源消耗     这些设置用于控制数据库服务器的资源消耗。\n  threaded_execution (boolean)\n控制是否启用多线程 Postgres 模型。在 Redrock Postgres 中，多线程 Postgres 模型使 UNIX 和 Linux 上的 Postgres 进程能够作为操作系统线程在单独的地址空间中运行。\n默认情况下，Windows上与会话相关的后端进程始终使用线程执行;其余的后台进程作为操作系统进程运行。因此，“Postgres进程”并不总是等同于“操作系统进程”。\n  自动分析     这些设置控制自动分析特性的行为。详情请参考 第 24.1.6 节。注意很多这些设置可以被针对每个表的设置所覆盖，请见存储参数。\n  autoanalyze (boolean)\n控制服务器是否运行自动分析启动器后台进程。默认为开启， 不过要自动分析正常工作还需要启用track_counts。 该参数只能在postgresql.conf文件或服务器命令行中设置， 不过，通过更改表存储参数可以为表禁用自动分析。\n  log_autoanalyze_min_duration (integer)\n如果自动分析运行至少该值所指定的时间量，被自动分析执行的每一个动作都会被日志记录。 将该参数设置为0会记录所有的自动分析动作。 -1（默认值）将禁用对自动分析动作的记录。 如果指定值时没有单位，则以毫秒为单位。 例如，如果你将它设置为250ms，则所有运行250ms或更长时间的自动分析将被记录。此外，当该参数被设置为除-1外的任何值时， 如果一个自动分析动作由于一个锁冲突或者被并发删除的关系而被跳过，将会为此记录一个消息。 开启这个参数对于追踪自动分析活动非常有用。这个参数只能在 postgresql.conf文件或者服务器命令行中设置。但是可以通过更改表的存储参数为个别表覆盖这个设置。\n  autoanalyze_max_workers (integer)",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "66",
+      "wordCount" : "64",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -103,7 +103,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-12T13:08:04.00Z",
+      "dateModified": "2022-06-12T20:30:38.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1875,9 +1875,9 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </div>
 <p>这些参数控制服务器范围的统计数据收集特性。当统计收集被启用时，被产生的数据可以通过<code>pg_stat</code>和<code>pg_statio</code>系统视图族访问。详见<a
   class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/12/monitoring.html"
+  href="/zh-cn/advanced/monitor-stats/"
   
->第 27 章</a>。</p>
+>运行统计视图</a>。</p>
 <ul>
 <li>
 <p><code>track_wait_events</code> (<code>boolean</code>)</p>

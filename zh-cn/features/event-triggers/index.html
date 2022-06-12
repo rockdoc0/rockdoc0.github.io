@@ -54,7 +54,7 @@ table_rewrite事件在表被命令ALTER TABLE和 ALTER TYPE的某些动作重写
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-06-12T10:59:26+08:00"
+      content="2022-06-12T20:30:38+08:00"
     />
 
 
@@ -91,7 +91,7 @@ table_rewrite事件在表被命令ALTER TABLE和 ALTER TYPE的某些动作重写
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-12T10:59:26.00Z",
+      "dateModified": "2022-06-12T20:30:38.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1810,19 +1810,19 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <p><code>ddl_command_start</code>事件就在<code>CREATE</code>、 <code>ALTER</code>、<code>DROP</code>、<code>SECURITY LABEL</code>、 <code>COMMENT</code>、<code>GRANT</code>或者<code>REVOKE</code> 命令的执行之前发生。在事件触发器引发前不会做受影响对象是否存在的检查。不过，一个例外是，这个事件不会为目标是共享对象 — 数据库 — 的 DDL 命令发生，也不会为目标是事件触发器的 DDL 命令发生。事件触发器机制不支持这些对象类型。 <code>ddl_command_start</code>也会在<code>SELECT INTO</code> 命令的执行之前发生，因为这等价于 <code>CREATE TABLE AS</code>。</p>
 <p><code>ddl_command_end</code>事件就在同一组命令的执行之后发生。为了得到发生的DDL操作的更多细节，可以从 <code>ddl_command_end</code>事件触发器代码中使用集合返回函数 <code>pg_event_trigger_ddl_commands()</code>（见 <a
   class="gdoc-markdown__link"
-  href="https://doc.rockdata.net/zh-cn/features/event-triggers/#%e4%ba%8b%e4%bb%b6%e8%a7%a6%e5%8f%91%e5%99%a8%e5%87%bd%e6%95%b0"
+  href="/zh-cn/features/event-triggers/#%e4%ba%8b%e4%bb%b6%e8%a7%a6%e5%8f%91%e5%99%a8%e5%87%bd%e6%95%b0"
   
 >事件触发器函数</a>）。注意该触发器是在那些动作已经发生之后（但是在事务提交前）引发，并且因此系统目录会被读作已更改。</p>
 <p><code>sql_drop</code>事件为任何删除数据库对象的操作在 <code>ddl_command_end</code>事件触发器之前发生。要列出已经被删除的对象，可以从<code>sql_drop</code>事件触发器代码中使用集合返回函数 <code>pg_event_trigger_dropped_objects()</code>见 <a
   class="gdoc-markdown__link"
-  href="https://doc.rockdata.net/zh-cn/features/event-triggers/#%e4%ba%8b%e4%bb%b6%e8%a7%a6%e5%8f%91%e5%99%a8%e5%87%bd%e6%95%b0"
+  href="/zh-cn/features/event-triggers/#%e4%ba%8b%e4%bb%b6%e8%a7%a6%e5%8f%91%e5%99%a8%e5%87%bd%e6%95%b0"
   
 >事件触发器函数</a>）。注意该触发器是在对象已经从系统目录删除以后执行，因此不能再查看它们。</p>
 <p><code>table_rewrite</code>事件在表被命令<code>ALTER TABLE</code>和 <code>ALTER TYPE</code>的某些动作重写之前发生。虽然其他控制语句（例如 <code>CLUSTER</code>和<code>VACUUM</code>）也可以用来重写表，但是它们不会触发<code>table_rewrite</code>事件。</p>
 <p>不能在一个中止的事务中执行事件触发器（其他函数也一样）。因此，如果一个 DDL 命令出现错误失败，将不会执行任何相关的 <code>ddl_command_end</code>触发器。反过来，如果一个 <code>ddl_command_start</code>触发器出现错误失败，将不会引发进一步的事件触发器，并且不会尝试执行该命令本身。类似地，如果一个 <code>ddl_command_end</code>触发器出现错误失败，DDL 命令的效果将被回滚，就像其他包含事务中止的情况中那样。</p>
 <p><a
   class="gdoc-markdown__link"
-  href="https://doc.rockdata.net/zh-cn/features/event-triggers/#%e4%ba%8b%e4%bb%b6%e8%a7%a6%e5%8f%91%e5%99%a8%e8%a7%a6%e5%8f%91%e7%9f%a9%e9%98%b5"
+  href="/zh-cn/features/event-triggers/#%e4%ba%8b%e4%bb%b6%e8%a7%a6%e5%8f%91%e5%99%a8%e8%a7%a6%e5%8f%91%e7%9f%a9%e9%98%b5"
   
 >事件触发器触发矩阵</a> 中有事件触发器机制所支持的完整命令列表。</p>
 <p>事件触发器通过命令<a
