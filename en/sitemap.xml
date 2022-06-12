@@ -223,32 +223,6 @@
                 href="https://doc.rockdata.net/posts/initial-release/"
                 />
   </url><url>
-    <loc>https://doc.rockdata.net/_includes/</loc>
-    <lastmod>2022-05-22T14:46:26+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://doc.rockdata.net/zh-cn/_includes/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://doc.rockdata.net/_includes/"
-                />
-  </url><url>
-    <loc>https://doc.rockdata.net/_includes/include-page/</loc>
-    <lastmod>2022-05-22T14:46:26+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://doc.rockdata.net/zh-cn/_includes/include-page/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://doc.rockdata.net/_includes/include-page/"
-                />
-  </url><url>
     <loc>https://doc.rockdata.net/tags/</loc>
     <xhtml:link
                 rel="alternate"
@@ -262,7 +236,7 @@
                 />
   </url><url>
     <loc>https://doc.rockdata.net/</loc>
-    <lastmod>2022-06-12T10:59:26+08:00</lastmod>
+    <lastmod>2022-06-12T18:01:15+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
