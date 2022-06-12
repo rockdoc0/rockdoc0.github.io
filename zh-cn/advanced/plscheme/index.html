@@ -8,7 +8,7 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="PL/scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/scheme 可以以 Lisp 风格启动 PostgreSQL 过程。
+  <meta name="description" content="PL/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/scheme 可以以 Lisp 风格启动 PostgreSQL 过程。
 PL/Scheme 函数和参数     要用 PL/Scheme 语言创建一个函数，可使用标准的 CREATE FUNCTION语法：
 CREATE FUNCTION funcname (argument-types) RETURNS return-type AS $$ # PL/Scheme 函数体 $$ LANGUAGE plscheme; 函数的主体就是普通的 Scheme 代码。事实上，PL/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。
 在一个 PL/Scheme 过程中，任何从Scheme代码返回的值都会被忽略。
@@ -40,7 +40,7 @@ DO $$ # PL/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="PL/scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/scheme 可以以 Lisp 风格启动 PostgreSQL 过程。
+  <meta property="og:description" content="PL/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/scheme 可以以 Lisp 风格启动 PostgreSQL 过程。
 PL/Scheme 函数和参数     要用 PL/Scheme 语言创建一个函数，可使用标准的 CREATE FUNCTION语法：
 CREATE FUNCTION funcname (argument-types) RETURNS return-type AS $$ # PL/Scheme 函数体 $$ LANGUAGE plscheme; 函数的主体就是普通的 Scheme 代码。事实上，PL/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。
 在一个 PL/Scheme 过程中，任何从Scheme代码返回的值都会被忽略。
@@ -52,14 +52,14 @@ DO $$ # PL/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数
 <meta property="article:section" content="Advanced" />
     <meta
       property="article:modified_time"
-      content="2022-06-11T10:04:26+08:00"
+      content="2022-06-12T12:11:00+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="PL/Scheme" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="PL/scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/scheme 可以以 Lisp 风格启动 PostgreSQL 过程。
+  <meta name="twitter:description" content="PL/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/scheme 可以以 Lisp 风格启动 PostgreSQL 过程。
 PL/Scheme 函数和参数     要用 PL/Scheme 语言创建一个函数，可使用标准的 CREATE FUNCTION语法：
 CREATE FUNCTION funcname (argument-types) RETURNS return-type AS $$ # PL/Scheme 函数体 $$ LANGUAGE plscheme; 函数的主体就是普通的 Scheme 代码。事实上，PL/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。
 在一个 PL/Scheme 过程中，任何从Scheme代码返回的值都会被忽略。
@@ -75,7 +75,7 @@ DO $$ # PL/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数
       "name": "PL/Scheme",
       "url" : "https://doc.rockdata.net/zh-cn/advanced/plscheme/",
       "headline": "PL/Scheme",
-      "description": "PL\/scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL\/scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL\/scheme 可以以 Lisp 风格启动 PostgreSQL 过程。\nPL\/Scheme 函数和参数     要用 PL\/Scheme 语言创建一个函数，可使用标准的 CREATE FUNCTION语法：\nCREATE FUNCTION funcname (argument-types) RETURNS return-type AS $$ # PL\/Scheme 函数体 $$ LANGUAGE plscheme; 函数的主体就是普通的 Scheme 代码。事实上，PL\/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL\/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。\n在一个 PL\/Scheme 过程中，任何从Scheme代码返回的值都会被忽略。\nPL\/Scheme 也支持用DO语句调用的匿名代码块：\nDO $$ # PL\/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数，并且它返回的任何值都会被抛弃。否则其行为就像一个函数。",
+      "description": "PL\/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL\/scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL\/scheme 可以以 Lisp 风格启动 PostgreSQL 过程。\nPL\/Scheme 函数和参数     要用 PL\/Scheme 语言创建一个函数，可使用标准的 CREATE FUNCTION语法：\nCREATE FUNCTION funcname (argument-types) RETURNS return-type AS $$ # PL\/Scheme 函数体 $$ LANGUAGE plscheme; 函数的主体就是普通的 Scheme 代码。事实上，PL\/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL\/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。\n在一个 PL\/Scheme 过程中，任何从Scheme代码返回的值都会被忽略。\nPL\/Scheme 也支持用DO语句调用的匿名代码块：\nDO $$ # PL\/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数，并且它返回的任何值都会被抛弃。否则其行为就像一个函数。",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
       "wordCount" : "109",
       "inLanguage": "zh-cn",
@@ -88,7 +88,7 @@ DO $$ # PL/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-11T10:04:26.00Z",
+      "dateModified": "2022-06-12T12:11:00.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1788,7 +1788,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     class="gdoc-markdown gdoc-markdown__align--left"
   >
     <h1>PL/Scheme</h1>
-    <p>PL/scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/scheme 可以以 Lisp 风格启动 PostgreSQL 过程。</p>
+    <p>PL/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/scheme 可以以 Lisp 风格启动 PostgreSQL 过程。</p>
 <div class="gdoc-page__anchorwrap">
     <h2 id="plscheme-函数和参数">
         PL/Scheme 函数和参数

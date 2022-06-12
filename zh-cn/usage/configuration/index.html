@@ -8,7 +8,17 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="数据库提供的所有可用服务器配置选项的概述。" />
+  <meta name="description" content="在PostgreSQL的基础上，Redrock Postgres修改或新增的服务器配置选项的概述。
+   资源消耗 自动分析 运行时统计信息      资源消耗     这些设置用于控制数据库服务器的资源消耗。
+  threaded_execution (boolean)
+控制是否启用多线程 Postgres 模型。在 Redrock Postgres 中，多线程 Postgres 模型使 UNIX 和 Linux 上的 Postgres 进程能够作为操作系统线程在单独的地址空间中运行。
+默认情况下，Windows上与会话相关的后端进程始终使用线程执行;其余的后台进程作为操作系统进程运行。因此，“Postgres进程”并不总是等同于“操作系统进程”。
+  自动分析     这些设置控制自动分析特性的行为。详情请参考 第 24.1.6 节。注意很多这些设置可以被针对每个表的设置所覆盖，请见存储参数。
+  autoanalyze (boolean)
+控制服务器是否运行自动分析启动器后台进程。默认为开启， 不过要自动分析正常工作还需要启用track_counts。 该参数只能在postgresql.conf文件或服务器命令行中设置， 不过，通过更改表存储参数可以为表禁用自动分析。
+  log_autoanalyze_min_duration (integer)
+如果自动分析运行至少该值所指定的时间量，被自动分析执行的每一个动作都会被日志记录。 将该参数设置为0会记录所有的自动分析动作。 -1（默认值）将禁用对自动分析动作的记录。 如果指定值时没有单位，则以毫秒为单位。 例如，如果你将它设置为250ms，则所有运行250ms或更长时间的自动分析将被记录。此外，当该参数被设置为除-1外的任何值时， 如果一个自动分析动作由于一个锁冲突或者被并发删除的关系而被跳过，将会为此记录一个消息。 开启这个参数对于追踪自动分析活动非常有用。这个参数只能在 postgresql.conf文件或者服务器命令行中设置。但是可以通过更改表的存储参数为个别表覆盖这个设置。
+  autoanalyze_max_workers (integer)" />
 
     <title>参数配置 | Redrock Documentation</title>
 
@@ -35,21 +45,41 @@
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="数据库提供的所有可用服务器配置选项的概述。" />
+  <meta property="og:description" content="在PostgreSQL的基础上，Redrock Postgres修改或新增的服务器配置选项的概述。
+   资源消耗 自动分析 运行时统计信息      资源消耗     这些设置用于控制数据库服务器的资源消耗。
+  threaded_execution (boolean)
+控制是否启用多线程 Postgres 模型。在 Redrock Postgres 中，多线程 Postgres 模型使 UNIX 和 Linux 上的 Postgres 进程能够作为操作系统线程在单独的地址空间中运行。
+默认情况下，Windows上与会话相关的后端进程始终使用线程执行;其余的后台进程作为操作系统进程运行。因此，“Postgres进程”并不总是等同于“操作系统进程”。
+  自动分析     这些设置控制自动分析特性的行为。详情请参考 第 24.1.6 节。注意很多这些设置可以被针对每个表的设置所覆盖，请见存储参数。
+  autoanalyze (boolean)
+控制服务器是否运行自动分析启动器后台进程。默认为开启， 不过要自动分析正常工作还需要启用track_counts。 该参数只能在postgresql.conf文件或服务器命令行中设置， 不过，通过更改表存储参数可以为表禁用自动分析。
+  log_autoanalyze_min_duration (integer)
+如果自动分析运行至少该值所指定的时间量，被自动分析执行的每一个动作都会被日志记录。 将该参数设置为0会记录所有的自动分析动作。 -1（默认值）将禁用对自动分析动作的记录。 如果指定值时没有单位，则以毫秒为单位。 例如，如果你将它设置为250ms，则所有运行250ms或更长时间的自动分析将被记录。此外，当该参数被设置为除-1外的任何值时， 如果一个自动分析动作由于一个锁冲突或者被并发删除的关系而被跳过，将会为此记录一个消息。 开启这个参数对于追踪自动分析活动非常有用。这个参数只能在 postgresql.conf文件或者服务器命令行中设置。但是可以通过更改表的存储参数为个别表覆盖这个设置。
+  autoanalyze_max_workers (integer)" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/zh-cn/usage/configuration/" />
 
 <meta property="article:section" content="Usage" />
     <meta
       property="article:modified_time"
-      content="2022-06-07T10:54:16+08:00"
+      content="2022-06-12T13:08:04+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="参数配置" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="数据库提供的所有可用服务器配置选项的概述。" />
+  <meta name="twitter:description" content="在PostgreSQL的基础上，Redrock Postgres修改或新增的服务器配置选项的概述。
+   资源消耗 自动分析 运行时统计信息      资源消耗     这些设置用于控制数据库服务器的资源消耗。
+  threaded_execution (boolean)
+控制是否启用多线程 Postgres 模型。在 Redrock Postgres 中，多线程 Postgres 模型使 UNIX 和 Linux 上的 Postgres 进程能够作为操作系统线程在单独的地址空间中运行。
+默认情况下，Windows上与会话相关的后端进程始终使用线程执行;其余的后台进程作为操作系统进程运行。因此，“Postgres进程”并不总是等同于“操作系统进程”。
+  自动分析     这些设置控制自动分析特性的行为。详情请参考 第 24.1.6 节。注意很多这些设置可以被针对每个表的设置所覆盖，请见存储参数。
+  autoanalyze (boolean)
+控制服务器是否运行自动分析启动器后台进程。默认为开启， 不过要自动分析正常工作还需要启用track_counts。 该参数只能在postgresql.conf文件或服务器命令行中设置， 不过，通过更改表存储参数可以为表禁用自动分析。
+  log_autoanalyze_min_duration (integer)
+如果自动分析运行至少该值所指定的时间量，被自动分析执行的每一个动作都会被日志记录。 将该参数设置为0会记录所有的自动分析动作。 -1（默认值）将禁用对自动分析动作的记录。 如果指定值时没有单位，则以毫秒为单位。 例如，如果你将它设置为250ms，则所有运行250ms或更长时间的自动分析将被记录。此外，当该参数被设置为除-1外的任何值时， 如果一个自动分析动作由于一个锁冲突或者被并发删除的关系而被跳过，将会为此记录一个消息。 开启这个参数对于追踪自动分析活动非常有用。这个参数只能在 postgresql.conf文件或者服务器命令行中设置。但是可以通过更改表的存储参数为个别表覆盖这个设置。
+  autoanalyze_max_workers (integer)" />
 
 
   <script type="application/ld+json">
@@ -60,9 +90,9 @@
       "name": "参数配置",
       "url" : "https://doc.rockdata.net/zh-cn/usage/configuration/",
       "headline": "参数配置",
-      "description": "数据库提供的所有可用服务器配置选项的概述。",
+      "description": "在PostgreSQL的基础上，Redrock Postgres修改或新增的服务器配置选项的概述。\n   资源消耗 自动分析 运行时统计信息      资源消耗     这些设置用于控制数据库服务器的资源消耗。\n  threaded_execution (boolean)\n控制是否启用多线程 Postgres 模型。在 Redrock Postgres 中，多线程 Postgres 模型使 UNIX 和 Linux 上的 Postgres 进程能够作为操作系统线程在单独的地址空间中运行。\n默认情况下，Windows上与会话相关的后端进程始终使用线程执行;其余的后台进程作为操作系统进程运行。因此，“Postgres进程”并不总是等同于“操作系统进程”。\n  自动分析     这些设置控制自动分析特性的行为。详情请参考 第 24.1.6 节。注意很多这些设置可以被针对每个表的设置所覆盖，请见存储参数。\n  autoanalyze (boolean)\n控制服务器是否运行自动分析启动器后台进程。默认为开启， 不过要自动分析正常工作还需要启用track_counts。 该参数只能在postgresql.conf文件或服务器命令行中设置， 不过，通过更改表存储参数可以为表禁用自动分析。\n  log_autoanalyze_min_duration (integer)\n如果自动分析运行至少该值所指定的时间量，被自动分析执行的每一个动作都会被日志记录。 将该参数设置为0会记录所有的自动分析动作。 -1（默认值）将禁用对自动分析动作的记录。 如果指定值时没有单位，则以毫秒为单位。 例如，如果你将它设置为250ms，则所有运行250ms或更长时间的自动分析将被记录。此外，当该参数被设置为除-1外的任何值时， 如果一个自动分析动作由于一个锁冲突或者被并发删除的关系而被跳过，将会为此记录一个消息。 开启这个参数对于追踪自动分析活动非常有用。这个参数只能在 postgresql.conf文件或者服务器命令行中设置。但是可以通过更改表的存储参数为个别表覆盖这个设置。\n  autoanalyze_max_workers (integer)",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "45",
+      "wordCount" : "66",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -73,7 +103,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-07T10:54:16.00Z",
+      "dateModified": "2022-06-12T13:08:04.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1773,14 +1803,31 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     class="gdoc-markdown gdoc-markdown__align--left"
   >
     <h1>参数配置</h1>
-    <p>数据库提供的所有可用服务器配置选项的概述。</p>
+    <p>在PostgreSQL的基础上，Redrock Postgres修改或新增的服务器配置选项的概述。</p>
 <div class="gdoc-toc gdoc-toc__level--3">
       <nav id="TableOfContents"><ul>
+        <li><a href="#资源消耗">资源消耗</a></li>
         <li><a href="#自动分析">自动分析</a></li>
         <li><a href="#运行时统计信息">运行时统计信息</a></li>
       </ul></nav>
       <hr />
     </div>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="资源消耗">
+        资源消耗
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/usage/configuration/#资源消耗" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 资源消耗" aria-label="锚定到： 资源消耗" href="#%e8%b5%84%e6%ba%90%e6%b6%88%e8%80%97">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>这些设置用于控制数据库服务器的资源消耗。</p>
+<ul>
+<li>
+<p><code>threaded_execution</code> (<code>boolean</code>)</p>
+<p>控制是否启用多线程 Postgres 模型。在 Redrock Postgres 中，多线程 Postgres 模型使 UNIX 和 Linux 上的 Postgres 进程能够作为操作系统线程在单独的地址空间中运行。</p>
+<p>默认情况下，Windows上与会话相关的后端进程始终使用线程执行;其余的后台进程作为操作系统进程运行。因此，“Postgres进程”并不总是等同于“操作系统进程”。</p>
+</li>
+</ul>
 <div class="gdoc-page__anchorwrap">
     <h2 id="自动分析">
         自动分析
@@ -1789,7 +1836,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         </a>
     </h2>
 </div>
-<p>这些设置控制<em>autoanalyze</em>特性的行为。详情请参考 <a
+<p>这些设置控制<em>自动分析</em>特性的行为。详情请参考 <a
   class="gdoc-markdown__link"
   href="http://www.postgres.cn/docs/12/routine-vacuuming.html#AUTOVACUUM"
   
@@ -1847,6 +1894,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <p>启用有关每个会话中发生的等待事件的信息的收集，包括发生的等待次数和耗时信息。该参数默认开启。注意即使被启用，这些信息也不是对所有用户可见，只有超级用户和拥有报告信息的会话的用户可见，因此它不会表现为一个安全风险。只有超级用户可以更改这个设置。</p>
 </li>
 </ul>
+
   </article>
 
 

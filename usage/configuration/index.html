@@ -8,7 +8,10 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Overview of all available server configuration options provided by the database." />
+  <meta name="description" content="Overview of all modified and new server configuration options based on PostgreSQL.
+   Resource Consumption Automatic Analyzing Run-time Statistics      Resource Consumption     These settings control the resource consumption of the database server.
+  threaded_execution (boolean)
+Controls whether to enable the multithreaded Postgres model. In Redrock Postgres, the multithreaded Postgres model enables Postgres processes on UNIX and Linux to run as operating system threads in separate address spaces." />
 
     <title>Configuration | Redrock Documentation</title>
 
@@ -35,21 +38,27 @@
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Overview of all available server configuration options provided by the database." />
+  <meta property="og:description" content="Overview of all modified and new server configuration options based on PostgreSQL.
+   Resource Consumption Automatic Analyzing Run-time Statistics      Resource Consumption     These settings control the resource consumption of the database server.
+  threaded_execution (boolean)
+Controls whether to enable the multithreaded Postgres model. In Redrock Postgres, the multithreaded Postgres model enables Postgres processes on UNIX and Linux to run as operating system threads in separate address spaces." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/usage/configuration/" />
 
 <meta property="article:section" content="Usage" />
     <meta
       property="article:modified_time"
-      content="2022-06-03T20:32:12+08:00"
+      content="2022-06-12T12:11:00+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Configuration" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Overview of all available server configuration options provided by the database." />
+  <meta name="twitter:description" content="Overview of all modified and new server configuration options based on PostgreSQL.
+   Resource Consumption Automatic Analyzing Run-time Statistics      Resource Consumption     These settings control the resource consumption of the database server.
+  threaded_execution (boolean)
+Controls whether to enable the multithreaded Postgres model. In Redrock Postgres, the multithreaded Postgres model enables Postgres processes on UNIX and Linux to run as operating system threads in separate address spaces." />
 
 
   <script type="application/ld+json">
@@ -60,9 +69,9 @@
       "name": "Configuration",
       "url" : "https://doc.rockdata.net/usage/configuration/",
       "headline": "Configuration",
-      "description": "Overview of all available server configuration options provided by the database.",
+      "description": "Overview of all modified and new server configuration options based on PostgreSQL.\n   Resource Consumption Automatic Analyzing Run-time Statistics      Resource Consumption     These settings control the resource consumption of the database server.\n  threaded_execution (boolean)\nControls whether to enable the multithreaded Postgres model. In Redrock Postgres, the multithreaded Postgres model enables Postgres processes on UNIX and Linux to run as operating system threads in separate address spaces.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "568",
+      "wordCount" : "651",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -73,7 +82,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-03T20:32:12.00Z",
+      "dateModified": "2022-06-12T12:11:00.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1773,14 +1782,31 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     class="gdoc-markdown gdoc-markdown__align--left"
   >
     <h1>Configuration</h1>
-    <p>Overview of all available server configuration options provided by the database.</p>
+    <p>Overview of all modified and new server configuration options based on PostgreSQL.</p>
 <div class="gdoc-toc gdoc-toc__level--3">
       <nav id="TableOfContents"><ul>
+        <li><a href="#resource-consumption">Resource Consumption</a></li>
         <li><a href="#automatic-analyzing">Automatic Analyzing</a></li>
         <li><a href="#run-time-statistics">Run-time Statistics</a></li>
       </ul></nav>
       <hr />
     </div>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="resource-consumption">
+        Resource Consumption
+        <a data-clipboard-text="https://doc.rockdata.net/usage/configuration/#resource-consumption" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Resource Consumption" aria-label="Anchor to: Resource Consumption" href="#resource-consumption">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>These settings control the resource consumption of the database server.</p>
+<ul>
+<li>
+<p><code>threaded_execution</code> (<code>boolean</code>)</p>
+<p>Controls whether to enable the multithreaded Postgres model. In Redrock Postgres, the multithreaded Postgres model enables Postgres processes on UNIX and Linux to run as operating system threads in separate address spaces.</p>
+<p>By default, session related backend processes on Windows always use threaded execution; the remaining background processes run as operating system processes. Thus, an &ldquo;Postgres process&rdquo; is not always equivalent to an &ldquo;operating system process.&rdquo;</p>
+</li>
+</ul>
 <div class="gdoc-page__anchorwrap">
     <h2 id="automatic-analyzing">
         Automatic Analyzing
@@ -1847,6 +1873,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <p>Enables the collection of information on the wait events occured in each session, include occured times and timing information. This parameter is on by default. Note that even when enabled, this information is not visible to all users, only to superusers and the user owning the session being reported on, so it should not represent a security risk. Only superusers can change this setting.</p>
 </li>
 </ul>
+
   </article>
 
 
