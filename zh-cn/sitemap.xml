@@ -197,6 +197,19 @@
                 href="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/"
                 />
   </url><url>
+    <loc>https://doc.rockdata.net/zh-cn/features/network-tablespace/</loc>
+    <lastmod>2022-06-13T21:05:58+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://doc.rockdata.net/features/network-tablespace/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://doc.rockdata.net/zh-cn/features/network-tablespace/"
+                />
+  </url><url>
     <loc>https://doc.rockdata.net/zh-cn/posts/</loc>
     <lastmod>2022-05-28T14:47:24+08:00</lastmod>
     <xhtml:link
@@ -208,6 +221,19 @@
                 rel="alternate"
                 hreflang="zh-cn"
                 href="https://doc.rockdata.net/zh-cn/posts/"
+                />
+  </url><url>
+    <loc>https://doc.rockdata.net/zh-cn/features/postgres-compatibility/</loc>
+    <lastmod>2022-06-13T21:05:58+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://doc.rockdata.net/features/postgres-compatibility/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://doc.rockdata.net/zh-cn/features/postgres-compatibility/"
                 />
   </url><url>
     <loc>https://doc.rockdata.net/zh-cn/posts/initial-release/</loc>

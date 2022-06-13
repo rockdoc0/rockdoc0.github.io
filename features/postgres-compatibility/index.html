@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn" class="color-toggle-hidden">
+<html lang="en" class="color-toggle-hidden">
   <head>
     <meta charset="UTF-8" />
 <meta name="referrer" content="no-referrer" />
@@ -8,8 +8,10 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
+  <meta name="description" content="Redrock Postgres is developed based on PostgreSQL. Redrock Postgres is compatible with PostgreSQL on client protocols and SQL syntax. If your application is developed based on PostgreSQL, then:
+ Based on the binary compatibility with PostgreSQL on client protocols, Redrock Postgres can be accessed using the same drivers as PostgreSQL for various programming languages, such as Java, C/C&#43;&#43;, .Net, Python, Ruby, Perl, Go, ODBC. Due to SQL compatibility with PostgreSQL, you can migrate the application software to Redrock Postgres without any modification." />
 
-    <title>使用介绍 | Redrock Documentation</title>
+    <title>Compatibility with PostgreSQL | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -30,46 +32,51 @@
     
   <meta
     property="og:title"
-    content="使用介绍"
+    content="Compatibility with PostgreSQL"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
+  <meta property="og:description" content="Redrock Postgres is developed based on PostgreSQL. Redrock Postgres is compatible with PostgreSQL on client protocols and SQL syntax. If your application is developed based on PostgreSQL, then:
+ Based on the binary compatibility with PostgreSQL on client protocols, Redrock Postgres can be accessed using the same drivers as PostgreSQL for various programming languages, such as Java, C/C&#43;&#43;, .Net, Python, Ruby, Perl, Go, ODBC. Due to SQL compatibility with PostgreSQL, you can migrate the application software to Redrock Postgres without any modification." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://doc.rockdata.net/zh-cn/usage/" />
+<meta property="og:url" content="https://doc.rockdata.net/features/postgres-compatibility/" />
 
-<meta property="article:section" content="Usage" />
+<meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-05-28T14:47:24+08:00"
+      content="2022-06-13T21:05:58+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="使用介绍" />
+<meta name="twitter:title" content="Compatibility with PostgreSQL" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
+  <meta name="twitter:description" content="Redrock Postgres is developed based on PostgreSQL. Redrock Postgres is compatible with PostgreSQL on client protocols and SQL syntax. If your application is developed based on PostgreSQL, then:
+ Based on the binary compatibility with PostgreSQL on client protocols, Redrock Postgres can be accessed using the same drivers as PostgreSQL for various programming languages, such as Java, C/C&#43;&#43;, .Net, Python, Ruby, Perl, Go, ODBC. Due to SQL compatibility with PostgreSQL, you can migrate the application software to Redrock Postgres without any modification." />
 
 
   <script type="application/ld+json">
   {
       "@context": "http://schema.org",
       "@type": "TechArticle",
-      "articleSection": "Usage",
-      "name": "使用介绍",
-      "url" : "https://doc.rockdata.net/zh-cn/usage/",
-      "headline": "使用介绍",
+      "articleSection": "Features",
+      "name": "Compatibility with PostgreSQL",
+      "url" : "https://doc.rockdata.net/features/postgres-compatibility/",
+      "headline": "Compatibility with PostgreSQL",
+      "description": "Redrock Postgres is developed based on PostgreSQL. Redrock Postgres is compatible with PostgreSQL on client protocols and SQL syntax. If your application is developed based on PostgreSQL, then:\n Based on the binary compatibility with PostgreSQL on client protocols, Redrock Postgres can be accessed using the same drivers as PostgreSQL for various programming languages, such as Java, C\/C\u002b\u002b, .Net, Python, Ruby, Perl, Go, ODBC. Due to SQL compatibility with PostgreSQL, you can migrate the application software to Redrock Postgres without any modification.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "0",
-      "inLanguage": "zh-cn",
+      "wordCount" : "326",
+      "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://doc.rockdata.net/zh-cn/usage/"
+          "@id": "https://doc.rockdata.net/features/postgres-compatibility/"
       },
       "copyrightHolder" : "Redrock Documentation",
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-05-28T14:47:24.00Z",
+      "dateModified": "2022-06-13T21:05:58.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -145,7 +152,7 @@
   href="/custom.css"
   media="all"
 />
-  <link href="https://doc.rockdata.net/zh-cn/usage/" rel="canonical" type="text/html" />
+  <link href="https://doc.rockdata.net/features/postgres-compatibility/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -637,11 +644,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
       <label for="menu-control" class="gdoc-nav__control" tabindex="0">
         <svg class="gdoc-icon gdoc_menu">
-          <title>打开导航</title>
+          <title>Open Navigation</title>
           <use xlink:href="#gdoc_menu"></use>
         </svg>
         <svg class="gdoc-icon gdoc_arrow_back">
-          <title>关闭导航</title>
+          <title>Close Navigation</title>
           <use xlink:href="#gdoc_arrow_back"></use>
         </svg>
       </label>
@@ -707,15 +714,15 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
         <span id="gdoc-dark-mode">
           <svg class="gdoc-icon gdoc_brightness_dark">
-            <title>切换暗/亮/自动模式</title>
+            <title>Toggle Dark/Light/Auto mode</title>
             <use xlink:href="#gdoc_brightness_dark"></use>
           </svg>
           <svg class="gdoc-icon gdoc_brightness_light">
-            <title>切换暗/亮/自动模式</title>
+            <title>Toggle Dark/Light/Auto mode</title>
             <use xlink:href="#gdoc_brightness_light"></use>
           </svg>
           <svg class="gdoc-icon gdoc_brightness_auto">
-            <title>切换暗/亮/自动模式</title>
+            <title>Toggle Dark/Light/Auto mode</title>
             <use xlink:href="#gdoc_brightness_auto"></use>
           </svg>
         </span>
@@ -723,7 +730,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         <span class="gdoc-menu-header__home">
           <a href="https://doc.rockdata.net/" class="gdoc-header__link">
             <svg class="gdoc-icon gdoc_home">
-              <title>返回首页</title>
+              <title>Back to homepage</title>
               <use xlink:href="#gdoc_home"></use>
             </svg>
           </a>
@@ -735,12 +742,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <li>
         
           
-        
-          
             <span class="flex align-center">
               <svg class="gdoc-icon gdoc_language"><use xlink:href="#gdoc_language"></use></svg>
-              <span>ZH-CN</span>
+              <span>EN</span>
             </span>
+          
+        
           
         
 
@@ -751,12 +758,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               <li>
                 <a
                   class="flex gdoc-language__entry"
-                  title="English"
-                  href="/usage/"
-                  hreflang="en"
-                  lang="en"
+                  title="简体中文"
+                  href="/zh-cn/features/postgres-compatibility/"
+                  hreflang="zh-cn"
+                  lang="zh-cn"
                 >
-                  English
+                  简体中文
                 </a>
               </li>
             
@@ -773,7 +780,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
           <label for="menu-header-control">
             <svg class="gdoc-icon gdoc_keyboard_arrow_right">
               <use xlink:href="#gdoc_keyboard_arrow_right"></use>
-              <title>关闭菜单栏</title>
+              <title>Close Menu Bar</title>
             </svg>
           </label>
         </span>
@@ -781,7 +788,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <label for="menu-header-control" class="gdoc-menu-header__control">
         <svg class="gdoc-icon gdoc_keyboard_arrow_left">
           <use xlink:href="#gdoc_keyboard_arrow_left"></use>
-          <title>打开菜单栏</title>
+          <title>Open Menu Bar</title>
         </svg>
       </label>
     </div>
@@ -801,11 +808,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       type="text"
       id="gdoc-search-input"
       class="gdoc-search__input"
-      placeholder="搜索"
-      aria-label="搜索"
+      placeholder="Search"
+      aria-label="Search"
       maxlength="64"
       data-site-base-url="https://doc.rockdata.net/"
-      data-site-lang="zh-cn"
+      data-site-lang="en"
     />
     <div class="gdoc-search__spinner spinner hidden"></div>
     <ul id="gdoc-search-results" class="gdoc-search__list"></ul>
@@ -815,7 +822,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
 
   <section class="gdoc-nav--main">
-    <h2>导航</h2>
+    <h2>Navigation</h2>
     
       
 
@@ -852,7 +859,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">使用介绍</span>
+                <span class="flex">Usage</span>
               
               
             </label>
@@ -894,10 +901,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/usage/why-redrock/"
+                    href="/usage/why-redrock/"
                     class="gdoc-nav__entry"
                   >
-                    为什么选择Redrock Postgres？
+                    Why Redrock Postgres?
                   </a>
                 </span>
               
@@ -938,10 +945,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/usage/getting-started/"
+                    href="/usage/getting-started/"
                     class="gdoc-nav__entry"
                   >
-                    开始上手
+                    Getting Started
                   </a>
                 </span>
               
@@ -982,10 +989,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/usage/configuration/"
+                    href="/usage/configuration/"
                     class="gdoc-nav__entry"
                   >
-                    参数配置
+                    Configuration
                   </a>
                 </span>
               
@@ -1031,7 +1038,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">安装指导</span>
+                <span class="flex">Installation</span>
               
               
             </label>
@@ -1073,10 +1080,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/installation/windows/"
+                    href="/installation/windows/"
                     class="gdoc-nav__entry"
                   >
-                    Windows 安装指导
+                    Installing on Windows
                   </a>
                 </span>
               
@@ -1117,10 +1124,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/installation/redhat/"
+                    href="/installation/redhat/"
                     class="gdoc-nav__entry"
                   >
-                    Red Hat/CentOS 安装指导
+                    Installing on Red Hat
                   </a>
                 </span>
               
@@ -1161,10 +1168,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/installation/debian/"
+                    href="/installation/debian/"
                     class="gdoc-nav__entry"
                   >
-                    Debian 安装指导
+                    Installing on Debian
                   </a>
                 </span>
               
@@ -1210,7 +1217,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">基础特性</span>
+                <span class="flex">Features</span>
               
               
             </label>
@@ -1252,10 +1259,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/features/undo/"
+                    href="/features/undo/"
                     class="gdoc-nav__entry"
                   >
-                    回滚段
+                    Undo
                   </a>
                 </span>
               
@@ -1296,10 +1303,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/features/event-triggers/"
+                    href="/features/event-triggers/"
                     class="gdoc-nav__entry"
                   >
-                    事件触发器
+                    Event Triggers
                   </a>
                 </span>
               
@@ -1340,10 +1347,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/features/network-tablespace/"
+                    href="/features/network-tablespace/"
                     class="gdoc-nav__entry"
                   >
-                    网络表空间
+                    Network Attached Tablespace
                   </a>
                 </span>
               
@@ -1384,10 +1391,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/features/postgres-compatibility/"
-                    class="gdoc-nav__entry"
+                    href="/features/postgres-compatibility/"
+                    class="gdoc-nav__entry is-active"
                   >
-                    同 PostgreSQL 的兼容性
+                    Compatibility with PostgreSQL
                   </a>
                 </span>
               
@@ -1433,7 +1440,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">高级特性</span>
+                <span class="flex">Advanced</span>
               
               
             </label>
@@ -1475,10 +1482,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/advanced/textsearch/"
+                    href="/advanced/textsearch/"
                     class="gdoc-nav__entry"
                   >
-                    中文搜索
+                    Chinese Text Search
                   </a>
                 </span>
               
@@ -1519,7 +1526,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/advanced/plscheme/"
+                    href="/advanced/plscheme/"
                     class="gdoc-nav__entry"
                   >
                     PL/Scheme
@@ -1563,10 +1570,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/advanced/monitor-stats/"
+                    href="/advanced/monitor-stats/"
                     class="gdoc-nav__entry"
                   >
-                    运行统计视图
+                    Statistics Views
                   </a>
                 </span>
               
@@ -1610,7 +1617,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
   <section class="gdoc-nav--more">
     
-      <h2>更多</h2>
+      <h2>More</h2>
       
 
   
@@ -1651,10 +1658,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                   <svg class="gdoc-icon gdoc_notification"><use xlink:href="#gdoc_notification"></use></svg>
                 
                 <a
-                  href="/zh-cn/posts/"
+                  href="/posts/"
                   class="gdoc-nav__entry"
                 >
-                  新闻
+                  News
                 </a>
               </span>
               
@@ -1701,7 +1708,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     https://gitee.com/rockdata/redrock/releases"
                   class="gdoc-nav__entry"
                 >
-                  下载
+                  Releases
                 </a>
               </span>
               
@@ -1748,7 +1755,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     https://gitee.com/rockdata/redrock"
                   class="gdoc-nav__entry"
                 >
-                  项目仓库
+                  View Source
                 </a>
               </span>
               
@@ -1811,7 +1818,15 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>使用介绍</span><meta itemprop='position' content='3' /></li>
+    
+    
+    
+    
+  
+  
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/features/' href='/features/'><span itemprop='name'>Features</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Compatibility with PostgreSQL</span><meta itemprop='position' content='3' /></li>
+  
+
   
 
   
@@ -1824,9 +1839,9 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <span class="editpage">
         <svg class="gdoc-icon gdoc_code"><use xlink:href="#gdoc_code"></use></svg>
         <a
-          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/zh-cn/usage/_index.md"
+          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/en/features/postgres-compatibility.md"
         >
-          编辑页面
+          Edit page
         </a>
       </span>
     </div>
@@ -1838,8 +1853,102 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <article
     class="gdoc-markdown gdoc-markdown__align--left"
   >
-    <h1>使用介绍</h1>
-    
+    <h1>Compatibility with PostgreSQL</h1>
+    <p>Redrock Postgres is developed based on PostgreSQL. Redrock Postgres is compatible with PostgreSQL on client protocols and SQL syntax. If your application is developed based on PostgreSQL, then:</p>
+<ul>
+<li>Based on the binary compatibility with PostgreSQL on client protocols, Redrock Postgres can be accessed using the same drivers as PostgreSQL for various programming languages, such as Java, C/C++, .Net, Python, Ruby, Perl, Go, ODBC.</li>
+<li>Due to SQL compatibility with PostgreSQL, you can migrate the application software to Redrock Postgres without any modification.</li>
+<li>You can use PostgreSQL-related desktop management tools to access Redrock Postgres, such as DBeaver, pgAdmin 4, and Navicat for PostgreSQL.</li>
+</ul>
+<p>That means in most cases, you can use pg_dump to export data from PostgreSQL, uninstall PostgreSQL and install Redrock Postgres, import the exported data into Redrock Postgres, and you are good to go.</p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="unsupported-features">
+        Unsupported features
+        <a data-clipboard-text="https://doc.rockdata.net/features/postgres-compatibility/#unsupported-features" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Unsupported features" aria-label="Anchor to: Unsupported features" href="#unsupported-features">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<ul>
+<li><a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/runtime-config-client.html#GUC-VACUUM-FREEZE-TABLE-AGE"
+  
+>VACUUM related parameters</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/runtime-config-autovacuum.html"
+  
+>Parameters related to automatic vacuuming</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/sql-vacuum.html"
+  
+>VACUUM FULL</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/sql-vacuum.html"
+  
+>VACUUM FREEZE</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/ddl-system-columns.html"
+  
+>System Columns</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/transaction-iso.html#XACT-SERIALIZABLE"
+  
+>Serializable Isolation Level</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/spgist.html"
+  
+>SP-GiST Indexes</a></li>
+</ul>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="features-different-from-community-version">
+        Features different from Community Version
+        <a data-clipboard-text="https://doc.rockdata.net/features/postgres-compatibility/#features-different-from-community-version" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Features different from Community Version" aria-label="Anchor to: Features different from Community Version" href="#features-different-from-community-version">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<div class="gdoc-page__anchorwrap">
+    <h3 id="user">
+        User
+        <a data-clipboard-text="https://doc.rockdata.net/features/postgres-compatibility/#user" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: User" aria-label="Anchor to: User" href="#user">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p>In PostgreSQL, users are cluster-level objects, while in Redrock Postgres, users are database-level objects. That means when you access different database objects in the same cluster, you may see users with the same name, in fact, they are different user objects belonging to different databases.</p>
+<p><strong>Note</strong>: DBA should pay attention to this difference, while developers may not.</p>
+<div class="gdoc-page__anchorwrap">
+    <h3 id="tablespace">
+        Tablespace
+        <a data-clipboard-text="https://doc.rockdata.net/features/postgres-compatibility/#tablespace" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Tablespace" aria-label="Anchor to: Tablespace" href="#tablespace">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p>In PostgreSQL, tablespaces are cluster-level objects, while in Redrock Postgres, tablespaces are database-level objects. That means when you access different database objects in the same cluster, you may see tablespaces with the same name, in fact, they are different tablespace objects in the respective databases.</p>
+<p><strong>Note</strong>: DBA should pay attention to this difference, while developers may not.</p>
+<div class="gdoc-page__anchorwrap">
+    <h3 id="pid">
+        PID
+        <a data-clipboard-text="https://doc.rockdata.net/features/postgres-compatibility/#pid" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: PID" aria-label="Anchor to: PID" href="#pid">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p>Some statistics views, such as pg_stat_activity and pg_locks, contain fields named <code>pid</code>. In PostgreSQL, these fields indicate the operating system process ID. In Redrock Postgres, these fields indicate the database process ID.</p>
+<p><strong>Note</strong>: There is a field named <code>spid</code> in <a
+  class="gdoc-markdown__link--code"
+  href="/zh-cn/advanced/monitor-stats/#pg_stat_activity"
+  
+><code>pg_stat_activity</code></a> view, indicating the actual operating system process ID.</p>
+
   </article>
 
 
@@ -2075,14 +2184,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         
           <span class="gdoc-footer__item gdoc-footer__item--row">
             <a href="https://www.rockdata.net/legal-notice/#contact-information" class="gdoc-footer__link">
-              法律声明
+              Legal Notice
             </a>
           </span>
         
         
           <span class="gdoc-footer__item gdoc-footer__item--row">
             <a href="https://www.rockdata.net/legal-notice/#privacy-policy" class="gdoc-footer__link">
-              隐私政策
+              Privacy Policy
             </a>
           </span>
         
@@ -2092,11 +2201,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
       <div class="flex flex-25 justify-end">
         <span class="gdoc-footer__item text-right">
-          <a class="gdoc-footer__link fake-link" href="#" aria-label="回到顶部">
+          <a class="gdoc-footer__link fake-link" href="#" aria-label="Back to top">
             <svg class="gdoc-icon gdoc_keyboard_arrow_up">
               <use xlink:href="#gdoc_keyboard_arrow_up"></use>
             </svg>
-            <span class="hidden-mobile">回到顶部</span>
+            <span class="hidden-mobile">Back to top</span>
           </a>
         </span>
       </div>
