@@ -70,7 +70,7 @@ Redrock Postgres也支持报告有关系统正在干什么的动态信息，例�
 <meta property="article:section" content="Advanced" />
     <meta
       property="article:modified_time"
-      content="2022-06-12T20:30:38+08:00"
+      content="2022-06-15T18:38:42+08:00"
     />
 
 
@@ -104,7 +104,7 @@ Redrock Postgres也支持报告有关系统正在干什么的动态信息，例�
       "headline": "运行统计视图",
       "description": "统计收集配置 查看统计信息 pg_stat_activity pg_stat_wait_event pg_stat_replication pg_stat_database pg_stat_all_tables pg_stat_all_undos pg_stat_all_indexes pg_statio_all_tables pg_statio_all_undos pg_statio_all_indexes pg_statio_all_sequences      Redrock Postgres的统计收集器是一个支持收集和报告服务器活动信息的子系统。 目前，这个收集器可以对表和索引的访问计数，计数可以按磁盘块和个体行来进行。它还跟踪每个表中的总行数、每个表的分析动作的信息。它也统计调用用户定义函数的次数以及在每次调用中花费的总时间。\nRedrock Postgres也支持报告有关系统正在干什么的动态信息，例如当前正在被其他服务器进程执行的命令以及系统中存在哪些其他连接。这个功能是独立于收集器进程存在的。\n统计收集配置     因为统计收集给查询执行增加了一些负荷，系统可以被配置为收集或不收集信息。这由配置参数控制，它们通常在postgresql.conf中设置（关于设置配置参数的细节请见第 19 章）。\n参数track_activities允许监控当前被任意服务器进程执行的命令。\n参数track_counts控制是否收集关于表和索引访问的统计信息。\n参数track_functions启用对用户定义函数使用的跟踪。\n参数track_io_timing启用对块读写次数的监控。\n参数track_wait_events控制是否收集关于等待事件的统计信息。\n通常这些参数被设置在postgresql.conf中，这样它们会应用于所有服务器进程，但是可以在单个会话中使用SET命令打开或关闭它们（为了阻止普通用户对管理员隐藏他们的活动，只有超级用户被允许使用SET来改变这些参数）。\n统计收集器通过临时文件将收集到的信息传送给其他PostgreSQL进程。这些文件被存储在名字由stats_temp_directory参数指定的目录中，默认是pg_tmp\/stats。为了得到更好的性能，stats_temp_directory可以被指向一个基于 RAM 的文件系统来降低物理 I\/O 需求。当服务器被干净地关闭时，一份统计数据的永久拷贝被存储在pg_stat子目录中，这样在服务器重启后统计信息能被保持。当在服务器启动时执行恢复时（例如立即关闭、服务器崩溃以及时间点恢复之后），所有统计计数器会被重置。\n查看统计信息     表 1中列出了一些预定义视图 可以用来显示系统的当前状态。 表 2中列出了另一些视图可以 显示统计收集的结果。你也可以使用底层统计函数（在 第 27.2.3 节中讨论）来建立自定义的视图。\n在使用统计信息监控收集到的数据时，你必须了解这些信息并非是实时更新的。每个独立的服务器进程只在进入闲置状态之前才向收集器传送新的统计计数；因此正在进行的查询或事务并不影响显示出来的总数。同样，收集器本身也最多每PGSTAT_STAT_INTERVAL毫秒（缺省为 500ms，除非在编译服务器的时候修改过）发送一 次新的报告。因此显示的信息总是落后于实际活动。但是由track_activities收集的当前查询信息总是最新的。\n另一个重点是当一个服务器进程被要求显示任何这些统计信息时，它首先取得收集器进程最近发出的报告并且接着为所有统计视图和函数使用这个快照，直到它的当前事务的结尾。因此只要你继续当前事务，统计数据将会一直显示静态信息。相似地，当任何关于所有会话的当前查询的信息在一个事务中第一次被请求时，这样的信息将被收集。并且在整个事务期间将显示相同的信息。这是一种特性而非缺陷，因为它允许你在该统计信息上执行多个查询并且关联结果而不用担心那些数字会在你不知情的情况下改变。但是如果你希望用每个查询都看到新结果，要确保在任何事务块之外做那些查询。或者，你可以调用pg_stat_clear_snapshot()，那将丢弃当前事务的统计快照（如果有）。下一次对统计性信息的使用将导致获取一个新的快照。\n一个事务也可以在视图pg_stat_xact_all_tables、pg_stat_xact_all_undos, pg_stat_xact_sys_tables、pg_stat_xact_user_tables和pg_stat_xact_user_functions中看到它自己的统计信息（还没有被传送给收集器）。这些数字并不像上面所述的那样行动，相反它们在事务期间持续被更新。\n表 1中显示的动态统计视图中的一些信息是有安全限制的。 普通用户只能看到关于他们自己的会话的所有信息（属于他们是成员的角色的会话）。 在关于其他会话的行中，许多列将为空。 但是，请注意，一个会话的存在和它的一般属性，例如会话用户和数据库，对所有用户都是可见的。超级用户和内置角色pg_read_all_stats的成员（参见第 21.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "1356",
+      "wordCount" : "1364",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -115,7 +115,7 @@ Redrock Postgres也支持报告有关系统正在干什么的动态信息，例�
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-12T20:30:38.00Z",
+      "dateModified": "2022-06-15T18:38:42.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1342,6 +1342,50 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
+                    href="/zh-cn/features/recyclebin/"
+                    class="gdoc-nav__entry"
+                  >
+                    回收站
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
                     href="/zh-cn/features/event-triggers/"
                     class="gdoc-nav__entry"
                   >
@@ -2067,16 +2111,24 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>和<code>pg_stat_all_tables</code>相似，但计数动作只在当前事务内发生（还<strong>没有</strong>被包括在<code>pg_stat_all_tables</code>和相关视图中）。用于生存和死亡行数量的列以及分析动作在此视图中不出现。</td>
 </tr>
 <tr>
-<td><code>pg_stat_xact_all_undos</code></td>
-<td>和<code>pg_stat_all_undos</code>相似，但计数动作只在当前事务内发生（还<strong>没有</strong>被包括在<code>pg_stat_all_undos</code>和相关视图中）。用于生存和死亡行数量的列在此视图中不出现。</td>
-</tr>
-<tr>
 <td><code>pg_stat_xact_sys_tables</code></td>
 <td>和<code>pg_stat_xact_all_tables</code>一样，但只显示系统表。</td>
 </tr>
 <tr>
 <td><code>pg_stat_xact_user_tables</code></td>
 <td>和<code>pg_stat_xact_all_tables</code>一样，但只显示用户表。</td>
+</tr>
+<tr>
+<td><code>pg_stat_all_undos</code></td>
+<td>当前数据库中每个回滚段一行，显示有关访问指定回滚段的统计信息。详见<a
+  class="gdoc-markdown__link"
+  href="/zh-cn/advanced/monitor-stats/#pg_stat_all_undos"
+  
+> <code>pg_stat_all_undos</code></a>。</td>
+</tr>
+<tr>
+<td><code>pg_stat_xact_all_undos</code></td>
+<td>和<code>pg_stat_all_undos</code>相似，但计数动作只在当前事务内发生（还<strong>没有</strong>被包括在<code>pg_stat_all_undos</code>和相关视图中）。用于生存和死亡行数量的列在此视图中不出现。</td>
 </tr>
 <tr>
 <td><code>pg_stat_all_indexes</code></td>
@@ -2109,6 +2161,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <tr>
 <td><code>pg_statio_user_tables</code></td>
 <td>和<code>pg_statio_all_tables</code>一样，但只显示用户表。</td>
+</tr>
+<tr>
+<td><code>pg_statio_all_undos</code></td>
+<td>当前数据库中每个回滚段一行，显示：回滚段OID、模式名、 回滚段名、该回滚段的磁盘块读取总数、该回滚段的缓冲区命中总数。 当前数据库中的每个回滚段包含一行，该行显示指定回滚段上有关 I/O 的统计信息。详见<a
+  class="gdoc-markdown__link"
+  href="/zh-cn/advanced/monitor-stats/#pg_statio_all_undos"
+  
+> <code>pg_statio_all_undos</code></a>。</td>
 </tr>
 <tr>
 <td><code>pg_statio_all_indexes</code></td>

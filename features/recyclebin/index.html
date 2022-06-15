@@ -8,9 +8,9 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Install Packages  Prerequisite Install Redrock Postgres   Post-installation commands  Data Directory Change Data Directory Initialize Startup   Control service After installation      Install Packages     Prerequisite     Log in to the host with your root account, and run the following commands to query installed packages, make sure none postgresql related packages already installed:" />
+  <meta name="description" content="What Is the Recycle Bin?  Object Naming in the Recycle Bin   Viewing and Querying Objects in the Recycle Bin Purging Objects in the Recycle Bin Restoring Tables from the Recycle Bin      When you drop a table, the database does not immediately remove the space associated with the table. The database renames the table and places it and any associated objects in a recycle bin, where, in case the table was dropped in error, it can be recovered at a later time." />
 
-    <title>Installing on Red Hat | Redrock Documentation</title>
+    <title>Recycle Bin | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -31,49 +31,49 @@
     
   <meta
     property="og:title"
-    content="Installing on Red Hat"
+    content="Recycle Bin"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Install Packages  Prerequisite Install Redrock Postgres   Post-installation commands  Data Directory Change Data Directory Initialize Startup   Control service After installation      Install Packages     Prerequisite     Log in to the host with your root account, and run the following commands to query installed packages, make sure none postgresql related packages already installed:" />
+  <meta property="og:description" content="What Is the Recycle Bin?  Object Naming in the Recycle Bin   Viewing and Querying Objects in the Recycle Bin Purging Objects in the Recycle Bin Restoring Tables from the Recycle Bin      When you drop a table, the database does not immediately remove the space associated with the table. The database renames the table and places it and any associated objects in a recycle bin, where, in case the table was dropped in error, it can be recovered at a later time." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://doc.rockdata.net/installation/redhat/" />
+<meta property="og:url" content="https://doc.rockdata.net/features/recyclebin/" />
 
-<meta property="article:section" content="Installation" />
+<meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-06-07T10:54:16+08:00"
+      content="2022-06-15T16:49:37+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Installing on Red Hat" />
+<meta name="twitter:title" content="Recycle Bin" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Install Packages  Prerequisite Install Redrock Postgres   Post-installation commands  Data Directory Change Data Directory Initialize Startup   Control service After installation      Install Packages     Prerequisite     Log in to the host with your root account, and run the following commands to query installed packages, make sure none postgresql related packages already installed:" />
+  <meta name="twitter:description" content="What Is the Recycle Bin?  Object Naming in the Recycle Bin   Viewing and Querying Objects in the Recycle Bin Purging Objects in the Recycle Bin Restoring Tables from the Recycle Bin      When you drop a table, the database does not immediately remove the space associated with the table. The database renames the table and places it and any associated objects in a recycle bin, where, in case the table was dropped in error, it can be recovered at a later time." />
 
 
   <script type="application/ld+json">
   {
       "@context": "http://schema.org",
       "@type": "TechArticle",
-      "articleSection": "Installation",
-      "name": "Installing on Red Hat",
-      "url" : "https://doc.rockdata.net/installation/redhat/",
-      "headline": "Installing on Red Hat",
-      "description": "Install Packages  Prerequisite Install Redrock Postgres   Post-installation commands  Data Directory Change Data Directory Initialize Startup   Control service After installation      Install Packages     Prerequisite     Log in to the host with your root account, and run the following commands to query installed packages, make sure none postgresql related packages already installed:",
+      "articleSection": "Features",
+      "name": "Recycle Bin",
+      "url" : "https://doc.rockdata.net/features/recyclebin/",
+      "headline": "Recycle Bin",
+      "description": "What Is the Recycle Bin?  Object Naming in the Recycle Bin   Viewing and Querying Objects in the Recycle Bin Purging Objects in the Recycle Bin Restoring Tables from the Recycle Bin      When you drop a table, the database does not immediately remove the space associated with the table. The database renames the table and places it and any associated objects in a recycle bin, where, in case the table was dropped in error, it can be recovered at a later time.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "504",
+      "wordCount" : "993",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://doc.rockdata.net/installation/redhat/"
+          "@id": "https://doc.rockdata.net/features/recyclebin/"
       },
       "copyrightHolder" : "Redrock Documentation",
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-07T10:54:16.00Z",
+      "dateModified": "2022-06-15T16:49:37.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -149,7 +149,7 @@
   href="/custom.css"
   media="all"
 />
-  <link href="https://doc.rockdata.net/installation/redhat/" rel="canonical" type="text/html" />
+  <link href="https://doc.rockdata.net/features/recyclebin/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -756,7 +756,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <a
                   class="flex gdoc-language__entry"
                   title="简体中文"
-                  href="/zh-cn/installation/redhat/"
+                  href="/zh-cn/features/recyclebin/"
                   hreflang="zh-cn"
                   lang="zh-cn"
                 >
@@ -1122,7 +1122,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <span class="flex">
                   <a
                     href="/installation/redhat/"
-                    class="gdoc-nav__entry is-active"
+                    class="gdoc-nav__entry"
                   >
                     Installing on Red Hat
                   </a>
@@ -1301,7 +1301,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <span class="flex">
                   <a
                     href="/features/recyclebin/"
-                    class="gdoc-nav__entry"
+                    class="gdoc-nav__entry is-active"
                   >
                     Recycle Bin
                   </a>
@@ -1865,7 +1865,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/installation/' href='/installation/'><span itemprop='name'>Installation</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Installing on Red Hat</span><meta itemprop='position' content='3' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/features/' href='/features/'><span itemprop='name'>Features</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Recycle Bin</span><meta itemprop='position' content='3' /></li>
   
 
   
@@ -1880,7 +1880,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <span class="editpage">
         <svg class="gdoc-icon gdoc_code"><use xlink:href="#gdoc_code"></use></svg>
         <a
-          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/en/installation/redhat.md"
+          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/en/features/recyclebin.md"
         >
           Edit page
         </a>
@@ -1894,167 +1894,135 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <article
     class="gdoc-markdown gdoc-markdown__align--left"
   >
-    <h1>Installing on Red Hat</h1>
+    <h1>Recycle Bin</h1>
     <div class="gdoc-toc gdoc-toc__level--3">
       <nav id="TableOfContents"><ul>
-        <li><a href="#install-packages">Install Packages</a>
+        <li><a href="#what-is-the-recycle-bin">What Is the Recycle Bin?</a>
           <ul>
-            <li><a href="#prerequisite">Prerequisite</a></li>
-            <li><a href="#install-redrock-postgres">Install Redrock Postgres</a></li>
+            <li><a href="#object-naming-in-the-recycle-bin">Object Naming in the Recycle Bin</a></li>
           </ul>
         </li>
-        <li><a href="#post-installation-commands">Post-installation commands</a>
-          <ul>
-            <li><a href="#data-directory">Data Directory</a></li>
-            <li><a href="#change-data-directory">Change Data Directory</a></li>
-            <li><a href="#initialize">Initialize</a></li>
-            <li><a href="#startup">Startup</a></li>
-          </ul>
-        </li>
-        <li><a href="#control-service">Control service</a></li>
-        <li><a href="#after-installation">After installation</a></li>
+        <li><a href="#viewing-and-querying-objects-in-the-recycle-bin">Viewing and Querying Objects in the Recycle Bin</a></li>
+        <li><a href="#purging-objects-in-the-recycle-bin">Purging Objects in the Recycle Bin</a></li>
+        <li><a href="#restoring-tables-from-the-recycle-bin">Restoring Tables from the Recycle Bin</a></li>
       </ul></nav>
       <hr />
     </div>
+<p>When you drop a table, the database does not immediately remove the space associated with the table. The database renames the table and places it and any associated objects in a recycle bin, where, in case the table was dropped in error, it can be recovered at a later time.</p>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="install-packages">
-        Install Packages
-        <a data-clipboard-text="https://doc.rockdata.net/installation/redhat/#install-packages" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Install Packages" aria-label="Anchor to: Install Packages" href="#install-packages">
+    <h2 id="what-is-the-recycle-bin">
+        What Is the Recycle Bin?
+        <a data-clipboard-text="https://doc.rockdata.net/features/recyclebin/#what-is-the-recycle-bin" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: What Is the Recycle Bin?" aria-label="Anchor to: What Is the Recycle Bin?" href="#what-is-the-recycle-bin">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<div class="gdoc-page__anchorwrap">
-    <h3 id="prerequisite">
-        Prerequisite
-        <a data-clipboard-text="https://doc.rockdata.net/installation/redhat/#prerequisite" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Prerequisite" aria-label="Anchor to: Prerequisite" href="#prerequisite">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
-<p>Log in to the host with your root account, and run the following commands to query installed packages, make sure none postgresql related packages already installed:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># rpm -qa | grep postgresql</span>
-</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
-    <h3 id="install-redrock-postgres">
-        Install Redrock Postgres
-        <a data-clipboard-text="https://doc.rockdata.net/installation/redhat/#install-redrock-postgres" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Install Redrock Postgres" aria-label="Anchor to: Install Redrock Postgres" href="#install-redrock-postgres">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
-<p>Download the <a
-  class="gdoc-markdown__link"
-  href="https://gitee.com/rockdata/redrock/releases"
-  
->Redrock Postgres Package for Red Hat or CentOS</a>, and run the following commands to install:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># tar xf redrock-12.1-1.el8.x86_64-bundle.tar</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># cd redrock-12.1-1.el8.x86_64-bundle</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># rpm -ivh redrock-12.1-1.el8.x86_64.rpm redrock-libs-12.1-1.el8.x86_64.rpm redrock-server-12.1-1.el8.x86_64.rpm</span>
-</span></span></code></pre></div><p>Other packages can be installed according to your needs.</p>
-<div class="gdoc-page__anchorwrap">
-    <h2 id="post-installation-commands">
-        Post-installation commands
-        <a data-clipboard-text="https://doc.rockdata.net/installation/redhat/#post-installation-commands" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Post-installation commands" aria-label="Anchor to: Post-installation commands" href="#post-installation-commands">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<p>After installing the packages, a database needs to be initialized and configured.</p>
-<p>In the commands below, the value of <em>version</em> includes the <em>major</em> version of PostgreSQL, e.g., <em>12</em></p>
-<div class="gdoc-page__anchorwrap">
-    <h3 id="data-directory">
-        Data Directory
-        <a data-clipboard-text="https://doc.rockdata.net/installation/redhat/#data-directory" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Data Directory" aria-label="Anchor to: Data Directory" href="#data-directory">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
-<p>The PostgreSQL data directory contains all of the data files for the database. The variable <em>PGDATA</em> is used to reference this directory.</p>
-<p>The default data directory is:</p>
-<pre tabindex="0"><code>/var/lib/pgsql/&lt;version&gt;/data
-</code></pre><p>For example:</p>
-<pre tabindex="0"><code>/var/lib/pgsql/12/data
-</code></pre><div class="gdoc-page__anchorwrap">
-    <h3 id="change-data-directory">
-        Change Data Directory
-        <a data-clipboard-text="https://doc.rockdata.net/installation/redhat/#change-data-directory" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Change Data Directory" aria-label="Anchor to: Change Data Directory" href="#change-data-directory">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
-<p>If you do not want to use the default data directory, you can go to a custom mount point (eg: /u01) and create a folder pgdata with postgres permissions:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># cd /u01</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># mkdir pgdata</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># chown postgres:postgres pgdata</span>
-</span></span></code></pre></div><p>Then, edit the postgresql service:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># systemctl edit postgresql-12.service</span>
-</span></span></code></pre></div><p>Go to the custom mount point that has the majority of the disk space, copy and paste the following into that file:</p>
-<pre tabindex="0"><code>[Service]
-Environment=PGDATA=/u01/pgdata
-</code></pre><div class="gdoc-page__anchorwrap">
-    <h3 id="initialize">
-        Initialize
-        <a data-clipboard-text="https://doc.rockdata.net/installation/redhat/#initialize" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Initialize" aria-label="Anchor to: Initialize" href="#initialize">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
-<p>The first command (only needed once) is to initialize the database in <em>PGDATA</em>.</p>
-<p>If the previous command did not work, try directly calling the setup binary, located in a similar naming scheme:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># /usr/pgsql-&lt;version&gt;/bin/postgresql-&lt;version&gt;-setup initdb</span>
-</span></span></code></pre></div><p>For versions 12, use:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># /usr/pgsql-12/bin/postgresql-12-setup initdb</span>
-</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
-    <h3 id="startup">
-        Startup
-        <a data-clipboard-text="https://doc.rockdata.net/installation/redhat/#startup" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Startup" aria-label="Anchor to: Startup" href="#startup">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
-<p>If you want PostgreSQL to start automatically when the OS starts, do the following:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># systemctl enable postgresql-12.service</span>
-</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
-    <h2 id="control-service">
-        Control service
-        <a data-clipboard-text="https://doc.rockdata.net/installation/redhat/#control-service" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Control service" aria-label="Anchor to: Control service" href="#control-service">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<p>To control the database service, use:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># systemctl &lt;command&gt; postgresql-12.service</span>
-</span></span></code></pre></div><p>where <em>command</em> can be:</p>
+<p>The recycle bin is actually a data dictionary table containing information about dropped objects. Dropped tables and any associated objects such as indexes, constraints, types, and so on are not removed and still occupy space.</p>
+<p>They continue to count against user space quotas, until specifically purged from the recycle bin or the unlikely situation where they must be purged by the database because of tablespace space constraints.</p>
+<p>Each user can be thought of as having his own recycle bin, because, unless a user has the <code>SUPERUSER</code> privilege, the only objects that the user has access to in the recycle bin are those that the user owns. A user can view the objects in his schema in the recycle bin using the following statement:</p>
+<pre tabindex="0"><code>SELECT * FROM pg_catalog.pg_recyclebin
+   WHERE namespace = to_regnamespace(CURRENT_SCHEMA)::oid;
+</code></pre><p>Objects dropped by the DDL command are moved to the recycle bin. Dropped objects that are moved to the recycle bin can include the following types of objects:</p>
 <ul>
-<li><em>enable</em> : enable automatical start</li>
-<li><em>start</em> : start the database</li>
-<li><em>stop</em> : stop the database</li>
-<li><em>restart</em> : stop/start the database; used to read changes to core configuration files</li>
-<li><em>reload</em> : reload configuration files while keeping database running</li>
+<li>Tables</li>
+<li>Undos</li>
+<li>Indexes</li>
+<li>Constraints</li>
+<li>Types</li>
+<li>Functions</li>
 </ul>
-<p>E.g. to control version 12 database service, use:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># systemctl enable postgresql-12.service</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># systemctl start postgresql-12.service</span>
-</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
-    <h2 id="after-installation">
-        After installation
-        <a data-clipboard-text="https://doc.rockdata.net/installation/redhat/#after-installation" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: After installation" aria-label="Anchor to: After installation" href="#after-installation">
+<p>When you drop a tablespace, the objects in the tablespace are not placed in the recycle bin and the database purges any entries in the recycle bin for objects located in the tablespace. Likewise:</p>
+<ul>
+<li>When you drop a user, any objects belonging to the user are not placed in the recycle bin and any objects in the recycle bin are purged.</li>
+<li>When you drop a schema, any objects belonging to the schema are not placed in the recycle bin and any objects in the recycle bin are purged.</li>
+</ul>
+<div class="gdoc-page__anchorwrap">
+    <h3 id="object-naming-in-the-recycle-bin">
+        Object Naming in the Recycle Bin
+        <a data-clipboard-text="https://doc.rockdata.net/features/recyclebin/#object-naming-in-the-recycle-bin" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Object Naming in the Recycle Bin" aria-label="Anchor to: Object Naming in the Recycle Bin" href="#object-naming-in-the-recycle-bin">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p>When a dropped table is moved to the recycle bin, the table and its associated objects are given system-generated names. This is necessary to avoid name conflicts that may arise if multiple tables have the same name. This could occur under the following circumstances:</p>
+<ul>
+<li>A user drops a table, re-creates it with the same name, then drops it again.</li>
+<li>Two users have tables with the same name, and both users drop their tables.</li>
+</ul>
+<p>The renaming convention is as follows:</p>
+<pre tabindex="0"><code>pg_dropped_[object_type]_[object_id]
+</code></pre><p>where:</p>
+<ul>
+<li><em><code>object_type</code></em> is the object type name, eg: table, index, constraint, type, function.</li>
+<li><em><code>object_id</code></em> is a unique identifier for this object, which makes the recycle bin name unique in current database.</li>
+</ul>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="viewing-and-querying-objects-in-the-recycle-bin">
+        Viewing and Querying Objects in the Recycle Bin
+        <a data-clipboard-text="https://doc.rockdata.net/features/recyclebin/#viewing-and-querying-objects-in-the-recycle-bin" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Viewing and Querying Objects in the Recycle Bin" aria-label="Anchor to: Viewing and Querying Objects in the Recycle Bin" href="#viewing-and-querying-objects-in-the-recycle-bin">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>Modify the pg_hba.conf file in data directory to define what authentication method should be used from all networks to the PostgreSQL server and modify the localhost authentication method (change from indent to md5 and change from localhost to accept all incoming requests). Find the lines below:</p>
-<pre tabindex="0"><code># IPv4 local connections:
-host    all             all             127.0.0.1/32            ident
-</code></pre><p>And change it to:</p>
-<pre tabindex="0"><code># IPv4 local connections:
-host    all             all             0.0.0.0/0            md5
-</code></pre><p>Modify the postgresql.conf file in data directory to allow connections from all hosts by uncommenting the following line and adding an * instead of localhost:</p>
-<pre tabindex="0"><code>listen_addresses = &#39;*&#39;
-</code></pre><p>Restart the database service to reload configurations:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># systemctl restart postgresql-12.service</span>
-</span></span></code></pre></div><p>In a production environment, you should also set up TLS-secured communication, and you should consider setting up data replication or snapshot-based backups. Consult the PostgreSQL online manual for these settings.</p>
+<p>You can query system catalog <code>pg_recyclebin</code> to identify the name that the database has assigned to a dropped object, as shown in the following example:</p>
+<pre tabindex="0"><code>SELECT objname, oldname FROM pg_catalog.pg_recyclebin
+   WHERE namespace = to_regnamespace(&#39;hr&#39;)::oid;
 
+       objname         |  oldname
+-----------------------+-----------
+pg_dropped_table_18762 | employees
+</code></pre><p>You can also view the contents of the recycle bin using the GUI management tool like DBeaver, pgAdmin 4, expand the system schema <code>pg_recyclebin</code> under a specified database to view all the dropped objects.</p>
+<p>You can query objects that are in the recycle bin, just as you can query other objects. However, you must specify the name of the object as it is identified in the recycle bin. For example:</p>
+<pre tabindex="0"><code>SELECT * FROM pg_recyclebin.pg_dropped_table_18762;
+</code></pre><div class="gdoc-page__anchorwrap">
+    <h2 id="purging-objects-in-the-recycle-bin">
+        Purging Objects in the Recycle Bin
+        <a data-clipboard-text="https://doc.rockdata.net/features/recyclebin/#purging-objects-in-the-recycle-bin" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Purging Objects in the Recycle Bin" aria-label="Anchor to: Purging Objects in the Recycle Bin" href="#purging-objects-in-the-recycle-bin">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>If you decide that you are never going to restore an item from the recycle bin, then you can use the <code>VACUUM</code> statement to remove the items and their associated objects from the recycle bin and release their storage space. You need the same privileges as if you were dropping the item.</p>
+<p>When you use the <code>VACUUM</code> statement to purge a table, you can use the name that the table is known by in the recycle bin or the original name of the table. The recycle bin name can be obtained from system catalog <code>pg_recyclebin</code> as shown in &ldquo;<a
+  class="gdoc-markdown__link"
+  href="/features/recyclebin/#viewing-and-querying-objects-in-the-recycle-bin"
+  
+>Viewing and Querying Objects in the Recycle Bin</a>&rdquo;. The following hypothetical example purges the table <code>hr.employees</code>, which was renamed to <code>pg_recyclebin.pg_dropped_table_18762</code> when it was placed in the recycle bin:</p>
+<pre tabindex="0"><code>VACUUM pg_recyclebin.pg_dropped_table_18762;
+</code></pre><p>You can achieve the same result with the following statement:</p>
+<pre tabindex="0"><code>VACUUM hr.employees;
+</code></pre><p>If you have the <code>SUPERUSER</code> privilege or you are the current database owner, then you can purge the entire recycle bin, and release space for objects, by using the following statement:</p>
+<pre tabindex="0"><code>VACUUM;
+</code></pre><p>You can also use the <code>VACUUM</code> statement to purge an index or undo from the recycle bin.</p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="restoring-tables-from-the-recycle-bin">
+        Restoring Tables from the Recycle Bin
+        <a data-clipboard-text="https://doc.rockdata.net/features/recyclebin/#restoring-tables-from-the-recycle-bin" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Restoring Tables from the Recycle Bin" aria-label="Anchor to: Restoring Tables from the Recycle Bin" href="#restoring-tables-from-the-recycle-bin">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>Use the <code>CREATE</code> <code>TABLE</code> &hellip; <code>LIKE</code> statement to recover objects from the recycle bin.</p>
+<p>You should specify the name of the table in the recycle bin. The recycle bin name can be obtained from system catalog <code>pg_recyclebin</code> as shown in &ldquo;<a
+  class="gdoc-markdown__link"
+  href="/features/recyclebin/#viewing-and-querying-objects-in-the-recycle-bin"
+  
+>Viewing and Querying Objects in the Recycle Bin</a>&rdquo;. To use the <code>CREATE</code> <code>TABLE</code> &hellip; <code>LIKE</code> statement, you need the <code>SELECT</code> privileges required to access the dropped table.</p>
+<p>The following example restores <code>employees</code> table and assigns to it a new name:</p>
+<pre tabindex="0"><code>CREATE TABLE hr.employees2 (LIKE pg_recyclebin.pg_dropped_table_18762 INCLUDING ALL);
+INSERT INTO hr.employees2 SELECT * FROM pg_recyclebin.pg_dropped_table_18762;
+</code></pre><p>The system-generated recycle bin name is very useful if you have dropped a table multiple times. For example, suppose you have three versions of the <code>employees</code> table in the recycle bin and you want to recover the second version. You can query the recycle bin and then restore to the appropriate system-generated name, as shown in the following example. Including the drop time in the query can help you verify that you are restoring the correct table.</p>
+<pre tabindex="0"><code>SELECT objname, oldname, droptime FROM pg_catalog.pg_recyclebin;
+
+       objname         |  oldname  |      droptime
+-----------------------+-----------+--------------------
+pg_dropped_table_18762 | employees | 2006-02-05:21:05:52
+pg_dropped_table_18924 | employees | 2006-02-05:21:25:13
+pg_dropped_table_19510 | employees | 2006-02-05:22:05:53
+
+CREATE TABLE hr.employees2 (LIKE pg_recyclebin.pg_dropped_table_18924 INCLUDING ALL);
+INSERT INTO hr.employees2 SELECT * FROM pg_recyclebin.pg_dropped_table_18924;
+</code></pre>
   </article>
 
 

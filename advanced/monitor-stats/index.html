@@ -42,7 +42,7 @@
 <meta property="article:section" content="Advanced" />
     <meta
       property="article:modified_time"
-      content="2022-06-12T20:30:38+08:00"
+      content="2022-06-15T18:38:42+08:00"
     />
 
 
@@ -62,7 +62,7 @@
       "headline": "Statistics Views",
       "description": "Statistics Collection Configuration Viewing Statistics pg_stat_activity pg_stat_wait_event pg_stat_replication pg_stat_database pg_stat_all_tables pg_stat_all_undos pg_stat_all_indexes pg_statio_all_tables pg_statio_all_undos pg_statio_all_indexes pg_statio_all_sequences      Redrock Postgres’s statistics collector is a subsystem that supports collection and reporting of information about server activity. Presently, the collector can count accesses to tables and indexes in both disk-block and individual-row terms. It also tracks the total number of rows in each table, and information about analyze actions for each table.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "7343",
+      "wordCount" : "7387",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -73,7 +73,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-12T20:30:38.00Z",
+      "dateModified": "2022-06-15T18:38:42.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1300,6 +1300,50 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
+                    href="/features/recyclebin/"
+                    class="gdoc-nav__entry"
+                  >
+                    Recycle Bin
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
                     href="/features/event-triggers/"
                     class="gdoc-nav__entry"
                   >
@@ -2025,16 +2069,24 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>Similar to <code>pg_stat_all_tables</code>, but counts actions taken so far within the current transaction (which are <em>not</em> yet included in <code>pg_stat_all_tables</code> and related views). The columns for numbers of live and dead rows and analyze actions are not present in this view.</td>
 </tr>
 <tr>
-<td><code>pg_stat_xact_all_undos</code></td>
-<td>Similar to <code>pg_stat_all_undos</code>, but counts actions taken so far within the current transaction (which are <em>not</em> yet included in <code>pg_stat_all_undos</code> and related views). The columns for numbers of live and dead records are not present in this view.</td>
-</tr>
-<tr>
 <td><code>pg_stat_xact_sys_tables</code></td>
 <td>Same as <code>pg_stat_xact_all_tables</code>, except that only system tables are shown.</td>
 </tr>
 <tr>
 <td><code>pg_stat_xact_user_tables</code></td>
 <td>Same as <code>pg_stat_xact_all_tables</code>, except that only user tables are shown.</td>
+</tr>
+<tr>
+<td><code>pg_stat_all_undos</code></td>
+<td>One row for each undo in the current database, showing statistics about accesses to that specific undo. See <a
+  class="gdoc-markdown__link"
+  href="/advanced/monitor-stats/#pg_stat_all_undos"
+  
+>pg_stat_all_undos</a> for details.</td>
+</tr>
+<tr>
+<td><code>pg_stat_xact_all_undos</code></td>
+<td>Similar to <code>pg_stat_all_undos</code>, but counts actions taken so far within the current transaction (which are <em>not</em> yet included in <code>pg_stat_all_undos</code> and related views). The columns for numbers of live and dead records are not present in this view.</td>
 </tr>
 <tr>
 <td><code>pg_stat_all_indexes</code></td>
@@ -2067,6 +2119,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <tr>
 <td><code>pg_statio_user_tables</code></td>
 <td>Same as <code>pg_statio_all_tables</code>, except that only user tables are shown.</td>
+</tr>
+<tr>
+<td><code>pg_statio_all_undos</code></td>
+<td>One row for each undo in the current database, showing statistics about I/O on that specific undo. See <a
+  class="gdoc-markdown__link"
+  href="/advanced/monitor-stats/#pg_statio_all_undos"
+  
+>pg_statio_all_undos</a> for details.</td>
 </tr>
 <tr>
 <td><code>pg_statio_all_indexes</code></td>
