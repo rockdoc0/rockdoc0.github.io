@@ -46,7 +46,7 @@ Planning     Prepare the computing server and storage server environments. The r
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-06-13T21:05:58+08:00"
+      content="2022-06-16T18:13:11+08:00"
     />
 
 
@@ -68,7 +68,7 @@ Planning     Prepare the computing server and storage server environments. The r
       "headline": "Network Attached Tablespace",
       "description": "Redrock Postgres supports network attached tablespaces. Based on this capability, Redrock Postgres can deploy database computing and storage separately.\nPlanning     Prepare the computing server and storage server environments. The recommended environment configurations are as follows:\n Computing servers should use high processor and memory configurations. The storage server should use the storage device with high I\/O throughput, and the storage space must meet the data storage requirements.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "313",
+      "wordCount" : "400",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -79,7 +79,7 @@ Planning     Prepare the computing server and storage server environments. The r
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-13T21:05:58.00Z",
+      "dateModified": "2022-06-16T18:13:11.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1954,22 +1954,36 @@ pg_dump or pg_dumpall).</li>
 >Installation Guide</a>.</li>
 <li>Stop the server, if it&rsquo;s running.</li>
 <li>Remove all existing files and subdirectories under the cluster data directory.</li>
-<li>Restore the database files from your file system backup. Be sure that they are restored with the right
-ownership (the database system user, not root!) and with the right permissions.</li>
+<li>Restore the database files from your file system backup. Be sure that they are restored with the right ownership (the database system user, not root!) and with the right permissions.</li>
 <li>Set the listening address and port in <code>postgresql.conf</code> and create a <code>storage.signal</code> file in the cluster data directory. Modify <code>pg_hba.conf</code> to allow connections from the compute server.</li>
 <li>Start the server.</li>
 </ol>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="create-a-network-based-database">
-        Create a Network Based Database
-        <a data-clipboard-text="https://doc.rockdata.net/features/network-tablespace/#create-a-network-based-database" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Create a Network Based Database" aria-label="Anchor to: Create a Network Based Database" href="#create-a-network-based-database">
+    <h2 id="create-a-network-attached-database">
+        Create a Network Attached Database
+        <a data-clipboard-text="https://doc.rockdata.net/features/network-tablespace/#create-a-network-attached-database" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Create a Network Attached Database" aria-label="Anchor to: Create a Network Attached Database" href="#create-a-network-attached-database">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>Log in to the computing server, connect to the <code>postgres</code> database in the database service as the database superuser, and create a network-based database. The following is a simple configuration example:</p>
-<pre tabindex="0"><code>postgres=# CREATE DATABASE bench STORAGE network LOCATION &#39;host=192.168.1.50 port=5432 user=postgres password=pgpass&#39;;
-</code></pre><p>Then you can connect to the new database in the database service as the database superuser and start the query operation.</p>
+<p>Log in to the computing server, connect to the <code>postgres</code> database in the database service as the database superuser, and create a network attached database. The following is a simple configuration example:</p>
+<pre tabindex="0"><code>CREATE DATABASE netdb STORAGE remote LOCATION
+  &#39;host=192.168.1.50 port=5432 user=postgres password=pgpass&#39;;
+</code></pre><p><strong>Note</strong>: In Redrock Postgres, creating a database creates a default tablespace in the database, and the newly created database in the example above produces a default network tablespace.</p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="create-a-network-attached-tablespace">
+        Create a Network Attached Tablespace
+        <a data-clipboard-text="https://doc.rockdata.net/features/network-tablespace/#create-a-network-attached-tablespace" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Create a Network Attached Tablespace" aria-label="Anchor to: Create a Network Attached Tablespace" href="#create-a-network-attached-tablespace">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>Use a database superuser to connect to the newly created database <code>netdb</code> in the database service to create a network attached tablespace. The following is a simple example of a configuration that creates two network attached tablespaces using two additional storage servers:</p>
+<pre tabindex="0"><code>CREATE TABLESPACE netts1 STORAGE remote LOCATION
+  &#39;host=192.168.1.51 port=5432 user=postgres password=pgpass&#39;;
+CREATE TABLESPACE netts2 STORAGE remote LOCATION
+  &#39;host=192.168.1.52 port=5432 user=postgres password=pgpass&#39;;
+</code></pre><p>You can then use these network attached tablespaces to create tables and indexes.</p>
 
   </article>
 
