@@ -8,8 +8,8 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo to do the following:
- Roll back an active transaction Recover a terminated transaction Provide read consistency  Redrock Postgres stores undo data inside the database rather than in external logs. Undo data is stored in blocks that are updated just like data blocks, with changes to these blocks generating redo. In this way, Redrock Postgres can efficiently access undo data without needing to read external logs." />
+  <meta name="description" content="Undos and Transactions Transaction Rollback Managing Undos      Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo to do the following:
+ Roll back an active transaction Recover a terminated transaction Provide read consistency  Redrock Postgres stores undo data inside the database rather than in external logs. Undo data is stored in blocks that are updated just like data blocks, with changes to these blocks generating redo." />
 
     <title>Undo | Redrock Documentation</title>
 
@@ -36,23 +36,23 @@
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo to do the following:
- Roll back an active transaction Recover a terminated transaction Provide read consistency  Redrock Postgres stores undo data inside the database rather than in external logs. Undo data is stored in blocks that are updated just like data blocks, with changes to these blocks generating redo. In this way, Redrock Postgres can efficiently access undo data without needing to read external logs." />
+  <meta property="og:description" content="Undos and Transactions Transaction Rollback Managing Undos      Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo to do the following:
+ Roll back an active transaction Recover a terminated transaction Provide read consistency  Redrock Postgres stores undo data inside the database rather than in external logs. Undo data is stored in blocks that are updated just like data blocks, with changes to these blocks generating redo." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/features/undo/" />
 
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-05-30T19:41:27+08:00"
+      content="2022-06-17T17:34:43+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Undo" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo to do the following:
- Roll back an active transaction Recover a terminated transaction Provide read consistency  Redrock Postgres stores undo data inside the database rather than in external logs. Undo data is stored in blocks that are updated just like data blocks, with changes to these blocks generating redo. In this way, Redrock Postgres can efficiently access undo data without needing to read external logs." />
+  <meta name="twitter:description" content="Undos and Transactions Transaction Rollback Managing Undos      Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo to do the following:
+ Roll back an active transaction Recover a terminated transaction Provide read consistency  Redrock Postgres stores undo data inside the database rather than in external logs. Undo data is stored in blocks that are updated just like data blocks, with changes to these blocks generating redo." />
 
 
   <script type="application/ld+json">
@@ -63,9 +63,9 @@
       "name": "Undo",
       "url" : "https://doc.rockdata.net/features/undo/",
       "headline": "Undo",
-      "description": "Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo to do the following:\n Roll back an active transaction Recover a terminated transaction Provide read consistency  Redrock Postgres stores undo data inside the database rather than in external logs. Undo data is stored in blocks that are updated just like data blocks, with changes to these blocks generating redo. In this way, Redrock Postgres can efficiently access undo data without needing to read external logs.",
+      "description": "Undos and Transactions Transaction Rollback Managing Undos      Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo to do the following:\n Roll back an active transaction Recover a terminated transaction Provide read consistency  Redrock Postgres stores undo data inside the database rather than in external logs. Undo data is stored in blocks that are updated just like data blocks, with changes to these blocks generating redo.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "241",
+      "wordCount" : "306",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -76,7 +76,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-05-30T19:41:27.00Z",
+      "dateModified": "2022-06-17T17:34:43.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1038,7 +1038,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">Installation</span>
+                <span class="flex">
+                  <a
+                    href="/installation/"
+                    class="gdoc-nav__entry"
+                  >
+                    Installation
+                  </a>
+                </span>
               
               
             </label>
@@ -1898,7 +1905,15 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     class="gdoc-markdown gdoc-markdown__align--left"
   >
     <h1>Undo</h1>
-    <p>Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo to do the following:</p>
+    <div class="gdoc-toc gdoc-toc__level--3">
+      <nav id="TableOfContents"><ul>
+        <li><a href="#undos-and-transactions">Undos and Transactions</a></li>
+        <li><a href="#transaction-rollback">Transaction Rollback</a></li>
+        <li><a href="#managing-undos">Managing Undos</a></li>
+      </ul></nav>
+      <hr />
+    </div>
+<p>Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo to do the following:</p>
 <ul>
 <li>Roll back an active transaction</li>
 <li>Recover a terminated transaction</li>
@@ -1907,25 +1922,38 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <p>Redrock Postgres stores undo data inside the database rather than in external logs. Undo data is stored in blocks that are updated just like data blocks, with changes to these blocks generating redo. In this way, Redrock Postgres can efficiently access undo data without needing to read external logs.</p>
 <p>Undo data is stored in an independent tablespace. Redrock Postgres provides a fully automated mechanism, known as automatic undo management mode, for managing undos and space.</p>
 <div class="gdoc-page__anchorwrap">
-    <h4 id="undos-and-transactions">
+    <h2 id="undos-and-transactions">
         Undos and Transactions
         <a data-clipboard-text="https://doc.rockdata.net/features/undo/#undos-and-transactions" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Undos and Transactions" aria-label="Anchor to: Undos and Transactions" href="#undos-and-transactions">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
-    </h4>
+    </h2>
 </div>
 <p>When a transaction starts, the database binds (assigns) the transaction to an undo segment, and therefore to a transaction table.</p>
 <p>Multiple active transactions can write concurrently to the same undo or to different undos. For example, transactions T1 and T2 can both write to undo U1, or T1 can write to U1 while T2 writes to undo U2.</p>
 <div class="gdoc-page__anchorwrap">
-    <h4 id="transaction-rollback">
+    <h2 id="transaction-rollback">
         Transaction Rollback
         <a data-clipboard-text="https://doc.rockdata.net/features/undo/#transaction-rollback" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Transaction Rollback" aria-label="Anchor to: Transaction Rollback" href="#transaction-rollback">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
-    </h4>
+    </h2>
 </div>
 <p>When a <code>ROLLBACK</code> statement is issued, the database uses undo records to roll back changes made to the database by the uncommitted transaction. During recovery, the database rolls back any uncommitted changes applied from the online redo log to the data files. Undo records provide read consistency by maintaining the before image of the data for users accessing data at the same time that another user is changing it.</p>
-
+<div class="gdoc-page__anchorwrap">
+    <h2 id="managing-undos">
+        Managing Undos
+        <a data-clipboard-text="https://doc.rockdata.net/features/undo/#managing-undos" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Managing Undos" aria-label="Anchor to: Managing Undos" href="#managing-undos">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>After the database cluster data directory is initialized, 4 cluster-level undos and 8 database-level undos are generated by default in the database. Users can use the following statement to view the undo information in the current database:</p>
+<pre tabindex="0"><code>SELECT c.relname, c.relisshared, u.undoid, u.undrelid,
+       pg_size_pretty(pg_relation_size(c.oid)) as undsize
+   FROM pg_undo u
+     LEFT JOIN pg_class c ON u.undrelid = c.oid;
+</code></pre>
   </article>
 
 

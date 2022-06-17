@@ -8,13 +8,12 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Redrock Postgres 支持基于网络的表空间。 基于该能力，Redrock Postgres 可以做到数据库的计算和存储的分离部署。
+  <meta name="description" content="规划 部署计算服务器 部署存储服务器 创建基于网络的数据库 创建网络表空间      Redrock Postgres 支持基于网络的表空间。 基于该能力，Redrock Postgres 可以做到数据库的计算和存储的分离部署。
 规划     准备好计算服务器和存储服务器环境，推荐环境配置：
  计算服务器应该采用较高的处理器和内存配置； 存储服务器应该采用IO处理能力偏高的存储配置，存储空间满足数据存储要求； 计算服务器和存储服务器之间，尽量采用高带宽和低延迟的网络；  如果需要在数据库服务器中创建多个网络表空间，对应地，就需要准备多台存储服务器。
 部署计算服务器     按照下述步骤，部署计算服务器：
  参考 Redrock Postgres 安装指导，安装软件包。 如果数据库服务器正在运行，停止它。 使用任何趁手的文件系统备份工具（例如tar或者 cpio，不是pg_dump 或者pg_dumpall）执行备份。 启动服务器。  部署存储服务器     按照下述步骤，部署存储服务器：
- 参考 Redrock Postgres 安装指导，安装软件包。 如果数据库服务器正在运行，停止它。 移除所有位于集群数据目录下的文件和子目录。 从你的文件系统备份中恢复数据库文件。注意它们要使用正确的所有权恢复（数据库系统用户，不是root！）并且使用正确的权限。 设置postgresql.conf中的监听地址和端口，并且在集群数据目录中创建一个storage.signal文件。修改pg_hba.conf以允许来自计算服务器的连接。 启动服务器。  创建基于网络的数据库     登录计算服务器，使用数据库超级用户连接到数据库服务中的 postgres 数据库，创建基于网络的数据库。配置的一个简单例子是：
-CREATE DATABASE netdb STORAGE remote LOCATION&#39;host=192.168.1.50 port=5432 user=postgres password=pgpass&#39;; 说明：在 Redrock Postgres 中，创建一个数据库时会在这个数据库中附带创建一个默认表空间，上例中新建的数据库会产生一个默认的网络表空间。" />
+ 参考 Redrock Postgres 安装指导，安装软件包。 如果数据库服务器正在运行，停止它。 移除所有位于集群数据目录下的文件和子目录。 从你的文件系统备份中恢复数据库文件。注意它们要使用正确的所有权恢复（数据库系统用户，不是root！）并且使用正确的权限。 设置postgresql.conf中的监听地址和端口，并且在集群数据目录中创建一个storage.signal文件。修改pg_hba.conf以允许来自计算服务器的连接。 启动服务器。  创建基于网络的数据库     登录计算服务器，使用数据库超级用户连接到数据库服务中的 postgres 数据库，创建基于网络的数据库。配置的一个简单例子是：" />
 
     <title>网络表空间 | Redrock Documentation</title>
 
@@ -41,33 +40,31 @@ CREATE DATABASE netdb STORAGE remote LOCATION&#39;host=192.168.1.50 port=5432 u
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Redrock Postgres 支持基于网络的表空间。 基于该能力，Redrock Postgres 可以做到数据库的计算和存储的分离部署。
+  <meta property="og:description" content="规划 部署计算服务器 部署存储服务器 创建基于网络的数据库 创建网络表空间      Redrock Postgres 支持基于网络的表空间。 基于该能力，Redrock Postgres 可以做到数据库的计算和存储的分离部署。
 规划     准备好计算服务器和存储服务器环境，推荐环境配置：
  计算服务器应该采用较高的处理器和内存配置； 存储服务器应该采用IO处理能力偏高的存储配置，存储空间满足数据存储要求； 计算服务器和存储服务器之间，尽量采用高带宽和低延迟的网络；  如果需要在数据库服务器中创建多个网络表空间，对应地，就需要准备多台存储服务器。
 部署计算服务器     按照下述步骤，部署计算服务器：
  参考 Redrock Postgres 安装指导，安装软件包。 如果数据库服务器正在运行，停止它。 使用任何趁手的文件系统备份工具（例如tar或者 cpio，不是pg_dump 或者pg_dumpall）执行备份。 启动服务器。  部署存储服务器     按照下述步骤，部署存储服务器：
- 参考 Redrock Postgres 安装指导，安装软件包。 如果数据库服务器正在运行，停止它。 移除所有位于集群数据目录下的文件和子目录。 从你的文件系统备份中恢复数据库文件。注意它们要使用正确的所有权恢复（数据库系统用户，不是root！）并且使用正确的权限。 设置postgresql.conf中的监听地址和端口，并且在集群数据目录中创建一个storage.signal文件。修改pg_hba.conf以允许来自计算服务器的连接。 启动服务器。  创建基于网络的数据库     登录计算服务器，使用数据库超级用户连接到数据库服务中的 postgres 数据库，创建基于网络的数据库。配置的一个简单例子是：
-CREATE DATABASE netdb STORAGE remote LOCATION&#39;host=192.168.1.50 port=5432 user=postgres password=pgpass&#39;; 说明：在 Redrock Postgres 中，创建一个数据库时会在这个数据库中附带创建一个默认表空间，上例中新建的数据库会产生一个默认的网络表空间。" />
+ 参考 Redrock Postgres 安装指导，安装软件包。 如果数据库服务器正在运行，停止它。 移除所有位于集群数据目录下的文件和子目录。 从你的文件系统备份中恢复数据库文件。注意它们要使用正确的所有权恢复（数据库系统用户，不是root！）并且使用正确的权限。 设置postgresql.conf中的监听地址和端口，并且在集群数据目录中创建一个storage.signal文件。修改pg_hba.conf以允许来自计算服务器的连接。 启动服务器。  创建基于网络的数据库     登录计算服务器，使用数据库超级用户连接到数据库服务中的 postgres 数据库，创建基于网络的数据库。配置的一个简单例子是：" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/zh-cn/features/network-tablespace/" />
 
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-06-16T18:13:11+08:00"
+      content="2022-06-17T17:34:43+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="网络表空间" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Redrock Postgres 支持基于网络的表空间。 基于该能力，Redrock Postgres 可以做到数据库的计算和存储的分离部署。
+  <meta name="twitter:description" content="规划 部署计算服务器 部署存储服务器 创建基于网络的数据库 创建网络表空间      Redrock Postgres 支持基于网络的表空间。 基于该能力，Redrock Postgres 可以做到数据库的计算和存储的分离部署。
 规划     准备好计算服务器和存储服务器环境，推荐环境配置：
  计算服务器应该采用较高的处理器和内存配置； 存储服务器应该采用IO处理能力偏高的存储配置，存储空间满足数据存储要求； 计算服务器和存储服务器之间，尽量采用高带宽和低延迟的网络；  如果需要在数据库服务器中创建多个网络表空间，对应地，就需要准备多台存储服务器。
 部署计算服务器     按照下述步骤，部署计算服务器：
  参考 Redrock Postgres 安装指导，安装软件包。 如果数据库服务器正在运行，停止它。 使用任何趁手的文件系统备份工具（例如tar或者 cpio，不是pg_dump 或者pg_dumpall）执行备份。 启动服务器。  部署存储服务器     按照下述步骤，部署存储服务器：
- 参考 Redrock Postgres 安装指导，安装软件包。 如果数据库服务器正在运行，停止它。 移除所有位于集群数据目录下的文件和子目录。 从你的文件系统备份中恢复数据库文件。注意它们要使用正确的所有权恢复（数据库系统用户，不是root！）并且使用正确的权限。 设置postgresql.conf中的监听地址和端口，并且在集群数据目录中创建一个storage.signal文件。修改pg_hba.conf以允许来自计算服务器的连接。 启动服务器。  创建基于网络的数据库     登录计算服务器，使用数据库超级用户连接到数据库服务中的 postgres 数据库，创建基于网络的数据库。配置的一个简单例子是：
-CREATE DATABASE netdb STORAGE remote LOCATION&#39;host=192.168.1.50 port=5432 user=postgres password=pgpass&#39;; 说明：在 Redrock Postgres 中，创建一个数据库时会在这个数据库中附带创建一个默认表空间，上例中新建的数据库会产生一个默认的网络表空间。" />
+ 参考 Redrock Postgres 安装指导，安装软件包。 如果数据库服务器正在运行，停止它。 移除所有位于集群数据目录下的文件和子目录。 从你的文件系统备份中恢复数据库文件。注意它们要使用正确的所有权恢复（数据库系统用户，不是root！）并且使用正确的权限。 设置postgresql.conf中的监听地址和端口，并且在集群数据目录中创建一个storage.signal文件。修改pg_hba.conf以允许来自计算服务器的连接。 启动服务器。  创建基于网络的数据库     登录计算服务器，使用数据库超级用户连接到数据库服务中的 postgres 数据库，创建基于网络的数据库。配置的一个简单例子是：" />
 
 
   <script type="application/ld+json">
@@ -78,9 +75,9 @@ CREATE DATABASE netdb STORAGE remote LOCATION&#39;host=192.168.1.50 port=5432 u
       "name": "网络表空间",
       "url" : "https://doc.rockdata.net/zh-cn/features/network-tablespace/",
       "headline": "网络表空间",
-      "description": "Redrock Postgres 支持基于网络的表空间。 基于该能力，Redrock Postgres 可以做到数据库的计算和存储的分离部署。\n规划     准备好计算服务器和存储服务器环境，推荐环境配置：\n 计算服务器应该采用较高的处理器和内存配置； 存储服务器应该采用IO处理能力偏高的存储配置，存储空间满足数据存储要求； 计算服务器和存储服务器之间，尽量采用高带宽和低延迟的网络；  如果需要在数据库服务器中创建多个网络表空间，对应地，就需要准备多台存储服务器。\n部署计算服务器     按照下述步骤，部署计算服务器：\n 参考 Redrock Postgres 安装指导，安装软件包。 如果数据库服务器正在运行，停止它。 使用任何趁手的文件系统备份工具（例如tar或者 cpio，不是pg_dump 或者pg_dumpall）执行备份。 启动服务器。  部署存储服务器     按照下述步骤，部署存储服务器：\n 参考 Redrock Postgres 安装指导，安装软件包。 如果数据库服务器正在运行，停止它。 移除所有位于集群数据目录下的文件和子目录。 从你的文件系统备份中恢复数据库文件。注意它们要使用正确的所有权恢复（数据库系统用户，不是root！）并且使用正确的权限。 设置postgresql.conf中的监听地址和端口，并且在集群数据目录中创建一个storage.signal文件。修改pg_hba.conf以允许来自计算服务器的连接。 启动服务器。  创建基于网络的数据库     登录计算服务器，使用数据库超级用户连接到数据库服务中的 postgres 数据库，创建基于网络的数据库。配置的一个简单例子是：\nCREATE DATABASE netdb STORAGE remote LOCATION\r\u0027host=192.168.1.50 port=5432 user=postgres password=pgpass\u0027; 说明：在 Redrock Postgres 中，创建一个数据库时会在这个数据库中附带创建一个默认表空间，上例中新建的数据库会产生一个默认的网络表空间。",
+      "description": "规划 部署计算服务器 部署存储服务器 创建基于网络的数据库 创建网络表空间      Redrock Postgres 支持基于网络的表空间。 基于该能力，Redrock Postgres 可以做到数据库的计算和存储的分离部署。\n规划     准备好计算服务器和存储服务器环境，推荐环境配置：\n 计算服务器应该采用较高的处理器和内存配置； 存储服务器应该采用IO处理能力偏高的存储配置，存储空间满足数据存储要求； 计算服务器和存储服务器之间，尽量采用高带宽和低延迟的网络；  如果需要在数据库服务器中创建多个网络表空间，对应地，就需要准备多台存储服务器。\n部署计算服务器     按照下述步骤，部署计算服务器：\n 参考 Redrock Postgres 安装指导，安装软件包。 如果数据库服务器正在运行，停止它。 使用任何趁手的文件系统备份工具（例如tar或者 cpio，不是pg_dump 或者pg_dumpall）执行备份。 启动服务器。  部署存储服务器     按照下述步骤，部署存储服务器：\n 参考 Redrock Postgres 安装指导，安装软件包。 如果数据库服务器正在运行，停止它。 移除所有位于集群数据目录下的文件和子目录。 从你的文件系统备份中恢复数据库文件。注意它们要使用正确的所有权恢复（数据库系统用户，不是root！）并且使用正确的权限。 设置postgresql.conf中的监听地址和端口，并且在集群数据目录中创建一个storage.signal文件。修改pg_hba.conf以允许来自计算服务器的连接。 启动服务器。  创建基于网络的数据库     登录计算服务器，使用数据库超级用户连接到数据库服务中的 postgres 数据库，创建基于网络的数据库。配置的一个简单例子是：",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "76",
+      "wordCount" : "81",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -91,7 +88,7 @@ CREATE DATABASE netdb STORAGE remote LOCATION&#39;host=192.168.1.50 port=5432 u
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-16T18:13:11.00Z",
+      "dateModified": "2022-06-17T17:34:43.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1053,7 +1050,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">安装指导</span>
+                <span class="flex">
+                  <a
+                    href="/zh-cn/installation/"
+                    class="gdoc-nav__entry"
+                  >
+                    安装指导
+                  </a>
+                </span>
               
               
             </label>
@@ -1913,7 +1917,17 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     class="gdoc-markdown gdoc-markdown__align--left"
   >
     <h1>网络表空间</h1>
-    <p>Redrock Postgres 支持基于网络的表空间。 基于该能力，Redrock Postgres 可以做到数据库的计算和存储的分离部署。</p>
+    <div class="gdoc-toc gdoc-toc__level--3">
+      <nav id="TableOfContents"><ul>
+        <li><a href="#规划">规划</a></li>
+        <li><a href="#部署计算服务器">部署计算服务器</a></li>
+        <li><a href="#部署存储服务器">部署存储服务器</a></li>
+        <li><a href="#创建基于网络的数据库">创建基于网络的数据库</a></li>
+        <li><a href="#创建网络表空间">创建网络表空间</a></li>
+      </ul></nav>
+      <hr />
+    </div>
+<p>Redrock Postgres 支持基于网络的表空间。 基于该能力，Redrock Postgres 可以做到数据库的计算和存储的分离部署。</p>
 <div class="gdoc-page__anchorwrap">
     <h2 id="规划">
         规划

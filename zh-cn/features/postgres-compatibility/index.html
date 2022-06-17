@@ -8,7 +8,7 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Redrock Postgres 是在 PostgreSQL 的基础上开发的，在客户端访问协议和SQL语法层面，Redrock Postgres 同 PostgreSQL 保持兼容。如果您的应用是基于 PostgreSQL 开发的，那么：
+  <meta name="description" content="不支持的功能特性 与社区版有差异的特性说明  用户 表空间 PID        Redrock Postgres 是在 PostgreSQL 的基础上开发的，在客户端访问协议和SQL语法层面，Redrock Postgres 同 PostgreSQL 保持兼容。如果您的应用是基于 PostgreSQL 开发的，那么：
  基于同 PostgreSQL 在客户端访问协议层面的二进制兼容，可以使用和 PostgreSQL 一样的各种编程语言驱动访问 Redrock Postgres，如：Java, C/C&#43;&#43;, .Net, Python, Ruby, Perl, Go, ODBC等。 基于同 PostgreSQL 在SQL语法上的严格兼容，可以在应用软件不做任何改动的情况下迁移到 Redrock Postgres。 可以使用 PostgreSQL 相关的桌面管理工具访问 Redrock Postgres，如：DBeaver、pgAdmin 4、Navicat for PostgreSQL 等。  这意味着，在多数情况下，您可以使用 pg_dump 导出 PostgreSQL 中的数据，卸载 PostgreSQL 并安装 Redrock Postgres，将导出的数据导入到 Redrock Postgres 中，就可以开始了。
 不支持的功能特性      清理相关配置参数 自动清理配置参数 完全清理操作 冻结操作 系统列 可序列化隔离级别 SP-GiST索引  与社区版有差异的特性说明     用户     在 PostgreSQL 中，用户为集群级别的对象，而在 Redrock Postgres 中，用户为数据库级别的对象。这意味者，在你访问同一个集群中不同的数据库对象时，虽然可能会看到相同名字的用户，实际上，它们是分属于各自数据库中不同的用户对象。" />
 
@@ -37,7 +37,7 @@
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Redrock Postgres 是在 PostgreSQL 的基础上开发的，在客户端访问协议和SQL语法层面，Redrock Postgres 同 PostgreSQL 保持兼容。如果您的应用是基于 PostgreSQL 开发的，那么：
+  <meta property="og:description" content="不支持的功能特性 与社区版有差异的特性说明  用户 表空间 PID        Redrock Postgres 是在 PostgreSQL 的基础上开发的，在客户端访问协议和SQL语法层面，Redrock Postgres 同 PostgreSQL 保持兼容。如果您的应用是基于 PostgreSQL 开发的，那么：
  基于同 PostgreSQL 在客户端访问协议层面的二进制兼容，可以使用和 PostgreSQL 一样的各种编程语言驱动访问 Redrock Postgres，如：Java, C/C&#43;&#43;, .Net, Python, Ruby, Perl, Go, ODBC等。 基于同 PostgreSQL 在SQL语法上的严格兼容，可以在应用软件不做任何改动的情况下迁移到 Redrock Postgres。 可以使用 PostgreSQL 相关的桌面管理工具访问 Redrock Postgres，如：DBeaver、pgAdmin 4、Navicat for PostgreSQL 等。  这意味着，在多数情况下，您可以使用 pg_dump 导出 PostgreSQL 中的数据，卸载 PostgreSQL 并安装 Redrock Postgres，将导出的数据导入到 Redrock Postgres 中，就可以开始了。
 不支持的功能特性      清理相关配置参数 自动清理配置参数 完全清理操作 冻结操作 系统列 可序列化隔离级别 SP-GiST索引  与社区版有差异的特性说明     用户     在 PostgreSQL 中，用户为集群级别的对象，而在 Redrock Postgres 中，用户为数据库级别的对象。这意味者，在你访问同一个集群中不同的数据库对象时，虽然可能会看到相同名字的用户，实际上，它们是分属于各自数据库中不同的用户对象。" />
 <meta property="og:type" content="article" />
@@ -46,14 +46,14 @@
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-06-13T21:05:58+08:00"
+      content="2022-06-17T17:34:43+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="同 PostgreSQL 的兼容性" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Redrock Postgres 是在 PostgreSQL 的基础上开发的，在客户端访问协议和SQL语法层面，Redrock Postgres 同 PostgreSQL 保持兼容。如果您的应用是基于 PostgreSQL 开发的，那么：
+  <meta name="twitter:description" content="不支持的功能特性 与社区版有差异的特性说明  用户 表空间 PID        Redrock Postgres 是在 PostgreSQL 的基础上开发的，在客户端访问协议和SQL语法层面，Redrock Postgres 同 PostgreSQL 保持兼容。如果您的应用是基于 PostgreSQL 开发的，那么：
  基于同 PostgreSQL 在客户端访问协议层面的二进制兼容，可以使用和 PostgreSQL 一样的各种编程语言驱动访问 Redrock Postgres，如：Java, C/C&#43;&#43;, .Net, Python, Ruby, Perl, Go, ODBC等。 基于同 PostgreSQL 在SQL语法上的严格兼容，可以在应用软件不做任何改动的情况下迁移到 Redrock Postgres。 可以使用 PostgreSQL 相关的桌面管理工具访问 Redrock Postgres，如：DBeaver、pgAdmin 4、Navicat for PostgreSQL 等。  这意味着，在多数情况下，您可以使用 pg_dump 导出 PostgreSQL 中的数据，卸载 PostgreSQL 并安装 Redrock Postgres，将导出的数据导入到 Redrock Postgres 中，就可以开始了。
 不支持的功能特性      清理相关配置参数 自动清理配置参数 完全清理操作 冻结操作 系统列 可序列化隔离级别 SP-GiST索引  与社区版有差异的特性说明     用户     在 PostgreSQL 中，用户为集群级别的对象，而在 Redrock Postgres 中，用户为数据库级别的对象。这意味者，在你访问同一个集群中不同的数据库对象时，虽然可能会看到相同名字的用户，实际上，它们是分属于各自数据库中不同的用户对象。" />
 
@@ -66,9 +66,9 @@
       "name": "同 PostgreSQL 的兼容性",
       "url" : "https://doc.rockdata.net/zh-cn/features/postgres-compatibility/",
       "headline": "同 PostgreSQL 的兼容性",
-      "description": "Redrock Postgres 是在 PostgreSQL 的基础上开发的，在客户端访问协议和SQL语法层面，Redrock Postgres 同 PostgreSQL 保持兼容。如果您的应用是基于 PostgreSQL 开发的，那么：\n 基于同 PostgreSQL 在客户端访问协议层面的二进制兼容，可以使用和 PostgreSQL 一样的各种编程语言驱动访问 Redrock Postgres，如：Java, C\/C\u002b\u002b, .Net, Python, Ruby, Perl, Go, ODBC等。 基于同 PostgreSQL 在SQL语法上的严格兼容，可以在应用软件不做任何改动的情况下迁移到 Redrock Postgres。 可以使用 PostgreSQL 相关的桌面管理工具访问 Redrock Postgres，如：DBeaver、pgAdmin 4、Navicat for PostgreSQL 等。  这意味着，在多数情况下，您可以使用 pg_dump 导出 PostgreSQL 中的数据，卸载 PostgreSQL 并安装 Redrock Postgres，将导出的数据导入到 Redrock Postgres 中，就可以开始了。\n不支持的功能特性      清理相关配置参数 自动清理配置参数 完全清理操作 冻结操作 系统列 可序列化隔离级别 SP-GiST索引  与社区版有差异的特性说明     用户     在 PostgreSQL 中，用户为集群级别的对象，而在 Redrock Postgres 中，用户为数据库级别的对象。这意味者，在你访问同一个集群中不同的数据库对象时，虽然可能会看到相同名字的用户，实际上，它们是分属于各自数据库中不同的用户对象。",
+      "description": "不支持的功能特性 与社区版有差异的特性说明  用户 表空间 PID        Redrock Postgres 是在 PostgreSQL 的基础上开发的，在客户端访问协议和SQL语法层面，Redrock Postgres 同 PostgreSQL 保持兼容。如果您的应用是基于 PostgreSQL 开发的，那么：\n 基于同 PostgreSQL 在客户端访问协议层面的二进制兼容，可以使用和 PostgreSQL 一样的各种编程语言驱动访问 Redrock Postgres，如：Java, C\/C\u002b\u002b, .Net, Python, Ruby, Perl, Go, ODBC等。 基于同 PostgreSQL 在SQL语法上的严格兼容，可以在应用软件不做任何改动的情况下迁移到 Redrock Postgres。 可以使用 PostgreSQL 相关的桌面管理工具访问 Redrock Postgres，如：DBeaver、pgAdmin 4、Navicat for PostgreSQL 等。  这意味着，在多数情况下，您可以使用 pg_dump 导出 PostgreSQL 中的数据，卸载 PostgreSQL 并安装 Redrock Postgres，将导出的数据导入到 Redrock Postgres 中，就可以开始了。\n不支持的功能特性      清理相关配置参数 自动清理配置参数 完全清理操作 冻结操作 系统列 可序列化隔离级别 SP-GiST索引  与社区版有差异的特性说明     用户     在 PostgreSQL 中，用户为集群级别的对象，而在 Redrock Postgres 中，用户为数据库级别的对象。这意味者，在你访问同一个集群中不同的数据库对象时，虽然可能会看到相同名字的用户，实际上，它们是分属于各自数据库中不同的用户对象。",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "91",
+      "wordCount" : "96",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -79,7 +79,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-13T21:05:58.00Z",
+      "dateModified": "2022-06-17T17:34:43.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1041,7 +1041,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">安装指导</span>
+                <span class="flex">
+                  <a
+                    href="/zh-cn/installation/"
+                    class="gdoc-nav__entry"
+                  >
+                    安装指导
+                  </a>
+                </span>
               
               
             </label>
@@ -1901,7 +1908,20 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     class="gdoc-markdown gdoc-markdown__align--left"
   >
     <h1>同 PostgreSQL 的兼容性</h1>
-    <p>Redrock Postgres 是在 PostgreSQL 的基础上开发的，在客户端访问协议和SQL语法层面，Redrock Postgres 同 PostgreSQL 保持兼容。如果您的应用是基于 PostgreSQL 开发的，那么：</p>
+    <div class="gdoc-toc gdoc-toc__level--3">
+      <nav id="TableOfContents"><ul>
+        <li><a href="#不支持的功能特性">不支持的功能特性</a></li>
+        <li><a href="#与社区版有差异的特性说明">与社区版有差异的特性说明</a>
+          <ul>
+            <li><a href="#用户">用户</a></li>
+            <li><a href="#表空间">表空间</a></li>
+            <li><a href="#pid">PID</a></li>
+          </ul>
+        </li>
+      </ul></nav>
+      <hr />
+    </div>
+<p>Redrock Postgres 是在 PostgreSQL 的基础上开发的，在客户端访问协议和SQL语法层面，Redrock Postgres 同 PostgreSQL 保持兼容。如果您的应用是基于 PostgreSQL 开发的，那么：</p>
 <ul>
 <li>基于同 PostgreSQL 在客户端访问协议层面的二进制兼容，可以使用和 PostgreSQL 一样的各种编程语言驱动访问 Redrock Postgres，如：Java, C/C++, .Net, Python, Ruby, Perl, Go, ODBC等。</li>
 <li>基于同 PostgreSQL 在SQL语法上的严格兼容，可以在应用软件不做任何改动的情况下迁移到 Redrock Postgres。</li>
