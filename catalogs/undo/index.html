@@ -10,7 +10,7 @@
 
   <meta name="description" content="The catalog pg_undo contains part of the information about undos. The rest is mostly in pg_class.
 Table. pg_undo Columns
-   Name Type Description     undoid oid The ID of this undo, the system assigns sequentially from 1   undrelid oid The OID of the pg_class entry for this undo   undusecount int8 The number of times the transaction table entry in this undo has been reused, this field will only be updated when the undo is deleted   undreusetime logicaltime The logical timestamp of when the transaction table entry in this undo was reused, this field will only be updated when the undo is deleted   indisvalid bool If true, the undo can currently be used to provide read consistency." />
+   Name Type Description     undoid oid The ID of this undo, the system assigns sequentially from 1   undrelid oid The OID of the pg_class entry for this undo   undusecount int8 The number of times the transaction table entry in this undo has been reused, this field will only be updated when the undo is deleted   undreusetime logicaltime The logical timestamp of when the transaction table entry in this undo was reused, this field will only be updated when the undo is deleted   undisvalid bool If true, the undo can currently be used to provide read consistency." />
 
     <title>pg_undo | Redrock Documentation</title>
 
@@ -39,14 +39,14 @@ Table. pg_undo Columns
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
   <meta property="og:description" content="The catalog pg_undo contains part of the information about undos. The rest is mostly in pg_class.
 Table. pg_undo Columns
-   Name Type Description     undoid oid The ID of this undo, the system assigns sequentially from 1   undrelid oid The OID of the pg_class entry for this undo   undusecount int8 The number of times the transaction table entry in this undo has been reused, this field will only be updated when the undo is deleted   undreusetime logicaltime The logical timestamp of when the transaction table entry in this undo was reused, this field will only be updated when the undo is deleted   indisvalid bool If true, the undo can currently be used to provide read consistency." />
+   Name Type Description     undoid oid The ID of this undo, the system assigns sequentially from 1   undrelid oid The OID of the pg_class entry for this undo   undusecount int8 The number of times the transaction table entry in this undo has been reused, this field will only be updated when the undo is deleted   undreusetime logicaltime The logical timestamp of when the transaction table entry in this undo was reused, this field will only be updated when the undo is deleted   undisvalid bool If true, the undo can currently be used to provide read consistency." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/catalogs/undo/" />
 
 <meta property="article:section" content="Catalogs" />
     <meta
       property="article:modified_time"
-      content="2022-06-18T15:29:38+08:00"
+      content="2022-06-18T18:45:30+08:00"
     />
 
 
@@ -55,7 +55,7 @@ Table. pg_undo Columns
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
   <meta name="twitter:description" content="The catalog pg_undo contains part of the information about undos. The rest is mostly in pg_class.
 Table. pg_undo Columns
-   Name Type Description     undoid oid The ID of this undo, the system assigns sequentially from 1   undrelid oid The OID of the pg_class entry for this undo   undusecount int8 The number of times the transaction table entry in this undo has been reused, this field will only be updated when the undo is deleted   undreusetime logicaltime The logical timestamp of when the transaction table entry in this undo was reused, this field will only be updated when the undo is deleted   indisvalid bool If true, the undo can currently be used to provide read consistency." />
+   Name Type Description     undoid oid The ID of this undo, the system assigns sequentially from 1   undrelid oid The OID of the pg_class entry for this undo   undusecount int8 The number of times the transaction table entry in this undo has been reused, this field will only be updated when the undo is deleted   undreusetime logicaltime The logical timestamp of when the transaction table entry in this undo was reused, this field will only be updated when the undo is deleted   undisvalid bool If true, the undo can currently be used to provide read consistency." />
 
 
   <script type="application/ld+json">
@@ -66,7 +66,7 @@ Table. pg_undo Columns
       "name": "pg_undo",
       "url" : "https://doc.rockdata.net/catalogs/undo/",
       "headline": "pg_undo",
-      "description": "The catalog pg_undo contains part of the information about undos. The rest is mostly in pg_class.\nTable. pg_undo Columns\n   Name Type Description     undoid oid The ID of this undo, the system assigns sequentially from 1   undrelid oid The OID of the pg_class entry for this undo   undusecount int8 The number of times the transaction table entry in this undo has been reused, this field will only be updated when the undo is deleted   undreusetime logicaltime The logical timestamp of when the transaction table entry in this undo was reused, this field will only be updated when the undo is deleted   indisvalid bool If true, the undo can currently be used to provide read consistency.",
+      "description": "The catalog pg_undo contains part of the information about undos. The rest is mostly in pg_class.\nTable. pg_undo Columns\n   Name Type Description     undoid oid The ID of this undo, the system assigns sequentially from 1   undrelid oid The OID of the pg_class entry for this undo   undusecount int8 The number of times the transaction table entry in this undo has been reused, this field will only be updated when the undo is deleted   undreusetime logicaltime The logical timestamp of when the transaction table entry in this undo was reused, this field will only be updated when the undo is deleted   undisvalid bool If true, the undo can currently be used to provide read consistency.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
       "wordCount" : "131",
       "inLanguage": "en",
@@ -79,7 +79,7 @@ Table. pg_undo Columns
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-18T15:29:38.00Z",
+      "dateModified": "2022-06-18T18:45:30.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2112,12 +2112,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>The logical timestamp of when the transaction table entry in this undo was reused, this field will only be updated when the undo is deleted</td>
 </tr>
 <tr>
-<td><code>indisvalid</code></td>
+<td><code>undisvalid</code></td>
 <td><code>bool</code></td>
 <td>If true, the undo can currently be used to provide read consistency. False means the undo has been completely deleted</td>
 </tr>
 <tr>
-<td><code>indislive</code></td>
+<td><code>undislive</code></td>
 <td><code>bool</code></td>
 <td>If false, the undo has been deleted</td>
 </tr>

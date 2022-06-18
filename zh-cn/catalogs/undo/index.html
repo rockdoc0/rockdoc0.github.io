@@ -10,7 +10,7 @@
 
   <meta name="description" content="目录pg_undo包含关于回滚段的部分信息。其他信息大部分在pg_class中。
 表. pg_undo的列
-   名称 类型 描述     undoid oid 此回滚段的编号，系统从1开始顺序分配   undrelid oid 此回滚段的pg_class项的OID   undusecount int8 此回滚段中事务表项被重用的次数，该字段只有在一个回滚段被删除时才会更新   undreusetime logicaltime 此回滚段中事务表项被重用时的逻辑时间戳，该字段只有在一个回滚段被删除时才会更新   indisvalid bool 如果为真，此回滚段当前可以用于提供读一致性。为假表示此回滚段已被彻底删除   indislive bool 如果为假，此回滚段已被删除    " />
+   名称 类型 描述     undoid oid 此回滚段的编号，系统从1开始顺序分配   undrelid oid 此回滚段的pg_class项的OID   undusecount int8 此回滚段中事务表项被重用的次数，该字段只有在一个回滚段被删除时才会更新   undreusetime logicaltime 此回滚段中事务表项被重用时的逻辑时间戳，该字段只有在一个回滚段被删除时才会更新   undisvalid bool 如果为真，此回滚段当前可以用于提供读一致性。为假表示此回滚段已被彻底删除   undislive bool 如果为假，此回滚段已被删除    " />
 
     <title>pg_undo | Redrock Documentation</title>
 
@@ -39,14 +39,14 @@
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
   <meta property="og:description" content="目录pg_undo包含关于回滚段的部分信息。其他信息大部分在pg_class中。
 表. pg_undo的列
-   名称 类型 描述     undoid oid 此回滚段的编号，系统从1开始顺序分配   undrelid oid 此回滚段的pg_class项的OID   undusecount int8 此回滚段中事务表项被重用的次数，该字段只有在一个回滚段被删除时才会更新   undreusetime logicaltime 此回滚段中事务表项被重用时的逻辑时间戳，该字段只有在一个回滚段被删除时才会更新   indisvalid bool 如果为真，此回滚段当前可以用于提供读一致性。为假表示此回滚段已被彻底删除   indislive bool 如果为假，此回滚段已被删除    " />
+   名称 类型 描述     undoid oid 此回滚段的编号，系统从1开始顺序分配   undrelid oid 此回滚段的pg_class项的OID   undusecount int8 此回滚段中事务表项被重用的次数，该字段只有在一个回滚段被删除时才会更新   undreusetime logicaltime 此回滚段中事务表项被重用时的逻辑时间戳，该字段只有在一个回滚段被删除时才会更新   undisvalid bool 如果为真，此回滚段当前可以用于提供读一致性。为假表示此回滚段已被彻底删除   undislive bool 如果为假，此回滚段已被删除    " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/zh-cn/catalogs/undo/" />
 
 <meta property="article:section" content="Catalogs" />
     <meta
       property="article:modified_time"
-      content="2022-06-18T15:29:38+08:00"
+      content="2022-06-18T18:45:30+08:00"
     />
 
 
@@ -55,7 +55,7 @@
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
   <meta name="twitter:description" content="目录pg_undo包含关于回滚段的部分信息。其他信息大部分在pg_class中。
 表. pg_undo的列
-   名称 类型 描述     undoid oid 此回滚段的编号，系统从1开始顺序分配   undrelid oid 此回滚段的pg_class项的OID   undusecount int8 此回滚段中事务表项被重用的次数，该字段只有在一个回滚段被删除时才会更新   undreusetime logicaltime 此回滚段中事务表项被重用时的逻辑时间戳，该字段只有在一个回滚段被删除时才会更新   indisvalid bool 如果为真，此回滚段当前可以用于提供读一致性。为假表示此回滚段已被彻底删除   indislive bool 如果为假，此回滚段已被删除    " />
+   名称 类型 描述     undoid oid 此回滚段的编号，系统从1开始顺序分配   undrelid oid 此回滚段的pg_class项的OID   undusecount int8 此回滚段中事务表项被重用的次数，该字段只有在一个回滚段被删除时才会更新   undreusetime logicaltime 此回滚段中事务表项被重用时的逻辑时间戳，该字段只有在一个回滚段被删除时才会更新   undisvalid bool 如果为真，此回滚段当前可以用于提供读一致性。为假表示此回滚段已被彻底删除   undislive bool 如果为假，此回滚段已被删除    " />
 
 
   <script type="application/ld+json">
@@ -66,7 +66,7 @@
       "name": "pg_undo",
       "url" : "https://doc.rockdata.net/zh-cn/catalogs/undo/",
       "headline": "pg_undo",
-      "description": "目录pg_undo包含关于回滚段的部分信息。其他信息大部分在pg_class中。\n表. pg_undo的列\n   名称 类型 描述     undoid oid 此回滚段的编号，系统从1开始顺序分配   undrelid oid 此回滚段的pg_class项的OID   undusecount int8 此回滚段中事务表项被重用的次数，该字段只有在一个回滚段被删除时才会更新   undreusetime logicaltime 此回滚段中事务表项被重用时的逻辑时间戳，该字段只有在一个回滚段被删除时才会更新   indisvalid bool 如果为真，此回滚段当前可以用于提供读一致性。为假表示此回滚段已被彻底删除   indislive bool 如果为假，此回滚段已被删除    ",
+      "description": "目录pg_undo包含关于回滚段的部分信息。其他信息大部分在pg_class中。\n表. pg_undo的列\n   名称 类型 描述     undoid oid 此回滚段的编号，系统从1开始顺序分配   undrelid oid 此回滚段的pg_class项的OID   undusecount int8 此回滚段中事务表项被重用的次数，该字段只有在一个回滚段被删除时才会更新   undreusetime logicaltime 此回滚段中事务表项被重用时的逻辑时间戳，该字段只有在一个回滚段被删除时才会更新   undisvalid bool 如果为真，此回滚段当前可以用于提供读一致性。为假表示此回滚段已被彻底删除   undislive bool 如果为假，此回滚段已被删除    ",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
       "wordCount" : "24",
       "inLanguage": "zh-cn",
@@ -79,7 +79,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-18T15:29:38.00Z",
+      "dateModified": "2022-06-18T18:45:30.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2112,12 +2112,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>此回滚段中事务表项被重用时的逻辑时间戳，该字段只有在一个回滚段被删除时才会更新</td>
 </tr>
 <tr>
-<td><code>indisvalid</code></td>
+<td><code>undisvalid</code></td>
 <td><code>bool</code></td>
 <td>如果为真，此回滚段当前可以用于提供读一致性。为假表示此回滚段已被彻底删除</td>
 </tr>
 <tr>
-<td><code>indislive</code></td>
+<td><code>undislive</code></td>
 <td><code>bool</code></td>
 <td>如果为假，此回滚段已被删除</td>
 </tr>
