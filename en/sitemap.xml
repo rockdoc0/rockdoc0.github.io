@@ -55,7 +55,7 @@
                 />
   </url><url>
     <loc>https://doc.rockdata.net/installation/</loc>
-    <lastmod>2022-06-17T17:34:43+08:00</lastmod>
+    <lastmod>2022-06-18T16:39:41+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
@@ -236,8 +236,21 @@
                 href="https://doc.rockdata.net/posts/"
                 />
   </url><url>
+    <loc>https://doc.rockdata.net/catalogs/</loc>
+    <lastmod>2022-06-18T16:39:41+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://doc.rockdata.net/zh-cn/catalogs/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://doc.rockdata.net/catalogs/"
+                />
+  </url><url>
     <loc>https://doc.rockdata.net/features/postgres-compatibility/</loc>
-    <lastmod>2022-06-17T17:34:43+08:00</lastmod>
+    <lastmod>2022-06-18T15:29:38+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
@@ -260,6 +273,45 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://doc.rockdata.net/posts/initial-release/"
+                />
+  </url><url>
+    <loc>https://doc.rockdata.net/catalogs/recyclebin/</loc>
+    <lastmod>2022-06-18T15:39:08+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://doc.rockdata.net/zh-cn/catalogs/recyclebin/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://doc.rockdata.net/catalogs/recyclebin/"
+                />
+  </url><url>
+    <loc>https://doc.rockdata.net/catalogs/ts-lexicon/</loc>
+    <lastmod>2022-06-18T15:29:38+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://doc.rockdata.net/zh-cn/catalogs/ts-lexicon/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://doc.rockdata.net/catalogs/ts-lexicon/"
+                />
+  </url><url>
+    <loc>https://doc.rockdata.net/catalogs/undo/</loc>
+    <lastmod>2022-06-18T15:29:38+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://doc.rockdata.net/zh-cn/catalogs/undo/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://doc.rockdata.net/catalogs/undo/"
                 />
   </url><url>
     <loc>https://doc.rockdata.net/tags/</loc>

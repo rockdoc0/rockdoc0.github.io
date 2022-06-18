@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn" class="color-toggle-hidden">
+<html lang="en" class="color-toggle-hidden">
   <head>
     <meta charset="UTF-8" />
 <meta name="referrer" content="no-referrer" />
@@ -8,11 +8,11 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="安装软件包  安装检查 安装 Redrock Postgres   安装设置  数据目录 更改数据目录 初始化数据 设置开机启动   服务器控制 安装后配置调整      安装软件包     安装检查     使用您的 root 帐户登录到主机，并运行以下命令来查询已安装的软件包，确保没有安装过 postgresql 相关的软件包：
-# rpm -qa | grep postgresql 安装 Redrock Postgres     下载 Red Hat 或 CentOS 的安装包，并执行以下命令进行安装：
-# tar xf redrock-12.1-1.el8.x86_64-bundle.tar # cd redrock-12.1-1.el8.x86_64-bundle # rpm -ivh redrock-12." />
+  <meta name="description" content="The catalog pg_undo contains part of the information about undos. The rest is mostly in pg_class.
+Table. pg_undo Columns
+   Name Type Description     undoid oid The ID of this undo, the system assigns sequentially from 1   undrelid oid The OID of the pg_class entry for this undo   undusecount int8 The number of times the transaction table entry in this undo has been reused, this field will only be updated when the undo is deleted   undreusetime logicaltime The logical timestamp of when the transaction table entry in this undo was reused, this field will only be updated when the undo is deleted   indisvalid bool If true, the undo can currently be used to provide read consistency." />
 
-    <title>Red Hat/CentOS 安装指导 | Redrock Documentation</title>
+    <title>pg_undo | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -33,53 +33,53 @@
     
   <meta
     property="og:title"
-    content="Red Hat/CentOS 安装指导"
+    content="pg_undo"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="安装软件包  安装检查 安装 Redrock Postgres   安装设置  数据目录 更改数据目录 初始化数据 设置开机启动   服务器控制 安装后配置调整      安装软件包     安装检查     使用您的 root 帐户登录到主机，并运行以下命令来查询已安装的软件包，确保没有安装过 postgresql 相关的软件包：
-# rpm -qa | grep postgresql 安装 Redrock Postgres     下载 Red Hat 或 CentOS 的安装包，并执行以下命令进行安装：
-# tar xf redrock-12.1-1.el8.x86_64-bundle.tar # cd redrock-12.1-1.el8.x86_64-bundle # rpm -ivh redrock-12." />
+  <meta property="og:description" content="The catalog pg_undo contains part of the information about undos. The rest is mostly in pg_class.
+Table. pg_undo Columns
+   Name Type Description     undoid oid The ID of this undo, the system assigns sequentially from 1   undrelid oid The OID of the pg_class entry for this undo   undusecount int8 The number of times the transaction table entry in this undo has been reused, this field will only be updated when the undo is deleted   undreusetime logicaltime The logical timestamp of when the transaction table entry in this undo was reused, this field will only be updated when the undo is deleted   indisvalid bool If true, the undo can currently be used to provide read consistency." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://doc.rockdata.net/zh-cn/installation/redhat/" />
+<meta property="og:url" content="https://doc.rockdata.net/catalogs/undo/" />
 
-<meta property="article:section" content="Installation" />
+<meta property="article:section" content="Catalogs" />
     <meta
       property="article:modified_time"
-      content="2022-06-06T15:26:28+08:00"
+      content="2022-06-18T15:29:38+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Red Hat/CentOS 安装指导" />
+<meta name="twitter:title" content="pg_undo" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="安装软件包  安装检查 安装 Redrock Postgres   安装设置  数据目录 更改数据目录 初始化数据 设置开机启动   服务器控制 安装后配置调整      安装软件包     安装检查     使用您的 root 帐户登录到主机，并运行以下命令来查询已安装的软件包，确保没有安装过 postgresql 相关的软件包：
-# rpm -qa | grep postgresql 安装 Redrock Postgres     下载 Red Hat 或 CentOS 的安装包，并执行以下命令进行安装：
-# tar xf redrock-12.1-1.el8.x86_64-bundle.tar # cd redrock-12.1-1.el8.x86_64-bundle # rpm -ivh redrock-12." />
+  <meta name="twitter:description" content="The catalog pg_undo contains part of the information about undos. The rest is mostly in pg_class.
+Table. pg_undo Columns
+   Name Type Description     undoid oid The ID of this undo, the system assigns sequentially from 1   undrelid oid The OID of the pg_class entry for this undo   undusecount int8 The number of times the transaction table entry in this undo has been reused, this field will only be updated when the undo is deleted   undreusetime logicaltime The logical timestamp of when the transaction table entry in this undo was reused, this field will only be updated when the undo is deleted   indisvalid bool If true, the undo can currently be used to provide read consistency." />
 
 
   <script type="application/ld+json">
   {
       "@context": "http://schema.org",
       "@type": "TechArticle",
-      "articleSection": "Installation",
-      "name": "Red Hat/CentOS 安装指导",
-      "url" : "https://doc.rockdata.net/zh-cn/installation/redhat/",
-      "headline": "Red Hat/CentOS 安装指导",
-      "description": "安装软件包  安装检查 安装 Redrock Postgres   安装设置  数据目录 更改数据目录 初始化数据 设置开机启动   服务器控制 安装后配置调整      安装软件包     安装检查     使用您的 root 帐户登录到主机，并运行以下命令来查询已安装的软件包，确保没有安装过 postgresql 相关的软件包：\n# rpm -qa | grep postgresql 安装 Redrock Postgres     下载 Red Hat 或 CentOS 的安装包，并执行以下命令进行安装：\n# tar xf redrock-12.1-1.el8.x86_64-bundle.tar # cd redrock-12.1-1.el8.x86_64-bundle # rpm -ivh redrock-12.",
+      "articleSection": "Catalogs",
+      "name": "pg_undo",
+      "url" : "https://doc.rockdata.net/catalogs/undo/",
+      "headline": "pg_undo",
+      "description": "The catalog pg_undo contains part of the information about undos. The rest is mostly in pg_class.\nTable. pg_undo Columns\n   Name Type Description     undoid oid The ID of this undo, the system assigns sequentially from 1   undrelid oid The OID of the pg_class entry for this undo   undusecount int8 The number of times the transaction table entry in this undo has been reused, this field will only be updated when the undo is deleted   undreusetime logicaltime The logical timestamp of when the transaction table entry in this undo was reused, this field will only be updated when the undo is deleted   indisvalid bool If true, the undo can currently be used to provide read consistency.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "195",
-      "inLanguage": "zh-cn",
+      "wordCount" : "131",
+      "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://doc.rockdata.net/zh-cn/installation/redhat/"
+          "@id": "https://doc.rockdata.net/catalogs/undo/"
       },
       "copyrightHolder" : "Redrock Documentation",
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-06T15:26:28.00Z",
+      "dateModified": "2022-06-18T15:29:38.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -155,7 +155,7 @@
   href="/custom.css"
   media="all"
 />
-  <link href="https://doc.rockdata.net/zh-cn/installation/redhat/" rel="canonical" type="text/html" />
+  <link href="https://doc.rockdata.net/catalogs/undo/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -647,11 +647,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
       <label for="menu-control" class="gdoc-nav__control" tabindex="0">
         <svg class="gdoc-icon gdoc_menu">
-          <title>打开导航</title>
+          <title>Open Navigation</title>
           <use xlink:href="#gdoc_menu"></use>
         </svg>
         <svg class="gdoc-icon gdoc_arrow_back">
-          <title>关闭导航</title>
+          <title>Close Navigation</title>
           <use xlink:href="#gdoc_arrow_back"></use>
         </svg>
       </label>
@@ -717,15 +717,15 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
         <span id="gdoc-dark-mode">
           <svg class="gdoc-icon gdoc_brightness_dark">
-            <title>切换暗/亮/自动模式</title>
+            <title>Toggle Dark/Light/Auto mode</title>
             <use xlink:href="#gdoc_brightness_dark"></use>
           </svg>
           <svg class="gdoc-icon gdoc_brightness_light">
-            <title>切换暗/亮/自动模式</title>
+            <title>Toggle Dark/Light/Auto mode</title>
             <use xlink:href="#gdoc_brightness_light"></use>
           </svg>
           <svg class="gdoc-icon gdoc_brightness_auto">
-            <title>切换暗/亮/自动模式</title>
+            <title>Toggle Dark/Light/Auto mode</title>
             <use xlink:href="#gdoc_brightness_auto"></use>
           </svg>
         </span>
@@ -733,7 +733,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         <span class="gdoc-menu-header__home">
           <a href="https://doc.rockdata.net/" class="gdoc-header__link">
             <svg class="gdoc-icon gdoc_home">
-              <title>返回首页</title>
+              <title>Back to homepage</title>
               <use xlink:href="#gdoc_home"></use>
             </svg>
           </a>
@@ -745,12 +745,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <li>
         
           
-        
-          
             <span class="flex align-center">
               <svg class="gdoc-icon gdoc_language"><use xlink:href="#gdoc_language"></use></svg>
-              <span>ZH-CN</span>
+              <span>EN</span>
             </span>
+          
+        
           
         
 
@@ -761,12 +761,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               <li>
                 <a
                   class="flex gdoc-language__entry"
-                  title="English"
-                  href="/installation/redhat/"
-                  hreflang="en"
-                  lang="en"
+                  title="简体中文"
+                  href="/zh-cn/catalogs/undo/"
+                  hreflang="zh-cn"
+                  lang="zh-cn"
                 >
-                  English
+                  简体中文
                 </a>
               </li>
             
@@ -783,7 +783,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
           <label for="menu-header-control">
             <svg class="gdoc-icon gdoc_keyboard_arrow_right">
               <use xlink:href="#gdoc_keyboard_arrow_right"></use>
-              <title>关闭菜单栏</title>
+              <title>Close Menu Bar</title>
             </svg>
           </label>
         </span>
@@ -791,7 +791,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <label for="menu-header-control" class="gdoc-menu-header__control">
         <svg class="gdoc-icon gdoc_keyboard_arrow_left">
           <use xlink:href="#gdoc_keyboard_arrow_left"></use>
-          <title>打开菜单栏</title>
+          <title>Open Menu Bar</title>
         </svg>
       </label>
     </div>
@@ -811,11 +811,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       type="text"
       id="gdoc-search-input"
       class="gdoc-search__input"
-      placeholder="搜索"
-      aria-label="搜索"
+      placeholder="Search"
+      aria-label="Search"
       maxlength="64"
       data-site-base-url="https://doc.rockdata.net/"
-      data-site-lang="zh-cn"
+      data-site-lang="en"
     />
     <div class="gdoc-search__spinner spinner hidden"></div>
     <ul id="gdoc-search-results" class="gdoc-search__list"></ul>
@@ -825,7 +825,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
 
   <section class="gdoc-nav--main">
-    <h2>导航</h2>
+    <h2>Navigation</h2>
     
       
 
@@ -862,7 +862,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">使用介绍</span>
+                <span class="flex">Usage</span>
               
               
             </label>
@@ -904,10 +904,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/usage/why-redrock/"
+                    href="/usage/why-redrock/"
                     class="gdoc-nav__entry"
                   >
-                    为什么选择Redrock Postgres？
+                    Why Redrock Postgres?
                   </a>
                 </span>
               
@@ -948,10 +948,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/usage/getting-started/"
+                    href="/usage/getting-started/"
                     class="gdoc-nav__entry"
                   >
-                    开始上手
+                    Getting Started
                   </a>
                 </span>
               
@@ -992,10 +992,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/usage/configuration/"
+                    href="/usage/configuration/"
                     class="gdoc-nav__entry"
                   >
-                    参数配置
+                    Configuration
                   </a>
                 </span>
               
@@ -1043,10 +1043,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/installation/"
+                    href="/installation/"
                     class="gdoc-nav__entry"
                   >
-                    安装指导
+                    Installation
                   </a>
                 </span>
               
@@ -1090,10 +1090,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/installation/windows/"
+                    href="/installation/windows/"
                     class="gdoc-nav__entry"
                   >
-                    Windows 安装指导
+                    Installing on Windows
                   </a>
                 </span>
               
@@ -1134,10 +1134,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/installation/redhat/"
-                    class="gdoc-nav__entry is-active"
+                    href="/installation/redhat/"
+                    class="gdoc-nav__entry"
                   >
-                    Red Hat/CentOS 安装指导
+                    Installing on Red Hat
                   </a>
                 </span>
               
@@ -1178,10 +1178,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/installation/debian/"
+                    href="/installation/debian/"
                     class="gdoc-nav__entry"
                   >
-                    Debian 安装指导
+                    Installing on Debian
                   </a>
                 </span>
               
@@ -1227,7 +1227,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">基础特性</span>
+                <span class="flex">Features</span>
               
               
             </label>
@@ -1269,10 +1269,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/features/undo/"
+                    href="/features/undo/"
                     class="gdoc-nav__entry"
                   >
-                    回滚段
+                    Undo
                   </a>
                 </span>
               
@@ -1313,10 +1313,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/features/recyclebin/"
+                    href="/features/recyclebin/"
                     class="gdoc-nav__entry"
                   >
-                    回收站
+                    Recycle Bin
                   </a>
                 </span>
               
@@ -1357,10 +1357,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/features/event-triggers/"
+                    href="/features/event-triggers/"
                     class="gdoc-nav__entry"
                   >
-                    事件触发器
+                    Event Triggers
                   </a>
                 </span>
               
@@ -1401,10 +1401,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/features/network-tablespace/"
+                    href="/features/network-tablespace/"
                     class="gdoc-nav__entry"
                   >
-                    网络表空间
+                    Network Attached Tablespace
                   </a>
                 </span>
               
@@ -1445,10 +1445,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/features/postgres-compatibility/"
+                    href="/features/postgres-compatibility/"
                     class="gdoc-nav__entry"
                   >
-                    同 PostgreSQL 的兼容性
+                    Compatibility with PostgreSQL
                   </a>
                 </span>
               
@@ -1494,7 +1494,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">高级特性</span>
+                <span class="flex">Advanced</span>
               
               
             </label>
@@ -1536,10 +1536,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/advanced/textsearch/"
+                    href="/advanced/textsearch/"
                     class="gdoc-nav__entry"
                   >
-                    中文搜索
+                    Chinese Text Search
                   </a>
                 </span>
               
@@ -1580,7 +1580,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/advanced/plscheme/"
+                    href="/advanced/plscheme/"
                     class="gdoc-nav__entry"
                   >
                     PL/Scheme
@@ -1624,10 +1624,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/advanced/monitor-stats/"
+                    href="/advanced/monitor-stats/"
                     class="gdoc-nav__entry"
                   >
-                    运行统计视图
+                    Statistics Views
                   </a>
                 </span>
               
@@ -1654,6 +1654,8 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
       
         
+      
+        
           
           
           
@@ -1666,22 +1668,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-7171e5f3"
-                
+                class="gdoc-nav__toggle" id="navtree-0ef779f7"
+                checked
               
             />
             <label
               
-                for="navtree-7171e5f3" class="flex justify-between align-center"
+                for="navtree-0ef779f7" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/catalogs/"
+                    href="/catalogs/"
                     class="gdoc-nav__entry"
                   >
-                    系统表
+                    System Catalogs
                   </a>
                 </span>
               
@@ -1732,7 +1734,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/catalogs/recyclebin/"
+                    href="/catalogs/recyclebin/"
                     class="gdoc-nav__entry"
                   >
                     pg_recyclebin
@@ -1768,7 +1770,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/catalogs/ts-lexicon/"
+                    href="/catalogs/ts-lexicon/"
                     class="gdoc-nav__entry"
                   >
                     pg_ts_lexicon
@@ -1804,8 +1806,8 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/catalogs/undo/"
-                    class="gdoc-nav__entry"
+                    href="/catalogs/undo/"
+                    class="gdoc-nav__entry is-active"
                   >
                     pg_undo
                   </a>
@@ -1825,8 +1827,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
           </li>
         
       
-        
-      
     
   </ul>
 
@@ -1843,7 +1843,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
   <section class="gdoc-nav--more">
     
-      <h2>更多</h2>
+      <h2>More</h2>
       
 
   
@@ -1884,10 +1884,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                   <svg class="gdoc-icon gdoc_notification"><use xlink:href="#gdoc_notification"></use></svg>
                 
                 <a
-                  href="/zh-cn/posts/"
+                  href="/posts/"
                   class="gdoc-nav__entry"
                 >
-                  新闻
+                  News
                 </a>
               </span>
               
@@ -1934,7 +1934,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     https://gitee.com/rockdata/redrock/releases"
                   class="gdoc-nav__entry"
                 >
-                  下载
+                  Releases
                 </a>
               </span>
               
@@ -1981,7 +1981,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     https://gitee.com/rockdata/redrock"
                   class="gdoc-nav__entry"
                 >
-                  项目仓库
+                  View Source
                 </a>
               </span>
               
@@ -2050,7 +2050,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/installation/' href='/zh-cn/installation/'><span itemprop='name'>安装指导</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Red Hat/CentOS 安装指导</span><meta itemprop='position' content='4' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/catalogs/' href='/catalogs/'><span itemprop='name'>System Catalogs</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>pg_undo</span><meta itemprop='position' content='3' /></li>
   
 
   
@@ -2065,9 +2065,9 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <span class="editpage">
         <svg class="gdoc-icon gdoc_code"><use xlink:href="#gdoc_code"></use></svg>
         <a
-          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/zh-cn/installation/redhat.md"
+          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/en/catalogs/undo.md"
         >
-          编辑页面
+          Edit page
         </a>
       </span>
     </div>
@@ -2079,165 +2079,50 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <article
     class="gdoc-markdown gdoc-markdown__align--left"
   >
-    <h1>Red Hat/CentOS 安装指导</h1>
-    <div class="gdoc-toc gdoc-toc__level--3">
-      <nav id="TableOfContents"><ul>
-        <li><a href="#安装软件包">安装软件包</a>
-          <ul>
-            <li><a href="#安装检查">安装检查</a></li>
-            <li><a href="#安装-redrock-postgres">安装 Redrock Postgres</a></li>
-          </ul>
-        </li>
-        <li><a href="#安装设置">安装设置</a>
-          <ul>
-            <li><a href="#数据目录">数据目录</a></li>
-            <li><a href="#更改数据目录">更改数据目录</a></li>
-            <li><a href="#初始化数据">初始化数据</a></li>
-            <li><a href="#设置开机启动">设置开机启动</a></li>
-          </ul>
-        </li>
-        <li><a href="#服务器控制">服务器控制</a></li>
-        <li><a href="#安装后配置调整">安装后配置调整</a></li>
-      </ul></nav>
-      <hr />
-    </div>
-<div class="gdoc-page__anchorwrap">
-    <h2 id="安装软件包">
-        安装软件包
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/redhat/#安装软件包" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 安装软件包" aria-label="锚定到： 安装软件包" href="#%e5%ae%89%e8%a3%85%e8%bd%af%e4%bb%b6%e5%8c%85">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<div class="gdoc-page__anchorwrap">
-    <h3 id="安装检查">
-        安装检查
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/redhat/#安装检查" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 安装检查" aria-label="锚定到： 安装检查" href="#%e5%ae%89%e8%a3%85%e6%a3%80%e6%9f%a5">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
-<p>使用您的 root 帐户登录到主机，并运行以下命令来查询已安装的软件包，确保没有安装过 postgresql 相关的软件包：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># rpm -qa | grep postgresql</span>
-</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
-    <h3 id="安装-redrock-postgres">
-        安装 Redrock Postgres
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/redhat/#安装-redrock-postgres" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 安装 Redrock Postgres" aria-label="锚定到： 安装 Redrock Postgres" href="#%e5%ae%89%e8%a3%85-redrock-postgres">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
-<p>下载 <a
-  class="gdoc-markdown__link"
-  href="https://gitee.com/rockdata/redrock/releases"
-  
->Red Hat 或 CentOS 的安装包</a>，并执行以下命令进行安装：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># tar xf redrock-12.1-1.el8.x86_64-bundle.tar</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># cd redrock-12.1-1.el8.x86_64-bundle</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># rpm -ivh redrock-12.1-1.el8.x86_64.rpm redrock-libs-12.1-1.el8.x86_64.rpm redrock-server-12.1-1.el8.x86_64.rpm</span>
-</span></span></code></pre></div><p>您还可以根据您的需要安装其他软件包。</p>
-<div class="gdoc-page__anchorwrap">
-    <h2 id="安装设置">
-        安装设置
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/redhat/#安装设置" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 安装设置" aria-label="锚定到： 安装设置" href="#%e5%ae%89%e8%a3%85%e8%ae%be%e7%bd%ae">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<p>安装软件包后，需要初始化和配置数据库。</p>
-<p>在下面的命令中，<em>version</em> 的值表示 PostgreSQL 的<em>主版本号</em>，例如：<em>12</em></p>
-<div class="gdoc-page__anchorwrap">
-    <h3 id="数据目录">
-        数据目录
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/redhat/#数据目录" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 数据目录" aria-label="锚定到： 数据目录" href="#%e6%95%b0%e6%8d%ae%e7%9b%ae%e5%bd%95">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
-<p>PostgreSQL 数据目录包含数据库的所有数据文件。环境变量 <em>PGDATA</em> 用于指定数据目录路径。</p>
-<p>默认数据目录为：</p>
-<pre tabindex="0"><code>/var/lib/pgsql/&lt;version&gt;/data
-</code></pre><p>例如：</p>
-<pre tabindex="0"><code>/var/lib/pgsql/12/data
-</code></pre><div class="gdoc-page__anchorwrap">
-    <h3 id="更改数据目录">
-        更改数据目录
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/redhat/#更改数据目录" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 更改数据目录" aria-label="锚定到： 更改数据目录" href="#%e6%9b%b4%e6%94%b9%e6%95%b0%e6%8d%ae%e7%9b%ae%e5%bd%95">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
-<p>如果不想使用默认的数据目录，可以进入到一个自定义的挂载目录（例如：/u01），然后创建一个 postgres 用户为拥有者的文件夹 pgdata ：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># cd /u01</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># mkdir pgdata</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># chown postgres:postgres pgdata</span>
-</span></span></code></pre></div><p>然后，编辑 postgresql 服务：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># systemctl edit postgresql-12.service</span>
-</span></span></code></pre></div><p>进入到自定义的数据目录，该目录应该具有主机中大部分的可用磁盘空间，复制该目录路径并粘贴到服务文件中：</p>
-<pre tabindex="0"><code>[Service]
-Environment=PGDATA=/u01/pgdata
-</code></pre><div class="gdoc-page__anchorwrap">
-    <h3 id="初始化数据">
-        初始化数据
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/redhat/#初始化数据" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 初始化数据" aria-label="锚定到： 初始化数据" href="#%e5%88%9d%e5%a7%8b%e5%8c%96%e6%95%b0%e6%8d%ae">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
-<p>执行类似如下的命令，在 <em>PGDATA</em> 中初始化数据库：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># /usr/pgsql-&lt;version&gt;/bin/postgresql-&lt;version&gt;-setup initdb</span>
-</span></span></code></pre></div><p>对于版本 12，请使用：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># /usr/pgsql-12/bin/postgresql-12-setup initdb</span>
-</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
-    <h3 id="设置开机启动">
-        设置开机启动
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/redhat/#设置开机启动" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 设置开机启动" aria-label="锚定到： 设置开机启动" href="#%e8%ae%be%e7%bd%ae%e5%bc%80%e6%9c%ba%e5%90%af%e5%8a%a8">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
-<p>如果您希望 PostgreSQL 在操作系统开机启动时自动运行，请执行以下操作：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># systemctl enable postgresql-12.service</span>
-</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
-    <h2 id="服务器控制">
-        服务器控制
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/redhat/#服务器控制" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 服务器控制" aria-label="锚定到： 服务器控制" href="#%e6%9c%8d%e5%8a%a1%e5%99%a8%e6%8e%a7%e5%88%b6">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<p>要控制数据库服务，请使用：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># systemctl &lt;command&gt; postgresql-12.service</span>
-</span></span></code></pre></div><p>其中的 <em>command</em> 可以为:</p>
-<ul>
-<li><em>enable</em> : 启用开机启动</li>
-<li><em>start</em> : 启动数据库</li>
-<li><em>stop</em> : 停止数据库</li>
-<li><em>restart</em> : 重启数据库; 主要用于重要参数的变更生效</li>
-<li><em>reload</em> : 在数据库运行过程中更新配置参数</li>
-</ul>
-<p>例如，要控制版本 12 的数据库服务，请使用：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># systemctl enable postgresql-12.service</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># systemctl start postgresql-12.service</span>
-</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
-    <h2 id="安装后配置调整">
-        安装后配置调整
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/redhat/#安装后配置调整" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 安装后配置调整" aria-label="锚定到： 安装后配置调整" href="#%e5%ae%89%e8%a3%85%e5%90%8e%e9%85%8d%e7%bd%ae%e8%b0%83%e6%95%b4">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<p>修改数据目录下的 pg_hba.conf 文件，以定义从网络中其他主机访问 PostgreSQL 服务器使用的访问控制策略，修改IPv4网络访问控制策略：从 indent 更改为 md5，从本机地址 127.0.0.1 更改为接受所有主机访问请求。找到下面行：</p>
-<pre tabindex="0"><code># IPv4 local connections:
-host    all             all             127.0.0.1/32            ident
-</code></pre><p>并将其更改为：</p>
-<pre tabindex="0"><code># IPv4 local connections:
-host    all             all             0.0.0.0/0            md5
-</code></pre><p>修改数据目录下的 postgresql.conf 文件，通过取消注释以下参数行并设置参数值为 * 而不是 localhost 来允许来自所有主机的访问连接：</p>
-<pre tabindex="0"><code>listen_addresses = &#39;*&#39;
-</code></pre><p>重启数据库服务以更新配置参数：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># systemctl restart postgresql-12.service</span>
-</span></span></code></pre></div><p>在生产环境中，还应设置 TLS 安全通信，并且应考虑配置数据复制或基于快照的备份。有关这些配置，请参阅 PostgreSQL 在线文档。</p>
+    <h1>pg_undo</h1>
+    <p>The catalog <code>pg_undo</code> contains part of the information about undos. The rest is mostly in <code>pg_class</code>.</p>
+<p><strong>Table. <code>pg_undo</code> Columns</strong></p>
+<div class="table-wrap"> <table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>undoid</code></td>
+<td><code>oid</code></td>
+<td>The ID of this undo, the system assigns sequentially from 1</td>
+</tr>
+<tr>
+<td><code>undrelid</code></td>
+<td><code>oid</code></td>
+<td>The OID of the <code>pg_class</code> entry for this undo</td>
+</tr>
+<tr>
+<td><code>undusecount</code></td>
+<td><code>int8</code></td>
+<td>The number of times the transaction table entry in this undo has been reused, this field will only be updated when the undo is deleted</td>
+</tr>
+<tr>
+<td><code>undreusetime</code></td>
+<td><code>logicaltime</code></td>
+<td>The logical timestamp of when the transaction table entry in this undo was reused, this field will only be updated when the undo is deleted</td>
+</tr>
+<tr>
+<td><code>indisvalid</code></td>
+<td><code>bool</code></td>
+<td>If true, the undo can currently be used to provide read consistency. False means the undo has been completely deleted</td>
+</tr>
+<tr>
+<td><code>indislive</code></td>
+<td><code>bool</code></td>
+<td>If false, the undo has been deleted</td>
+</tr>
+</tbody>
+</table> </div>
 
   </article>
 
@@ -2474,14 +2359,14 @@ host    all             all             0.0.0.0/0            md5
         
           <span class="gdoc-footer__item gdoc-footer__item--row">
             <a href="https://www.rockdata.net/legal-notice/#contact-information" class="gdoc-footer__link">
-              法律声明
+              Legal Notice
             </a>
           </span>
         
         
           <span class="gdoc-footer__item gdoc-footer__item--row">
             <a href="https://www.rockdata.net/legal-notice/#privacy-policy" class="gdoc-footer__link">
-              隐私政策
+              Privacy Policy
             </a>
           </span>
         
@@ -2491,11 +2376,11 @@ host    all             all             0.0.0.0/0            md5
     
       <div class="flex flex-25 justify-end">
         <span class="gdoc-footer__item text-right">
-          <a class="gdoc-footer__link fake-link" href="#" aria-label="回到顶部">
+          <a class="gdoc-footer__link fake-link" href="#" aria-label="Back to top">
             <svg class="gdoc-icon gdoc_keyboard_arrow_up">
               <use xlink:href="#gdoc_keyboard_arrow_up"></use>
             </svg>
-            <span class="hidden-mobile">回到顶部</span>
+            <span class="hidden-mobile">Back to top</span>
           </a>
         </span>
       </div>
