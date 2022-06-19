@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn" class="color-toggle-hidden">
+<html lang="en" class="color-toggle-hidden">
   <head>
     <meta charset="UTF-8" />
 <meta name="referrer" content="no-referrer" />
@@ -8,10 +8,10 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="不支持的功能特性 同 PostgreSQL 的特性差异说明  用户 表空间 PID        Redrock Postgres 是在 PostgreSQL 的基础上开发的，在客户端访问协议和SQL语法层面，Redrock Postgres 同 PostgreSQL 保持兼容。如果您的应用是基于 PostgreSQL 开发的，那么：
- 基于同 PostgreSQL 在客户端访问协议层面的二进制兼容，可以使用和 PostgreSQL 一样的各种编程语言驱动访问 Redrock Postgres，如：Java, C/C&#43;&#43;, .Net, Python, Ruby, Perl, Go, ODBC等。 基于同 PostgreSQL 在SQL语法上的严格兼容，可以在应用软件不做任何改动的情况下迁移到 Redrock Postgres。 可以使用 PostgreSQL 相关的桌面管理工具访问 Redrock Postgres，如：DBeaver、pgAdmin 4、Navicat for PostgreSQL 等。  这意味着，在多数情况下，您可以使用 pg_dump 导出 PostgreSQL 中的数据，卸载 PostgreSQL 并安装 Redrock Postgres，将导出的数据导入到 Redrock Postgres 中，就可以开始了。" />
+  <meta name="description" content="CREATE UNDO — define a new undo
+Synopsis     CREATE UNDO [ IF NOT EXISTS ] name[ WITH ( storage_parameter = value [, ... ] ) ][ TABLESPACE tablespace_name ] Description     CREATE UNDO constructs a new undo in the current database. The undo name must be distinct from the name of any existing undo in the current database. Undos are primarily used to hold old version data that has been modified in tables and indexes." />
 
-    <title>同 PostgreSQL 的兼容性 | Redrock Documentation</title>
+    <title>CREATE UNDO | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -32,51 +32,51 @@
     
   <meta
     property="og:title"
-    content="同 PostgreSQL 的兼容性"
+    content="CREATE UNDO"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="不支持的功能特性 同 PostgreSQL 的特性差异说明  用户 表空间 PID        Redrock Postgres 是在 PostgreSQL 的基础上开发的，在客户端访问协议和SQL语法层面，Redrock Postgres 同 PostgreSQL 保持兼容。如果您的应用是基于 PostgreSQL 开发的，那么：
- 基于同 PostgreSQL 在客户端访问协议层面的二进制兼容，可以使用和 PostgreSQL 一样的各种编程语言驱动访问 Redrock Postgres，如：Java, C/C&#43;&#43;, .Net, Python, Ruby, Perl, Go, ODBC等。 基于同 PostgreSQL 在SQL语法上的严格兼容，可以在应用软件不做任何改动的情况下迁移到 Redrock Postgres。 可以使用 PostgreSQL 相关的桌面管理工具访问 Redrock Postgres，如：DBeaver、pgAdmin 4、Navicat for PostgreSQL 等。  这意味着，在多数情况下，您可以使用 pg_dump 导出 PostgreSQL 中的数据，卸载 PostgreSQL 并安装 Redrock Postgres，将导出的数据导入到 Redrock Postgres 中，就可以开始了。" />
+  <meta property="og:description" content="CREATE UNDO — define a new undo
+Synopsis     CREATE UNDO [ IF NOT EXISTS ] name[ WITH ( storage_parameter = value [, ... ] ) ][ TABLESPACE tablespace_name ] Description     CREATE UNDO constructs a new undo in the current database. The undo name must be distinct from the name of any existing undo in the current database. Undos are primarily used to hold old version data that has been modified in tables and indexes." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://doc.rockdata.net/zh-cn/features/postgres-compatibility/" />
+<meta property="og:url" content="https://doc.rockdata.net/commands/createundo/" />
 
-<meta property="article:section" content="Features" />
+<meta property="article:section" content="Commands" />
     <meta
       property="article:modified_time"
-      content="2022-06-18T15:29:38+08:00"
+      content="2022-06-19T17:28:24+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="同 PostgreSQL 的兼容性" />
+<meta name="twitter:title" content="CREATE UNDO" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="不支持的功能特性 同 PostgreSQL 的特性差异说明  用户 表空间 PID        Redrock Postgres 是在 PostgreSQL 的基础上开发的，在客户端访问协议和SQL语法层面，Redrock Postgres 同 PostgreSQL 保持兼容。如果您的应用是基于 PostgreSQL 开发的，那么：
- 基于同 PostgreSQL 在客户端访问协议层面的二进制兼容，可以使用和 PostgreSQL 一样的各种编程语言驱动访问 Redrock Postgres，如：Java, C/C&#43;&#43;, .Net, Python, Ruby, Perl, Go, ODBC等。 基于同 PostgreSQL 在SQL语法上的严格兼容，可以在应用软件不做任何改动的情况下迁移到 Redrock Postgres。 可以使用 PostgreSQL 相关的桌面管理工具访问 Redrock Postgres，如：DBeaver、pgAdmin 4、Navicat for PostgreSQL 等。  这意味着，在多数情况下，您可以使用 pg_dump 导出 PostgreSQL 中的数据，卸载 PostgreSQL 并安装 Redrock Postgres，将导出的数据导入到 Redrock Postgres 中，就可以开始了。" />
+  <meta name="twitter:description" content="CREATE UNDO — define a new undo
+Synopsis     CREATE UNDO [ IF NOT EXISTS ] name[ WITH ( storage_parameter = value [, ... ] ) ][ TABLESPACE tablespace_name ] Description     CREATE UNDO constructs a new undo in the current database. The undo name must be distinct from the name of any existing undo in the current database. Undos are primarily used to hold old version data that has been modified in tables and indexes." />
 
 
   <script type="application/ld+json">
   {
       "@context": "http://schema.org",
       "@type": "TechArticle",
-      "articleSection": "Features",
-      "name": "同 PostgreSQL 的兼容性",
-      "url" : "https://doc.rockdata.net/zh-cn/features/postgres-compatibility/",
-      "headline": "同 PostgreSQL 的兼容性",
-      "description": "不支持的功能特性 同 PostgreSQL 的特性差异说明  用户 表空间 PID        Redrock Postgres 是在 PostgreSQL 的基础上开发的，在客户端访问协议和SQL语法层面，Redrock Postgres 同 PostgreSQL 保持兼容。如果您的应用是基于 PostgreSQL 开发的，那么：\n 基于同 PostgreSQL 在客户端访问协议层面的二进制兼容，可以使用和 PostgreSQL 一样的各种编程语言驱动访问 Redrock Postgres，如：Java, C\/C\u002b\u002b, .Net, Python, Ruby, Perl, Go, ODBC等。 基于同 PostgreSQL 在SQL语法上的严格兼容，可以在应用软件不做任何改动的情况下迁移到 Redrock Postgres。 可以使用 PostgreSQL 相关的桌面管理工具访问 Redrock Postgres，如：DBeaver、pgAdmin 4、Navicat for PostgreSQL 等。  这意味着，在多数情况下，您可以使用 pg_dump 导出 PostgreSQL 中的数据，卸载 PostgreSQL 并安装 Redrock Postgres，将导出的数据导入到 Redrock Postgres 中，就可以开始了。",
+      "articleSection": "Commands",
+      "name": "CREATE UNDO",
+      "url" : "https://doc.rockdata.net/commands/createundo/",
+      "headline": "CREATE UNDO",
+      "description": "CREATE UNDO — define a new undo\nSynopsis     CREATE UNDO [ IF NOT EXISTS ] name\r[ WITH ( storage_parameter = value [, ... ] ) ]\r[ TABLESPACE tablespace_name ] Description     CREATE UNDO constructs a new undo in the current database. The undo name must be distinct from the name of any existing undo in the current database. Undos are primarily used to hold old version data that has been modified in tables and indexes.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "100",
-      "inLanguage": "zh-cn",
+      "wordCount" : "449",
+      "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://doc.rockdata.net/zh-cn/features/postgres-compatibility/"
+          "@id": "https://doc.rockdata.net/commands/createundo/"
       },
       "copyrightHolder" : "Redrock Documentation",
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-18T15:29:38.00Z",
+      "dateModified": "2022-06-19T17:28:24.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -152,7 +152,7 @@
   href="/custom.css"
   media="all"
 />
-  <link href="https://doc.rockdata.net/zh-cn/features/postgres-compatibility/" rel="canonical" type="text/html" />
+  <link href="https://doc.rockdata.net/commands/createundo/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -644,11 +644,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
       <label for="menu-control" class="gdoc-nav__control" tabindex="0">
         <svg class="gdoc-icon gdoc_menu">
-          <title>打开导航</title>
+          <title>Open Navigation</title>
           <use xlink:href="#gdoc_menu"></use>
         </svg>
         <svg class="gdoc-icon gdoc_arrow_back">
-          <title>关闭导航</title>
+          <title>Close Navigation</title>
           <use xlink:href="#gdoc_arrow_back"></use>
         </svg>
       </label>
@@ -714,15 +714,15 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
         <span id="gdoc-dark-mode">
           <svg class="gdoc-icon gdoc_brightness_dark">
-            <title>切换暗/亮/自动模式</title>
+            <title>Toggle Dark/Light/Auto mode</title>
             <use xlink:href="#gdoc_brightness_dark"></use>
           </svg>
           <svg class="gdoc-icon gdoc_brightness_light">
-            <title>切换暗/亮/自动模式</title>
+            <title>Toggle Dark/Light/Auto mode</title>
             <use xlink:href="#gdoc_brightness_light"></use>
           </svg>
           <svg class="gdoc-icon gdoc_brightness_auto">
-            <title>切换暗/亮/自动模式</title>
+            <title>Toggle Dark/Light/Auto mode</title>
             <use xlink:href="#gdoc_brightness_auto"></use>
           </svg>
         </span>
@@ -730,7 +730,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         <span class="gdoc-menu-header__home">
           <a href="https://doc.rockdata.net/" class="gdoc-header__link">
             <svg class="gdoc-icon gdoc_home">
-              <title>返回首页</title>
+              <title>Back to homepage</title>
               <use xlink:href="#gdoc_home"></use>
             </svg>
           </a>
@@ -742,12 +742,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <li>
         
           
-        
-          
             <span class="flex align-center">
               <svg class="gdoc-icon gdoc_language"><use xlink:href="#gdoc_language"></use></svg>
-              <span>ZH-CN</span>
+              <span>EN</span>
             </span>
+          
+        
           
         
 
@@ -758,12 +758,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               <li>
                 <a
                   class="flex gdoc-language__entry"
-                  title="English"
-                  href="/features/postgres-compatibility/"
-                  hreflang="en"
-                  lang="en"
+                  title="简体中文"
+                  href="/zh-cn/commands/createundo/"
+                  hreflang="zh-cn"
+                  lang="zh-cn"
                 >
-                  English
+                  简体中文
                 </a>
               </li>
             
@@ -780,7 +780,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
           <label for="menu-header-control">
             <svg class="gdoc-icon gdoc_keyboard_arrow_right">
               <use xlink:href="#gdoc_keyboard_arrow_right"></use>
-              <title>关闭菜单栏</title>
+              <title>Close Menu Bar</title>
             </svg>
           </label>
         </span>
@@ -788,7 +788,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <label for="menu-header-control" class="gdoc-menu-header__control">
         <svg class="gdoc-icon gdoc_keyboard_arrow_left">
           <use xlink:href="#gdoc_keyboard_arrow_left"></use>
-          <title>打开菜单栏</title>
+          <title>Open Menu Bar</title>
         </svg>
       </label>
     </div>
@@ -808,11 +808,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       type="text"
       id="gdoc-search-input"
       class="gdoc-search__input"
-      placeholder="搜索"
-      aria-label="搜索"
+      placeholder="Search"
+      aria-label="Search"
       maxlength="64"
       data-site-base-url="https://doc.rockdata.net/"
-      data-site-lang="zh-cn"
+      data-site-lang="en"
     />
     <div class="gdoc-search__spinner spinner hidden"></div>
     <ul id="gdoc-search-results" class="gdoc-search__list"></ul>
@@ -822,7 +822,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
 
   <section class="gdoc-nav--main">
-    <h2>导航</h2>
+    <h2>Navigation</h2>
     
       
 
@@ -859,7 +859,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">使用介绍</span>
+                <span class="flex">Usage</span>
               
               
             </label>
@@ -901,10 +901,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/usage/why-redrock/"
+                    href="/usage/why-redrock/"
                     class="gdoc-nav__entry"
                   >
-                    为什么选择Redrock Postgres？
+                    Why Redrock Postgres?
                   </a>
                 </span>
               
@@ -945,10 +945,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/usage/getting-started/"
+                    href="/usage/getting-started/"
                     class="gdoc-nav__entry"
                   >
-                    开始上手
+                    Getting Started
                   </a>
                 </span>
               
@@ -989,10 +989,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/usage/configuration/"
+                    href="/usage/configuration/"
                     class="gdoc-nav__entry"
                   >
-                    参数配置
+                    Configuration
                   </a>
                 </span>
               
@@ -1040,10 +1040,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/installation/"
+                    href="/installation/"
                     class="gdoc-nav__entry"
                   >
-                    安装指导
+                    Installation
                   </a>
                 </span>
               
@@ -1087,10 +1087,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/installation/windows/"
+                    href="/installation/windows/"
                     class="gdoc-nav__entry"
                   >
-                    Windows 安装指导
+                    Installing on Windows
                   </a>
                 </span>
               
@@ -1131,10 +1131,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/installation/redhat/"
+                    href="/installation/redhat/"
                     class="gdoc-nav__entry"
                   >
-                    Red Hat/CentOS 安装指导
+                    Installing on Red Hat
                   </a>
                 </span>
               
@@ -1175,10 +1175,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/installation/debian/"
+                    href="/installation/debian/"
                     class="gdoc-nav__entry"
                   >
-                    Debian 安装指导
+                    Installing on Debian
                   </a>
                 </span>
               
@@ -1224,7 +1224,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">基础特性</span>
+                <span class="flex">Features</span>
               
               
             </label>
@@ -1266,10 +1266,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/features/undo/"
+                    href="/features/undo/"
                     class="gdoc-nav__entry"
                   >
-                    回滚段
+                    Undo
                   </a>
                 </span>
               
@@ -1310,10 +1310,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/features/recyclebin/"
+                    href="/features/recyclebin/"
                     class="gdoc-nav__entry"
                   >
-                    回收站
+                    Recycle Bin
                   </a>
                 </span>
               
@@ -1354,10 +1354,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/features/event-triggers/"
+                    href="/features/event-triggers/"
                     class="gdoc-nav__entry"
                   >
-                    事件触发器
+                    Event Triggers
                   </a>
                 </span>
               
@@ -1398,10 +1398,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/features/network-tablespace/"
+                    href="/features/network-tablespace/"
                     class="gdoc-nav__entry"
                   >
-                    网络表空间
+                    Network Attached Tablespace
                   </a>
                 </span>
               
@@ -1442,10 +1442,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/features/postgres-compatibility/"
-                    class="gdoc-nav__entry is-active"
+                    href="/features/postgres-compatibility/"
+                    class="gdoc-nav__entry"
                   >
-                    同 PostgreSQL 的兼容性
+                    Compatibility with PostgreSQL
                   </a>
                 </span>
               
@@ -1491,7 +1491,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">高级特性</span>
+                <span class="flex">Advanced</span>
               
               
             </label>
@@ -1533,10 +1533,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/advanced/textsearch/"
+                    href="/advanced/textsearch/"
                     class="gdoc-nav__entry"
                   >
-                    中文搜索
+                    Chinese Text Search
                   </a>
                 </span>
               
@@ -1577,7 +1577,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/advanced/plscheme/"
+                    href="/advanced/plscheme/"
                     class="gdoc-nav__entry"
                   >
                     PL/Scheme
@@ -1621,10 +1621,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/advanced/monitor-stats/"
+                    href="/advanced/monitor-stats/"
                     class="gdoc-nav__entry"
                   >
-                    运行统计视图
+                    Statistics Views
                   </a>
                 </span>
               
@@ -1663,22 +1663,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-a5b7adb4"
-                
+                class="gdoc-nav__toggle" id="navtree-4ac8285e"
+                checked
               
             />
             <label
               
-                for="navtree-a5b7adb4" class="flex justify-between align-center"
+                for="navtree-4ac8285e" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/commands/"
+                    href="/commands/"
                     class="gdoc-nav__entry"
                   >
-                    SQL 命令
+                    SQL Commands
                   </a>
                 </span>
               
@@ -1729,7 +1729,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/commands/alterundo/"
+                    href="/commands/alterundo/"
                     class="gdoc-nav__entry"
                   >
                     ALTER UNDO
@@ -1765,8 +1765,8 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/commands/createundo/"
-                    class="gdoc-nav__entry"
+                    href="/commands/createundo/"
+                    class="gdoc-nav__entry is-active"
                   >
                     CREATE UNDO
                   </a>
@@ -1801,7 +1801,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/commands/dropundo/"
+                    href="/commands/dropundo/"
                     class="gdoc-nav__entry"
                   >
                     DROP UNDO
@@ -1831,6 +1831,8 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
       
         
+      
+        
           
           
           
@@ -1843,22 +1845,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-7171e5f3"
+                class="gdoc-nav__toggle" id="navtree-0ef779f7"
                 
               
             />
             <label
               
-                for="navtree-7171e5f3" class="flex justify-between align-center"
+                for="navtree-0ef779f7" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/catalogs/"
+                    href="/catalogs/"
                     class="gdoc-nav__entry"
                   >
-                    系统表
+                    System Catalogs
                   </a>
                 </span>
               
@@ -1909,7 +1911,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/catalogs/recyclebin/"
+                    href="/catalogs/recyclebin/"
                     class="gdoc-nav__entry"
                   >
                     pg_recyclebin
@@ -1945,7 +1947,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/catalogs/ts-lexicon/"
+                    href="/catalogs/ts-lexicon/"
                     class="gdoc-nav__entry"
                   >
                     pg_ts_lexicon
@@ -1981,7 +1983,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/catalogs/undo/"
+                    href="/catalogs/undo/"
                     class="gdoc-nav__entry"
                   >
                     pg_undo
@@ -2002,8 +2004,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
           </li>
         
       
-        
-      
     
   </ul>
 
@@ -2020,7 +2020,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
   <section class="gdoc-nav--more">
     
-      <h2>更多</h2>
+      <h2>More</h2>
       
 
   
@@ -2061,10 +2061,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                   <svg class="gdoc-icon gdoc_notification"><use xlink:href="#gdoc_notification"></use></svg>
                 
                 <a
-                  href="/zh-cn/posts/"
+                  href="/posts/"
                   class="gdoc-nav__entry"
                 >
-                  新闻
+                  News
                 </a>
               </span>
               
@@ -2111,7 +2111,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     https://gitee.com/rockdata/redrock/releases"
                   class="gdoc-nav__entry"
                 >
-                  下载
+                  Releases
                 </a>
               </span>
               
@@ -2158,7 +2158,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     https://gitee.com/rockdata/redrock"
                   class="gdoc-nav__entry"
                 >
-                  项目仓库
+                  View Source
                 </a>
               </span>
               
@@ -2227,7 +2227,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/features/' href='/zh-cn/features/'><span itemprop='name'>基础特性</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>同 PostgreSQL 的兼容性</span><meta itemprop='position' content='4' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/commands/' href='/commands/'><span itemprop='name'>SQL Commands</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>CREATE UNDO</span><meta itemprop='position' content='3' /></li>
   
 
   
@@ -2242,9 +2242,9 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <span class="editpage">
         <svg class="gdoc-icon gdoc_code"><use xlink:href="#gdoc_code"></use></svg>
         <a
-          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/zh-cn/features/postgres-compatibility.md"
+          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/en/commands/createundo.md"
         >
-          编辑页面
+          Edit page
         </a>
       </span>
     </div>
@@ -2256,114 +2256,117 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <article
     class="gdoc-markdown gdoc-markdown__align--left"
   >
-    <h1>同 PostgreSQL 的兼容性</h1>
-    <div class="gdoc-toc gdoc-toc__level--3">
-      <nav id="TableOfContents"><ul>
-        <li><a href="#不支持的功能特性">不支持的功能特性</a></li>
-        <li><a href="#同-postgresql-的特性差异说明">同 PostgreSQL 的特性差异说明</a>
-          <ul>
-            <li><a href="#用户">用户</a></li>
-            <li><a href="#表空间">表空间</a></li>
-            <li><a href="#pid">PID</a></li>
-          </ul>
-        </li>
-      </ul></nav>
-      <hr />
-    </div>
-<p>Redrock Postgres 是在 PostgreSQL 的基础上开发的，在客户端访问协议和SQL语法层面，Redrock Postgres 同 PostgreSQL 保持兼容。如果您的应用是基于 PostgreSQL 开发的，那么：</p>
-<ul>
-<li>基于同 PostgreSQL 在客户端访问协议层面的二进制兼容，可以使用和 PostgreSQL 一样的各种编程语言驱动访问 Redrock Postgres，如：Java, C/C++, .Net, Python, Ruby, Perl, Go, ODBC等。</li>
-<li>基于同 PostgreSQL 在SQL语法上的严格兼容，可以在应用软件不做任何改动的情况下迁移到 Redrock Postgres。</li>
-<li>可以使用 PostgreSQL 相关的桌面管理工具访问 Redrock Postgres，如：DBeaver、pgAdmin 4、Navicat for PostgreSQL 等。</li>
-</ul>
-<p>这意味着，在多数情况下，您可以使用 pg_dump 导出 PostgreSQL 中的数据，卸载 PostgreSQL 并安装 Redrock Postgres，将导出的数据导入到 Redrock Postgres 中，就可以开始了。</p>
+    <h1>CREATE UNDO</h1>
+    <p>CREATE UNDO — define a new undo</p>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="不支持的功能特性">
-        不支持的功能特性
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/postgres-compatibility/#不支持的功能特性" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 不支持的功能特性" aria-label="锚定到： 不支持的功能特性" href="#%e4%b8%8d%e6%94%af%e6%8c%81%e7%9a%84%e5%8a%9f%e8%83%bd%e7%89%b9%e6%80%a7">
+    <h2 id="synopsis">
+        Synopsis
+        <a data-clipboard-text="https://doc.rockdata.net/commands/createundo/#synopsis" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Synopsis" aria-label="Anchor to: Synopsis" href="#synopsis">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<pre tabindex="0"><code>CREATE UNDO [ IF NOT EXISTS ] name
+    [ WITH ( storage_parameter = value [, ... ] ) ]
+    [ TABLESPACE tablespace_name ]
+</code></pre><div class="gdoc-page__anchorwrap">
+    <h2 id="description">
+        Description
+        <a data-clipboard-text="https://doc.rockdata.net/commands/createundo/#description" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Description" aria-label="Anchor to: Description" href="#description">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p><code>CREATE UNDO</code> constructs a new undo in the current database. The undo name must be distinct from the name of any existing undo in the current database. Undos are primarily used to hold old version data that has been modified in tables and indexes.</p>
+<p>To create a undo, the invoking user must have the <code>CREATE</code> privilege for the current database. (Of course, superusers bypass this check.)</p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="parameters">
+        Parameters
+        <a data-clipboard-text="https://doc.rockdata.net/commands/createundo/#parameters" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Parameters" aria-label="Anchor to: Parameters" href="#parameters">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
 <ul>
-<li><a
+<li>
+<p><code>IF NOT EXISTS</code></p>
+<p>Do not throw an error if a relation with the same name already exists. A notice is issued in this case. Note that there is no guarantee that the existing undo is anything like the one that would have been created.</p>
+</li>
+<li>
+<p><em><code>name</code></em></p>
+<p>The name of the undo to be created. No schema name can be included here; the undo is always created in the schema <code>pg_catalog</code>.</p>
+</li>
+<li>
+<p><em><code>storage_parameter</code></em></p>
+<p>The name of an undo-specific storage parameter. See <a
   class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/12/runtime-config-client.html#GUC-VACUUM-FREEZE-TABLE-AGE"
+  href="/commands/createundo/#undo-storage-parameters"
   
->清理相关配置参数</a></li>
-<li><a
+>Undo Storage Parameters</a> for details.</p>
+</li>
+<li>
+<p><em><code>tablespace_name</code></em></p>
+<p>The tablespace in which to create the undo. If not specified, <a
   class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/12/runtime-config-autovacuum.html"
+  href="https://www.postgresql.org/docs/12/runtime-config-client.html#GUC-DEFAULT-TABLESPACE"
   
->自动清理配置参数</a></li>
-<li><a
-  class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/12/sql-vacuum.html"
-  
->完全清理操作</a></li>
-<li><a
-  class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/12/sql-vacuum.html"
-  
->冻结操作</a></li>
-<li><a
-  class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/12/ddl-system-columns.html"
-  
->系统列</a></li>
-<li><a
-  class="gdoc-markdown__link"
-  href="http://postgres.cn/docs/12/transaction-iso.html#XACT-SERIALIZABLE"
-  
->可序列化隔离级别</a></li>
-<li><a
-  class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/12/spgist.html"
-  
->SP-GiST索引</a></li>
+>default_tablespace</a> is consulted.</p>
+</li>
 </ul>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="同-postgresql-的特性差异说明">
-        同 PostgreSQL 的特性差异说明
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/postgres-compatibility/#同-postgresql-的特性差异说明" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 同 PostgreSQL 的特性差异说明" aria-label="锚定到： 同 PostgreSQL 的特性差异说明" href="#%e5%90%8c-postgresql-%e7%9a%84%e7%89%b9%e6%80%a7%e5%b7%ae%e5%bc%82%e8%af%b4%e6%98%8e">
+    <h3 id="undo-storage-parameters">
+        Undo Storage Parameters
+        <a data-clipboard-text="https://doc.rockdata.net/commands/createundo/#undo-storage-parameters" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Undo Storage Parameters" aria-label="Anchor to: Undo Storage Parameters" href="#undo-storage-parameters">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p>The optional <code>WITH</code> clause specifies <em>storage parameters</em> for the undo. Accepted parameters include:</p>
+<ul>
+<li>
+<p><code>initialpages</code></p>
+<p>Number of initial pages in undo. The default is <code>128</code>.</p>
+</li>
+<li>
+<p><code>minpages</code></p>
+<p>Minimum number of pages in undo. The default is <code>128</code>.</p>
+</li>
+<li>
+<p><code>maxpages</code></p>
+<p>Maximum number of pages in undo. The default is unlimited. It is just a hint, in fact, Redrock Postgres provides a fully automated mechanism, known as automatic undo management mode, for managing undos and space.</p>
+</li>
+</ul>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="notes">
+        Notes
+        <a data-clipboard-text="https://doc.rockdata.net/commands/createundo/#notes" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Notes" aria-label="Anchor to: Notes" href="#notes">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
+<p>After the database cluster data directory is initialized, 4 cluster-level undos and 8 database-level undos are generated in the database by default, the cluster-level undos is mainly used to modify the data of the shared system catalogs, such as pg_database. The first page of the undo is used to store transaction table items, and a single undo can hold up to about 200 transaction items at the same time.</p>
+<p>However, if a single undo processes a large number of transactions at the same time (for example, more than 8), a corresponding page access wait event will occur due to concurrent access violations of the transaction table. In this case, you can use the <code>CREATE UNDO</code> command to create more undos in the current database to improve the transaction processing performance of the system.</p>
 <div class="gdoc-page__anchorwrap">
-    <h3 id="用户">
-        用户
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/postgres-compatibility/#用户" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 用户" aria-label="锚定到： 用户" href="#%e7%94%a8%e6%88%b7">
+    <h2 id="examples">
+        Examples
+        <a data-clipboard-text="https://doc.rockdata.net/commands/createundo/#examples" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Examples" aria-label="Anchor to: Examples" href="#examples">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
-    </h3>
+    </h2>
 </div>
-<p>在 PostgreSQL 中，用户为集群级别的对象，而在 Redrock Postgres 中，用户为数据库级别的对象。这意味者，在你访问同一个集群中不同的数据库对象时，虽然可能会看到相同名字的用户，实际上，它们是分属于各自数据库中不同的用户对象。</p>
-<p><strong>说明</strong>：该差异需要数据库管理员特别关注，对于应用开发人员不受影响。</p>
-<div class="gdoc-page__anchorwrap">
-    <h3 id="表空间">
-        表空间
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/postgres-compatibility/#表空间" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 表空间" aria-label="锚定到： 表空间" href="#%e8%a1%a8%e7%a9%ba%e9%97%b4">
+<p>Create a undo:</p>
+<pre tabindex="0"><code>CREATE UNDO undo_13;
+</code></pre><p>To create an undo and have the undo reside in the tablespace <code>undospace</code>:</p>
+<pre tabindex="0"><code>CREATE UNDO undo_14 TABLESPACE undospace;
+</code></pre><div class="gdoc-page__anchorwrap">
+    <h2 id="compatibility">
+        Compatibility
+        <a data-clipboard-text="https://doc.rockdata.net/commands/createundo/#compatibility" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Compatibility" aria-label="Anchor to: Compatibility" href="#compatibility">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
-    </h3>
+    </h2>
 </div>
-<p>在 PostgreSQL 中，表空间为集群级别的对象，而在 Redrock Postgres 中，表空间为数据库级别的对象。这意味者，在你访问同一个集群中不同的数据库对象时，虽然可能会看到相同名字的表空间，实际上，它们是分属于各自数据库中不同的表空间对象。</p>
-<p><strong>说明</strong>：该差异需要数据库管理员特别关注，对于应用开发人员不受影响。</p>
-<div class="gdoc-page__anchorwrap">
-    <h3 id="pid">
-        PID
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/postgres-compatibility/#pid" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： PID" aria-label="锚定到： PID" href="#pid">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
-<p>在有些运行统计视图中（如：pg_stat_activity, pg_locks），存在名称为 <code>pid</code> 的字段。在 PostgreSQL 中，这些字段表示的是操作系统进程号，而在 Redrock Postgres 中，表示的是数据库进程号。</p>
-<p><strong>说明</strong>：在 <a
-  class="gdoc-markdown__link--code"
-  href="/zh-cn/advanced/monitor-stats/#pg_stat_activity"
-  
-><code>pg_stat_activity</code></a> 视图中，存在名称为 <code>spid</code> 的字段，表示真实的操作系统进程号。</p>
+<p><code>CREATE UNDO</code> is a Redrock Postgres language extension. There are no provisions for undos in the SQL standard.</p>
 
   </article>
 
@@ -2600,14 +2603,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         
           <span class="gdoc-footer__item gdoc-footer__item--row">
             <a href="https://www.rockdata.net/legal-notice/#contact-information" class="gdoc-footer__link">
-              法律声明
+              Legal Notice
             </a>
           </span>
         
         
           <span class="gdoc-footer__item gdoc-footer__item--row">
             <a href="https://www.rockdata.net/legal-notice/#privacy-policy" class="gdoc-footer__link">
-              隐私政策
+              Privacy Policy
             </a>
           </span>
         
@@ -2617,11 +2620,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
       <div class="flex flex-25 justify-end">
         <span class="gdoc-footer__item text-right">
-          <a class="gdoc-footer__link fake-link" href="#" aria-label="回到顶部">
+          <a class="gdoc-footer__link fake-link" href="#" aria-label="Back to top">
             <svg class="gdoc-icon gdoc_keyboard_arrow_up">
               <use xlink:href="#gdoc_keyboard_arrow_up"></use>
             </svg>
-            <span class="hidden-mobile">回到顶部</span>
+            <span class="hidden-mobile">Back to top</span>
           </a>
         </span>
       </div>

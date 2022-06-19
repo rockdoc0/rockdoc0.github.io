@@ -8,10 +8,10 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="不支持的功能特性 同 PostgreSQL 的特性差异说明  用户 表空间 PID        Redrock Postgres 是在 PostgreSQL 的基础上开发的，在客户端访问协议和SQL语法层面，Redrock Postgres 同 PostgreSQL 保持兼容。如果您的应用是基于 PostgreSQL 开发的，那么：
- 基于同 PostgreSQL 在客户端访问协议层面的二进制兼容，可以使用和 PostgreSQL 一样的各种编程语言驱动访问 Redrock Postgres，如：Java, C/C&#43;&#43;, .Net, Python, Ruby, Perl, Go, ODBC等。 基于同 PostgreSQL 在SQL语法上的严格兼容，可以在应用软件不做任何改动的情况下迁移到 Redrock Postgres。 可以使用 PostgreSQL 相关的桌面管理工具访问 Redrock Postgres，如：DBeaver、pgAdmin 4、Navicat for PostgreSQL 等。  这意味着，在多数情况下，您可以使用 pg_dump 导出 PostgreSQL 中的数据，卸载 PostgreSQL 并安装 Redrock Postgres，将导出的数据导入到 Redrock Postgres 中，就可以开始了。" />
+  <meta name="description" content="ALTER UNDO — 更改一个回滚段的定义
+语法     ALTER UNDO [ IF EXISTS ] name RENAME TO new_nameALTER UNDO [ IF EXISTS ] name SET TABLESPACE tablespace_nameALTER UNDO name OWNER TO { new_owner | CURRENT_USER | SESSION_USER }ALTER UNDO [ IF EXISTS ] name SET ( storage_parameter = value [, ... ] )ALTER UNDO [ IF EXISTS ] name RESET ( storage_parameter [, ... ] ) 描述     ALTER UNDO更改一个现有回滚段的定义。下面描述了几种子形式。 注意每个子形式所需的锁级别可能不同。除非显式说明，ACCESS EXCLUSIVE锁被持有。 列出多个子命令时，锁的持有将是任何子命令所需的最严格的子命令。" />
 
-    <title>同 PostgreSQL 的兼容性 | Redrock Documentation</title>
+    <title>ALTER UNDO | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -32,51 +32,51 @@
     
   <meta
     property="og:title"
-    content="同 PostgreSQL 的兼容性"
+    content="ALTER UNDO"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="不支持的功能特性 同 PostgreSQL 的特性差异说明  用户 表空间 PID        Redrock Postgres 是在 PostgreSQL 的基础上开发的，在客户端访问协议和SQL语法层面，Redrock Postgres 同 PostgreSQL 保持兼容。如果您的应用是基于 PostgreSQL 开发的，那么：
- 基于同 PostgreSQL 在客户端访问协议层面的二进制兼容，可以使用和 PostgreSQL 一样的各种编程语言驱动访问 Redrock Postgres，如：Java, C/C&#43;&#43;, .Net, Python, Ruby, Perl, Go, ODBC等。 基于同 PostgreSQL 在SQL语法上的严格兼容，可以在应用软件不做任何改动的情况下迁移到 Redrock Postgres。 可以使用 PostgreSQL 相关的桌面管理工具访问 Redrock Postgres，如：DBeaver、pgAdmin 4、Navicat for PostgreSQL 等。  这意味着，在多数情况下，您可以使用 pg_dump 导出 PostgreSQL 中的数据，卸载 PostgreSQL 并安装 Redrock Postgres，将导出的数据导入到 Redrock Postgres 中，就可以开始了。" />
+  <meta property="og:description" content="ALTER UNDO — 更改一个回滚段的定义
+语法     ALTER UNDO [ IF EXISTS ] name RENAME TO new_nameALTER UNDO [ IF EXISTS ] name SET TABLESPACE tablespace_nameALTER UNDO name OWNER TO { new_owner | CURRENT_USER | SESSION_USER }ALTER UNDO [ IF EXISTS ] name SET ( storage_parameter = value [, ... ] )ALTER UNDO [ IF EXISTS ] name RESET ( storage_parameter [, ... ] ) 描述     ALTER UNDO更改一个现有回滚段的定义。下面描述了几种子形式。 注意每个子形式所需的锁级别可能不同。除非显式说明，ACCESS EXCLUSIVE锁被持有。 列出多个子命令时，锁的持有将是任何子命令所需的最严格的子命令。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://doc.rockdata.net/zh-cn/features/postgres-compatibility/" />
+<meta property="og:url" content="https://doc.rockdata.net/zh-cn/commands/alterundo/" />
 
-<meta property="article:section" content="Features" />
+<meta property="article:section" content="Commands" />
     <meta
       property="article:modified_time"
-      content="2022-06-18T15:29:38+08:00"
+      content="2022-06-19T17:28:24+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="同 PostgreSQL 的兼容性" />
+<meta name="twitter:title" content="ALTER UNDO" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="不支持的功能特性 同 PostgreSQL 的特性差异说明  用户 表空间 PID        Redrock Postgres 是在 PostgreSQL 的基础上开发的，在客户端访问协议和SQL语法层面，Redrock Postgres 同 PostgreSQL 保持兼容。如果您的应用是基于 PostgreSQL 开发的，那么：
- 基于同 PostgreSQL 在客户端访问协议层面的二进制兼容，可以使用和 PostgreSQL 一样的各种编程语言驱动访问 Redrock Postgres，如：Java, C/C&#43;&#43;, .Net, Python, Ruby, Perl, Go, ODBC等。 基于同 PostgreSQL 在SQL语法上的严格兼容，可以在应用软件不做任何改动的情况下迁移到 Redrock Postgres。 可以使用 PostgreSQL 相关的桌面管理工具访问 Redrock Postgres，如：DBeaver、pgAdmin 4、Navicat for PostgreSQL 等。  这意味着，在多数情况下，您可以使用 pg_dump 导出 PostgreSQL 中的数据，卸载 PostgreSQL 并安装 Redrock Postgres，将导出的数据导入到 Redrock Postgres 中，就可以开始了。" />
+  <meta name="twitter:description" content="ALTER UNDO — 更改一个回滚段的定义
+语法     ALTER UNDO [ IF EXISTS ] name RENAME TO new_nameALTER UNDO [ IF EXISTS ] name SET TABLESPACE tablespace_nameALTER UNDO name OWNER TO { new_owner | CURRENT_USER | SESSION_USER }ALTER UNDO [ IF EXISTS ] name SET ( storage_parameter = value [, ... ] )ALTER UNDO [ IF EXISTS ] name RESET ( storage_parameter [, ... ] ) 描述     ALTER UNDO更改一个现有回滚段的定义。下面描述了几种子形式。 注意每个子形式所需的锁级别可能不同。除非显式说明，ACCESS EXCLUSIVE锁被持有。 列出多个子命令时，锁的持有将是任何子命令所需的最严格的子命令。" />
 
 
   <script type="application/ld+json">
   {
       "@context": "http://schema.org",
       "@type": "TechArticle",
-      "articleSection": "Features",
-      "name": "同 PostgreSQL 的兼容性",
-      "url" : "https://doc.rockdata.net/zh-cn/features/postgres-compatibility/",
-      "headline": "同 PostgreSQL 的兼容性",
-      "description": "不支持的功能特性 同 PostgreSQL 的特性差异说明  用户 表空间 PID        Redrock Postgres 是在 PostgreSQL 的基础上开发的，在客户端访问协议和SQL语法层面，Redrock Postgres 同 PostgreSQL 保持兼容。如果您的应用是基于 PostgreSQL 开发的，那么：\n 基于同 PostgreSQL 在客户端访问协议层面的二进制兼容，可以使用和 PostgreSQL 一样的各种编程语言驱动访问 Redrock Postgres，如：Java, C\/C\u002b\u002b, .Net, Python, Ruby, Perl, Go, ODBC等。 基于同 PostgreSQL 在SQL语法上的严格兼容，可以在应用软件不做任何改动的情况下迁移到 Redrock Postgres。 可以使用 PostgreSQL 相关的桌面管理工具访问 Redrock Postgres，如：DBeaver、pgAdmin 4、Navicat for PostgreSQL 等。  这意味着，在多数情况下，您可以使用 pg_dump 导出 PostgreSQL 中的数据，卸载 PostgreSQL 并安装 Redrock Postgres，将导出的数据导入到 Redrock Postgres 中，就可以开始了。",
+      "articleSection": "Commands",
+      "name": "ALTER UNDO",
+      "url" : "https://doc.rockdata.net/zh-cn/commands/alterundo/",
+      "headline": "ALTER UNDO",
+      "description": "ALTER UNDO — 更改一个回滚段的定义\n语法     ALTER UNDO [ IF EXISTS ] name RENAME TO new_name\rALTER UNDO [ IF EXISTS ] name SET TABLESPACE tablespace_name\rALTER UNDO name OWNER TO { new_owner | CURRENT_USER | SESSION_USER }\rALTER UNDO [ IF EXISTS ] name SET ( storage_parameter = value [, ... ] )\rALTER UNDO [ IF EXISTS ] name RESET ( storage_parameter [, ... ] ) 描述     ALTER UNDO更改一个现有回滚段的定义。下面描述了几种子形式。 注意每个子形式所需的锁级别可能不同。除非显式说明，ACCESS EXCLUSIVE锁被持有。 列出多个子命令时，锁的持有将是任何子命令所需的最严格的子命令。",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "100",
+      "wordCount" : "158",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://doc.rockdata.net/zh-cn/features/postgres-compatibility/"
+          "@id": "https://doc.rockdata.net/zh-cn/commands/alterundo/"
       },
       "copyrightHolder" : "Redrock Documentation",
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-18T15:29:38.00Z",
+      "dateModified": "2022-06-19T17:28:24.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -152,7 +152,7 @@
   href="/custom.css"
   media="all"
 />
-  <link href="https://doc.rockdata.net/zh-cn/features/postgres-compatibility/" rel="canonical" type="text/html" />
+  <link href="https://doc.rockdata.net/zh-cn/commands/alterundo/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -759,7 +759,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <a
                   class="flex gdoc-language__entry"
                   title="English"
-                  href="/features/postgres-compatibility/"
+                  href="/commands/alterundo/"
                   hreflang="en"
                   lang="en"
                 >
@@ -1443,7 +1443,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <span class="flex">
                   <a
                     href="/zh-cn/features/postgres-compatibility/"
-                    class="gdoc-nav__entry is-active"
+                    class="gdoc-nav__entry"
                   >
                     同 PostgreSQL 的兼容性
                   </a>
@@ -1664,7 +1664,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               type="checkbox"
               
                 class="gdoc-nav__toggle" id="navtree-a5b7adb4"
-                
+                checked
               
             />
             <label
@@ -1730,7 +1730,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <span class="flex">
                   <a
                     href="/zh-cn/commands/alterundo/"
-                    class="gdoc-nav__entry"
+                    class="gdoc-nav__entry is-active"
                   >
                     ALTER UNDO
                   </a>
@@ -2227,7 +2227,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/features/' href='/zh-cn/features/'><span itemprop='name'>基础特性</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>同 PostgreSQL 的兼容性</span><meta itemprop='position' content='4' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/commands/' href='/zh-cn/commands/'><span itemprop='name'>SQL 命令</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>ALTER UNDO</span><meta itemprop='position' content='4' /></li>
   
 
   
@@ -2242,7 +2242,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <span class="editpage">
         <svg class="gdoc-icon gdoc_code"><use xlink:href="#gdoc_code"></use></svg>
         <a
-          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/zh-cn/features/postgres-compatibility.md"
+          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/zh-cn/commands/alterundo.md"
         >
           编辑页面
         </a>
@@ -2256,114 +2256,123 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <article
     class="gdoc-markdown gdoc-markdown__align--left"
   >
-    <h1>同 PostgreSQL 的兼容性</h1>
-    <div class="gdoc-toc gdoc-toc__level--3">
-      <nav id="TableOfContents"><ul>
-        <li><a href="#不支持的功能特性">不支持的功能特性</a></li>
-        <li><a href="#同-postgresql-的特性差异说明">同 PostgreSQL 的特性差异说明</a>
-          <ul>
-            <li><a href="#用户">用户</a></li>
-            <li><a href="#表空间">表空间</a></li>
-            <li><a href="#pid">PID</a></li>
-          </ul>
-        </li>
-      </ul></nav>
-      <hr />
-    </div>
-<p>Redrock Postgres 是在 PostgreSQL 的基础上开发的，在客户端访问协议和SQL语法层面，Redrock Postgres 同 PostgreSQL 保持兼容。如果您的应用是基于 PostgreSQL 开发的，那么：</p>
-<ul>
-<li>基于同 PostgreSQL 在客户端访问协议层面的二进制兼容，可以使用和 PostgreSQL 一样的各种编程语言驱动访问 Redrock Postgres，如：Java, C/C++, .Net, Python, Ruby, Perl, Go, ODBC等。</li>
-<li>基于同 PostgreSQL 在SQL语法上的严格兼容，可以在应用软件不做任何改动的情况下迁移到 Redrock Postgres。</li>
-<li>可以使用 PostgreSQL 相关的桌面管理工具访问 Redrock Postgres，如：DBeaver、pgAdmin 4、Navicat for PostgreSQL 等。</li>
-</ul>
-<p>这意味着，在多数情况下，您可以使用 pg_dump 导出 PostgreSQL 中的数据，卸载 PostgreSQL 并安装 Redrock Postgres，将导出的数据导入到 Redrock Postgres 中，就可以开始了。</p>
+    <h1>ALTER UNDO</h1>
+    <p>ALTER UNDO — 更改一个回滚段的定义</p>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="不支持的功能特性">
-        不支持的功能特性
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/postgres-compatibility/#不支持的功能特性" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 不支持的功能特性" aria-label="锚定到： 不支持的功能特性" href="#%e4%b8%8d%e6%94%af%e6%8c%81%e7%9a%84%e5%8a%9f%e8%83%bd%e7%89%b9%e6%80%a7">
+    <h2 id="语法">
+        语法
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/commands/alterundo/#语法" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 语法" aria-label="锚定到： 语法" href="#%e8%af%ad%e6%b3%95">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<pre tabindex="0"><code>ALTER UNDO [ IF EXISTS ] name RENAME TO new_name
+ALTER UNDO [ IF EXISTS ] name SET TABLESPACE tablespace_name
+ALTER UNDO name OWNER TO { new_owner | CURRENT_USER | SESSION_USER }
+ALTER UNDO [ IF EXISTS ] name SET ( storage_parameter = value [, ... ] )
+ALTER UNDO [ IF EXISTS ] name RESET ( storage_parameter [, ... ] )
+</code></pre><div class="gdoc-page__anchorwrap">
+    <h2 id="描述">
+        描述
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/commands/alterundo/#描述" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 描述" aria-label="锚定到： 描述" href="#%e6%8f%8f%e8%bf%b0">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p><code>ALTER UNDO</code>更改一个现有回滚段的定义。下面描述了几种子形式。 注意每个子形式所需的锁级别可能不同。除非显式说明，<code>ACCESS EXCLUSIVE</code>锁被持有。 列出多个子命令时，锁的持有将是任何子命令所需的最严格的子命令。</p>
+<ul>
+<li>
+<p><code>RENAME</code></p>
+<p><code>RENAME</code>形式更改该回滚段的名称。这对已存储的数据没有影响。重命名回滚段取得一个 <code>SHARE UPDATE EXCLUSIVE</code>锁。</p>
+</li>
+<li>
+<p><code>SET TABLESPACE</code></p>
+<p>这种形式更改该回滚段的表空间为指定的表空间，并且把与该回滚段相关联的数据文件移动到新的表空间中。要更改一个回滚段的表空间，你必须拥有该回滚段并且具有新表空间上的<code>CREATE</code>特权。</p>
+</li>
+<li>
+<p><code>OWNER TO</code></p>
+<p>这种形式更改该回滚段的拥有者为指定的拥有者。要修改拥有者，你还必须是新拥有角色的一个直接或间接成员（注意超级用户自动拥有这些特权）。</p>
+</li>
+<li>
+<p><code>SET ( </code><em>storage_parameter</em><code>=</code><em>value</em><code> [, ... ] )</code></p>
+<p>这种形式为该回滚段更改一个或者多个回滚段相关的存储参数。可用的参数详见 <a
+  class="gdoc-markdown__link"
+  href="/zh-cn/commands/createundo/"
+  
+>CREATE UNDO</a>。注意这个命令不会立刻修改回滚段内容， 根据参数你可能需要用 <a
+  class="gdoc-markdown__link"
+  href="http://www.postgres.cn/docs/12/sql-vacuum.html"
+  
+>VACUUM</a> 清理回滚段来得到想要的效果。</p>
+</li>
+<li>
+<p><code>RESET ( </code><em>storage_parameter</em><code> [, ... ] )</code></p>
+<p>这种形式把一个或者多个回滚段相关的存储参数重置为其默认值。正如 <code>SET</code>一样，可能需要一次<code>VACUUM</code>来清理该回滚段。</p>
+</li>
+</ul>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="参数">
+        参数
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/commands/alterundo/#参数" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 参数" aria-label="锚定到： 参数" href="#%e5%8f%82%e6%95%b0">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
 <ul>
-<li><a
-  class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/12/runtime-config-client.html#GUC-VACUUM-FREEZE-TABLE-AGE"
-  
->清理相关配置参数</a></li>
-<li><a
-  class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/12/runtime-config-autovacuum.html"
-  
->自动清理配置参数</a></li>
-<li><a
-  class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/12/sql-vacuum.html"
-  
->完全清理操作</a></li>
-<li><a
-  class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/12/sql-vacuum.html"
-  
->冻结操作</a></li>
-<li><a
-  class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/12/ddl-system-columns.html"
-  
->系统列</a></li>
-<li><a
-  class="gdoc-markdown__link"
-  href="http://postgres.cn/docs/12/transaction-iso.html#XACT-SERIALIZABLE"
-  
->可序列化隔离级别</a></li>
-<li><a
-  class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/12/spgist.html"
-  
->SP-GiST索引</a></li>
+<li>
+<p><code>IF EXISTS</code></p>
+<p>如果该回滚段不存在不要抛出错误。这种情况下将发出一个提示。</p>
+</li>
+<li>
+<p><em><code>name</code></em></p>
+<p>要更改的一个现有回滚段的名称（可能被模式限定）。</p>
+</li>
+<li>
+<p><em><code>new_name</code></em></p>
+<p>该回滚段的新名称。</p>
+</li>
+<li>
+<p><em><code>tablespace_name</code></em></p>
+<p>该回滚段将被移动到的表空间。</p>
+</li>
+<li>
+<p><em><code>new_owner</code></em></p>
+<p>该回滚段的新拥有者。</p>
+</li>
+<li>
+<p><em><code>storage_parameter</code></em></p>
+<p>一个回滚段相关的存储参数的名称。</p>
+</li>
+<li>
+<p><em><code>value</code></em></p>
+<p>一个回滚段相关的存储参数的新值。根据该参数，这可能是一个数字或者一个词。</p>
+</li>
 </ul>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="同-postgresql-的特性差异说明">
-        同 PostgreSQL 的特性差异说明
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/postgres-compatibility/#同-postgresql-的特性差异说明" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 同 PostgreSQL 的特性差异说明" aria-label="锚定到： 同 PostgreSQL 的特性差异说明" href="#%e5%90%8c-postgresql-%e7%9a%84%e7%89%b9%e6%80%a7%e5%b7%ae%e5%bc%82%e8%af%b4%e6%98%8e">
+    <h2 id="示例">
+        示例
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/commands/alterundo/#示例" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 示例" aria-label="锚定到： 示例" href="#%e7%a4%ba%e4%be%8b">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<div class="gdoc-page__anchorwrap">
-    <h3 id="用户">
-        用户
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/postgres-compatibility/#用户" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 用户" aria-label="锚定到： 用户" href="#%e7%94%a8%e6%88%b7">
+<p>要重命名一个现有回滚段：</p>
+<pre tabindex="0"><code>ALTER UNDO undo_abc RENAME TO undo_test;
+</code></pre><p>把一个回滚段移动到一个不同的表空间：</p>
+<pre tabindex="0"><code>ALTER UNDO undo_15 SET TABLESPACE undospace;
+</code></pre><p>更改一个回滚段的最小页面数：</p>
+<pre tabindex="0"><code>ALTER UNDO undo_15 SET (minpages = 131072);
+</code></pre><p>更改回滚段<code>undo_15</code>的拥有者：</p>
+<pre tabindex="0"><code>ALTER UNDO undo_15 OWNER TO mary;
+</code></pre><div class="gdoc-page__anchorwrap">
+    <h2 id="兼容性">
+        兼容性
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/commands/alterundo/#兼容性" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 兼容性" aria-label="锚定到： 兼容性" href="#%e5%85%bc%e5%ae%b9%e6%80%a7">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
-    </h3>
+    </h2>
 </div>
-<p>在 PostgreSQL 中，用户为集群级别的对象，而在 Redrock Postgres 中，用户为数据库级别的对象。这意味者，在你访问同一个集群中不同的数据库对象时，虽然可能会看到相同名字的用户，实际上，它们是分属于各自数据库中不同的用户对象。</p>
-<p><strong>说明</strong>：该差异需要数据库管理员特别关注，对于应用开发人员不受影响。</p>
-<div class="gdoc-page__anchorwrap">
-    <h3 id="表空间">
-        表空间
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/postgres-compatibility/#表空间" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 表空间" aria-label="锚定到： 表空间" href="#%e8%a1%a8%e7%a9%ba%e9%97%b4">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
-<p>在 PostgreSQL 中，表空间为集群级别的对象，而在 Redrock Postgres 中，表空间为数据库级别的对象。这意味者，在你访问同一个集群中不同的数据库对象时，虽然可能会看到相同名字的表空间，实际上，它们是分属于各自数据库中不同的表空间对象。</p>
-<p><strong>说明</strong>：该差异需要数据库管理员特别关注，对于应用开发人员不受影响。</p>
-<div class="gdoc-page__anchorwrap">
-    <h3 id="pid">
-        PID
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/postgres-compatibility/#pid" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： PID" aria-label="锚定到： PID" href="#pid">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
-<p>在有些运行统计视图中（如：pg_stat_activity, pg_locks），存在名称为 <code>pid</code> 的字段。在 PostgreSQL 中，这些字段表示的是操作系统进程号，而在 Redrock Postgres 中，表示的是数据库进程号。</p>
-<p><strong>说明</strong>：在 <a
-  class="gdoc-markdown__link--code"
-  href="/zh-cn/advanced/monitor-stats/#pg_stat_activity"
-  
-><code>pg_stat_activity</code></a> 视图中，存在名称为 <code>spid</code> 的字段，表示真实的操作系统进程号。</p>
+<p><code>ALTER UNDO</code>是一种 Redrock Postgres 扩展。</p>
 
   </article>
 

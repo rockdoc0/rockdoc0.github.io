@@ -197,6 +197,19 @@
                 href="https://doc.rockdata.net/features/event-triggers/"
                 />
   </url><url>
+    <loc>https://doc.rockdata.net/commands/</loc>
+    <lastmod>2022-06-19T17:28:24+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://doc.rockdata.net/zh-cn/commands/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://doc.rockdata.net/commands/"
+                />
+  </url><url>
     <loc>https://doc.rockdata.net/advanced/monitor-stats/</loc>
     <lastmod>2022-06-15T18:38:42+08:00</lastmod>
     <xhtml:link
@@ -273,6 +286,45 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://doc.rockdata.net/posts/initial-release/"
+                />
+  </url><url>
+    <loc>https://doc.rockdata.net/commands/alterundo/</loc>
+    <lastmod>2022-06-19T17:28:24+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://doc.rockdata.net/zh-cn/commands/alterundo/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://doc.rockdata.net/commands/alterundo/"
+                />
+  </url><url>
+    <loc>https://doc.rockdata.net/commands/createundo/</loc>
+    <lastmod>2022-06-19T17:28:24+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://doc.rockdata.net/zh-cn/commands/createundo/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://doc.rockdata.net/commands/createundo/"
+                />
+  </url><url>
+    <loc>https://doc.rockdata.net/commands/dropundo/</loc>
+    <lastmod>2022-06-19T17:28:24+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://doc.rockdata.net/zh-cn/commands/dropundo/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://doc.rockdata.net/commands/dropundo/"
                 />
   </url><url>
     <loc>https://doc.rockdata.net/catalogs/recyclebin/</loc>

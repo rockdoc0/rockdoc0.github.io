@@ -8,10 +8,20 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="不支持的功能特性 同 PostgreSQL 的特性差异说明  用户 表空间 PID        Redrock Postgres 是在 PostgreSQL 的基础上开发的，在客户端访问协议和SQL语法层面，Redrock Postgres 同 PostgreSQL 保持兼容。如果您的应用是基于 PostgreSQL 开发的，那么：
- 基于同 PostgreSQL 在客户端访问协议层面的二进制兼容，可以使用和 PostgreSQL 一样的各种编程语言驱动访问 Redrock Postgres，如：Java, C/C&#43;&#43;, .Net, Python, Ruby, Perl, Go, ODBC等。 基于同 PostgreSQL 在SQL语法上的严格兼容，可以在应用软件不做任何改动的情况下迁移到 Redrock Postgres。 可以使用 PostgreSQL 相关的桌面管理工具访问 Redrock Postgres，如：DBeaver、pgAdmin 4、Navicat for PostgreSQL 等。  这意味着，在多数情况下，您可以使用 pg_dump 导出 PostgreSQL 中的数据，卸载 PostgreSQL 并安装 Redrock Postgres，将导出的数据导入到 Redrock Postgres 中，就可以开始了。" />
+  <meta name="description" content="CREATE UNDO — 定义一个新回滚段
+语法     CREATE UNDO [ IF NOT EXISTS ] name[ WITH ( storage_parameter = value [, ... ] ) ][ TABLESPACE tablespace_name ] 描述     CREATE UNDO在当前数据库中构建一个回滚段。该回滚段名必须与当前数据库中任何现有回滚段的名称不同。回滚段主要被用来存放表和索引中修改过的老版本数据。
+要创建一个回滚段，你必须是一个超级用户或者当前数据库拥有者。
+参数       IF NOT EXISTS
+如果一个同名关系已经存在则不要抛出错误。这种情况下会发出一个提示。 注意这并不保证现有的回滚段与将要创建的回滚段有任何相似。
+  name
+要创建的回滚段名称。这里不能包括模式名，因为回滚段总是被创建在系统模式 pg_catalog 中。
+  storage_parameter
+回滚段相关的存储参数的名称。详见 回滚段存储参数。
+  tablespace_name
+在其中创建回滚段的表空间。如果没有指定，将会使用 default_tablespace。
+  回滚段存储参数     可选的WITH子句为回滚段指定存储参数：" />
 
-    <title>同 PostgreSQL 的兼容性 | Redrock Documentation</title>
+    <title>CREATE UNDO | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -32,51 +42,71 @@
     
   <meta
     property="og:title"
-    content="同 PostgreSQL 的兼容性"
+    content="CREATE UNDO"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="不支持的功能特性 同 PostgreSQL 的特性差异说明  用户 表空间 PID        Redrock Postgres 是在 PostgreSQL 的基础上开发的，在客户端访问协议和SQL语法层面，Redrock Postgres 同 PostgreSQL 保持兼容。如果您的应用是基于 PostgreSQL 开发的，那么：
- 基于同 PostgreSQL 在客户端访问协议层面的二进制兼容，可以使用和 PostgreSQL 一样的各种编程语言驱动访问 Redrock Postgres，如：Java, C/C&#43;&#43;, .Net, Python, Ruby, Perl, Go, ODBC等。 基于同 PostgreSQL 在SQL语法上的严格兼容，可以在应用软件不做任何改动的情况下迁移到 Redrock Postgres。 可以使用 PostgreSQL 相关的桌面管理工具访问 Redrock Postgres，如：DBeaver、pgAdmin 4、Navicat for PostgreSQL 等。  这意味着，在多数情况下，您可以使用 pg_dump 导出 PostgreSQL 中的数据，卸载 PostgreSQL 并安装 Redrock Postgres，将导出的数据导入到 Redrock Postgres 中，就可以开始了。" />
+  <meta property="og:description" content="CREATE UNDO — 定义一个新回滚段
+语法     CREATE UNDO [ IF NOT EXISTS ] name[ WITH ( storage_parameter = value [, ... ] ) ][ TABLESPACE tablespace_name ] 描述     CREATE UNDO在当前数据库中构建一个回滚段。该回滚段名必须与当前数据库中任何现有回滚段的名称不同。回滚段主要被用来存放表和索引中修改过的老版本数据。
+要创建一个回滚段，你必须是一个超级用户或者当前数据库拥有者。
+参数       IF NOT EXISTS
+如果一个同名关系已经存在则不要抛出错误。这种情况下会发出一个提示。 注意这并不保证现有的回滚段与将要创建的回滚段有任何相似。
+  name
+要创建的回滚段名称。这里不能包括模式名，因为回滚段总是被创建在系统模式 pg_catalog 中。
+  storage_parameter
+回滚段相关的存储参数的名称。详见 回滚段存储参数。
+  tablespace_name
+在其中创建回滚段的表空间。如果没有指定，将会使用 default_tablespace。
+  回滚段存储参数     可选的WITH子句为回滚段指定存储参数：" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://doc.rockdata.net/zh-cn/features/postgres-compatibility/" />
+<meta property="og:url" content="https://doc.rockdata.net/zh-cn/commands/createundo/" />
 
-<meta property="article:section" content="Features" />
+<meta property="article:section" content="Commands" />
     <meta
       property="article:modified_time"
-      content="2022-06-18T15:29:38+08:00"
+      content="2022-06-19T17:28:24+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="同 PostgreSQL 的兼容性" />
+<meta name="twitter:title" content="CREATE UNDO" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="不支持的功能特性 同 PostgreSQL 的特性差异说明  用户 表空间 PID        Redrock Postgres 是在 PostgreSQL 的基础上开发的，在客户端访问协议和SQL语法层面，Redrock Postgres 同 PostgreSQL 保持兼容。如果您的应用是基于 PostgreSQL 开发的，那么：
- 基于同 PostgreSQL 在客户端访问协议层面的二进制兼容，可以使用和 PostgreSQL 一样的各种编程语言驱动访问 Redrock Postgres，如：Java, C/C&#43;&#43;, .Net, Python, Ruby, Perl, Go, ODBC等。 基于同 PostgreSQL 在SQL语法上的严格兼容，可以在应用软件不做任何改动的情况下迁移到 Redrock Postgres。 可以使用 PostgreSQL 相关的桌面管理工具访问 Redrock Postgres，如：DBeaver、pgAdmin 4、Navicat for PostgreSQL 等。  这意味着，在多数情况下，您可以使用 pg_dump 导出 PostgreSQL 中的数据，卸载 PostgreSQL 并安装 Redrock Postgres，将导出的数据导入到 Redrock Postgres 中，就可以开始了。" />
+  <meta name="twitter:description" content="CREATE UNDO — 定义一个新回滚段
+语法     CREATE UNDO [ IF NOT EXISTS ] name[ WITH ( storage_parameter = value [, ... ] ) ][ TABLESPACE tablespace_name ] 描述     CREATE UNDO在当前数据库中构建一个回滚段。该回滚段名必须与当前数据库中任何现有回滚段的名称不同。回滚段主要被用来存放表和索引中修改过的老版本数据。
+要创建一个回滚段，你必须是一个超级用户或者当前数据库拥有者。
+参数       IF NOT EXISTS
+如果一个同名关系已经存在则不要抛出错误。这种情况下会发出一个提示。 注意这并不保证现有的回滚段与将要创建的回滚段有任何相似。
+  name
+要创建的回滚段名称。这里不能包括模式名，因为回滚段总是被创建在系统模式 pg_catalog 中。
+  storage_parameter
+回滚段相关的存储参数的名称。详见 回滚段存储参数。
+  tablespace_name
+在其中创建回滚段的表空间。如果没有指定，将会使用 default_tablespace。
+  回滚段存储参数     可选的WITH子句为回滚段指定存储参数：" />
 
 
   <script type="application/ld+json">
   {
       "@context": "http://schema.org",
       "@type": "TechArticle",
-      "articleSection": "Features",
-      "name": "同 PostgreSQL 的兼容性",
-      "url" : "https://doc.rockdata.net/zh-cn/features/postgres-compatibility/",
-      "headline": "同 PostgreSQL 的兼容性",
-      "description": "不支持的功能特性 同 PostgreSQL 的特性差异说明  用户 表空间 PID        Redrock Postgres 是在 PostgreSQL 的基础上开发的，在客户端访问协议和SQL语法层面，Redrock Postgres 同 PostgreSQL 保持兼容。如果您的应用是基于 PostgreSQL 开发的，那么：\n 基于同 PostgreSQL 在客户端访问协议层面的二进制兼容，可以使用和 PostgreSQL 一样的各种编程语言驱动访问 Redrock Postgres，如：Java, C\/C\u002b\u002b, .Net, Python, Ruby, Perl, Go, ODBC等。 基于同 PostgreSQL 在SQL语法上的严格兼容，可以在应用软件不做任何改动的情况下迁移到 Redrock Postgres。 可以使用 PostgreSQL 相关的桌面管理工具访问 Redrock Postgres，如：DBeaver、pgAdmin 4、Navicat for PostgreSQL 等。  这意味着，在多数情况下，您可以使用 pg_dump 导出 PostgreSQL 中的数据，卸载 PostgreSQL 并安装 Redrock Postgres，将导出的数据导入到 Redrock Postgres 中，就可以开始了。",
+      "articleSection": "Commands",
+      "name": "CREATE UNDO",
+      "url" : "https://doc.rockdata.net/zh-cn/commands/createundo/",
+      "headline": "CREATE UNDO",
+      "description": "CREATE UNDO — 定义一个新回滚段\n语法     CREATE UNDO [ IF NOT EXISTS ] name\r[ WITH ( storage_parameter = value [, ... ] ) ]\r[ TABLESPACE tablespace_name ] 描述     CREATE UNDO在当前数据库中构建一个回滚段。该回滚段名必须与当前数据库中任何现有回滚段的名称不同。回滚段主要被用来存放表和索引中修改过的老版本数据。\n要创建一个回滚段，你必须是一个超级用户或者当前数据库拥有者。\n参数       IF NOT EXISTS\n如果一个同名关系已经存在则不要抛出错误。这种情况下会发出一个提示。 注意这并不保证现有的回滚段与将要创建的回滚段有任何相似。\n  name\n要创建的回滚段名称。这里不能包括模式名，因为回滚段总是被创建在系统模式 pg_catalog 中。\n  storage_parameter\n回滚段相关的存储参数的名称。详见 回滚段存储参数。\n  tablespace_name\n在其中创建回滚段的表空间。如果没有指定，将会使用 default_tablespace。\n  回滚段存储参数     可选的WITH子句为回滚段指定存储参数：",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "100",
+      "wordCount" : "84",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://doc.rockdata.net/zh-cn/features/postgres-compatibility/"
+          "@id": "https://doc.rockdata.net/zh-cn/commands/createundo/"
       },
       "copyrightHolder" : "Redrock Documentation",
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-18T15:29:38.00Z",
+      "dateModified": "2022-06-19T17:28:24.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -152,7 +182,7 @@
   href="/custom.css"
   media="all"
 />
-  <link href="https://doc.rockdata.net/zh-cn/features/postgres-compatibility/" rel="canonical" type="text/html" />
+  <link href="https://doc.rockdata.net/zh-cn/commands/createundo/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -759,7 +789,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <a
                   class="flex gdoc-language__entry"
                   title="English"
-                  href="/features/postgres-compatibility/"
+                  href="/commands/createundo/"
                   hreflang="en"
                   lang="en"
                 >
@@ -1443,7 +1473,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <span class="flex">
                   <a
                     href="/zh-cn/features/postgres-compatibility/"
-                    class="gdoc-nav__entry is-active"
+                    class="gdoc-nav__entry"
                   >
                     同 PostgreSQL 的兼容性
                   </a>
@@ -1664,7 +1694,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               type="checkbox"
               
                 class="gdoc-nav__toggle" id="navtree-a5b7adb4"
-                
+                checked
               
             />
             <label
@@ -1766,7 +1796,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <span class="flex">
                   <a
                     href="/zh-cn/commands/createundo/"
-                    class="gdoc-nav__entry"
+                    class="gdoc-nav__entry is-active"
                   >
                     CREATE UNDO
                   </a>
@@ -2227,7 +2257,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/features/' href='/zh-cn/features/'><span itemprop='name'>基础特性</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>同 PostgreSQL 的兼容性</span><meta itemprop='position' content='4' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/commands/' href='/zh-cn/commands/'><span itemprop='name'>SQL 命令</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>CREATE UNDO</span><meta itemprop='position' content='4' /></li>
   
 
   
@@ -2242,7 +2272,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <span class="editpage">
         <svg class="gdoc-icon gdoc_code"><use xlink:href="#gdoc_code"></use></svg>
         <a
-          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/zh-cn/features/postgres-compatibility.md"
+          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/zh-cn/commands/createundo.md"
         >
           编辑页面
         </a>
@@ -2256,114 +2286,117 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <article
     class="gdoc-markdown gdoc-markdown__align--left"
   >
-    <h1>同 PostgreSQL 的兼容性</h1>
-    <div class="gdoc-toc gdoc-toc__level--3">
-      <nav id="TableOfContents"><ul>
-        <li><a href="#不支持的功能特性">不支持的功能特性</a></li>
-        <li><a href="#同-postgresql-的特性差异说明">同 PostgreSQL 的特性差异说明</a>
-          <ul>
-            <li><a href="#用户">用户</a></li>
-            <li><a href="#表空间">表空间</a></li>
-            <li><a href="#pid">PID</a></li>
-          </ul>
-        </li>
-      </ul></nav>
-      <hr />
-    </div>
-<p>Redrock Postgres 是在 PostgreSQL 的基础上开发的，在客户端访问协议和SQL语法层面，Redrock Postgres 同 PostgreSQL 保持兼容。如果您的应用是基于 PostgreSQL 开发的，那么：</p>
-<ul>
-<li>基于同 PostgreSQL 在客户端访问协议层面的二进制兼容，可以使用和 PostgreSQL 一样的各种编程语言驱动访问 Redrock Postgres，如：Java, C/C++, .Net, Python, Ruby, Perl, Go, ODBC等。</li>
-<li>基于同 PostgreSQL 在SQL语法上的严格兼容，可以在应用软件不做任何改动的情况下迁移到 Redrock Postgres。</li>
-<li>可以使用 PostgreSQL 相关的桌面管理工具访问 Redrock Postgres，如：DBeaver、pgAdmin 4、Navicat for PostgreSQL 等。</li>
-</ul>
-<p>这意味着，在多数情况下，您可以使用 pg_dump 导出 PostgreSQL 中的数据，卸载 PostgreSQL 并安装 Redrock Postgres，将导出的数据导入到 Redrock Postgres 中，就可以开始了。</p>
+    <h1>CREATE UNDO</h1>
+    <p>CREATE UNDO — 定义一个新回滚段</p>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="不支持的功能特性">
-        不支持的功能特性
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/postgres-compatibility/#不支持的功能特性" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 不支持的功能特性" aria-label="锚定到： 不支持的功能特性" href="#%e4%b8%8d%e6%94%af%e6%8c%81%e7%9a%84%e5%8a%9f%e8%83%bd%e7%89%b9%e6%80%a7">
+    <h2 id="语法">
+        语法
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/commands/createundo/#语法" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 语法" aria-label="锚定到： 语法" href="#%e8%af%ad%e6%b3%95">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<pre tabindex="0"><code>CREATE UNDO [ IF NOT EXISTS ] name
+    [ WITH ( storage_parameter = value [, ... ] ) ]
+    [ TABLESPACE tablespace_name ]
+</code></pre><div class="gdoc-page__anchorwrap">
+    <h2 id="描述">
+        描述
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/commands/createundo/#描述" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 描述" aria-label="锚定到： 描述" href="#%e6%8f%8f%e8%bf%b0">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p><code>CREATE UNDO</code>在当前数据库中构建一个回滚段。该回滚段名必须与当前数据库中任何现有回滚段的名称不同。回滚段主要被用来存放表和索引中修改过的老版本数据。</p>
+<p>要创建一个回滚段，你必须是一个超级用户或者当前数据库拥有者。</p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="参数">
+        参数
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/commands/createundo/#参数" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 参数" aria-label="锚定到： 参数" href="#%e5%8f%82%e6%95%b0">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
 <ul>
-<li><a
+<li>
+<p><code>IF NOT EXISTS</code></p>
+<p>如果一个同名关系已经存在则不要抛出错误。这种情况下会发出一个提示。 注意这并不保证现有的回滚段与将要创建的回滚段有任何相似。</p>
+</li>
+<li>
+<p><em><code>name</code></em></p>
+<p>要创建的回滚段名称。这里不能包括模式名，因为回滚段总是被创建在系统模式 <code>pg_catalog</code> 中。</p>
+</li>
+<li>
+<p><em><code>storage_parameter</code></em></p>
+<p>回滚段相关的存储参数的名称。详见 <a
   class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/12/runtime-config-client.html#GUC-VACUUM-FREEZE-TABLE-AGE"
+  href="/zh-cn/commands/createundo/#%e5%9b%9e%e6%bb%9a%e6%ae%b5%e5%ad%98%e5%82%a8%e5%8f%82%e6%95%b0"
   
->清理相关配置参数</a></li>
-<li><a
+>回滚段存储参数</a>。</p>
+</li>
+<li>
+<p><em><code>tablespace_name</code></em></p>
+<p>在其中创建回滚段的表空间。如果没有指定，将会使用 <a
   class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/12/runtime-config-autovacuum.html"
+  href="http://www.postgres.cn/docs/12/runtime-config-client.html#GUC-DEFAULT-TABLESPACE"
   
->自动清理配置参数</a></li>
-<li><a
-  class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/12/sql-vacuum.html"
-  
->完全清理操作</a></li>
-<li><a
-  class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/12/sql-vacuum.html"
-  
->冻结操作</a></li>
-<li><a
-  class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/12/ddl-system-columns.html"
-  
->系统列</a></li>
-<li><a
-  class="gdoc-markdown__link"
-  href="http://postgres.cn/docs/12/transaction-iso.html#XACT-SERIALIZABLE"
-  
->可序列化隔离级别</a></li>
-<li><a
-  class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/12/spgist.html"
-  
->SP-GiST索引</a></li>
+>default_tablespace</a>。</p>
+</li>
 </ul>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="同-postgresql-的特性差异说明">
-        同 PostgreSQL 的特性差异说明
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/postgres-compatibility/#同-postgresql-的特性差异说明" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 同 PostgreSQL 的特性差异说明" aria-label="锚定到： 同 PostgreSQL 的特性差异说明" href="#%e5%90%8c-postgresql-%e7%9a%84%e7%89%b9%e6%80%a7%e5%b7%ae%e5%bc%82%e8%af%b4%e6%98%8e">
+    <h3 id="回滚段存储参数">
+        回滚段存储参数
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/commands/createundo/#回滚段存储参数" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 回滚段存储参数" aria-label="锚定到： 回滚段存储参数" href="#%e5%9b%9e%e6%bb%9a%e6%ae%b5%e5%ad%98%e5%82%a8%e5%8f%82%e6%95%b0">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p>可选的<code>WITH</code>子句为回滚段指定<em>存储参数</em>：</p>
+<ul>
+<li>
+<p><code>initialpages</code></p>
+<p>回滚段中的初始页面数。默认是<code>128</code>。</p>
+</li>
+<li>
+<p><code>minpages</code></p>
+<p>回滚段中的最小页面数。默认是<code>128</code>。</p>
+</li>
+<li>
+<p><code>maxpages</code></p>
+<p>回滚段中的最大页面数。默认不限制。该参数更多只是一种提示，实际上，Redrock Postgres 采用的是一种完全自动化的机制，称为自动回滚段管理模式，用于管理回滚段占用的存储空间。</p>
+</li>
+</ul>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="备注">
+        备注
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/commands/createundo/#备注" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 备注" aria-label="锚定到： 备注" href="#%e5%a4%87%e6%b3%a8">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
+<p>初始化数据库集群数据目录后，数据库中默认会产生4个集群级回滚段和8个数据库级别的回滚段，其中集群级回滚段主要用来修改共享系统表的数据，如 pg_database。回滚段的首个页面用于存储事务表项信息，单个回滚段同时最多能存放约200个事务项。</p>
+<p>但是，如果单个回滚段同时处理的事务数较多（比如超过8个），会因为事务表并发访问冲突产生对应的页面访问等待事件。此时，就可以使用 <code>CREATE UNDO</code> 命令在当前数据库中创建更多的回滚段，以提升系统的事务处理性能。</p>
 <div class="gdoc-page__anchorwrap">
-    <h3 id="用户">
-        用户
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/postgres-compatibility/#用户" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 用户" aria-label="锚定到： 用户" href="#%e7%94%a8%e6%88%b7">
+    <h2 id="示例">
+        示例
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/commands/createundo/#示例" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 示例" aria-label="锚定到： 示例" href="#%e7%a4%ba%e4%be%8b">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
-    </h3>
+    </h2>
 </div>
-<p>在 PostgreSQL 中，用户为集群级别的对象，而在 Redrock Postgres 中，用户为数据库级别的对象。这意味者，在你访问同一个集群中不同的数据库对象时，虽然可能会看到相同名字的用户，实际上，它们是分属于各自数据库中不同的用户对象。</p>
-<p><strong>说明</strong>：该差异需要数据库管理员特别关注，对于应用开发人员不受影响。</p>
-<div class="gdoc-page__anchorwrap">
-    <h3 id="表空间">
-        表空间
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/postgres-compatibility/#表空间" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 表空间" aria-label="锚定到： 表空间" href="#%e8%a1%a8%e7%a9%ba%e9%97%b4">
+<p>创建一个回滚段：</p>
+<pre tabindex="0"><code>CREATE UNDO undo_13;
+</code></pre><p>创建一个回滚段并且把回滚段放在表空间<code>undospace</code>中：</p>
+<pre tabindex="0"><code>CREATE UNDO undo_14 TABLESPACE undospace;
+</code></pre><div class="gdoc-page__anchorwrap">
+    <h2 id="兼容性">
+        兼容性
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/commands/createundo/#兼容性" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 兼容性" aria-label="锚定到： 兼容性" href="#%e5%85%bc%e5%ae%b9%e6%80%a7">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
-    </h3>
+    </h2>
 </div>
-<p>在 PostgreSQL 中，表空间为集群级别的对象，而在 Redrock Postgres 中，表空间为数据库级别的对象。这意味者，在你访问同一个集群中不同的数据库对象时，虽然可能会看到相同名字的表空间，实际上，它们是分属于各自数据库中不同的表空间对象。</p>
-<p><strong>说明</strong>：该差异需要数据库管理员特别关注，对于应用开发人员不受影响。</p>
-<div class="gdoc-page__anchorwrap">
-    <h3 id="pid">
-        PID
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/postgres-compatibility/#pid" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： PID" aria-label="锚定到： PID" href="#pid">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
-<p>在有些运行统计视图中（如：pg_stat_activity, pg_locks），存在名称为 <code>pid</code> 的字段。在 PostgreSQL 中，这些字段表示的是操作系统进程号，而在 Redrock Postgres 中，表示的是数据库进程号。</p>
-<p><strong>说明</strong>：在 <a
-  class="gdoc-markdown__link--code"
-  href="/zh-cn/advanced/monitor-stats/#pg_stat_activity"
-  
-><code>pg_stat_activity</code></a> 视图中，存在名称为 <code>spid</code> 的字段，表示真实的操作系统进程号。</p>
+<p><code>CREATE UNDO</code>是一种 Redrock Postgres 的语言扩展。在 SQL 标准中没有对于回滚段的规定。</p>
 
   </article>
 
