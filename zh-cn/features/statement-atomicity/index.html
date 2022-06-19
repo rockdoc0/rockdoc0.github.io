@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="color-toggle-hidden">
+<html lang="zh-cn" class="color-toggle-hidden">
   <head>
     <meta charset="UTF-8" />
 <meta name="referrer" content="no-referrer" />
@@ -8,10 +8,22 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="CREATE UNDO — define a new undo
-Synopsis     CREATE UNDO [ IF NOT EXISTS ] name[ WITH ( storage_parameter = value [, ... ] ) ][ TABLESPACE tablespace_name ] Description     CREATE UNDO constructs a new undo in the current database. The undo name must be distinct from the name of any existing undo in the current database. Undos are primarily used to hold old version data that has been modified in tables and indexes." />
+  <meta name="description" content="示例事务：帐户借贷     为了说明事务的概念，考虑一个银行数据库。当一个客户将钱从储蓄账户转移到支票帐户时，事务必须由三个单独的操作组成：
+  减少储蓄账户余额
+  增加支票账户余额
+  在事务日志中记录这笔交易
+  Redrock Postgres 必须考虑两种情况。如果所有三个 SQL 语句都对该账号维持了正确的余额，则事务的效果可以应用到数据库中。但是，如果某个问题，如资金不足、帐号无效、或硬件故障，阻止了事务中某些语句的完成，则数据库必须回滚整个事务，以便所有帐户的余额是正确的。
+图 1 说明了银行事务。第一条语句从储蓄帐户3209中减去 500 美元。第二条语句向支票帐户3208增加500 美元。第三条语句在日志表中插入这笔转账记录。最后一个语句提交事务。
+    图 1 银行事务    语句级原子性     Redrock Postgres 支持语句级原子性，这意味着 SQL 语句是一个原子工作单元，要么完全成功，要么完全失败。
+成功的语句不同于已提交事务。如果一个SQL 语句能被数据库正确分析，并作为一个原子单位来运行且未产生错误，且所有行都被正确更改，则这个SQL 语句是成功执行的。
+如果 SQL 语句在执行过程中导致错误，则它是不成功的，该语句中的所有影响都将被回滚。此操作是一个语句级回滚。此操作具有以下特征：
+  未成功的 SQL 语句只会导致它本身执行的工作丢失。
+未成功的语句不会导致丢失当前事务中该语句之前的任何工作。例如，若图1中第二个UPDATE语句的执行导致错误并被回滚，但由第一个UPDATE语句执行的工作是不会被回滚的。第一个UPDATE语句可以由用户显式提交或回滚。
+  回滚的效果是，好像该语句从来未运行过。
+原子语句的副作用被视为原子语句的一部分，例如，由语句执行所引发的触发器调用。作为原子语句的一部分所产生的所有工作，要么都成功，要么都失败。
+  由错误导致语句级回滚的一个示例，是尝试插入重复的主键。死锁中的某个为争用相同数据的SQL 语句，也会导致语句级回滚。然而，在解析中发现的错误，比如语法错误，实际上尚未运行，因此不会导致语句级回滚。" />
 
-    <title>CREATE UNDO | Redrock Documentation</title>
+    <title>语句级原子性 | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -32,51 +44,75 @@ Synopsis     CREATE UNDO [ IF NOT EXISTS ] name[ WITH ( storage_parameter = val
     
   <meta
     property="og:title"
-    content="CREATE UNDO"
+    content="语句级原子性"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="CREATE UNDO — define a new undo
-Synopsis     CREATE UNDO [ IF NOT EXISTS ] name[ WITH ( storage_parameter = value [, ... ] ) ][ TABLESPACE tablespace_name ] Description     CREATE UNDO constructs a new undo in the current database. The undo name must be distinct from the name of any existing undo in the current database. Undos are primarily used to hold old version data that has been modified in tables and indexes." />
+  <meta property="og:description" content="示例事务：帐户借贷     为了说明事务的概念，考虑一个银行数据库。当一个客户将钱从储蓄账户转移到支票帐户时，事务必须由三个单独的操作组成：
+  减少储蓄账户余额
+  增加支票账户余额
+  在事务日志中记录这笔交易
+  Redrock Postgres 必须考虑两种情况。如果所有三个 SQL 语句都对该账号维持了正确的余额，则事务的效果可以应用到数据库中。但是，如果某个问题，如资金不足、帐号无效、或硬件故障，阻止了事务中某些语句的完成，则数据库必须回滚整个事务，以便所有帐户的余额是正确的。
+图 1 说明了银行事务。第一条语句从储蓄帐户3209中减去 500 美元。第二条语句向支票帐户3208增加500 美元。第三条语句在日志表中插入这笔转账记录。最后一个语句提交事务。
+    图 1 银行事务    语句级原子性     Redrock Postgres 支持语句级原子性，这意味着 SQL 语句是一个原子工作单元，要么完全成功，要么完全失败。
+成功的语句不同于已提交事务。如果一个SQL 语句能被数据库正确分析，并作为一个原子单位来运行且未产生错误，且所有行都被正确更改，则这个SQL 语句是成功执行的。
+如果 SQL 语句在执行过程中导致错误，则它是不成功的，该语句中的所有影响都将被回滚。此操作是一个语句级回滚。此操作具有以下特征：
+  未成功的 SQL 语句只会导致它本身执行的工作丢失。
+未成功的语句不会导致丢失当前事务中该语句之前的任何工作。例如，若图1中第二个UPDATE语句的执行导致错误并被回滚，但由第一个UPDATE语句执行的工作是不会被回滚的。第一个UPDATE语句可以由用户显式提交或回滚。
+  回滚的效果是，好像该语句从来未运行过。
+原子语句的副作用被视为原子语句的一部分，例如，由语句执行所引发的触发器调用。作为原子语句的一部分所产生的所有工作，要么都成功，要么都失败。
+  由错误导致语句级回滚的一个示例，是尝试插入重复的主键。死锁中的某个为争用相同数据的SQL 语句，也会导致语句级回滚。然而，在解析中发现的错误，比如语法错误，实际上尚未运行，因此不会导致语句级回滚。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://doc.rockdata.net/commands/createundo/" />
+<meta property="og:url" content="https://doc.rockdata.net/zh-cn/features/statement-atomicity/" />
 
-<meta property="article:section" content="Commands" />
+<meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-06-19T17:28:24+08:00"
+      content="2022-06-19T20:52:49+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="CREATE UNDO" />
+<meta name="twitter:title" content="语句级原子性" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="CREATE UNDO — define a new undo
-Synopsis     CREATE UNDO [ IF NOT EXISTS ] name[ WITH ( storage_parameter = value [, ... ] ) ][ TABLESPACE tablespace_name ] Description     CREATE UNDO constructs a new undo in the current database. The undo name must be distinct from the name of any existing undo in the current database. Undos are primarily used to hold old version data that has been modified in tables and indexes." />
+  <meta name="twitter:description" content="示例事务：帐户借贷     为了说明事务的概念，考虑一个银行数据库。当一个客户将钱从储蓄账户转移到支票帐户时，事务必须由三个单独的操作组成：
+  减少储蓄账户余额
+  增加支票账户余额
+  在事务日志中记录这笔交易
+  Redrock Postgres 必须考虑两种情况。如果所有三个 SQL 语句都对该账号维持了正确的余额，则事务的效果可以应用到数据库中。但是，如果某个问题，如资金不足、帐号无效、或硬件故障，阻止了事务中某些语句的完成，则数据库必须回滚整个事务，以便所有帐户的余额是正确的。
+图 1 说明了银行事务。第一条语句从储蓄帐户3209中减去 500 美元。第二条语句向支票帐户3208增加500 美元。第三条语句在日志表中插入这笔转账记录。最后一个语句提交事务。
+    图 1 银行事务    语句级原子性     Redrock Postgres 支持语句级原子性，这意味着 SQL 语句是一个原子工作单元，要么完全成功，要么完全失败。
+成功的语句不同于已提交事务。如果一个SQL 语句能被数据库正确分析，并作为一个原子单位来运行且未产生错误，且所有行都被正确更改，则这个SQL 语句是成功执行的。
+如果 SQL 语句在执行过程中导致错误，则它是不成功的，该语句中的所有影响都将被回滚。此操作是一个语句级回滚。此操作具有以下特征：
+  未成功的 SQL 语句只会导致它本身执行的工作丢失。
+未成功的语句不会导致丢失当前事务中该语句之前的任何工作。例如，若图1中第二个UPDATE语句的执行导致错误并被回滚，但由第一个UPDATE语句执行的工作是不会被回滚的。第一个UPDATE语句可以由用户显式提交或回滚。
+  回滚的效果是，好像该语句从来未运行过。
+原子语句的副作用被视为原子语句的一部分，例如，由语句执行所引发的触发器调用。作为原子语句的一部分所产生的所有工作，要么都成功，要么都失败。
+  由错误导致语句级回滚的一个示例，是尝试插入重复的主键。死锁中的某个为争用相同数据的SQL 语句，也会导致语句级回滚。然而，在解析中发现的错误，比如语法错误，实际上尚未运行，因此不会导致语句级回滚。" />
 
 
   <script type="application/ld+json">
   {
       "@context": "http://schema.org",
       "@type": "TechArticle",
-      "articleSection": "Commands",
-      "name": "CREATE UNDO",
-      "url" : "https://doc.rockdata.net/commands/createundo/",
-      "headline": "CREATE UNDO",
-      "description": "CREATE UNDO — define a new undo\nSynopsis     CREATE UNDO [ IF NOT EXISTS ] name\r[ WITH ( storage_parameter = value [, ... ] ) ]\r[ TABLESPACE tablespace_name ] Description     CREATE UNDO constructs a new undo in the current database. The undo name must be distinct from the name of any existing undo in the current database. Undos are primarily used to hold old version data that has been modified in tables and indexes.",
+      "articleSection": "Features",
+      "name": "语句级原子性",
+      "url" : "https://doc.rockdata.net/zh-cn/features/statement-atomicity/",
+      "headline": "语句级原子性",
+      "description": "示例事务：帐户借贷     为了说明事务的概念，考虑一个银行数据库。当一个客户将钱从储蓄账户转移到支票帐户时，事务必须由三个单独的操作组成：\n  减少储蓄账户余额\n  增加支票账户余额\n  在事务日志中记录这笔交易\n  Redrock Postgres 必须考虑两种情况。如果所有三个 SQL 语句都对该账号维持了正确的余额，则事务的效果可以应用到数据库中。但是，如果某个问题，如资金不足、帐号无效、或硬件故障，阻止了事务中某些语句的完成，则数据库必须回滚整个事务，以便所有帐户的余额是正确的。\n图 1 说明了银行事务。第一条语句从储蓄帐户3209中减去 500 美元。第二条语句向支票帐户3208增加500 美元。第三条语句在日志表中插入这笔转账记录。最后一个语句提交事务。\n    图 1 银行事务    语句级原子性     Redrock Postgres 支持语句级原子性，这意味着 SQL 语句是一个原子工作单元，要么完全成功，要么完全失败。\n成功的语句不同于已提交事务。如果一个SQL 语句能被数据库正确分析，并作为一个原子单位来运行且未产生错误，且所有行都被正确更改，则这个SQL 语句是成功执行的。\n如果 SQL 语句在执行过程中导致错误，则它是不成功的，该语句中的所有影响都将被回滚。此操作是一个语句级回滚。此操作具有以下特征：\n  未成功的 SQL 语句只会导致它本身执行的工作丢失。\n未成功的语句不会导致丢失当前事务中该语句之前的任何工作。例如，若图1中第二个UPDATE语句的执行导致错误并被回滚，但由第一个UPDATE语句执行的工作是不会被回滚的。第一个UPDATE语句可以由用户显式提交或回滚。\n  回滚的效果是，好像该语句从来未运行过。\n原子语句的副作用被视为原子语句的一部分，例如，由语句执行所引发的触发器调用。作为原子语句的一部分所产生的所有工作，要么都成功，要么都失败。\n  由错误导致语句级回滚的一个示例，是尝试插入重复的主键。死锁中的某个为争用相同数据的SQL 语句，也会导致语句级回滚。然而，在解析中发现的错误，比如语法错误，实际上尚未运行，因此不会导致语句级回滚。",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "449",
-      "inLanguage": "en",
+      "wordCount" : "39",
+      "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://doc.rockdata.net/commands/createundo/"
+          "@id": "https://doc.rockdata.net/zh-cn/features/statement-atomicity/"
       },
       "copyrightHolder" : "Redrock Documentation",
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-19T17:28:24.00Z",
+      "dateModified": "2022-06-19T20:52:49.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -152,7 +188,7 @@ Synopsis     CREATE UNDO [ IF NOT EXISTS ] name[ WITH ( storage_parameter = val
   href="/custom.css"
   media="all"
 />
-  <link href="https://doc.rockdata.net/commands/createundo/" rel="canonical" type="text/html" />
+  <link href="https://doc.rockdata.net/zh-cn/features/statement-atomicity/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -644,11 +680,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
       <label for="menu-control" class="gdoc-nav__control" tabindex="0">
         <svg class="gdoc-icon gdoc_menu">
-          <title>Open Navigation</title>
+          <title>打开导航</title>
           <use xlink:href="#gdoc_menu"></use>
         </svg>
         <svg class="gdoc-icon gdoc_arrow_back">
-          <title>Close Navigation</title>
+          <title>关闭导航</title>
           <use xlink:href="#gdoc_arrow_back"></use>
         </svg>
       </label>
@@ -714,15 +750,15 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
         <span id="gdoc-dark-mode">
           <svg class="gdoc-icon gdoc_brightness_dark">
-            <title>Toggle Dark/Light/Auto mode</title>
+            <title>切换暗/亮/自动模式</title>
             <use xlink:href="#gdoc_brightness_dark"></use>
           </svg>
           <svg class="gdoc-icon gdoc_brightness_light">
-            <title>Toggle Dark/Light/Auto mode</title>
+            <title>切换暗/亮/自动模式</title>
             <use xlink:href="#gdoc_brightness_light"></use>
           </svg>
           <svg class="gdoc-icon gdoc_brightness_auto">
-            <title>Toggle Dark/Light/Auto mode</title>
+            <title>切换暗/亮/自动模式</title>
             <use xlink:href="#gdoc_brightness_auto"></use>
           </svg>
         </span>
@@ -730,7 +766,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         <span class="gdoc-menu-header__home">
           <a href="https://doc.rockdata.net/" class="gdoc-header__link">
             <svg class="gdoc-icon gdoc_home">
-              <title>Back to homepage</title>
+              <title>返回首页</title>
               <use xlink:href="#gdoc_home"></use>
             </svg>
           </a>
@@ -742,12 +778,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <li>
         
           
+        
+          
             <span class="flex align-center">
               <svg class="gdoc-icon gdoc_language"><use xlink:href="#gdoc_language"></use></svg>
-              <span>EN</span>
+              <span>ZH-CN</span>
             </span>
-          
-        
           
         
 
@@ -758,12 +794,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               <li>
                 <a
                   class="flex gdoc-language__entry"
-                  title="简体中文"
-                  href="/zh-cn/commands/createundo/"
-                  hreflang="zh-cn"
-                  lang="zh-cn"
+                  title="English"
+                  href="/features/statement-atomicity/"
+                  hreflang="en"
+                  lang="en"
                 >
-                  简体中文
+                  English
                 </a>
               </li>
             
@@ -780,7 +816,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
           <label for="menu-header-control">
             <svg class="gdoc-icon gdoc_keyboard_arrow_right">
               <use xlink:href="#gdoc_keyboard_arrow_right"></use>
-              <title>Close Menu Bar</title>
+              <title>关闭菜单栏</title>
             </svg>
           </label>
         </span>
@@ -788,7 +824,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <label for="menu-header-control" class="gdoc-menu-header__control">
         <svg class="gdoc-icon gdoc_keyboard_arrow_left">
           <use xlink:href="#gdoc_keyboard_arrow_left"></use>
-          <title>Open Menu Bar</title>
+          <title>打开菜单栏</title>
         </svg>
       </label>
     </div>
@@ -808,11 +844,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       type="text"
       id="gdoc-search-input"
       class="gdoc-search__input"
-      placeholder="Search"
-      aria-label="Search"
+      placeholder="搜索"
+      aria-label="搜索"
       maxlength="64"
       data-site-base-url="https://doc.rockdata.net/"
-      data-site-lang="en"
+      data-site-lang="zh-cn"
     />
     <div class="gdoc-search__spinner spinner hidden"></div>
     <ul id="gdoc-search-results" class="gdoc-search__list"></ul>
@@ -822,7 +858,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
 
   <section class="gdoc-nav--main">
-    <h2>Navigation</h2>
+    <h2>导航</h2>
     
       
 
@@ -859,7 +895,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">Usage</span>
+                <span class="flex">使用介绍</span>
               
               
             </label>
@@ -901,10 +937,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/usage/why-redrock/"
+                    href="/zh-cn/usage/why-redrock/"
                     class="gdoc-nav__entry"
                   >
-                    Why Redrock Postgres?
+                    为什么选择Redrock Postgres？
                   </a>
                 </span>
               
@@ -945,10 +981,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/usage/getting-started/"
+                    href="/zh-cn/usage/getting-started/"
                     class="gdoc-nav__entry"
                   >
-                    Getting Started
+                    开始上手
                   </a>
                 </span>
               
@@ -989,10 +1025,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/usage/configuration/"
+                    href="/zh-cn/usage/configuration/"
                     class="gdoc-nav__entry"
                   >
-                    Configuration
+                    参数配置
                   </a>
                 </span>
               
@@ -1031,22 +1067,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-46385245"
+                class="gdoc-nav__toggle" id="navtree-09089698"
                 
               
             />
             <label
               
-                for="navtree-46385245" class="flex justify-between align-center"
+                for="navtree-09089698" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/installation/"
+                    href="/zh-cn/installation/"
                     class="gdoc-nav__entry"
                   >
-                    Installation
+                    安装指导
                   </a>
                 </span>
               
@@ -1097,10 +1133,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/installation/windows/"
+                    href="/zh-cn/installation/windows/"
                     class="gdoc-nav__entry"
                   >
-                    Installing on Windows
+                    Windows 安装指导
                   </a>
                 </span>
               
@@ -1141,10 +1177,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/installation/redhat/"
+                    href="/zh-cn/installation/redhat/"
                     class="gdoc-nav__entry"
                   >
-                    Installing on Red Hat
+                    Red Hat/CentOS 安装指导
                   </a>
                 </span>
               
@@ -1185,321 +1221,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/installation/debian/"
+                    href="/zh-cn/installation/debian/"
                     class="gdoc-nav__entry"
                   >
-                    Installing on Debian
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-  </ul>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">Features</span>
-              
-              
-            </label>
-
-            
-              
-  
-
-
-  <ul class="gdoc-nav__list">
-    
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/features/undo/"
-                    class="gdoc-nav__entry"
-                  >
-                    Undo
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/features/recyclebin/"
-                    class="gdoc-nav__entry"
-                  >
-                    Recycle Bin
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/features/statement-atomicity/"
-                    class="gdoc-nav__entry"
-                  >
-                    Statement Level Atomicity
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/features/network-tablespace/"
-                    class="gdoc-nav__entry"
-                  >
-                    Network Attached Tablespace
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/features/event-triggers/"
-                    class="gdoc-nav__entry"
-                  >
-                    Event Triggers
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/features/postgres-compatibility/"
-                    class="gdoc-nav__entry"
-                  >
-                    Compatibility with PostgreSQL
+                    Debian 安装指导
                   </a>
                 </span>
               
@@ -1545,7 +1270,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">Advanced</span>
+                <span class="flex">基础特性</span>
               
               
             </label>
@@ -1587,10 +1312,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/advanced/textsearch/"
+                    href="/zh-cn/features/undo/"
                     class="gdoc-nav__entry"
                   >
-                    Chinese Text Search
+                    回滚段
                   </a>
                 </span>
               
@@ -1631,7 +1356,318 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/advanced/plscheme/"
+                    href="/zh-cn/features/recyclebin/"
+                    class="gdoc-nav__entry"
+                  >
+                    回收站
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/features/statement-atomicity/"
+                    class="gdoc-nav__entry is-active"
+                  >
+                    语句级原子性
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/features/network-tablespace/"
+                    class="gdoc-nav__entry"
+                  >
+                    网络表空间
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/features/event-triggers/"
+                    class="gdoc-nav__entry"
+                  >
+                    事件触发器
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/features/postgres-compatibility/"
+                    class="gdoc-nav__entry"
+                  >
+                    同 PostgreSQL 的兼容性
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+  </ul>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">高级特性</span>
+              
+              
+            </label>
+
+            
+              
+  
+
+
+  <ul class="gdoc-nav__list">
+    
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/advanced/textsearch/"
+                    class="gdoc-nav__entry"
+                  >
+                    中文搜索
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/advanced/plscheme/"
                     class="gdoc-nav__entry"
                   >
                     PL/Scheme
@@ -1675,10 +1711,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/advanced/monitor-stats/"
+                    href="/zh-cn/advanced/monitor-stats/"
                     class="gdoc-nav__entry"
                   >
-                    Statistics Views
+                    运行统计视图
                   </a>
                 </span>
               
@@ -1717,22 +1753,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-4ac8285e"
-                checked
+                class="gdoc-nav__toggle" id="navtree-a5b7adb4"
+                
               
             />
             <label
               
-                for="navtree-4ac8285e" class="flex justify-between align-center"
+                for="navtree-a5b7adb4" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/commands/"
+                    href="/zh-cn/commands/"
                     class="gdoc-nav__entry"
                   >
-                    SQL Commands
+                    SQL 命令
                   </a>
                 </span>
               
@@ -1783,7 +1819,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/commands/alterundo/"
+                    href="/zh-cn/commands/alterundo/"
                     class="gdoc-nav__entry"
                   >
                     ALTER UNDO
@@ -1819,8 +1855,8 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/commands/createundo/"
-                    class="gdoc-nav__entry is-active"
+                    href="/zh-cn/commands/createundo/"
+                    class="gdoc-nav__entry"
                   >
                     CREATE UNDO
                   </a>
@@ -1855,7 +1891,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/commands/dropundo/"
+                    href="/zh-cn/commands/dropundo/"
                     class="gdoc-nav__entry"
                   >
                     DROP UNDO
@@ -1885,8 +1921,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
       
         
-      
-        
           
           
           
@@ -1899,22 +1933,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-0ef779f7"
+                class="gdoc-nav__toggle" id="navtree-7171e5f3"
                 
               
             />
             <label
               
-                for="navtree-0ef779f7" class="flex justify-between align-center"
+                for="navtree-7171e5f3" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/catalogs/"
+                    href="/zh-cn/catalogs/"
                     class="gdoc-nav__entry"
                   >
-                    System Catalogs
+                    系统表
                   </a>
                 </span>
               
@@ -1965,7 +1999,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/catalogs/recyclebin/"
+                    href="/zh-cn/catalogs/recyclebin/"
                     class="gdoc-nav__entry"
                   >
                     pg_recyclebin
@@ -2001,7 +2035,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/catalogs/ts-lexicon/"
+                    href="/zh-cn/catalogs/ts-lexicon/"
                     class="gdoc-nav__entry"
                   >
                     pg_ts_lexicon
@@ -2037,7 +2071,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/catalogs/undo/"
+                    href="/zh-cn/catalogs/undo/"
                     class="gdoc-nav__entry"
                   >
                     pg_undo
@@ -2058,6 +2092,8 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
           </li>
         
       
+        
+      
     
   </ul>
 
@@ -2074,7 +2110,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
   <section class="gdoc-nav--more">
     
-      <h2>More</h2>
+      <h2>更多</h2>
       
 
   
@@ -2115,10 +2151,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                   <svg class="gdoc-icon gdoc_notification"><use xlink:href="#gdoc_notification"></use></svg>
                 
                 <a
-                  href="/posts/"
+                  href="/zh-cn/posts/"
                   class="gdoc-nav__entry"
                 >
-                  News
+                  新闻
                 </a>
               </span>
               
@@ -2165,7 +2201,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     https://gitee.com/rockdata/redrock/releases"
                   class="gdoc-nav__entry"
                 >
-                  Releases
+                  下载
                 </a>
               </span>
               
@@ -2212,7 +2248,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     https://gitee.com/rockdata/redrock"
                   class="gdoc-nav__entry"
                 >
-                  View Source
+                  项目仓库
                 </a>
               </span>
               
@@ -2281,7 +2317,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/commands/' href='/commands/'><span itemprop='name'>SQL Commands</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>CREATE UNDO</span><meta itemprop='position' content='3' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/features/' href='/zh-cn/features/'><span itemprop='name'>基础特性</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>语句级原子性</span><meta itemprop='position' content='4' /></li>
   
 
   
@@ -2296,9 +2332,9 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <span class="editpage">
         <svg class="gdoc-icon gdoc_code"><use xlink:href="#gdoc_code"></use></svg>
         <a
-          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/en/commands/createundo.md"
+          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/zh-cn/features/statement-atomicity/_index.md"
         >
-          Edit page
+          编辑页面
         </a>
       </span>
     </div>
@@ -2310,117 +2346,90 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <article
     class="gdoc-markdown gdoc-markdown__align--left"
   >
-    <h1>CREATE UNDO</h1>
-    <p>CREATE UNDO — define a new undo</p>
-<div class="gdoc-page__anchorwrap">
-    <h2 id="synopsis">
-        Synopsis
-        <a data-clipboard-text="https://doc.rockdata.net/commands/createundo/#synopsis" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Synopsis" aria-label="Anchor to: Synopsis" href="#synopsis">
+    <h1>语句级原子性</h1>
+    <div class="gdoc-page__anchorwrap">
+    <h2 id="示例事务帐户借贷">
+        示例事务：帐户借贷
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/statement-atomicity/#示例事务帐户借贷" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 示例事务：帐户借贷" aria-label="锚定到： 示例事务：帐户借贷" href="#%e7%a4%ba%e4%be%8b%e4%ba%8b%e5%8a%a1%e5%b8%90%e6%88%b7%e5%80%9f%e8%b4%b7">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<pre tabindex="0"><code>CREATE UNDO [ IF NOT EXISTS ] name
-    [ WITH ( storage_parameter = value [, ... ] ) ]
-    [ TABLESPACE tablespace_name ]
-</code></pre><div class="gdoc-page__anchorwrap">
-    <h2 id="description">
-        Description
-        <a data-clipboard-text="https://doc.rockdata.net/commands/createundo/#description" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Description" aria-label="Anchor to: Description" href="#description">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<p><code>CREATE UNDO</code> constructs a new undo in the current database. The undo name must be distinct from the name of any existing undo in the current database. Undos are primarily used to hold old version data that has been modified in tables and indexes.</p>
-<p>To create a undo, the invoking user must have the <code>CREATE</code> privilege for the current database. (Of course, superusers bypass this check.)</p>
-<div class="gdoc-page__anchorwrap">
-    <h2 id="parameters">
-        Parameters
-        <a data-clipboard-text="https://doc.rockdata.net/commands/createundo/#parameters" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Parameters" aria-label="Anchor to: Parameters" href="#parameters">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
+<p>为了说明事务的概念，考虑一个银行数据库。当一个客户将钱从储蓄账户转移到支票帐户时，事务必须由三个单独的操作组成：</p>
 <ul>
 <li>
-<p><code>IF NOT EXISTS</code></p>
-<p>Do not throw an error if a relation with the same name already exists. A notice is issued in this case. Note that there is no guarantee that the existing undo is anything like the one that would have been created.</p>
+<p>减少储蓄账户余额</p>
 </li>
 <li>
-<p><em><code>name</code></em></p>
-<p>The name of the undo to be created. No schema name can be included here; the undo is always created in the schema <code>pg_catalog</code>.</p>
+<p>增加支票账户余额</p>
 </li>
 <li>
-<p><em><code>storage_parameter</code></em></p>
-<p>The name of an undo-specific storage parameter. See <a
-  class="gdoc-markdown__link"
-  href="/commands/createundo/#undo-storage-parameters"
-  
->Undo Storage Parameters</a> for details.</p>
-</li>
-<li>
-<p><em><code>tablespace_name</code></em></p>
-<p>The tablespace in which to create the undo. If not specified, <a
-  class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/runtime-config-client.html#GUC-DEFAULT-TABLESPACE"
-  
->default_tablespace</a> is consulted.</p>
+<p>在事务日志中记录这笔交易</p>
 </li>
 </ul>
+<p>Redrock Postgres 必须考虑两种情况。如果所有三个 SQL 语句都对该账号维持了正确的余额，则事务的效果可以应用到数据库中。但是，如果某个问题，如资金不足、帐号无效、或硬件故障，阻止了事务中某些语句的完成，则数据库必须回滚整个事务，以便所有帐户的余额是正确的。</p>
+<p>图 1 说明了银行事务。第一条语句从储蓄帐户3209中减去 500 美元。第二条语句向支票帐户3208增加500 美元。第三条语句在日志表中插入这笔转账记录。最后一个语句提交事务。</p>
+
+
+
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+
+  <div class="flex justify-center">
+    <figure class="gdoc-markdown__figure">
+      <a class="gdoc-markdown__link--raw" href="https://doc.rockdata.net/zh-cn/features/statement-atomicity/banking-transaction.png">
+        <picture>
+          <source
+            
+              srcset="https://doc.rockdata.net/zh-cn/features/statement-atomicity/banking-transaction_hu0fdada471061fc3029608b62d59c3b0a_22808_600x0_resize_box_3.png"
+            
+          />
+          <img
+            
+            src="https://doc.rockdata.net/zh-cn/features/statement-atomicity/banking-transaction_hu0fdada471061fc3029608b62d59c3b0a_22808_1800x0_resize_box_3.png"
+            alt="图 1 银行事务"
+          />
+        </picture>
+      </a>
+      <figcaption>
+          图 1 银行事务
+        </figcaption>
+    </figure>
+  </div>
+
+
 <div class="gdoc-page__anchorwrap">
-    <h3 id="undo-storage-parameters">
-        Undo Storage Parameters
-        <a data-clipboard-text="https://doc.rockdata.net/commands/createundo/#undo-storage-parameters" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Undo Storage Parameters" aria-label="Anchor to: Undo Storage Parameters" href="#undo-storage-parameters">
+    <h2 id="语句级原子性">
+        语句级原子性
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/statement-atomicity/#语句级原子性" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 语句级原子性" aria-label="锚定到： 语句级原子性" href="#%e8%af%ad%e5%8f%a5%e7%ba%a7%e5%8e%9f%e5%ad%90%e6%80%a7">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
-    </h3>
+    </h2>
 </div>
-<p>The optional <code>WITH</code> clause specifies <em>storage parameters</em> for the undo. Accepted parameters include:</p>
+<p>Redrock Postgres 支持<strong>语句级原子性</strong>，这意味着 SQL 语句是一个原子工作单元，要么完全成功，要么完全失败。</p>
+<p>成功的语句不同于已提交事务。如果一个SQL 语句能被数据库正确分析，并作为一个原子单位来运行且未产生错误，且所有行都被正确更改，则这个SQL 语句是成功执行的。</p>
+<p>如果 SQL 语句在执行过程中导致错误，则它是不成功的，该语句中的所有影响都将被回滚。此操作是一个语句级回滚。此操作具有以下特征：</p>
 <ul>
 <li>
-<p><code>initialpages</code></p>
-<p>Number of initial pages in undo. The default is <code>128</code>.</p>
+<p>未成功的 SQL 语句只会导致它本身执行的工作丢失。</p>
+<p>未成功的语句不会导致丢失当前事务中该语句之前的任何工作。例如，若图1中第二个UPDATE语句的执行导致错误并被回滚，但由第一个UPDATE语句执行的工作是不会被回滚的。第一个UPDATE语句可以由用户显式提交或回滚。</p>
 </li>
 <li>
-<p><code>minpages</code></p>
-<p>Minimum number of pages in undo. The default is <code>128</code>.</p>
-</li>
-<li>
-<p><code>maxpages</code></p>
-<p>Maximum number of pages in undo. The default is unlimited. It is just a hint, in fact, Redrock Postgres provides a fully automated mechanism, known as automatic undo management mode, for managing undos and space.</p>
+<p>回滚的效果是，好像该语句从来未运行过。</p>
+<p>原子语句的副作用被视为原子语句的一部分，例如，由语句执行所引发的触发器调用。作为原子语句的一部分所产生的所有工作，要么都成功，要么都失败。</p>
 </li>
 </ul>
-<div class="gdoc-page__anchorwrap">
-    <h2 id="notes">
-        Notes
-        <a data-clipboard-text="https://doc.rockdata.net/commands/createundo/#notes" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Notes" aria-label="Anchor to: Notes" href="#notes">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<p>After the database cluster data directory is initialized, 4 cluster-level undos and 8 database-level undos are generated in the database by default, the cluster-level undos is mainly used to modify the data of the shared system catalogs, such as pg_database. The first page of the undo is used to store transaction table items, and a single undo can hold up to about 200 transaction items at the same time.</p>
-<p>However, if a single undo processes a large number of transactions at the same time (for example, more than 8), a corresponding page access wait event will occur due to concurrent access violations of the transaction table. In this case, you can use the <code>CREATE UNDO</code> command to create more undos in the current database to improve the transaction processing performance of the system.</p>
-<div class="gdoc-page__anchorwrap">
-    <h2 id="examples">
-        Examples
-        <a data-clipboard-text="https://doc.rockdata.net/commands/createundo/#examples" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Examples" aria-label="Anchor to: Examples" href="#examples">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<p>Create a undo:</p>
-<pre tabindex="0"><code>CREATE UNDO undo_13;
-</code></pre><p>To create an undo and have the undo reside in the tablespace <code>undospace</code>:</p>
-<pre tabindex="0"><code>CREATE UNDO undo_14 TABLESPACE undospace;
-</code></pre><div class="gdoc-page__anchorwrap">
-    <h2 id="compatibility">
-        Compatibility
-        <a data-clipboard-text="https://doc.rockdata.net/commands/createundo/#compatibility" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Compatibility" aria-label="Anchor to: Compatibility" href="#compatibility">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<p><code>CREATE UNDO</code> is a Redrock Postgres language extension. There are no provisions for undos in the SQL standard.</p>
+<p>由错误导致语句级回滚的一个示例，是尝试插入重复的主键。死锁中的某个为争用相同数据的SQL 语句，也会导致语句级回滚。然而，在解析中发现的错误，比如语法错误，实际上尚未运行，因此不会导致语句级回滚。</p>
 
   </article>
 
@@ -2657,14 +2666,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         
           <span class="gdoc-footer__item gdoc-footer__item--row">
             <a href="https://www.rockdata.net/legal-notice/#contact-information" class="gdoc-footer__link">
-              Legal Notice
+              法律声明
             </a>
           </span>
         
         
           <span class="gdoc-footer__item gdoc-footer__item--row">
             <a href="https://www.rockdata.net/legal-notice/#privacy-policy" class="gdoc-footer__link">
-              Privacy Policy
+              隐私政策
             </a>
           </span>
         
@@ -2674,11 +2683,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
       <div class="flex flex-25 justify-end">
         <span class="gdoc-footer__item text-right">
-          <a class="gdoc-footer__link fake-link" href="#" aria-label="Back to top">
+          <a class="gdoc-footer__link fake-link" href="#" aria-label="回到顶部">
             <svg class="gdoc-icon gdoc_keyboard_arrow_up">
               <use xlink:href="#gdoc_keyboard_arrow_up"></use>
             </svg>
-            <span class="hidden-mobile">Back to top</span>
+            <span class="hidden-mobile">回到顶部</span>
           </a>
         </span>
       </div>
