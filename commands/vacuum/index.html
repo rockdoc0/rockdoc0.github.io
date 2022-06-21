@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn" class="color-toggle-hidden">
+<html lang="en" class="color-toggle-hidden">
   <head>
     <meta charset="UTF-8" />
 <meta name="referrer" content="no-referrer" />
@@ -8,8 +8,11 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
+  <meta name="description" content="VACUUM — garbage-collect a database
+Synopsis     VACUUM [ ( option [, ...] ) ] [ name [, ...] ]VACUUM [ VERBOSE ] [ name [, ...] ]where option can be one of:VERBOSE [ boolean ]SKIP_LOCKED [ boolean ]TRUNCATE [ boolean ] Description     VACUUM is used to do the following:
+ Attempts to truncate off any empty pages at the end of the table and allow the disk space for the truncated pages to be returned to the operating system." />
 
-    <title>高级特性 | Redrock Documentation</title>
+    <title>VACUUM | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -30,46 +33,53 @@
     
   <meta
     property="og:title"
-    content="高级特性"
+    content="VACUUM"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
+  <meta property="og:description" content="VACUUM — garbage-collect a database
+Synopsis     VACUUM [ ( option [, ...] ) ] [ name [, ...] ]VACUUM [ VERBOSE ] [ name [, ...] ]where option can be one of:VERBOSE [ boolean ]SKIP_LOCKED [ boolean ]TRUNCATE [ boolean ] Description     VACUUM is used to do the following:
+ Attempts to truncate off any empty pages at the end of the table and allow the disk space for the truncated pages to be returned to the operating system." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://doc.rockdata.net/zh-cn/advanced/" />
+<meta property="og:url" content="https://doc.rockdata.net/commands/vacuum/" />
 
-<meta property="article:section" content="Advanced" />
+<meta property="article:section" content="Commands" />
     <meta
       property="article:modified_time"
-      content="2022-05-28T14:47:24+08:00"
+      content="2022-06-21T21:12:41+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="高级特性" />
+<meta name="twitter:title" content="VACUUM" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
+  <meta name="twitter:description" content="VACUUM — garbage-collect a database
+Synopsis     VACUUM [ ( option [, ...] ) ] [ name [, ...] ]VACUUM [ VERBOSE ] [ name [, ...] ]where option can be one of:VERBOSE [ boolean ]SKIP_LOCKED [ boolean ]TRUNCATE [ boolean ] Description     VACUUM is used to do the following:
+ Attempts to truncate off any empty pages at the end of the table and allow the disk space for the truncated pages to be returned to the operating system." />
 
 
   <script type="application/ld+json">
   {
       "@context": "http://schema.org",
       "@type": "TechArticle",
-      "articleSection": "Advanced",
-      "name": "高级特性",
-      "url" : "https://doc.rockdata.net/zh-cn/advanced/",
-      "headline": "高级特性",
+      "articleSection": "Commands",
+      "name": "VACUUM",
+      "url" : "https://doc.rockdata.net/commands/vacuum/",
+      "headline": "VACUUM",
+      "description": "VACUUM — garbage-collect a database\nSynopsis     VACUUM [ ( option [, ...] ) ] [ name [, ...] ]\rVACUUM [ VERBOSE ] [ name [, ...] ]\rwhere option can be one of:\rVERBOSE [ boolean ]\rSKIP_LOCKED [ boolean ]\rTRUNCATE [ boolean ] Description     VACUUM is used to do the following:\n Attempts to truncate off any empty pages at the end of the table and allow the disk space for the truncated pages to be returned to the operating system.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "0",
-      "inLanguage": "zh-cn",
+      "wordCount" : "526",
+      "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://doc.rockdata.net/zh-cn/advanced/"
+          "@id": "https://doc.rockdata.net/commands/vacuum/"
       },
       "copyrightHolder" : "Redrock Documentation",
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-05-28T14:47:24.00Z",
+      "dateModified": "2022-06-21T21:12:41.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -145,7 +155,7 @@
   href="/custom.css"
   media="all"
 />
-  <link href="https://doc.rockdata.net/zh-cn/advanced/" rel="canonical" type="text/html" />
+  <link href="https://doc.rockdata.net/commands/vacuum/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -637,11 +647,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
       <label for="menu-control" class="gdoc-nav__control" tabindex="0">
         <svg class="gdoc-icon gdoc_menu">
-          <title>打开导航</title>
+          <title>Open Navigation</title>
           <use xlink:href="#gdoc_menu"></use>
         </svg>
         <svg class="gdoc-icon gdoc_arrow_back">
-          <title>关闭导航</title>
+          <title>Close Navigation</title>
           <use xlink:href="#gdoc_arrow_back"></use>
         </svg>
       </label>
@@ -707,15 +717,15 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
         <span id="gdoc-dark-mode">
           <svg class="gdoc-icon gdoc_brightness_dark">
-            <title>切换暗/亮/自动模式</title>
+            <title>Toggle Dark/Light/Auto mode</title>
             <use xlink:href="#gdoc_brightness_dark"></use>
           </svg>
           <svg class="gdoc-icon gdoc_brightness_light">
-            <title>切换暗/亮/自动模式</title>
+            <title>Toggle Dark/Light/Auto mode</title>
             <use xlink:href="#gdoc_brightness_light"></use>
           </svg>
           <svg class="gdoc-icon gdoc_brightness_auto">
-            <title>切换暗/亮/自动模式</title>
+            <title>Toggle Dark/Light/Auto mode</title>
             <use xlink:href="#gdoc_brightness_auto"></use>
           </svg>
         </span>
@@ -723,7 +733,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         <span class="gdoc-menu-header__home">
           <a href="https://doc.rockdata.net/" class="gdoc-header__link">
             <svg class="gdoc-icon gdoc_home">
-              <title>返回首页</title>
+              <title>Back to homepage</title>
               <use xlink:href="#gdoc_home"></use>
             </svg>
           </a>
@@ -735,12 +745,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <li>
         
           
-        
-          
             <span class="flex align-center">
               <svg class="gdoc-icon gdoc_language"><use xlink:href="#gdoc_language"></use></svg>
-              <span>ZH-CN</span>
+              <span>EN</span>
             </span>
+          
+        
           
         
 
@@ -751,12 +761,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               <li>
                 <a
                   class="flex gdoc-language__entry"
-                  title="English"
-                  href="/advanced/"
-                  hreflang="en"
-                  lang="en"
+                  title="简体中文"
+                  href="/zh-cn/commands/vacuum/"
+                  hreflang="zh-cn"
+                  lang="zh-cn"
                 >
-                  English
+                  简体中文
                 </a>
               </li>
             
@@ -773,7 +783,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
           <label for="menu-header-control">
             <svg class="gdoc-icon gdoc_keyboard_arrow_right">
               <use xlink:href="#gdoc_keyboard_arrow_right"></use>
-              <title>关闭菜单栏</title>
+              <title>Close Menu Bar</title>
             </svg>
           </label>
         </span>
@@ -781,7 +791,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <label for="menu-header-control" class="gdoc-menu-header__control">
         <svg class="gdoc-icon gdoc_keyboard_arrow_left">
           <use xlink:href="#gdoc_keyboard_arrow_left"></use>
-          <title>打开菜单栏</title>
+          <title>Open Menu Bar</title>
         </svg>
       </label>
     </div>
@@ -801,11 +811,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       type="text"
       id="gdoc-search-input"
       class="gdoc-search__input"
-      placeholder="搜索"
-      aria-label="搜索"
+      placeholder="Search"
+      aria-label="Search"
       maxlength="64"
       data-site-base-url="https://doc.rockdata.net/"
-      data-site-lang="zh-cn"
+      data-site-lang="en"
     />
     <div class="gdoc-search__spinner spinner hidden"></div>
     <ul id="gdoc-search-results" class="gdoc-search__list"></ul>
@@ -815,7 +825,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
 
   <section class="gdoc-nav--main">
-    <h2>导航</h2>
+    <h2>Navigation</h2>
     
       
 
@@ -852,7 +862,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">使用介绍</span>
+                <span class="flex">Usage</span>
               
               
             </label>
@@ -894,10 +904,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/usage/why-redrock/"
+                    href="/usage/why-redrock/"
                     class="gdoc-nav__entry"
                   >
-                    为什么选择Redrock Postgres？
+                    Why Redrock Postgres?
                   </a>
                 </span>
               
@@ -938,10 +948,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/usage/getting-started/"
+                    href="/usage/getting-started/"
                     class="gdoc-nav__entry"
                   >
-                    开始上手
+                    Getting Started
                   </a>
                 </span>
               
@@ -982,10 +992,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/usage/configuration/"
+                    href="/usage/configuration/"
                     class="gdoc-nav__entry"
                   >
-                    参数配置
+                    Configuration
                   </a>
                 </span>
               
@@ -1024,22 +1034,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-09089698"
+                class="gdoc-nav__toggle" id="navtree-46385245"
                 
               
             />
             <label
               
-                for="navtree-09089698" class="flex justify-between align-center"
+                for="navtree-46385245" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/installation/"
+                    href="/installation/"
                     class="gdoc-nav__entry"
                   >
-                    安装指导
+                    Installation
                   </a>
                 </span>
               
@@ -1090,10 +1100,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/installation/windows/"
+                    href="/installation/windows/"
                     class="gdoc-nav__entry"
                   >
-                    Windows 安装指导
+                    Installing on Windows
                   </a>
                 </span>
               
@@ -1134,10 +1144,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/installation/redhat/"
+                    href="/installation/redhat/"
                     class="gdoc-nav__entry"
                   >
-                    Red Hat/CentOS 安装指导
+                    Installing on Red Hat
                   </a>
                 </span>
               
@@ -1178,321 +1188,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/installation/debian/"
+                    href="/installation/debian/"
                     class="gdoc-nav__entry"
                   >
-                    Debian 安装指导
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-  </ul>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">基础特性</span>
-              
-              
-            </label>
-
-            
-              
-  
-
-
-  <ul class="gdoc-nav__list">
-    
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/zh-cn/features/undo/"
-                    class="gdoc-nav__entry"
-                  >
-                    回滚段
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/zh-cn/features/recyclebin/"
-                    class="gdoc-nav__entry"
-                  >
-                    回收站
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/zh-cn/features/statement-atomicity/"
-                    class="gdoc-nav__entry"
-                  >
-                    语句级原子性
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/zh-cn/features/network-tablespace/"
-                    class="gdoc-nav__entry"
-                  >
-                    网络表空间
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/zh-cn/features/event-triggers/"
-                    class="gdoc-nav__entry"
-                  >
-                    事件触发器
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/zh-cn/features/postgres-compatibility/"
-                    class="gdoc-nav__entry"
-                  >
-                    同 PostgreSQL 的兼容性
+                    Installing on Debian
                   </a>
                 </span>
               
@@ -1538,7 +1237,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">高级特性</span>
+                <span class="flex">Features</span>
               
               
             </label>
@@ -1580,10 +1279,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/advanced/textsearch/"
+                    href="/features/undo/"
                     class="gdoc-nav__entry"
                   >
-                    中文搜索
+                    Undo
                   </a>
                 </span>
               
@@ -1624,7 +1323,318 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/advanced/plscheme/"
+                    href="/features/recyclebin/"
+                    class="gdoc-nav__entry"
+                  >
+                    Recycle Bin
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/features/statement-atomicity/"
+                    class="gdoc-nav__entry"
+                  >
+                    Statement Level Atomicity
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/features/network-tablespace/"
+                    class="gdoc-nav__entry"
+                  >
+                    Network Attached Tablespace
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/features/event-triggers/"
+                    class="gdoc-nav__entry"
+                  >
+                    Event Triggers
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/features/postgres-compatibility/"
+                    class="gdoc-nav__entry"
+                  >
+                    Compatibility with PostgreSQL
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+  </ul>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">Advanced</span>
+              
+              
+            </label>
+
+            
+              
+  
+
+
+  <ul class="gdoc-nav__list">
+    
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/advanced/textsearch/"
+                    class="gdoc-nav__entry"
+                  >
+                    Chinese Text Search
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/advanced/plscheme/"
                     class="gdoc-nav__entry"
                   >
                     PL/Scheme
@@ -1668,10 +1678,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/advanced/monitor-stats/"
+                    href="/advanced/monitor-stats/"
                     class="gdoc-nav__entry"
                   >
-                    运行统计视图
+                    Statistics Views
                   </a>
                 </span>
               
@@ -1710,22 +1720,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-a5b7adb4"
-                
+                class="gdoc-nav__toggle" id="navtree-4ac8285e"
+                checked
               
             />
             <label
               
-                for="navtree-a5b7adb4" class="flex justify-between align-center"
+                for="navtree-4ac8285e" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/commands/"
+                    href="/commands/"
                     class="gdoc-nav__entry"
                   >
-                    SQL 命令
+                    SQL Commands
                   </a>
                 </span>
               
@@ -1776,7 +1786,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/commands/alterundo/"
+                    href="/commands/alterundo/"
                     class="gdoc-nav__entry"
                   >
                     ALTER UNDO
@@ -1812,7 +1822,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/commands/createundo/"
+                    href="/commands/createundo/"
                     class="gdoc-nav__entry"
                   >
                     CREATE UNDO
@@ -1848,7 +1858,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/commands/dropundo/"
+                    href="/commands/dropundo/"
                     class="gdoc-nav__entry"
                   >
                     DROP UNDO
@@ -1884,8 +1894,8 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/commands/vacuum/"
-                    class="gdoc-nav__entry"
+                    href="/commands/vacuum/"
+                    class="gdoc-nav__entry is-active"
                   >
                     VACUUM
                   </a>
@@ -1914,6 +1924,8 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
       
         
+      
+        
           
           
           
@@ -1926,22 +1938,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-7171e5f3"
+                class="gdoc-nav__toggle" id="navtree-0ef779f7"
                 
               
             />
             <label
               
-                for="navtree-7171e5f3" class="flex justify-between align-center"
+                for="navtree-0ef779f7" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/catalogs/"
+                    href="/catalogs/"
                     class="gdoc-nav__entry"
                   >
-                    系统表
+                    System Catalogs
                   </a>
                 </span>
               
@@ -1992,7 +2004,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/catalogs/recyclebin/"
+                    href="/catalogs/recyclebin/"
                     class="gdoc-nav__entry"
                   >
                     pg_recyclebin
@@ -2028,7 +2040,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/catalogs/ts-lexicon/"
+                    href="/catalogs/ts-lexicon/"
                     class="gdoc-nav__entry"
                   >
                     pg_ts_lexicon
@@ -2064,7 +2076,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/catalogs/undo/"
+                    href="/catalogs/undo/"
                     class="gdoc-nav__entry"
                   >
                     pg_undo
@@ -2085,8 +2097,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
           </li>
         
       
-        
-      
     
   </ul>
 
@@ -2103,7 +2113,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
   <section class="gdoc-nav--more">
     
-      <h2>更多</h2>
+      <h2>More</h2>
       
 
   
@@ -2144,10 +2154,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                   <svg class="gdoc-icon gdoc_notification"><use xlink:href="#gdoc_notification"></use></svg>
                 
                 <a
-                  href="/zh-cn/posts/"
+                  href="/posts/"
                   class="gdoc-nav__entry"
                 >
-                  新闻
+                  News
                 </a>
               </span>
               
@@ -2194,7 +2204,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     https://gitee.com/rockdata/redrock/releases"
                   class="gdoc-nav__entry"
                 >
-                  下载
+                  Releases
                 </a>
               </span>
               
@@ -2241,7 +2251,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     https://gitee.com/rockdata/redrock"
                   class="gdoc-nav__entry"
                 >
-                  项目仓库
+                  View Source
                 </a>
               </span>
               
@@ -2304,7 +2314,15 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>高级特性</span><meta itemprop='position' content='3' /></li>
+    
+    
+    
+    
+  
+  
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/commands/' href='/commands/'><span itemprop='name'>SQL Commands</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>VACUUM</span><meta itemprop='position' content='3' /></li>
+  
+
   
 
   
@@ -2317,9 +2335,9 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <span class="editpage">
         <svg class="gdoc-icon gdoc_code"><use xlink:href="#gdoc_code"></use></svg>
         <a
-          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/zh-cn/advanced/_index.md"
+          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/en/commands/vacuum.md"
         >
-          编辑页面
+          Edit page
         </a>
       </span>
     </div>
@@ -2331,8 +2349,108 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <article
     class="gdoc-markdown gdoc-markdown__align--left"
   >
-    <h1>高级特性</h1>
-    
+    <h1>VACUUM</h1>
+    <p>VACUUM — garbage-collect a database</p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="synopsis">
+        Synopsis
+        <a data-clipboard-text="https://doc.rockdata.net/commands/vacuum/#synopsis" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Synopsis" aria-label="Anchor to: Synopsis" href="#synopsis">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<pre tabindex="0"><code>VACUUM [ ( option [, ...] ) ] [ name [, ...] ]
+VACUUM [ VERBOSE ] [ name [, ...] ]
+
+where option can be one of:
+    VERBOSE [ boolean ]
+    SKIP_LOCKED [ boolean ]
+    TRUNCATE [ boolean ]
+</code></pre><div class="gdoc-page__anchorwrap">
+    <h2 id="description">
+        Description
+        <a data-clipboard-text="https://doc.rockdata.net/commands/vacuum/#description" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Description" aria-label="Anchor to: Description" href="#description">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p><code>VACUUM</code> is used to do the following:</p>
+<ul>
+<li>Attempts to truncate off any empty pages at the end of the table and allow the disk space for the truncated pages to be returned to the operating system.</li>
+<li>Attempts to shrink undos.</li>
+<li>Clearing dropped objects in the recycle bin.</li>
+</ul>
+<p>Without a <em><code>name</code></em> list, <code>VACUUM</code> processes every table, materialized view, undo, and dropped object in recycle bin in the current database that the current user has permission to vacuum. With a list, <code>VACUUM</code> processes only those table(s).</p>
+<p>When the option list is surrounded by parentheses, the options can be written in any order. Without parentheses, options must be specified in exactly the order shown above.</p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="parameters">
+        Parameters
+        <a data-clipboard-text="https://doc.rockdata.net/commands/vacuum/#parameters" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Parameters" aria-label="Anchor to: Parameters" href="#parameters">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<ul>
+<li>
+<p><code>VERBOSE</code></p>
+<p>Prints a detailed vacuum activity report for each table.</p>
+</li>
+<li>
+<p><code>SKIP_LOCKED</code></p>
+<p>Specifies that <code>VACUUM</code> should not wait for any conflicting locks to be released when beginning work on a relation: if a relation cannot be locked immediately without waiting, the relation is skipped. Note that even with this option, <code>VACUUM</code> may still block when opening the relation&rsquo;s indexes. Also, while <code>VACUUM</code> ordinarily processes all partitions of specified partitioned tables, this option will cause <code>VACUUM</code> to skip all partitions if there is a conflicting lock on the partitioned table.</p>
+</li>
+<li>
+<p><code>TRUNCATE</code></p>
+<p>Specifies that <code>VACUUM</code> should attempt to truncate off any empty pages at the end of the table and allow the disk space for the truncated pages to be returned to the operating system. This is normally the desired behavior and is the default unless the <code>vacuum_truncate</code> option has been set to false for the table to be vacuumed. Setting this option to false may be useful to avoid <code>ACCESS EXCLUSIVE</code> lock on the table that the truncation requires.</p>
+</li>
+<li>
+<p><em><code>boolean</code></em></p>
+<p>Specifies whether the selected option should be turned on or off. You can write <code>TRUE</code>, <code>ON</code>, or <code>1</code> to enable the option, and <code>FALSE</code>, <code>OFF</code>, or <code>0</code> to disable it. The <em><code>boolean</code></em> value can also be omitted, in which case <code>TRUE</code> is assumed.</p>
+</li>
+<li>
+<p><em><code>name</code></em></p>
+<p>The name (optionally schema-qualified) of a specific table, materialized view or undo to vacuum. If the specified table is a partitioned table, all of its leaf partitions are vacuumed.</p>
+</li>
+</ul>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="outputs">
+        Outputs
+        <a data-clipboard-text="https://doc.rockdata.net/commands/vacuum/#outputs" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Outputs" aria-label="Anchor to: Outputs" href="#outputs">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>When <code>VERBOSE</code> is specified, <code>VACUUM</code> emits progress messages to indicate which table is currently being processed. Various statistics about the tables are printed as well.</p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="notes">
+        Notes
+        <a data-clipboard-text="https://doc.rockdata.net/commands/vacuum/#notes" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Notes" aria-label="Anchor to: Notes" href="#notes">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>To vacuum a table, one must ordinarily be the table&rsquo;s owner or a superuser. However, database owners are allowed to vacuum all tables in their databases, except shared catalogs. (The restriction for shared catalogs means that a true database-wide <code>VACUUM</code> can only be performed by a superuser.) <code>VACUUM</code> will skip over any tables that the calling user does not have permission to vacuum.</p>
+<p><code>VACUUM</code> cannot be executed inside a transaction block.</p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="examples">
+        Examples
+        <a data-clipboard-text="https://doc.rockdata.net/commands/vacuum/#examples" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Examples" aria-label="Anchor to: Examples" href="#examples">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>To clean a single table <code>onek</code>, and print a detailed vacuum activity report:</p>
+<pre tabindex="0"><code>VACUUM (VERBOSE) onek;
+</code></pre><div class="gdoc-page__anchorwrap">
+    <h2 id="compatibility">
+        Compatibility
+        <a data-clipboard-text="https://doc.rockdata.net/commands/vacuum/#compatibility" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Compatibility" aria-label="Anchor to: Compatibility" href="#compatibility">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>There is no <code>VACUUM</code> statement in the SQL standard.</p>
+
   </article>
 
 
@@ -2568,14 +2686,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         
           <span class="gdoc-footer__item gdoc-footer__item--row">
             <a href="https://www.rockdata.net/legal-notice/#contact-information" class="gdoc-footer__link">
-              法律声明
+              Legal Notice
             </a>
           </span>
         
         
           <span class="gdoc-footer__item gdoc-footer__item--row">
             <a href="https://www.rockdata.net/legal-notice/#privacy-policy" class="gdoc-footer__link">
-              隐私政策
+              Privacy Policy
             </a>
           </span>
         
@@ -2585,11 +2703,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
       <div class="flex flex-25 justify-end">
         <span class="gdoc-footer__item text-right">
-          <a class="gdoc-footer__link fake-link" href="#" aria-label="回到顶部">
+          <a class="gdoc-footer__link fake-link" href="#" aria-label="Back to top">
             <svg class="gdoc-icon gdoc_keyboard_arrow_up">
               <use xlink:href="#gdoc_keyboard_arrow_up"></use>
             </svg>
-            <span class="hidden-mobile">回到顶部</span>
+            <span class="hidden-mobile">Back to top</span>
           </a>
         </span>
       </div>

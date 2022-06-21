@@ -8,8 +8,16 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
+  <meta name="description" content="VACUUM — 清理一个数据库
+语法     VACUUM [ ( option [, ...] ) ] [ name [, ...] ]VACUUM [ VERBOSE ] [ name [, ...] ]其中option可以是下列之一：VERBOSE [ boolean ]SKIP_LOCKED [ boolean ]TRUNCATE [ boolean ] 描述     VACUUM可以用来执行以下操作：
+ 尝试截断表末尾的任何空页，并允许将截断页的磁盘空间返回到操作系统 尝试收缩回滚段 清理回收站中的已删除对象  在没有*name*列表的情况下，VACUUM会处理当前用户具有清理权限的当前数据库中的每一个表、物化视图、回滚段，和回收站中的已删除对象。如果给出一个列表，VACUUM可以只处理列表中的那些表。
+当选项列表被包围在圆括号中时，选项可以被写成任何顺序。如果没有圆括号，选项必须严格按照上面所展示的顺序指定。
+参数       VERBOSE
+为每个表打印一份详细的清理活动报告。
+  SKIP_LOCKED
+规定VACUUM在开始处理关系时不等待任何冲突锁被释放：如果关系不能立即锁定而不等待，则跳过关系。 请注意即使采用此选项，VACUUM在打开关系的索引时仍可能阻塞。还有，虽然VACUUM通常处理指定分区表的所有分区，但如果分区表上的锁冲突， 此选项将导致VACUUM跳过所有分区。" />
 
-    <title>高级特性 | Redrock Documentation</title>
+    <title>VACUUM | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -30,46 +38,63 @@
     
   <meta
     property="og:title"
-    content="高级特性"
+    content="VACUUM"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
+  <meta property="og:description" content="VACUUM — 清理一个数据库
+语法     VACUUM [ ( option [, ...] ) ] [ name [, ...] ]VACUUM [ VERBOSE ] [ name [, ...] ]其中option可以是下列之一：VERBOSE [ boolean ]SKIP_LOCKED [ boolean ]TRUNCATE [ boolean ] 描述     VACUUM可以用来执行以下操作：
+ 尝试截断表末尾的任何空页，并允许将截断页的磁盘空间返回到操作系统 尝试收缩回滚段 清理回收站中的已删除对象  在没有*name*列表的情况下，VACUUM会处理当前用户具有清理权限的当前数据库中的每一个表、物化视图、回滚段，和回收站中的已删除对象。如果给出一个列表，VACUUM可以只处理列表中的那些表。
+当选项列表被包围在圆括号中时，选项可以被写成任何顺序。如果没有圆括号，选项必须严格按照上面所展示的顺序指定。
+参数       VERBOSE
+为每个表打印一份详细的清理活动报告。
+  SKIP_LOCKED
+规定VACUUM在开始处理关系时不等待任何冲突锁被释放：如果关系不能立即锁定而不等待，则跳过关系。 请注意即使采用此选项，VACUUM在打开关系的索引时仍可能阻塞。还有，虽然VACUUM通常处理指定分区表的所有分区，但如果分区表上的锁冲突， 此选项将导致VACUUM跳过所有分区。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://doc.rockdata.net/zh-cn/advanced/" />
+<meta property="og:url" content="https://doc.rockdata.net/zh-cn/commands/vacuum/" />
 
-<meta property="article:section" content="Advanced" />
+<meta property="article:section" content="Commands" />
     <meta
       property="article:modified_time"
-      content="2022-05-28T14:47:24+08:00"
+      content="2022-06-21T21:12:41+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="高级特性" />
+<meta name="twitter:title" content="VACUUM" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
+  <meta name="twitter:description" content="VACUUM — 清理一个数据库
+语法     VACUUM [ ( option [, ...] ) ] [ name [, ...] ]VACUUM [ VERBOSE ] [ name [, ...] ]其中option可以是下列之一：VERBOSE [ boolean ]SKIP_LOCKED [ boolean ]TRUNCATE [ boolean ] 描述     VACUUM可以用来执行以下操作：
+ 尝试截断表末尾的任何空页，并允许将截断页的磁盘空间返回到操作系统 尝试收缩回滚段 清理回收站中的已删除对象  在没有*name*列表的情况下，VACUUM会处理当前用户具有清理权限的当前数据库中的每一个表、物化视图、回滚段，和回收站中的已删除对象。如果给出一个列表，VACUUM可以只处理列表中的那些表。
+当选项列表被包围在圆括号中时，选项可以被写成任何顺序。如果没有圆括号，选项必须严格按照上面所展示的顺序指定。
+参数       VERBOSE
+为每个表打印一份详细的清理活动报告。
+  SKIP_LOCKED
+规定VACUUM在开始处理关系时不等待任何冲突锁被释放：如果关系不能立即锁定而不等待，则跳过关系。 请注意即使采用此选项，VACUUM在打开关系的索引时仍可能阻塞。还有，虽然VACUUM通常处理指定分区表的所有分区，但如果分区表上的锁冲突， 此选项将导致VACUUM跳过所有分区。" />
 
 
   <script type="application/ld+json">
   {
       "@context": "http://schema.org",
       "@type": "TechArticle",
-      "articleSection": "Advanced",
-      "name": "高级特性",
-      "url" : "https://doc.rockdata.net/zh-cn/advanced/",
-      "headline": "高级特性",
+      "articleSection": "Commands",
+      "name": "VACUUM",
+      "url" : "https://doc.rockdata.net/zh-cn/commands/vacuum/",
+      "headline": "VACUUM",
+      "description": "VACUUM — 清理一个数据库\n语法     VACUUM [ ( option [, ...] ) ] [ name [, ...] ]\rVACUUM [ VERBOSE ] [ name [, ...] ]\r其中option可以是下列之一：\rVERBOSE [ boolean ]\rSKIP_LOCKED [ boolean ]\rTRUNCATE [ boolean ] 描述     VACUUM可以用来执行以下操作：\n 尝试截断表末尾的任何空页，并允许将截断页的磁盘空间返回到操作系统 尝试收缩回滚段 清理回收站中的已删除对象  在没有*name*列表的情况下，VACUUM会处理当前用户具有清理权限的当前数据库中的每一个表、物化视图、回滚段，和回收站中的已删除对象。如果给出一个列表，VACUUM可以只处理列表中的那些表。\n当选项列表被包围在圆括号中时，选项可以被写成任何顺序。如果没有圆括号，选项必须严格按照上面所展示的顺序指定。\n参数       VERBOSE\n为每个表打印一份详细的清理活动报告。\n  SKIP_LOCKED\n规定VACUUM在开始处理关系时不等待任何冲突锁被释放：如果关系不能立即锁定而不等待，则跳过关系。 请注意即使采用此选项，VACUUM在打开关系的索引时仍可能阻塞。还有，虽然VACUUM通常处理指定分区表的所有分区，但如果分区表上的锁冲突， 此选项将导致VACUUM跳过所有分区。",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "0",
+      "wordCount" : "79",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://doc.rockdata.net/zh-cn/advanced/"
+          "@id": "https://doc.rockdata.net/zh-cn/commands/vacuum/"
       },
       "copyrightHolder" : "Redrock Documentation",
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-05-28T14:47:24.00Z",
+      "dateModified": "2022-06-21T21:12:41.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -145,7 +170,7 @@
   href="/custom.css"
   media="all"
 />
-  <link href="https://doc.rockdata.net/zh-cn/advanced/" rel="canonical" type="text/html" />
+  <link href="https://doc.rockdata.net/zh-cn/commands/vacuum/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -752,7 +777,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <a
                   class="flex gdoc-language__entry"
                   title="English"
-                  href="/advanced/"
+                  href="/commands/vacuum/"
                   hreflang="en"
                   lang="en"
                 >
@@ -1711,7 +1736,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               type="checkbox"
               
                 class="gdoc-nav__toggle" id="navtree-a5b7adb4"
-                
+                checked
               
             />
             <label
@@ -1885,7 +1910,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <span class="flex">
                   <a
                     href="/zh-cn/commands/vacuum/"
-                    class="gdoc-nav__entry"
+                    class="gdoc-nav__entry is-active"
                   >
                     VACUUM
                   </a>
@@ -2304,7 +2329,15 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>高级特性</span><meta itemprop='position' content='3' /></li>
+    
+    
+    
+    
+  
+  
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/commands/' href='/zh-cn/commands/'><span itemprop='name'>SQL 命令</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>VACUUM</span><meta itemprop='position' content='4' /></li>
+  
+
   
 
   
@@ -2317,7 +2350,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <span class="editpage">
         <svg class="gdoc-icon gdoc_code"><use xlink:href="#gdoc_code"></use></svg>
         <a
-          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/zh-cn/advanced/_index.md"
+          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/zh-cn/commands/vacuum.md"
         >
           编辑页面
         </a>
@@ -2331,8 +2364,108 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <article
     class="gdoc-markdown gdoc-markdown__align--left"
   >
-    <h1>高级特性</h1>
-    
+    <h1>VACUUM</h1>
+    <p>VACUUM — 清理一个数据库</p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="语法">
+        语法
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/commands/vacuum/#语法" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 语法" aria-label="锚定到： 语法" href="#%e8%af%ad%e6%b3%95">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<pre tabindex="0"><code>VACUUM [ ( option [, ...] ) ] [ name [, ...] ]
+VACUUM [ VERBOSE ] [ name [, ...] ]
+
+其中option可以是下列之一：
+    VERBOSE [ boolean ]
+    SKIP_LOCKED [ boolean ]
+    TRUNCATE [ boolean ]
+</code></pre><div class="gdoc-page__anchorwrap">
+    <h2 id="描述">
+        描述
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/commands/vacuum/#描述" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 描述" aria-label="锚定到： 描述" href="#%e6%8f%8f%e8%bf%b0">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p><code>VACUUM</code>可以用来执行以下操作：</p>
+<ul>
+<li>尝试截断表末尾的任何空页，并允许将截断页的磁盘空间返回到操作系统</li>
+<li>尝试收缩回滚段</li>
+<li>清理回收站中的已删除对象</li>
+</ul>
+<p>在没有*<code>name</code>*列表的情况下，<code>VACUUM</code>会处理当前用户具有清理权限的当前数据库中的每一个表、物化视图、回滚段，和回收站中的已删除对象。如果给出一个列表，<code>VACUUM</code>可以只处理列表中的那些表。</p>
+<p>当选项列表被包围在圆括号中时，选项可以被写成任何顺序。如果没有圆括号，选项必须严格按照上面所展示的顺序指定。</p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="参数">
+        参数
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/commands/vacuum/#参数" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 参数" aria-label="锚定到： 参数" href="#%e5%8f%82%e6%95%b0">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<ul>
+<li>
+<p><code>VERBOSE</code></p>
+<p>为每个表打印一份详细的清理活动报告。</p>
+</li>
+<li>
+<p><code>SKIP_LOCKED</code></p>
+<p>规定<code>VACUUM</code>在开始处理关系时不等待任何冲突锁被释放：如果关系不能立即锁定而不等待，则跳过关系。 请注意即使采用此选项，<code>VACUUM</code>在打开关系的索引时仍可能阻塞。还有，虽然<code>VACUUM</code>通常处理指定分区表的所有分区，但如果分区表上的锁冲突， 此选项将导致<code>VACUUM</code>跳过所有分区。</p>
+</li>
+<li>
+<p><code>TRUNCATE</code></p>
+<p>指定<code>VACUUM</code>尝试截断表末尾的任何空页，并允许将截断页的磁盘空间返回到操作系统。 这通常是所需的行为，并且是默认行为，除非将<code>vacuum_truncate</code>选项设置为 false，对要被清空的表。 将此选项设置为 false 可能有助于避免<code>ACCESS EXCLUSIVE</code>锁定需要截断的表。</p>
+</li>
+<li>
+<p><em><code>boolean</code></em></p>
+<p>指定打开还是关闭所选选项。你可以写入<code>TRUE</code>、<code>ON</code>或<code>1</code>以启用该选项，以及<code>FALSE</code>、<code>OFF</code>或<code>0</code>来禁用它。 在<code>TRUE</code>被假定的情况下，<em><code>boolean</code></em> 值也可以被省略。</p>
+</li>
+<li>
+<p><em><code>name</code></em></p>
+<p>要清理的表、物化视图或者回滚段的名称（可以有模式修饰）。如果指定的表示一个分区表，则它所有的叶子分区也会被清理。</p>
+</li>
+</ul>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="输出">
+        输出
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/commands/vacuum/#输出" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 输出" aria-label="锚定到： 输出" href="#%e8%be%93%e5%87%ba">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>如果声明了<code>VERBOSE</code>，<code>VACUUM</code>会发出进度消息来表明当前正在处理哪个表。各种有关这些表的统计信息也会打印出来。</p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="注意">
+        注意
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/commands/vacuum/#注意" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 注意" aria-label="锚定到： 注意" href="#%e6%b3%a8%e6%84%8f">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>要清理一个表，操作者通常必须是表的拥有者或者超级用户。但是，数据库拥有者被允许清理他们的数据库中除了共享目录之外的所有表（对于共享目录的限制意味着一个真正的数据库范围的<code>VACUUM</code>只能被超级用户执行）。<code>VACUUM</code>将会跳过执行者不具备清理权限的表。</p>
+<p><code>VACUUM</code>不能在一个事务块内被执行。</p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="例子">
+        例子
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/commands/vacuum/#例子" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 例子" aria-label="锚定到： 例子" href="#%e4%be%8b%e5%ad%90">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>清理单一表<code>onek</code>，并且打印出详细的清理活动报告：</p>
+<pre tabindex="0"><code>VACUUM (VERBOSE) onek;
+</code></pre><div class="gdoc-page__anchorwrap">
+    <h2 id="兼容性">
+        兼容性
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/commands/vacuum/#兼容性" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 兼容性" aria-label="锚定到： 兼容性" href="#%e5%85%bc%e5%ae%b9%e6%80%a7">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>在SQL标准中没有<code>VACUUM</code>语句。</p>
+
   </article>
 
 

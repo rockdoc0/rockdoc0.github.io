@@ -9,7 +9,7 @@
 
 
   <meta name="description" content="Overview of all modified and new server configuration options based on PostgreSQL.
-   Resource Consumption Automatic Analyzing Run-time Statistics      Resource Consumption     These settings control the resource consumption of the database server.
+   Resource Consumption Write Ahead Log Run-time Statistics Automatic Analyzing      Resource Consumption     These settings control the resource consumption of the database server.
   threaded_execution (boolean)
 Controls whether to enable the multithreaded Postgres model. In Redrock Postgres, the multithreaded Postgres model enables Postgres processes on UNIX and Linux to run as operating system threads in separate address spaces." />
 
@@ -39,7 +39,7 @@ Controls whether to enable the multithreaded Postgres model. In Redrock Postgres
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
   <meta property="og:description" content="Overview of all modified and new server configuration options based on PostgreSQL.
-   Resource Consumption Automatic Analyzing Run-time Statistics      Resource Consumption     These settings control the resource consumption of the database server.
+   Resource Consumption Write Ahead Log Run-time Statistics Automatic Analyzing      Resource Consumption     These settings control the resource consumption of the database server.
   threaded_execution (boolean)
 Controls whether to enable the multithreaded Postgres model. In Redrock Postgres, the multithreaded Postgres model enables Postgres processes on UNIX and Linux to run as operating system threads in separate address spaces." />
 <meta property="og:type" content="article" />
@@ -48,7 +48,7 @@ Controls whether to enable the multithreaded Postgres model. In Redrock Postgres
 <meta property="article:section" content="Usage" />
     <meta
       property="article:modified_time"
-      content="2022-06-12T20:30:38+08:00"
+      content="2022-06-21T21:12:41+08:00"
     />
 
 
@@ -56,7 +56,7 @@ Controls whether to enable the multithreaded Postgres model. In Redrock Postgres
 <meta name="twitter:title" content="Configuration" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
   <meta name="twitter:description" content="Overview of all modified and new server configuration options based on PostgreSQL.
-   Resource Consumption Automatic Analyzing Run-time Statistics      Resource Consumption     These settings control the resource consumption of the database server.
+   Resource Consumption Write Ahead Log Run-time Statistics Automatic Analyzing      Resource Consumption     These settings control the resource consumption of the database server.
   threaded_execution (boolean)
 Controls whether to enable the multithreaded Postgres model. In Redrock Postgres, the multithreaded Postgres model enables Postgres processes on UNIX and Linux to run as operating system threads in separate address spaces." />
 
@@ -69,9 +69,9 @@ Controls whether to enable the multithreaded Postgres model. In Redrock Postgres
       "name": "Configuration",
       "url" : "https://doc.rockdata.net/usage/configuration/",
       "headline": "Configuration",
-      "description": "Overview of all modified and new server configuration options based on PostgreSQL.\n   Resource Consumption Automatic Analyzing Run-time Statistics      Resource Consumption     These settings control the resource consumption of the database server.\n  threaded_execution (boolean)\nControls whether to enable the multithreaded Postgres model. In Redrock Postgres, the multithreaded Postgres model enables Postgres processes on UNIX and Linux to run as operating system threads in separate address spaces.",
+      "description": "Overview of all modified and new server configuration options based on PostgreSQL.\n   Resource Consumption Write Ahead Log Run-time Statistics Automatic Analyzing      Resource Consumption     These settings control the resource consumption of the database server.\n  threaded_execution (boolean)\nControls whether to enable the multithreaded Postgres model. In Redrock Postgres, the multithreaded Postgres model enables Postgres processes on UNIX and Linux to run as operating system threads in separate address spaces.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "651",
+      "wordCount" : "806",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -82,7 +82,7 @@ Controls whether to enable the multithreaded Postgres model. In Redrock Postgres
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-12T20:30:38.00Z",
+      "dateModified": "2022-06-21T21:12:41.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1875,6 +1875,42 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
           </li>
         
       
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/commands/vacuum/"
+                    class="gdoc-nav__entry"
+                  >
+                    VACUUM
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
     
   </ul>
 
@@ -2321,8 +2357,9 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <div class="gdoc-toc gdoc-toc__level--3">
       <nav id="TableOfContents"><ul>
         <li><a href="#resource-consumption">Resource Consumption</a></li>
-        <li><a href="#automatic-analyzing">Automatic Analyzing</a></li>
+        <li><a href="#write-ahead-log">Write Ahead Log</a></li>
         <li><a href="#run-time-statistics">Run-time Statistics</a></li>
+        <li><a href="#automatic-analyzing">Automatic Analyzing</a></li>
       </ul></nav>
       <hr />
     </div>
@@ -2340,6 +2377,42 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <p><code>threaded_execution</code> (<code>boolean</code>)</p>
 <p>Controls whether to enable the multithreaded Postgres model. In Redrock Postgres, the multithreaded Postgres model enables Postgres processes on UNIX and Linux to run as operating system threads in separate address spaces.</p>
 <p>By default, session related backend processes on Windows always use threaded execution; the remaining background processes run as operating system processes. Thus, an &ldquo;Postgres process&rdquo; is not always equivalent to an &ldquo;operating system process.&rdquo;</p>
+</li>
+</ul>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="write-ahead-log">
+        Write Ahead Log
+        <a data-clipboard-text="https://doc.rockdata.net/usage/configuration/#write-ahead-log" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Write Ahead Log" aria-label="Anchor to: Write Ahead Log" href="#write-ahead-log">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>There are several WAL-related configuration parameters that affect database performance.</p>
+<ul>
+<li>
+<p><code>data_checksums</code> (<code>boolean</code>)</p>
+<p>Determines whether to calculate a checksum when writing a data block (a number calculated from all the bytes stored in the block) and store it in the page header of every data block when writing it to disk. Checksums are verified when a block is read - only if this parameter is <code>on</code> and the last write of the block stored a checksum. Besides, Postgres also verifies the checksum before a change application from update/delete statements and recomputes it after the change is applied. In addition, Postgres gives every WAL record a checksum before writing it to disk.</p>
+<p>If this parameter is set to <code>off</code>, data checksums are turned off.</p>
+<p>Checksums allow Postgres to detect corruption caused by underlying disks, storage systems, or I/O systems. Turning on data checksums causes only an additional 1% to 2% overhead.</p>
+</li>
+</ul>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="run-time-statistics">
+        Run-time Statistics
+        <a data-clipboard-text="https://doc.rockdata.net/usage/configuration/#run-time-statistics" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Run-time Statistics" aria-label="Anchor to: Run-time Statistics" href="#run-time-statistics">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>These parameters control server-wide statistics collection features. When statistics collection is enabled, the data that is produced can be accessed via the <code>pg_stat</code> and <code>pg_statio</code> family of system views. Refer to <a
+  class="gdoc-markdown__link"
+  href="/advanced/monitor-stats/"
+  
+>Statistics Views</a> for more information.</p>
+<ul>
+<li>
+<p><code>track_wait_events</code> (<code>boolean</code>)</p>
+<p>Enables the collection of information on the wait events occured in each session, include occured times and timing information. This parameter is on by default. Note that even when enabled, this information is not visible to all users, only to superusers and the user owning the session being reported on, so it should not represent a security risk. Only superusers can change this setting.</p>
 </li>
 </ul>
 <div class="gdoc-page__anchorwrap">
@@ -2387,25 +2460,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <li>
 <p><code>autoanalyze_scale_factor</code> (<code>floating point</code>)</p>
 <p>Specifies a fraction of the table size to add to <code>autoanalyze_base_threshold</code> when deciding whether to trigger an <code>ANALYZE</code>. The default is 0.1 (10% of table size). This parameter can only be set in the <code>postgresql.conf</code> file or on the server command line; but the setting can be overridden for individual tables by changing table storage parameters.</p>
-</li>
-</ul>
-<div class="gdoc-page__anchorwrap">
-    <h2 id="run-time-statistics">
-        Run-time Statistics
-        <a data-clipboard-text="https://doc.rockdata.net/usage/configuration/#run-time-statistics" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Run-time Statistics" aria-label="Anchor to: Run-time Statistics" href="#run-time-statistics">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<p>These parameters control server-wide statistics collection features. When statistics collection is enabled, the data that is produced can be accessed via the <code>pg_stat</code> and <code>pg_statio</code> family of system views. Refer to <a
-  class="gdoc-markdown__link"
-  href="/advanced/monitor-stats/"
-  
->Statistics Views</a> for more information.</p>
-<ul>
-<li>
-<p><code>track_wait_events</code> (<code>boolean</code>)</p>
-<p>Enables the collection of information on the wait events occured in each session, include occured times and timing information. This parameter is on by default. Note that even when enabled, this information is not visible to all users, only to superusers and the user owning the session being reported on, so it should not represent a security risk. Only superusers can change this setting.</p>
 </li>
 </ul>
 
