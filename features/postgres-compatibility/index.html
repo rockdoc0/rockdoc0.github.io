@@ -8,7 +8,7 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Unsupported features Features different from PostgreSQL  User Tablespace PID        Redrock Postgres is developed based on PostgreSQL. Redrock Postgres is compatible with PostgreSQL on client protocols and SQL syntax. If your application is developed based on PostgreSQL, then:
+  <meta name="description" content="Unsupported features Features different from PostgreSQL  User Tablespace PID   Unsupported Configuration Options Unsupported Storage Parameters      Redrock Postgres is developed based on PostgreSQL. Redrock Postgres is compatible with PostgreSQL on client protocols and SQL syntax. If your application is developed based on PostgreSQL, then:
  Based on the binary compatibility with PostgreSQL on client protocols, Redrock Postgres can be accessed using the same drivers as PostgreSQL for various programming languages, such as Java, C/C&#43;&#43;, ." />
 
     <title>Compatibility with PostgreSQL | Redrock Documentation</title>
@@ -36,7 +36,7 @@
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Unsupported features Features different from PostgreSQL  User Tablespace PID        Redrock Postgres is developed based on PostgreSQL. Redrock Postgres is compatible with PostgreSQL on client protocols and SQL syntax. If your application is developed based on PostgreSQL, then:
+  <meta property="og:description" content="Unsupported features Features different from PostgreSQL  User Tablespace PID   Unsupported Configuration Options Unsupported Storage Parameters      Redrock Postgres is developed based on PostgreSQL. Redrock Postgres is compatible with PostgreSQL on client protocols and SQL syntax. If your application is developed based on PostgreSQL, then:
  Based on the binary compatibility with PostgreSQL on client protocols, Redrock Postgres can be accessed using the same drivers as PostgreSQL for various programming languages, such as Java, C/C&#43;&#43;, ." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/features/postgres-compatibility/" />
@@ -44,14 +44,14 @@
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-06-22T15:24:12+08:00"
+      content="2022-06-22T21:19:44+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Compatibility with PostgreSQL" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Unsupported features Features different from PostgreSQL  User Tablespace PID        Redrock Postgres is developed based on PostgreSQL. Redrock Postgres is compatible with PostgreSQL on client protocols and SQL syntax. If your application is developed based on PostgreSQL, then:
+  <meta name="twitter:description" content="Unsupported features Features different from PostgreSQL  User Tablespace PID   Unsupported Configuration Options Unsupported Storage Parameters      Redrock Postgres is developed based on PostgreSQL. Redrock Postgres is compatible with PostgreSQL on client protocols and SQL syntax. If your application is developed based on PostgreSQL, then:
  Based on the binary compatibility with PostgreSQL on client protocols, Redrock Postgres can be accessed using the same drivers as PostgreSQL for various programming languages, such as Java, C/C&#43;&#43;, ." />
 
 
@@ -63,9 +63,9 @@
       "name": "Compatibility with PostgreSQL",
       "url" : "https://doc.rockdata.net/features/postgres-compatibility/",
       "headline": "Compatibility with PostgreSQL",
-      "description": "Unsupported features Features different from PostgreSQL  User Tablespace PID        Redrock Postgres is developed based on PostgreSQL. Redrock Postgres is compatible with PostgreSQL on client protocols and SQL syntax. If your application is developed based on PostgreSQL, then:\n Based on the binary compatibility with PostgreSQL on client protocols, Redrock Postgres can be accessed using the same drivers as PostgreSQL for various programming languages, such as Java, C\/C\u002b\u002b, .",
+      "description": "Unsupported features Features different from PostgreSQL  User Tablespace PID   Unsupported Configuration Options Unsupported Storage Parameters      Redrock Postgres is developed based on PostgreSQL. Redrock Postgres is compatible with PostgreSQL on client protocols and SQL syntax. If your application is developed based on PostgreSQL, then:\n Based on the binary compatibility with PostgreSQL on client protocols, Redrock Postgres can be accessed using the same drivers as PostgreSQL for various programming languages, such as Java, C\/C\u002b\u002b, .",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "331",
+      "wordCount" : "460",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -76,7 +76,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-22T15:24:12.00Z",
+      "dateModified": "2022-06-22T21:19:44.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2357,6 +2357,8 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <li><a href="#pid">PID</a></li>
           </ul>
         </li>
+        <li><a href="#unsupported-configuration-options">Unsupported Configuration Options</a></li>
+        <li><a href="#unsupported-storage-parameters">Unsupported Storage Parameters</a></li>
       </ul></nav>
       <hr />
     </div>
@@ -2378,16 +2380,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <ul>
 <li><a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/runtime-config-client.html#GUC-VACUUM-FREEZE-TABLE-AGE"
-  
->VACUUM related parameters</a></li>
-<li><a
-  class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/runtime-config-autovacuum.html"
-  
->Parameters related to automatic vacuuming</a></li>
-<li><a
-  class="gdoc-markdown__link"
   href="https://www.postgresql.org/docs/12/sql-vacuum.html"
   
 >VACUUM FULL</a></li>
@@ -2400,7 +2392,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   class="gdoc-markdown__link"
   href="https://www.postgresql.org/docs/12/ddl-system-columns.html"
   
->System Columns</a></li>
+>System Columns</a> related to transaction: <em>xmin</em>, <em>cmin</em>, <em>xmax</em>, <em>cmax</em></li>
 <li><a
   class="gdoc-markdown__link"
   href="https://www.postgresql.org/docs/12/transaction-iso.html#XACT-SERIALIZABLE"
@@ -2481,6 +2473,157 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 ><code>pg_stat_activity</code></a> view, indicating the actual operating system process ID.</div>
 </blockquote>
 
+<div class="gdoc-page__anchorwrap">
+    <h2 id="unsupported-configuration-options">
+        Unsupported Configuration Options
+        <a data-clipboard-text="https://doc.rockdata.net/features/postgres-compatibility/#unsupported-configuration-options" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Unsupported Configuration Options" aria-label="Anchor to: Unsupported Configuration Options" href="#unsupported-configuration-options">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>If you are using any of the following options in your <code>postgresql.conf</code> file you should remove or rename them.</p>
+<ul>
+<li><a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/runtime-config-client.html#GUC-VACUUM-FREEZE-TABLE-AGE"
+  
+>vacuum_freeze_table_age</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/runtime-config-client.html#GUC-VACUUM-FREEZE-MIN-AGE"
+  
+>vacuum_freeze_min_age</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/runtime-config-client.html#GUC-VACUUM-MULTIXACT-FREEZE-TABLE-AGE"
+  
+>vacuum_multixact_freeze_table_age</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/runtime-config-client.html#GUC-VACUUM-MULTIXACT-FREEZE-MIN-AGE"
+  
+>vacuum_multixact_freeze_min_age</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/runtime-config-client.html#GUC-VACUUM-CLEANUP-INDEX-SCALE-FACTOR"
+  
+>vacuum_cleanup_index_scale_factor</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/runtime-config-autovacuum.html#GUC-AUTOVACUUM"
+  
+>autovacuum</a> <em>renamed to</em> <a
+  class="gdoc-markdown__link"
+  href="/usage/configuration/#automatic-analyzing"
+  
+>autoanalyze</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/runtime-config-autovacuum.html#GUC-LOG-AUTOVACUUM-MIN-DURATION"
+  
+>log_autovacuum_min_duration</a> <em>renamed to</em> <a
+  class="gdoc-markdown__link"
+  href="/usage/configuration/#automatic-analyzing"
+  
+>log_autoanalyze_min_duration</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/runtime-config-autovacuum.html#GUC-AUTOVACUUM-MAX-WORKERS"
+  
+>autovacuum_max_workers</a> <em>renamed to</em> <a
+  class="gdoc-markdown__link"
+  href="/usage/configuration/#automatic-analyzing"
+  
+>autoanalyze_max_workers</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/runtime-config-autovacuum.html#GUC-AUTOVACUUM-NAPTIME"
+  
+>autovacuum_naptime</a> <em>renamed to</em> <a
+  class="gdoc-markdown__link"
+  href="/usage/configuration/#automatic-analyzing"
+  
+>autoanalyze_naptime</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/runtime-config-autovacuum.html#GUC-AUTOVACUUM-VACUUM-THRESHOLD"
+  
+>autovacuum_vacuum_threshold</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/runtime-config-autovacuum.html#GUC-AUTOVACUUM-ANALYZE-THRESHOLD"
+  
+>autovacuum_analyze_threshold</a> <em>renamed to</em> <a
+  class="gdoc-markdown__link"
+  href="/usage/configuration/#automatic-analyzing"
+  
+>autoanalyze_base_threshold</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/runtime-config-autovacuum.html#GUC-AUTOVACUUM-VACUUM-SCALE-FACTOR"
+  
+>autovacuum_vacuum_scale_factor</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/runtime-config-autovacuum.html#GUC-AUTOVACUUM-ANALYZE-SCALE-FACTOR"
+  
+>autovacuum_analyze_scale_factor</a> <em>renamed to</em> <a
+  class="gdoc-markdown__link"
+  href="/usage/configuration/#automatic-analyzing"
+  
+>autoanalyze_scale_factor</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/runtime-config-autovacuum.html#GUC-AUTOVACUUM-FREEZE-MAX-AGE"
+  
+>autovacuum_freeze_max_age</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/runtime-config-autovacuum.html#GUC-AUTOVACUUM-MULTIXACT-FREEZE-MAX-AGE"
+  
+>autovacuum_multixact_freeze_max_age</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/runtime-config-autovacuum.html#GUC-AUTOVACUUM-VACUUM-COST-DELAY"
+  
+>autovacuum_vacuum_cost_delay</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/runtime-config-autovacuum.html#GUC-AUTOVACUUM-VACUUM-COST-LIMIT"
+  
+>autovacuum_vacuum_cost_limit</a></li>
+</ul>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="unsupported-storage-parameters">
+        Unsupported Storage Parameters
+        <a data-clipboard-text="https://doc.rockdata.net/features/postgres-compatibility/#unsupported-storage-parameters" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Unsupported Storage Parameters" aria-label="Anchor to: Unsupported Storage Parameters" href="#unsupported-storage-parameters">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>If you are using any of the following <a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/sql-createtable.html#SQL-CREATETABLE-STORAGE-PARAMETERS"
+  
+>Storage Parameters</a> in your table definitions you should remove or rename them.</p>
+<ul>
+<li><code>autovacuum_enabled</code>, <code>toast.autovacuum_enabled</code> <em>renamed to</em> <code>autoanalyze_enabled</code>, <code>toast.autoanalyze_enabled</code></li>
+<li><code>vacuum_index_cleanup</code>, <code>toast.vacuum_index_cleanup</code></li>
+<li><code>vacuum_truncate</code>, <code>toast.vacuum_truncate</code></li>
+<li><code>autovacuum_vacuum_threshold</code>, <code>toast.autovacuum_vacuum_threshold</code></li>
+<li><code>autovacuum_vacuum_scale_factor</code>, <code>toast.autovacuum_vacuum_scale_factor</code></li>
+<li><code>autovacuum_analyze_threshold</code> <em>renamed to</em> <code>autoanalyze_base_threshold</code></li>
+<li><code>autovacuum_analyze_scale_factor</code> <em>renamed to</em> <code>autoanalyze_scale_factor</code></li>
+<li><code>autovacuum_vacuum_cost_delay</code>, <code>toast.autovacuum_vacuum_cost_delay</code></li>
+<li><code>autovacuum_vacuum_cost_limit</code>, <code>toast.autovacuum_vacuum_cost_limit</code></li>
+<li><code>autovacuum_freeze_min_age</code>, <code>toast.autovacuum_freeze_min_age</code></li>
+<li><code>autovacuum_freeze_max_age</code>, <code>toast.autovacuum_freeze_max_age</code></li>
+<li><code>autovacuum_freeze_table_age</code>, <code>toast.autovacuum_freeze_table_age</code></li>
+<li><code>autovacuum_multixact_freeze_min_age</code>, <code>toast.autovacuum_multixact_freeze_min_age</code></li>
+<li><code>autovacuum_multixact_freeze_max_age</code>, <code>toast.autovacuum_multixact_freeze_max_age</code></li>
+<li><code>autovacuum_multixact_freeze_table_age</code>, <code>toast.autovacuum_multixact_freeze_table_age</code></li>
+<li><code>log_autovacuum_min_duration</code>, <code>toast.log_autovacuum_min_duration</code> <em>renamed to</em> <code>log_autoanalyze_min_duration</code>, <code>toast.log_autoanalyze_min_duration</code></li>
+</ul>
 
   </article>
 
