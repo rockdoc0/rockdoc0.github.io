@@ -42,7 +42,7 @@
 <meta property="article:section" content="Advanced" />
     <meta
       property="article:modified_time"
-      content="2022-06-15T18:38:42+08:00"
+      content="2022-06-22T15:24:12+08:00"
     />
 
 
@@ -62,7 +62,7 @@
       "headline": "Statistics Views",
       "description": "Statistics Collection Configuration Viewing Statistics pg_stat_activity pg_stat_wait_event pg_stat_replication pg_stat_database pg_stat_all_tables pg_stat_all_undos pg_stat_all_indexes pg_statio_all_tables pg_statio_all_undos pg_statio_all_indexes pg_statio_all_sequences      Redrock Postgres’s statistics collector is a subsystem that supports collection and reporting of information about server activity. Presently, the collector can count accesses to tables and indexes in both disk-block and individual-row terms. It also tracks the total number of rows in each table, and information about analyze actions for each table.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "7387",
+      "wordCount" : "7383",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -73,7 +73,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-15T18:38:42.00Z",
+      "dateModified": "2022-06-22T15:24:12.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2765,8 +2765,16 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 </tbody>
 </table> </div>
-<p><strong>Note</strong></p>
-<p>The <code>wait_event</code> and <code>state</code> columns are independent. If a backend is in the <code>active</code> state, it may or may not be <code>waiting</code> on some event. If the state is <code>active</code> and <code>wait_event</code> is non-null, it means that a query is being executed, but is being blocked somewhere in the system.</p>
+
+
+
+
+
+<blockquote class="gdoc-hint note">
+  <div class="gdoc-hint__title flex align-center"><i class="fa note" title="Note"></i></div>
+  <div class="gdoc-hint__text">The <code>wait_event</code> and <code>state</code> columns are independent. If a backend is in the <code>active</code> state, it may or may not be <code>waiting</code> on some event. If the state is <code>active</code> and <code>wait_event</code> is non-null, it means that a query is being executed, but is being blocked somewhere in the system.</div>
+</blockquote>
+
 <p><strong>Table 4. Wait Event Types</strong></p>
 <div class="table-wrap"> <table>
 <thead>
@@ -3618,8 +3626,16 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 </tbody>
 </table> </div>
-<p><strong>Note</strong></p>
-<p>Extensions can add <code>LWLock</code> types to the list shown in <em>Table 12</em>. In some cases, the name assigned by an extension will not be available in all server processes; so an <code>LWLock</code> wait event might be reported as just “<code>extension</code>” rather than the extension-assigned name.</p>
+
+
+
+
+
+<blockquote class="gdoc-hint note">
+  <div class="gdoc-hint__title flex align-center"><i class="fa note" title="Note"></i></div>
+  <div class="gdoc-hint__text">Extensions can add <code>LWLock</code> types to the list shown in <em>Table 12</em>. In some cases, the name assigned by an extension will not be available in all server processes; so an <code>LWLock</code> wait event might be reported as just “<code>extension</code>” rather than the extension-assigned name.</div>
+</blockquote>
+
 <p><strong>Table 13. Wait Events of Type <code>Timeout</code></strong></p>
 <div class="table-wrap"> <table>
 <thead>
@@ -3849,8 +3865,16 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </table> </div>
 <p>The lag times reported in the <code>pg_stat_replication</code> view are measurements of the time taken for recent WAL to be written, flushed and replayed and for the sender to know about it. These times represent the commit delay that was (or would have been) introduced by each synchronous commit level, if the remote server was configured as a synchronous standby. For an asynchronous standby, the <code>replay_lag</code> column approximates the delay before recent transactions became visible to queries. If the standby server has entirely caught up with the sending server and there is no more WAL activity, the most recently measured lag times will continue to be displayed for a short time and then show NULL.</p>
 <p>Lag times work automatically for physical replication. Logical decoding plugins may optionally emit tracking messages; if they do not, the tracking mechanism will simply display NULL lag.</p>
-<p><strong>Note</strong></p>
-<p>The reported lag times are not predictions of how long it will take for the standby to catch up with the sending server assuming the current rate of replay. Such a system would show similar times while new WAL is being generated, but would differ when the sender becomes idle. In particular, when the standby has caught up completely, <code>pg_stat_replication</code> shows the time taken to write, flush and replay the most recent reported WAL location rather than zero as some users might expect. This is consistent with the goal of measuring synchronous commit and transaction visibility delays for recent write transactions. To reduce confusion for users expecting a different model of lag, the lag columns revert to NULL after a short time on a fully replayed idle system. Monitoring systems should choose whether to represent this as missing data, zero or continue to display the last known value.</p>
+
+
+
+
+
+<blockquote class="gdoc-hint note">
+  <div class="gdoc-hint__title flex align-center"><i class="fa note" title="Note"></i></div>
+  <div class="gdoc-hint__text">The reported lag times are not predictions of how long it will take for the standby to catch up with the sending server assuming the current rate of replay. Such a system would show similar times while new WAL is being generated, but would differ when the sender becomes idle. In particular, when the standby has caught up completely, <code>pg_stat_replication</code> shows the time taken to write, flush and replay the most recent reported WAL location rather than zero as some users might expect. This is consistent with the goal of measuring synchronous commit and transaction visibility delays for recent write transactions. To reduce confusion for users expecting a different model of lag, the lag columns revert to NULL after a short time on a fully replayed idle system. Monitoring systems should choose whether to represent this as missing data, zero or continue to display the last known value.</div>
+</blockquote>
+
 <div class="gdoc-page__anchorwrap">
     <h2 id="pg_stat_database">
         pg_stat_database
@@ -4243,8 +4267,16 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tbody>
 </table> </div>
 <p>Indexes can be used by simple index scans, “bitmap” index scans, and the optimizer. In a bitmap scan the output of several indexes can be combined via AND or OR rules, so it is difficult to associate individual heap row fetches with specific indexes when a bitmap scan is used. Therefore, a bitmap scan increments the <code>pg_stat_all_indexes</code>.<code>idx_tup_read</code> count(s) for the index(es) it uses, and it increments the <code>pg_stat_all_tables</code>.<code>idx_tup_fetch</code> count for the table, but it does not affect <code>pg_stat_all_indexes</code>.<code>idx_tup_fetch</code>. The optimizer also accesses indexes to check for supplied constants whose values are outside the recorded range of the optimizer statistics because the optimizer statistics might be stale.</p>
-<p><strong>Note</strong></p>
-<p>The <code>idx_tup_read</code> and <code>idx_tup_fetch</code> counts can be different even without any use of bitmap scans, because <code>idx_tup_read</code> counts index entries retrieved from the index while <code>idx_tup_fetch</code> counts live rows fetched from the table. The latter will be less if any dead or not-yet-committed rows are fetched using the index, or if any heap fetches are avoided by means of an index-only scan.</p>
+
+
+
+
+
+<blockquote class="gdoc-hint note">
+  <div class="gdoc-hint__title flex align-center"><i class="fa note" title="Note"></i></div>
+  <div class="gdoc-hint__text">The <code>idx_tup_read</code> and <code>idx_tup_fetch</code> counts can be different even without any use of bitmap scans, because <code>idx_tup_read</code> counts index entries retrieved from the index while <code>idx_tup_fetch</code> counts live rows fetched from the table. The latter will be less if any dead or not-yet-committed rows are fetched using the index, or if any heap fetches are avoided by means of an index-only scan.</div>
+</blockquote>
+
 <div class="gdoc-page__anchorwrap">
     <h2 id="pg_statio_all_tables">
         pg_statio_all_tables

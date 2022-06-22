@@ -9,7 +9,7 @@
 
 
   <meta name="description" content="Table of Contents
- pg_recyclebin pg_ts_lexicon pg_undo  The system catalogs are the place where a relational database management system stores schema metadata, such as information about tables and columns, and internal bookkeeping information. Redrock Postgres&rsquo;s system catalogs are regular tables. You can drop and recreate the tables, add columns, insert and update values, and severely mess up your system that way. Normally, one should not change the system catalogs by hand, there are normally SQL commands to do that." />
+   pg_recyclebin      pg_ts_lexicon      pg_undo      The system catalogs are the place where a relational database management system stores schema metadata, such as information about tables and columns, and internal bookkeeping information. Redrock Postgres&rsquo;s system catalogs are regular tables. You can drop and recreate the tables, add columns, insert and update values, and severely mess up your system that way." />
 
     <title>System Catalogs | Redrock Documentation</title>
 
@@ -37,14 +37,14 @@
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
   <meta property="og:description" content="Table of Contents
- pg_recyclebin pg_ts_lexicon pg_undo  The system catalogs are the place where a relational database management system stores schema metadata, such as information about tables and columns, and internal bookkeeping information. Redrock Postgres’s system catalogs are regular tables. You can drop and recreate the tables, add columns, insert and update values, and severely mess up your system that way. Normally, one should not change the system catalogs by hand, there are normally SQL commands to do that." />
+   pg_recyclebin      pg_ts_lexicon      pg_undo      The system catalogs are the place where a relational database management system stores schema metadata, such as information about tables and columns, and internal bookkeeping information. Redrock Postgres’s system catalogs are regular tables. You can drop and recreate the tables, add columns, insert and update values, and severely mess up your system that way." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/catalogs/" />
 
 <meta property="article:section" content="Catalogs" />
     <meta
       property="article:modified_time"
-      content="2022-06-18T16:39:41+08:00"
+      content="2022-06-22T15:24:12+08:00"
     />
 
 
@@ -52,7 +52,7 @@
 <meta name="twitter:title" content="System Catalogs" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
   <meta name="twitter:description" content="Table of Contents
- pg_recyclebin pg_ts_lexicon pg_undo  The system catalogs are the place where a relational database management system stores schema metadata, such as information about tables and columns, and internal bookkeeping information. Redrock Postgres’s system catalogs are regular tables. You can drop and recreate the tables, add columns, insert and update values, and severely mess up your system that way. Normally, one should not change the system catalogs by hand, there are normally SQL commands to do that." />
+   pg_recyclebin      pg_ts_lexicon      pg_undo      The system catalogs are the place where a relational database management system stores schema metadata, such as information about tables and columns, and internal bookkeeping information. Redrock Postgres’s system catalogs are regular tables. You can drop and recreate the tables, add columns, insert and update values, and severely mess up your system that way." />
 
 
   <script type="application/ld+json">
@@ -63,7 +63,7 @@
       "name": "System Catalogs",
       "url" : "https://doc.rockdata.net/catalogs/",
       "headline": "System Catalogs",
-      "description": "Table of Contents\n pg_recyclebin pg_ts_lexicon pg_undo  The system catalogs are the place where a relational database management system stores schema metadata, such as information about tables and columns, and internal bookkeeping information. Redrock Postgres’s system catalogs are regular tables. You can drop and recreate the tables, add columns, insert and update values, and severely mess up your system that way. Normally, one should not change the system catalogs by hand, there are normally SQL commands to do that.",
+      "description": "Table of Contents\n   pg_recyclebin      pg_ts_lexicon      pg_undo      The system catalogs are the place where a relational database management system stores schema metadata, such as information about tables and columns, and internal bookkeeping information. Redrock Postgres’s system catalogs are regular tables. You can drop and recreate the tables, add columns, insert and update values, and severely mess up your system that way.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
       "wordCount" : "132",
       "inLanguage": "en",
@@ -76,7 +76,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-18T16:39:41.00Z",
+      "dateModified": "2022-06-22T15:24:12.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2340,23 +2340,34 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   >
     <h1>System Catalogs</h1>
     <p><strong>Table of Contents</strong></p>
-<ul>
-<li><a
-  class="gdoc-markdown__link"
-  href="/catalogs/recyclebin/"
-  
->pg_recyclebin</a></li>
-<li><a
-  class="gdoc-markdown__link"
-  href="/catalogs/ts-lexicon/"
-  
->pg_ts_lexicon</a></li>
-<li><a
-  class="gdoc-markdown__link"
-  href="/catalogs/undo/"
-  
->pg_undo</a></li>
-</ul>
+
+  <div class="gdoc-toc gdoc-toc__level--3">
+    
+  <ul>
+          <li>
+              <span>
+                <a href="/catalogs/recyclebin/" class="gdoc-toc__entry">pg_recyclebin
+                </a>
+              </span>
+          </li>
+          <li>
+              <span>
+                <a href="/catalogs/ts-lexicon/" class="gdoc-toc__entry">pg_ts_lexicon
+                </a>
+              </span>
+          </li>
+          <li>
+              <span>
+                <a href="/catalogs/undo/" class="gdoc-toc__entry">pg_undo
+                </a>
+              </span>
+          </li>
+  </ul>
+  </div>
+
+
+
+
 <p>The system catalogs are the place where a relational database management system stores schema metadata, such as information about tables and columns, and internal bookkeeping information. Redrock Postgres&rsquo;s system catalogs are regular tables. You can drop and recreate the tables, add columns, insert and update values, and severely mess up your system that way. Normally, one should not change the system catalogs by hand, there are normally SQL commands to do that. (For example, <code>CREATE DATABASE</code> inserts a row into the <code>pg_database</code> catalog — and actually creates the database on disk.) There are some exceptions for particularly esoteric operations, but many of those have been made available as SQL commands over time, and so the need for direct manipulation of the system catalogs is ever decreasing.</p>
 
   </article>

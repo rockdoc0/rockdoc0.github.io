@@ -46,7 +46,7 @@ Planning     Prepare the computing server and storage server environments. The r
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-06-19T20:52:49+08:00"
+      content="2022-06-22T15:24:12+08:00"
     />
 
 
@@ -68,7 +68,7 @@ Planning     Prepare the computing server and storage server environments. The r
       "headline": "Network Attached Tablespace",
       "description": "Planning Deploying Compute Server Deploying Storage Server Create a Network Attached Database Create a Network Attached Tablespace      Redrock Postgres supports network attached tablespaces. Based on this capability, Redrock Postgres can deploy database computing and storage separately.\nPlanning     Prepare the computing server and storage server environments. The recommended environment configurations are as follows:\n Computing servers should use high processor and memory configurations.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "417",
+      "wordCount" : "416",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -79,7 +79,7 @@ Planning     Prepare the computing server and storage server environments. The r
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-19T20:52:49.00Z",
+      "dateModified": "2022-06-22T15:24:12.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2428,7 +2428,16 @@ pg_dump or pg_dumpall).</li>
 <p>Log in to the computing server, connect to the <code>postgres</code> database in the database service as the database superuser, and create a network attached database. The following is a simple configuration example:</p>
 <pre tabindex="0"><code>CREATE DATABASE netdb STORAGE remote LOCATION
   &#39;host=192.168.1.50 port=5432 user=postgres password=pgpass&#39;;
-</code></pre><p><strong>Note</strong>: In Redrock Postgres, creating a database creates a default tablespace in the database, and the newly created database in the example above produces a default network tablespace.</p>
+</code></pre>
+
+
+
+
+<blockquote class="gdoc-hint note">
+  <div class="gdoc-hint__title flex align-center"><i class="fa note" title="Note"></i></div>
+  <div class="gdoc-hint__text">In Redrock Postgres, creating a database creates a default tablespace in the database, and the newly created database in the example above produces a default network tablespace.</div>
+</blockquote>
+
 <div class="gdoc-page__anchorwrap">
     <h2 id="create-a-network-attached-tablespace">
         Create a Network Attached Tablespace

@@ -52,7 +52,7 @@
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-06-19T20:52:49+08:00"
+      content="2022-06-22T15:24:12+08:00"
     />
 
 
@@ -88,7 +88,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-19T20:52:49.00Z",
+      "dateModified": "2022-06-22T15:24:12.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2436,7 +2436,16 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <p>登录计算服务器，使用数据库超级用户连接到数据库服务中的 <code>postgres</code> 数据库，创建基于网络的数据库。配置的一个简单例子是：</p>
 <pre tabindex="0"><code>CREATE DATABASE netdb STORAGE remote LOCATION
   &#39;host=192.168.1.50 port=5432 user=postgres password=pgpass&#39;;
-</code></pre><p><strong>说明</strong>：在 Redrock Postgres 中，创建一个数据库时会在这个数据库中附带创建一个默认表空间，上例中新建的数据库会产生一个默认的网络表空间。</p>
+</code></pre>
+
+
+
+
+<blockquote class="gdoc-hint note">
+  <div class="gdoc-hint__title flex align-center"><i class="fa note" title="Note"></i></div>
+  <div class="gdoc-hint__text">在 Redrock Postgres 中，创建一个数据库时会在这个数据库中附带创建一个默认表空间，上例中新建的数据库会产生一个默认的网络表空间。</div>
+</blockquote>
+
 <div class="gdoc-page__anchorwrap">
     <h2 id="创建网络表空间">
         创建网络表空间

@@ -44,7 +44,7 @@
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-06-18T15:29:38+08:00"
+      content="2022-06-22T15:24:12+08:00"
     />
 
 
@@ -65,7 +65,7 @@
       "headline": "Compatibility with PostgreSQL",
       "description": "Unsupported features Features different from PostgreSQL  User Tablespace PID        Redrock Postgres is developed based on PostgreSQL. Redrock Postgres is compatible with PostgreSQL on client protocols and SQL syntax. If your application is developed based on PostgreSQL, then:\n Based on the binary compatibility with PostgreSQL on client protocols, Redrock Postgres can be accessed using the same drivers as PostgreSQL for various programming languages, such as Java, C\/C\u002b\u002b, .",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "334",
+      "wordCount" : "331",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -76,7 +76,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-18T15:29:38.00Z",
+      "dateModified": "2022-06-22T15:24:12.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2429,7 +2429,16 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     </h3>
 </div>
 <p>In PostgreSQL, users are cluster-level objects, while in Redrock Postgres, users are database-level objects. That means when you access different database objects in the same cluster, you may see users with the same name, in fact, they are different user objects belonging to different databases.</p>
-<p><strong>Note</strong>: DBA should pay attention to this difference, while developers may not.</p>
+
+
+
+
+
+<blockquote class="gdoc-hint caution">
+  <div class="gdoc-hint__title flex align-center"><i class="fa caution" title="Caution"></i></div>
+  <div class="gdoc-hint__text">DBA should pay attention to this difference, while developers may not.</div>
+</blockquote>
+
 <div class="gdoc-page__anchorwrap">
     <h3 id="tablespace">
         Tablespace
@@ -2439,7 +2448,16 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     </h3>
 </div>
 <p>In PostgreSQL, tablespaces are cluster-level objects, while in Redrock Postgres, tablespaces are database-level objects. That means when you access different database objects in the same cluster, you may see tablespaces with the same name, in fact, they are different tablespace objects in the respective databases.</p>
-<p><strong>Note</strong>: DBA should pay attention to this difference, while developers may not.</p>
+
+
+
+
+
+<blockquote class="gdoc-hint caution">
+  <div class="gdoc-hint__title flex align-center"><i class="fa caution" title="Caution"></i></div>
+  <div class="gdoc-hint__text">DBA should pay attention to this difference, while developers may not.</div>
+</blockquote>
+
 <div class="gdoc-page__anchorwrap">
     <h3 id="pid">
         PID
@@ -2449,11 +2467,20 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     </h3>
 </div>
 <p>Some statistics views, such as pg_stat_activity and pg_locks, contain fields named <code>pid</code>. In PostgreSQL, these fields indicate the operating system process ID. In Redrock Postgres, these fields indicate the database process ID.</p>
-<p><strong>Note</strong>: There is a field named <code>spid</code> in <a
+
+
+
+
+
+<blockquote class="gdoc-hint tip">
+  <div class="gdoc-hint__title flex align-center"><i class="fa tip" title="Tip"></i></div>
+  <div class="gdoc-hint__text">There is a field named <code>spid</code> in <a
   class="gdoc-markdown__link--code"
   href="/zh-cn/advanced/monitor-stats/#pg_stat_activity"
   
-><code>pg_stat_activity</code></a> view, indicating the actual operating system process ID.</p>
+><code>pg_stat_activity</code></a> view, indicating the actual operating system process ID.</div>
+</blockquote>
+
 
   </article>
 
