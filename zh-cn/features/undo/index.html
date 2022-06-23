@@ -8,7 +8,7 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="回滚段和事务 事务回滚 管理回滚段      Redrock Postgres 维护事务操作的记录，统称为撤消数据。 Redrock Postgres 使用 undo 来执行以下操作：
+  <meta name="description" content="回滚段和事务 事务回滚 管理回滚段      Redrock Postgres 维护事务操作的记录，统称为 undo 数据。 Redrock Postgres 使用 undo 来执行以下操作：
  回滚活跃事务 恢复异常结束的事务 提供读一致性  Redrock Postgres 将 undo 数据存储在数据库中而不是外部日志中。 undo 数据存储在与数据块一样更新的块中，对这些块的更改会产生重做。 通过这种方式，Redrock Postgres 可以高效地访问 undo 数据，而无需读取外部日志。
 undo 数据存储在独立的表空间中。 Redrock Postgres 提供了一种完全自动化的机制，称为自动回滚段管理模式，用于管理回滚段和存储空间。
 回滚段和事务     当事务开始时，数据库将事务绑定（分配）到回滚段，因此绑定到事务表。
@@ -40,7 +40,7 @@ undo 数据存储在独立的表空间中。 Redrock Postgres 提供了一种完
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="回滚段和事务 事务回滚 管理回滚段      Redrock Postgres 维护事务操作的记录，统称为撤消数据。 Redrock Postgres 使用 undo 来执行以下操作：
+  <meta property="og:description" content="回滚段和事务 事务回滚 管理回滚段      Redrock Postgres 维护事务操作的记录，统称为 undo 数据。 Redrock Postgres 使用 undo 来执行以下操作：
  回滚活跃事务 恢复异常结束的事务 提供读一致性  Redrock Postgres 将 undo 数据存储在数据库中而不是外部日志中。 undo 数据存储在与数据块一样更新的块中，对这些块的更改会产生重做。 通过这种方式，Redrock Postgres 可以高效地访问 undo 数据，而无需读取外部日志。
 undo 数据存储在独立的表空间中。 Redrock Postgres 提供了一种完全自动化的机制，称为自动回滚段管理模式，用于管理回滚段和存储空间。
 回滚段和事务     当事务开始时，数据库将事务绑定（分配）到回滚段，因此绑定到事务表。
@@ -52,14 +52,14 @@ undo 数据存储在独立的表空间中。 Redrock Postgres 提供了一种完
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-06-17T17:34:43+08:00"
+      content="2022-06-23T23:20:58+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="回滚段" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="回滚段和事务 事务回滚 管理回滚段      Redrock Postgres 维护事务操作的记录，统称为撤消数据。 Redrock Postgres 使用 undo 来执行以下操作：
+  <meta name="twitter:description" content="回滚段和事务 事务回滚 管理回滚段      Redrock Postgres 维护事务操作的记录，统称为 undo 数据。 Redrock Postgres 使用 undo 来执行以下操作：
  回滚活跃事务 恢复异常结束的事务 提供读一致性  Redrock Postgres 将 undo 数据存储在数据库中而不是外部日志中。 undo 数据存储在与数据块一样更新的块中，对这些块的更改会产生重做。 通过这种方式，Redrock Postgres 可以高效地访问 undo 数据，而无需读取外部日志。
 undo 数据存储在独立的表空间中。 Redrock Postgres 提供了一种完全自动化的机制，称为自动回滚段管理模式，用于管理回滚段和存储空间。
 回滚段和事务     当事务开始时，数据库将事务绑定（分配）到回滚段，因此绑定到事务表。
@@ -75,9 +75,9 @@ undo 数据存储在独立的表空间中。 Redrock Postgres 提供了一种完
       "name": "回滚段",
       "url" : "https://doc.rockdata.net/zh-cn/features/undo/",
       "headline": "回滚段",
-      "description": "回滚段和事务 事务回滚 管理回滚段      Redrock Postgres 维护事务操作的记录，统称为撤消数据。 Redrock Postgres 使用 undo 来执行以下操作：\n 回滚活跃事务 恢复异常结束的事务 提供读一致性  Redrock Postgres 将 undo 数据存储在数据库中而不是外部日志中。 undo 数据存储在与数据块一样更新的块中，对这些块的更改会产生重做。 通过这种方式，Redrock Postgres 可以高效地访问 undo 数据，而无需读取外部日志。\nundo 数据存储在独立的表空间中。 Redrock Postgres 提供了一种完全自动化的机制，称为自动回滚段管理模式，用于管理回滚段和存储空间。\n回滚段和事务     当事务开始时，数据库将事务绑定（分配）到回滚段，因此绑定到事务表。\n多个活动事务可以同时写入相同的回滚段或不同的回滚段。 例如，事务 T1 和 T2 都可以写入 undo U1，或者 T1 可以写入 U1 而 T2 写入 undo U2。\n事务回滚     当执行 ROLLBACK语句时，数据库使用 undo 记录回滚未提交事务对数据库所做的更改。 在恢复期间，数据库回滚从联机重做日志应用到数据文件的任何未提交的更改。 undo 记录通过在另一个用户正在更改数据的同时为访问数据的用户维护数据的前映像来提供读取一致性。",
+      "description": "回滚段和事务 事务回滚 管理回滚段      Redrock Postgres 维护事务操作的记录，统称为 undo 数据。 Redrock Postgres 使用 undo 来执行以下操作：\n 回滚活跃事务 恢复异常结束的事务 提供读一致性  Redrock Postgres 将 undo 数据存储在数据库中而不是外部日志中。 undo 数据存储在与数据块一样更新的块中，对这些块的更改会产生重做。 通过这种方式，Redrock Postgres 可以高效地访问 undo 数据，而无需读取外部日志。\nundo 数据存储在独立的表空间中。 Redrock Postgres 提供了一种完全自动化的机制，称为自动回滚段管理模式，用于管理回滚段和存储空间。\n回滚段和事务     当事务开始时，数据库将事务绑定（分配）到回滚段，因此绑定到事务表。\n多个活动事务可以同时写入相同的回滚段或不同的回滚段。 例如，事务 T1 和 T2 都可以写入 undo U1，或者 T1 可以写入 U1 而 T2 写入 undo U2。\n事务回滚     当执行 ROLLBACK语句时，数据库使用 undo 记录回滚未提交事务对数据库所做的更改。 在恢复期间，数据库回滚从联机重做日志应用到数据文件的任何未提交的更改。 undo 记录通过在另一个用户正在更改数据的同时为访问数据的用户维护数据的前映像来提供读取一致性。",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "78",
+      "wordCount" : "80",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -88,7 +88,7 @@ undo 数据存储在独立的表空间中。 Redrock Postgres 提供了一种完
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-17T17:34:43.00Z",
+      "dateModified": "2022-06-23T23:20:58.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2367,7 +2367,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       </ul></nav>
       <hr />
     </div>
-<p>Redrock Postgres 维护事务操作的记录，统称为撤消数据。 Redrock Postgres 使用 undo 来执行以下操作：</p>
+<p>Redrock Postgres 维护事务操作的记录，统称为 undo 数据。 Redrock Postgres 使用 undo 来执行以下操作：</p>
 <ul>
 <li>回滚活跃事务</li>
 <li>恢复异常结束的事务</li>

@@ -10,12 +10,11 @@
 
   <meta name="description" content="VACUUM — 清理一个数据库
 语法     VACUUM [ ( option [, ...] ) ] [ name [, ...] ]VACUUM [ VERBOSE ] [ name [, ...] ]其中option可以是下列之一：VERBOSE [ boolean ]SKIP_LOCKED [ boolean ]TRUNCATE [ boolean ] 描述     VACUUM可以用来执行以下操作：
- 尝试截断表末尾的任何空页，并允许将截断页的磁盘空间返回到操作系统 尝试收缩回滚段 清理回收站中的已删除对象  在没有*name*列表的情况下，VACUUM会处理当前用户具有清理权限的当前数据库中的每一个表、物化视图、回滚段，和回收站中的已删除对象。如果给出一个列表，VACUUM可以只处理列表中的那些表。
+ 尝试截断表末尾的任何空页，并允许将截断页的磁盘空间返回到操作系统 尝试收缩回滚段 清理回收站中的已删除对象  在没有 name 列表的情况下，VACUUM会处理当前用户具有清理权限的当前数据库中的每一个表、物化视图、回滚段，和回收站中的已删除对象。如果给出一个列表，VACUUM可以只处理列表中的那些表。
 当选项列表被包围在圆括号中时，选项可以被写成任何顺序。如果没有圆括号，选项必须严格按照上面所展示的顺序指定。
 参数       VERBOSE
 为每个表打印一份详细的清理活动报告。
-  SKIP_LOCKED
-规定VACUUM在开始处理关系时不等待任何冲突锁被释放：如果关系不能立即锁定而不等待，则跳过关系。 请注意即使采用此选项，VACUUM在打开关系的索引时仍可能阻塞。还有，虽然VACUUM通常处理指定分区表的所有分区，但如果分区表上的锁冲突， 此选项将导致VACUUM跳过所有分区。" />
+  SKIP_LOCKED" />
 
     <title>VACUUM | Redrock Documentation</title>
 
@@ -44,19 +43,18 @@
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
   <meta property="og:description" content="VACUUM — 清理一个数据库
 语法     VACUUM [ ( option [, ...] ) ] [ name [, ...] ]VACUUM [ VERBOSE ] [ name [, ...] ]其中option可以是下列之一：VERBOSE [ boolean ]SKIP_LOCKED [ boolean ]TRUNCATE [ boolean ] 描述     VACUUM可以用来执行以下操作：
- 尝试截断表末尾的任何空页，并允许将截断页的磁盘空间返回到操作系统 尝试收缩回滚段 清理回收站中的已删除对象  在没有*name*列表的情况下，VACUUM会处理当前用户具有清理权限的当前数据库中的每一个表、物化视图、回滚段，和回收站中的已删除对象。如果给出一个列表，VACUUM可以只处理列表中的那些表。
+ 尝试截断表末尾的任何空页，并允许将截断页的磁盘空间返回到操作系统 尝试收缩回滚段 清理回收站中的已删除对象  在没有 name 列表的情况下，VACUUM会处理当前用户具有清理权限的当前数据库中的每一个表、物化视图、回滚段，和回收站中的已删除对象。如果给出一个列表，VACUUM可以只处理列表中的那些表。
 当选项列表被包围在圆括号中时，选项可以被写成任何顺序。如果没有圆括号，选项必须严格按照上面所展示的顺序指定。
 参数       VERBOSE
 为每个表打印一份详细的清理活动报告。
-  SKIP_LOCKED
-规定VACUUM在开始处理关系时不等待任何冲突锁被释放：如果关系不能立即锁定而不等待，则跳过关系。 请注意即使采用此选项，VACUUM在打开关系的索引时仍可能阻塞。还有，虽然VACUUM通常处理指定分区表的所有分区，但如果分区表上的锁冲突， 此选项将导致VACUUM跳过所有分区。" />
+  SKIP_LOCKED" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/zh-cn/commands/vacuum/" />
 
 <meta property="article:section" content="Commands" />
     <meta
       property="article:modified_time"
-      content="2022-06-21T21:12:41+08:00"
+      content="2022-06-23T23:20:58+08:00"
     />
 
 
@@ -65,12 +63,11 @@
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
   <meta name="twitter:description" content="VACUUM — 清理一个数据库
 语法     VACUUM [ ( option [, ...] ) ] [ name [, ...] ]VACUUM [ VERBOSE ] [ name [, ...] ]其中option可以是下列之一：VERBOSE [ boolean ]SKIP_LOCKED [ boolean ]TRUNCATE [ boolean ] 描述     VACUUM可以用来执行以下操作：
- 尝试截断表末尾的任何空页，并允许将截断页的磁盘空间返回到操作系统 尝试收缩回滚段 清理回收站中的已删除对象  在没有*name*列表的情况下，VACUUM会处理当前用户具有清理权限的当前数据库中的每一个表、物化视图、回滚段，和回收站中的已删除对象。如果给出一个列表，VACUUM可以只处理列表中的那些表。
+ 尝试截断表末尾的任何空页，并允许将截断页的磁盘空间返回到操作系统 尝试收缩回滚段 清理回收站中的已删除对象  在没有 name 列表的情况下，VACUUM会处理当前用户具有清理权限的当前数据库中的每一个表、物化视图、回滚段，和回收站中的已删除对象。如果给出一个列表，VACUUM可以只处理列表中的那些表。
 当选项列表被包围在圆括号中时，选项可以被写成任何顺序。如果没有圆括号，选项必须严格按照上面所展示的顺序指定。
 参数       VERBOSE
 为每个表打印一份详细的清理活动报告。
-  SKIP_LOCKED
-规定VACUUM在开始处理关系时不等待任何冲突锁被释放：如果关系不能立即锁定而不等待，则跳过关系。 请注意即使采用此选项，VACUUM在打开关系的索引时仍可能阻塞。还有，虽然VACUUM通常处理指定分区表的所有分区，但如果分区表上的锁冲突， 此选项将导致VACUUM跳过所有分区。" />
+  SKIP_LOCKED" />
 
 
   <script type="application/ld+json">
@@ -81,9 +78,9 @@
       "name": "VACUUM",
       "url" : "https://doc.rockdata.net/zh-cn/commands/vacuum/",
       "headline": "VACUUM",
-      "description": "VACUUM — 清理一个数据库\n语法     VACUUM [ ( option [, ...] ) ] [ name [, ...] ]\rVACUUM [ VERBOSE ] [ name [, ...] ]\r其中option可以是下列之一：\rVERBOSE [ boolean ]\rSKIP_LOCKED [ boolean ]\rTRUNCATE [ boolean ] 描述     VACUUM可以用来执行以下操作：\n 尝试截断表末尾的任何空页，并允许将截断页的磁盘空间返回到操作系统 尝试收缩回滚段 清理回收站中的已删除对象  在没有*name*列表的情况下，VACUUM会处理当前用户具有清理权限的当前数据库中的每一个表、物化视图、回滚段，和回收站中的已删除对象。如果给出一个列表，VACUUM可以只处理列表中的那些表。\n当选项列表被包围在圆括号中时，选项可以被写成任何顺序。如果没有圆括号，选项必须严格按照上面所展示的顺序指定。\n参数       VERBOSE\n为每个表打印一份详细的清理活动报告。\n  SKIP_LOCKED\n规定VACUUM在开始处理关系时不等待任何冲突锁被释放：如果关系不能立即锁定而不等待，则跳过关系。 请注意即使采用此选项，VACUUM在打开关系的索引时仍可能阻塞。还有，虽然VACUUM通常处理指定分区表的所有分区，但如果分区表上的锁冲突， 此选项将导致VACUUM跳过所有分区。",
+      "description": "VACUUM — 清理一个数据库\n语法     VACUUM [ ( option [, ...] ) ] [ name [, ...] ]\rVACUUM [ VERBOSE ] [ name [, ...] ]\r其中option可以是下列之一：\rVERBOSE [ boolean ]\rSKIP_LOCKED [ boolean ]\rTRUNCATE [ boolean ] 描述     VACUUM可以用来执行以下操作：\n 尝试截断表末尾的任何空页，并允许将截断页的磁盘空间返回到操作系统 尝试收缩回滚段 清理回收站中的已删除对象  在没有 name 列表的情况下，VACUUM会处理当前用户具有清理权限的当前数据库中的每一个表、物化视图、回滚段，和回收站中的已删除对象。如果给出一个列表，VACUUM可以只处理列表中的那些表。\n当选项列表被包围在圆括号中时，选项可以被写成任何顺序。如果没有圆括号，选项必须严格按照上面所展示的顺序指定。\n参数       VERBOSE\n为每个表打印一份详细的清理活动报告。\n  SKIP_LOCKED",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "79",
+      "wordCount" : "81",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -94,7 +91,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-21T21:12:41.00Z",
+      "dateModified": "2022-06-23T23:20:58.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2395,7 +2392,7 @@ VACUUM [ VERBOSE ] [ name [, ...] ]
 <li>尝试收缩回滚段</li>
 <li>清理回收站中的已删除对象</li>
 </ul>
-<p>在没有*<code>name</code>*列表的情况下，<code>VACUUM</code>会处理当前用户具有清理权限的当前数据库中的每一个表、物化视图、回滚段，和回收站中的已删除对象。如果给出一个列表，<code>VACUUM</code>可以只处理列表中的那些表。</p>
+<p>在没有 <em><code>name</code></em> 列表的情况下，<code>VACUUM</code>会处理当前用户具有清理权限的当前数据库中的每一个表、物化视图、回滚段，和回收站中的已删除对象。如果给出一个列表，<code>VACUUM</code>可以只处理列表中的那些表。</p>
 <p>当选项列表被包围在圆括号中时，选项可以被写成任何顺序。如果没有圆括号，选项必须严格按照上面所展示的顺序指定。</p>
 <div class="gdoc-page__anchorwrap">
     <h2 id="参数">
