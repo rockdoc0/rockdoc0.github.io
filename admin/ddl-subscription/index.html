@@ -44,7 +44,7 @@
 <meta property="article:section" content="Admin" />
     <meta
       property="article:modified_time"
-      content="2022-06-25T12:17:19+08:00"
+      content="2022-06-25T18:45:32+08:00"
     />
 
 
@@ -65,7 +65,7 @@
       "headline": "Subscribing DDL Commands",
       "description": "Recording and Publishing DDL Commands Subscribing and Replicating DDL Commands      PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can subscribe DDL commands with event triggers:\n In Redrock Postgres, users and tablespaces are database-level objects. Event triggers also support DDL commands for users and tablespace objects.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "511",
+      "wordCount" : "534",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -76,7 +76,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-25T12:17:19.00Z",
+      "dateModified": "2022-06-25T18:45:32.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2572,7 +2572,9 @@ GRANT SELECT, INSERT ON TABLE sql_audit.ddl_history TO PUBLIC;
 </code></pre></li>
 <li>
 <p>Subscribing the log table:</p>
-<pre tabindex="0"><code>CREATE SUBSCRIPTION ddl_subscriptin CONNECTION &#39;host=192.168.1.50 port=5432 user=testuser password=pgpass&#39; PUBLICATION ddl_publication;
+<pre tabindex="0"><code>CREATE SUBSCRIPTION ddl_subscriptin CONNECTION
+  &#39;host=192.168.1.50 port=5432 user=testuser password=pgpass&#39;
+  PUBLICATION ddl_publication;
 </code></pre>
 
 
@@ -2580,7 +2582,7 @@ GRANT SELECT, INSERT ON TABLE sql_audit.ddl_history TO PUBLIC;
 
 <blockquote class="gdoc-hint note">
   <div class="gdoc-hint__title flex align-center"><i class="fa note" title="Note"></i></div>
-  <div class="gdoc-hint__text">Make sure to set the <code>wal_level</code> parameter to logical on the publisher side, and restart the database server for the change to take effect.</div>
+  <div class="gdoc-hint__text">You need to modify the access information of the publisher in the above SQL command according to the actual deployment environment. In addition, make sure to set the <code>wal_level</code> parameter to logical on the publisher side, and restart the database server for the change to take effect.</div>
 </blockquote>
 
 </li>

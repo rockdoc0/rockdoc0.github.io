@@ -50,7 +50,7 @@ CREATE SCHEMA IF NOT EXISTS sql_audit; -- create table for ddl record CREATE TAB
 <meta property="article:section" content="Admin" />
     <meta
       property="article:modified_time"
-      content="2022-06-25T12:17:19+08:00"
+      content="2022-06-25T18:45:32+08:00"
     />
 
 
@@ -85,7 +85,7 @@ CREATE SCHEMA IF NOT EXISTS sql_audit; -- create table for ddl record CREATE TAB
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-25T12:17:19.00Z",
+      "dateModified": "2022-06-25T18:45:32.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2581,7 +2581,9 @@ GRANT SELECT, INSERT ON TABLE sql_audit.ddl_history TO PUBLIC;
 </code></pre></li>
 <li>
 <p>在订阅端创建订阅：</p>
-<pre tabindex="0"><code>CREATE SUBSCRIPTION ddl_subscriptin CONNECTION &#39;host=192.168.1.50 port=5432 user=testuser password=pgpass&#39; PUBLICATION ddl_publication;
+<pre tabindex="0"><code>CREATE SUBSCRIPTION ddl_subscriptin CONNECTION
+  &#39;host=192.168.1.50 port=5432 user=testuser password=pgpass&#39;
+  PUBLICATION ddl_publication;
 </code></pre>
 
 
@@ -2589,7 +2591,7 @@ GRANT SELECT, INSERT ON TABLE sql_audit.ddl_history TO PUBLIC;
 
 <blockquote class="gdoc-hint note">
   <div class="gdoc-hint__title flex align-center"><i class="fa note" title="Note"></i></div>
-  <div class="gdoc-hint__text">需要确保发布端数据库配置参数 <code>wal_level</code> 的值为 logical，该参数修改后需要重启实例才能生效。</div>
+  <div class="gdoc-hint__text">您需要根据实际的部署环境，修改上面SQL命令中发布端的访问信息。另外，请确保发布端数据库配置参数 <code>wal_level</code> 的值为 logical，该参数修改后需要重启实例才能生效。</div>
 </blockquote>
 
 </li>
