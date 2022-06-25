@@ -132,6 +132,19 @@
                 href="https://doc.rockdata.net/zh-cn/advanced/"
                 />
   </url><url>
+    <loc>https://doc.rockdata.net/zh-cn/admin/</loc>
+    <lastmod>2022-06-25T00:11:04+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://doc.rockdata.net/admin/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://doc.rockdata.net/zh-cn/admin/"
+                />
+  </url><url>
     <loc>https://doc.rockdata.net/zh-cn/advanced/textsearch/</loc>
     <lastmod>2022-06-06T15:26:28+08:00</lastmod>
     <xhtml:link
@@ -236,8 +249,21 @@
                 href="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/"
                 />
   </url><url>
+    <loc>https://doc.rockdata.net/zh-cn/admin/ddl-subscription/</loc>
+    <lastmod>2022-06-25T12:17:19+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://doc.rockdata.net/admin/ddl-subscription/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://doc.rockdata.net/zh-cn/admin/ddl-subscription/"
+                />
+  </url><url>
     <loc>https://doc.rockdata.net/zh-cn/features/event-triggers/</loc>
-    <lastmod>2022-06-19T20:52:49+08:00</lastmod>
+    <lastmod>2022-06-25T12:17:19+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"

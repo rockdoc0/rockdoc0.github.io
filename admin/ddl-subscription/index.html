@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn" class="color-toggle-hidden">
+<html lang="en" class="color-toggle-hidden">
   <head>
     <meta charset="UTF-8" />
 <meta name="referrer" content="no-referrer" />
@@ -8,13 +8,10 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="安装软件包  安装准备 安装 Redrock Postgres   服务器控制 安装后配置调整      安装软件包     安装准备     使用您的 root 帐户登录到主机，然后运行以下命令来安装依赖包：
-# apt install postgresql-common postgresql-client-common 安装 Redrock Postgres     下载 Debian 的安装包，并执行以下命令进行安装：
-# tar xf redrock-12.1-1.debian10.x86_64-bundle.tar # cd redrock-12.1-1.debian10.x86_64-bundle # dpkg -i libpq5_12.1-1_amd64.deb redrock-client_12.1-1_amd64.deb redrock_12.1-1_amd64.deb 您还可以根据您的需要安装其他软件包。
-服务器控制     要控制数据库服务，请使用：
-# systemctl &lt;command&gt; postgresql 其中的 command 可以为:" />
+  <meta name="description" content="Recording and Publishing DDL Commands Subscribing and Replicating DDL Commands      PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can subscribe DDL commands with event triggers:
+ In Redrock Postgres, users and tablespaces are database-level objects. Event triggers also support DDL commands for users and tablespace objects." />
 
-    <title>Debian 安装指导 | Redrock Documentation</title>
+    <title>Subscribing DDL Commands | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -35,57 +32,51 @@
     
   <meta
     property="og:title"
-    content="Debian 安装指导"
+    content="Subscribing DDL Commands"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="安装软件包  安装准备 安装 Redrock Postgres   服务器控制 安装后配置调整      安装软件包     安装准备     使用您的 root 帐户登录到主机，然后运行以下命令来安装依赖包：
-# apt install postgresql-common postgresql-client-common 安装 Redrock Postgres     下载 Debian 的安装包，并执行以下命令进行安装：
-# tar xf redrock-12.1-1.debian10.x86_64-bundle.tar # cd redrock-12.1-1.debian10.x86_64-bundle # dpkg -i libpq5_12.1-1_amd64.deb redrock-client_12.1-1_amd64.deb redrock_12.1-1_amd64.deb 您还可以根据您的需要安装其他软件包。
-服务器控制     要控制数据库服务，请使用：
-# systemctl &lt;command&gt; postgresql 其中的 command 可以为:" />
+  <meta property="og:description" content="Recording and Publishing DDL Commands Subscribing and Replicating DDL Commands      PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can subscribe DDL commands with event triggers:
+ In Redrock Postgres, users and tablespaces are database-level objects. Event triggers also support DDL commands for users and tablespace objects." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://doc.rockdata.net/zh-cn/installation/debian/" />
+<meta property="og:url" content="https://doc.rockdata.net/admin/ddl-subscription/" />
 
-<meta property="article:section" content="Installation" />
+<meta property="article:section" content="Admin" />
     <meta
       property="article:modified_time"
-      content="2022-06-07T10:54:16+08:00"
+      content="2022-06-25T12:17:19+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Debian 安装指导" />
+<meta name="twitter:title" content="Subscribing DDL Commands" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="安装软件包  安装准备 安装 Redrock Postgres   服务器控制 安装后配置调整      安装软件包     安装准备     使用您的 root 帐户登录到主机，然后运行以下命令来安装依赖包：
-# apt install postgresql-common postgresql-client-common 安装 Redrock Postgres     下载 Debian 的安装包，并执行以下命令进行安装：
-# tar xf redrock-12.1-1.debian10.x86_64-bundle.tar # cd redrock-12.1-1.debian10.x86_64-bundle # dpkg -i libpq5_12.1-1_amd64.deb redrock-client_12.1-1_amd64.deb redrock_12.1-1_amd64.deb 您还可以根据您的需要安装其他软件包。
-服务器控制     要控制数据库服务，请使用：
-# systemctl &lt;command&gt; postgresql 其中的 command 可以为:" />
+  <meta name="twitter:description" content="Recording and Publishing DDL Commands Subscribing and Replicating DDL Commands      PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can subscribe DDL commands with event triggers:
+ In Redrock Postgres, users and tablespaces are database-level objects. Event triggers also support DDL commands for users and tablespace objects." />
 
 
   <script type="application/ld+json">
   {
       "@context": "http://schema.org",
       "@type": "TechArticle",
-      "articleSection": "Installation",
-      "name": "Debian 安装指导",
-      "url" : "https://doc.rockdata.net/zh-cn/installation/debian/",
-      "headline": "Debian 安装指导",
-      "description": "安装软件包  安装准备 安装 Redrock Postgres   服务器控制 安装后配置调整      安装软件包     安装准备     使用您的 root 帐户登录到主机，然后运行以下命令来安装依赖包：\n# apt install postgresql-common postgresql-client-common 安装 Redrock Postgres     下载 Debian 的安装包，并执行以下命令进行安装：\n# tar xf redrock-12.1-1.debian10.x86_64-bundle.tar # cd redrock-12.1-1.debian10.x86_64-bundle # dpkg -i libpq5_12.1-1_amd64.deb redrock-client_12.1-1_amd64.deb redrock_12.1-1_amd64.deb 您还可以根据您的需要安装其他软件包。\n服务器控制     要控制数据库服务，请使用：\n# systemctl \u003ccommand\u003e postgresql 其中的 command 可以为:",
+      "articleSection": "Admin",
+      "name": "Subscribing DDL Commands",
+      "url" : "https://doc.rockdata.net/admin/ddl-subscription/",
+      "headline": "Subscribing DDL Commands",
+      "description": "Recording and Publishing DDL Commands Subscribing and Replicating DDL Commands      PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can subscribe DDL commands with event triggers:\n In Redrock Postgres, users and tablespaces are database-level objects. Event triggers also support DDL commands for users and tablespace objects.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "111",
-      "inLanguage": "zh-cn",
+      "wordCount" : "511",
+      "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://doc.rockdata.net/zh-cn/installation/debian/"
+          "@id": "https://doc.rockdata.net/admin/ddl-subscription/"
       },
       "copyrightHolder" : "Redrock Documentation",
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-07T10:54:16.00Z",
+      "dateModified": "2022-06-25T12:17:19.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -161,7 +152,7 @@
   href="/custom.css"
   media="all"
 />
-  <link href="https://doc.rockdata.net/zh-cn/installation/debian/" rel="canonical" type="text/html" />
+  <link href="https://doc.rockdata.net/admin/ddl-subscription/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -653,11 +644,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
       <label for="menu-control" class="gdoc-nav__control" tabindex="0">
         <svg class="gdoc-icon gdoc_menu">
-          <title>打开导航</title>
+          <title>Open Navigation</title>
           <use xlink:href="#gdoc_menu"></use>
         </svg>
         <svg class="gdoc-icon gdoc_arrow_back">
-          <title>关闭导航</title>
+          <title>Close Navigation</title>
           <use xlink:href="#gdoc_arrow_back"></use>
         </svg>
       </label>
@@ -723,15 +714,15 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
         <span id="gdoc-dark-mode">
           <svg class="gdoc-icon gdoc_brightness_dark">
-            <title>切换暗/亮/自动模式</title>
+            <title>Toggle Dark/Light/Auto mode</title>
             <use xlink:href="#gdoc_brightness_dark"></use>
           </svg>
           <svg class="gdoc-icon gdoc_brightness_light">
-            <title>切换暗/亮/自动模式</title>
+            <title>Toggle Dark/Light/Auto mode</title>
             <use xlink:href="#gdoc_brightness_light"></use>
           </svg>
           <svg class="gdoc-icon gdoc_brightness_auto">
-            <title>切换暗/亮/自动模式</title>
+            <title>Toggle Dark/Light/Auto mode</title>
             <use xlink:href="#gdoc_brightness_auto"></use>
           </svg>
         </span>
@@ -739,7 +730,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         <span class="gdoc-menu-header__home">
           <a href="https://doc.rockdata.net/" class="gdoc-header__link">
             <svg class="gdoc-icon gdoc_home">
-              <title>返回首页</title>
+              <title>Back to homepage</title>
               <use xlink:href="#gdoc_home"></use>
             </svg>
           </a>
@@ -751,12 +742,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <li>
         
           
-        
-          
             <span class="flex align-center">
               <svg class="gdoc-icon gdoc_language"><use xlink:href="#gdoc_language"></use></svg>
-              <span>ZH-CN</span>
+              <span>EN</span>
             </span>
+          
+        
           
         
 
@@ -767,12 +758,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               <li>
                 <a
                   class="flex gdoc-language__entry"
-                  title="English"
-                  href="/installation/debian/"
-                  hreflang="en"
-                  lang="en"
+                  title="简体中文"
+                  href="/zh-cn/admin/ddl-subscription/"
+                  hreflang="zh-cn"
+                  lang="zh-cn"
                 >
-                  English
+                  简体中文
                 </a>
               </li>
             
@@ -789,7 +780,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
           <label for="menu-header-control">
             <svg class="gdoc-icon gdoc_keyboard_arrow_right">
               <use xlink:href="#gdoc_keyboard_arrow_right"></use>
-              <title>关闭菜单栏</title>
+              <title>Close Menu Bar</title>
             </svg>
           </label>
         </span>
@@ -797,7 +788,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <label for="menu-header-control" class="gdoc-menu-header__control">
         <svg class="gdoc-icon gdoc_keyboard_arrow_left">
           <use xlink:href="#gdoc_keyboard_arrow_left"></use>
-          <title>打开菜单栏</title>
+          <title>Open Menu Bar</title>
         </svg>
       </label>
     </div>
@@ -817,11 +808,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       type="text"
       id="gdoc-search-input"
       class="gdoc-search__input"
-      placeholder="搜索"
-      aria-label="搜索"
+      placeholder="Search"
+      aria-label="Search"
       maxlength="64"
       data-site-base-url="https://doc.rockdata.net/"
-      data-site-lang="zh-cn"
+      data-site-lang="en"
     />
     <div class="gdoc-search__spinner spinner hidden"></div>
     <ul id="gdoc-search-results" class="gdoc-search__list"></ul>
@@ -831,7 +822,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
 
   <section class="gdoc-nav--main">
-    <h2>导航</h2>
+    <h2>Navigation</h2>
     
       
 
@@ -868,7 +859,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">使用介绍</span>
+                <span class="flex">Usage</span>
               
               
             </label>
@@ -910,10 +901,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/usage/why-redrock/"
+                    href="/usage/why-redrock/"
                     class="gdoc-nav__entry"
                   >
-                    为什么选择Redrock Postgres？
+                    Why Redrock Postgres?
                   </a>
                 </span>
               
@@ -954,10 +945,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/usage/getting-started/"
+                    href="/usage/getting-started/"
                     class="gdoc-nav__entry"
                   >
-                    开始上手
+                    Getting Started
                   </a>
                 </span>
               
@@ -998,10 +989,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/usage/configuration/"
+                    href="/usage/configuration/"
                     class="gdoc-nav__entry"
                   >
-                    参数配置
+                    Configuration
                   </a>
                 </span>
               
@@ -1040,22 +1031,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-09089698"
-                checked
+                class="gdoc-nav__toggle" id="navtree-46385245"
+                
               
             />
             <label
               
-                for="navtree-09089698" class="flex justify-between align-center"
+                for="navtree-46385245" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/installation/"
+                    href="/installation/"
                     class="gdoc-nav__entry"
                   >
-                    安装指导
+                    Installation
                   </a>
                 </span>
               
@@ -1106,10 +1097,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/installation/windows/"
+                    href="/installation/windows/"
                     class="gdoc-nav__entry"
                   >
-                    Windows 安装指导
+                    Installing on Windows
                   </a>
                 </span>
               
@@ -1150,10 +1141,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/installation/redhat/"
+                    href="/installation/redhat/"
                     class="gdoc-nav__entry"
                   >
-                    Red Hat/CentOS 安装指导
+                    Installing on Red Hat
                   </a>
                 </span>
               
@@ -1194,10 +1185,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/installation/debian/"
-                    class="gdoc-nav__entry is-active"
+                    href="/installation/debian/"
+                    class="gdoc-nav__entry"
                   >
-                    Debian 安装指导
+                    Installing on Debian
                   </a>
                 </span>
               
@@ -1243,7 +1234,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">基础特性</span>
+                <span class="flex">Features</span>
               
               
             </label>
@@ -1285,10 +1276,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/features/undo/"
+                    href="/features/undo/"
                     class="gdoc-nav__entry"
                   >
-                    回滚段
+                    Undo
                   </a>
                 </span>
               
@@ -1329,10 +1320,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/features/recyclebin/"
+                    href="/features/recyclebin/"
                     class="gdoc-nav__entry"
                   >
-                    回收站
+                    Recycle Bin
                   </a>
                 </span>
               
@@ -1373,10 +1364,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/features/statement-atomicity/"
+                    href="/features/statement-atomicity/"
                     class="gdoc-nav__entry"
                   >
-                    语句级原子性
+                    Statement Level Atomicity
                   </a>
                 </span>
               
@@ -1417,10 +1408,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/features/network-tablespace/"
+                    href="/features/network-tablespace/"
                     class="gdoc-nav__entry"
                   >
-                    网络表空间
+                    Network Attached Tablespace
                   </a>
                 </span>
               
@@ -1461,10 +1452,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/features/event-triggers/"
+                    href="/features/event-triggers/"
                     class="gdoc-nav__entry"
                   >
-                    事件触发器
+                    Event Triggers
                   </a>
                 </span>
               
@@ -1505,10 +1496,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/features/postgres-compatibility/"
+                    href="/features/postgres-compatibility/"
                     class="gdoc-nav__entry"
                   >
-                    同 PostgreSQL 的兼容性
+                    Compatibility with PostgreSQL
                   </a>
                 </span>
               
@@ -1554,7 +1545,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">高级特性</span>
+                <span class="flex">Advanced</span>
               
               
             </label>
@@ -1596,10 +1587,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/advanced/textsearch/"
+                    href="/advanced/textsearch/"
                     class="gdoc-nav__entry"
                   >
-                    中文搜索
+                    Chinese Text Search
                   </a>
                 </span>
               
@@ -1640,7 +1631,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/advanced/plscheme/"
+                    href="/advanced/plscheme/"
                     class="gdoc-nav__entry"
                   >
                     PL/Scheme
@@ -1684,10 +1675,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/advanced/monitor-stats/"
+                    href="/advanced/monitor-stats/"
                     class="gdoc-nav__entry"
                   >
-                    运行统计视图
+                    Statistics Views
                   </a>
                 </span>
               
@@ -1726,22 +1717,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-2c8f00d6"
-                
+                class="gdoc-nav__toggle" id="navtree-d9ef83eb"
+                checked
               
             />
             <label
               
-                for="navtree-2c8f00d6" class="flex justify-between align-center"
+                for="navtree-d9ef83eb" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/admin/"
+                    href="/admin/"
                     class="gdoc-nav__entry"
                   >
-                    服务器管理
+                    Server Administration
                   </a>
                 </span>
               
@@ -1792,10 +1783,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/admin/ddl-subscription/"
-                    class="gdoc-nav__entry"
+                    href="/admin/ddl-subscription/"
+                    class="gdoc-nav__entry is-active"
                   >
-                    DDL操作订阅
+                    Subscribing DDL Commands
                   </a>
                 </span>
               
@@ -1834,22 +1825,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-a5b7adb4"
+                class="gdoc-nav__toggle" id="navtree-4ac8285e"
                 
               
             />
             <label
               
-                for="navtree-a5b7adb4" class="flex justify-between align-center"
+                for="navtree-4ac8285e" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/commands/"
+                    href="/commands/"
                     class="gdoc-nav__entry"
                   >
-                    SQL 命令
+                    SQL Commands
                   </a>
                 </span>
               
@@ -1900,7 +1891,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/commands/alterundo/"
+                    href="/commands/alterundo/"
                     class="gdoc-nav__entry"
                   >
                     ALTER UNDO
@@ -1936,7 +1927,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/commands/createundo/"
+                    href="/commands/createundo/"
                     class="gdoc-nav__entry"
                   >
                     CREATE UNDO
@@ -1972,7 +1963,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/commands/dropundo/"
+                    href="/commands/dropundo/"
                     class="gdoc-nav__entry"
                   >
                     DROP UNDO
@@ -2008,7 +1999,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/commands/vacuum/"
+                    href="/commands/vacuum/"
                     class="gdoc-nav__entry"
                   >
                     VACUUM
@@ -2038,6 +2029,8 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
       
         
+      
+        
           
           
           
@@ -2050,22 +2043,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-7171e5f3"
+                class="gdoc-nav__toggle" id="navtree-0ef779f7"
                 
               
             />
             <label
               
-                for="navtree-7171e5f3" class="flex justify-between align-center"
+                for="navtree-0ef779f7" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/catalogs/"
+                    href="/catalogs/"
                     class="gdoc-nav__entry"
                   >
-                    系统表
+                    System Catalogs
                   </a>
                 </span>
               
@@ -2116,7 +2109,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/catalogs/recyclebin/"
+                    href="/catalogs/recyclebin/"
                     class="gdoc-nav__entry"
                   >
                     pg_recyclebin
@@ -2152,7 +2145,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/catalogs/ts-lexicon/"
+                    href="/catalogs/ts-lexicon/"
                     class="gdoc-nav__entry"
                   >
                     pg_ts_lexicon
@@ -2188,7 +2181,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/catalogs/undo/"
+                    href="/catalogs/undo/"
                     class="gdoc-nav__entry"
                   >
                     pg_undo
@@ -2209,8 +2202,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
           </li>
         
       
-        
-      
     
   </ul>
 
@@ -2227,7 +2218,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
   <section class="gdoc-nav--more">
     
-      <h2>更多</h2>
+      <h2>More</h2>
       
 
   
@@ -2268,10 +2259,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                   <svg class="gdoc-icon gdoc_notification"><use xlink:href="#gdoc_notification"></use></svg>
                 
                 <a
-                  href="/zh-cn/posts/"
+                  href="/posts/"
                   class="gdoc-nav__entry"
                 >
-                  新闻
+                  News
                 </a>
               </span>
               
@@ -2318,7 +2309,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     https://gitee.com/rockdata/redrock/releases"
                   class="gdoc-nav__entry"
                 >
-                  下载
+                  Releases
                 </a>
               </span>
               
@@ -2365,7 +2356,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     https://gitee.com/rockdata/redrock"
                   class="gdoc-nav__entry"
                 >
-                  项目仓库
+                  View Source
                 </a>
               </span>
               
@@ -2434,7 +2425,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/installation/' href='/zh-cn/installation/'><span itemprop='name'>安装指导</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Debian 安装指导</span><meta itemprop='position' content='4' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/admin/' href='/admin/'><span itemprop='name'>Server Administration</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Subscribing DDL Commands</span><meta itemprop='position' content='3' /></li>
   
 
   
@@ -2449,9 +2440,9 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <span class="editpage">
         <svg class="gdoc-icon gdoc_code"><use xlink:href="#gdoc_code"></use></svg>
         <a
-          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/zh-cn/installation/debian.md"
+          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/en/admin/ddl-subscription.md"
         >
-          编辑页面
+          Edit page
         </a>
       </span>
     </div>
@@ -2463,92 +2454,153 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <article
     class="gdoc-markdown gdoc-markdown__align--left"
   >
-    <h1>Debian 安装指导</h1>
+    <h1>Subscribing DDL Commands</h1>
     <div class="gdoc-toc gdoc-toc__level--3">
       <nav id="TableOfContents"><ul>
-        <li><a href="#安装软件包">安装软件包</a>
-          <ul>
-            <li><a href="#安装准备">安装准备</a></li>
-            <li><a href="#安装-redrock-postgres">安装 Redrock Postgres</a></li>
-          </ul>
-        </li>
-        <li><a href="#服务器控制">服务器控制</a></li>
-        <li><a href="#安装后配置调整">安装后配置调整</a></li>
+        <li><a href="#recording-and-publishing-ddl-commands">Recording and Publishing DDL Commands</a></li>
+        <li><a href="#subscribing-and-replicating-ddl-commands">Subscribing and Replicating DDL Commands</a></li>
       </ul></nav>
       <hr />
     </div>
-<div class="gdoc-page__anchorwrap">
-    <h2 id="安装软件包">
-        安装软件包
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/debian/#安装软件包" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 安装软件包" aria-label="锚定到： 安装软件包" href="#%e5%ae%89%e8%a3%85%e8%bd%af%e4%bb%b6%e5%8c%85">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<div class="gdoc-page__anchorwrap">
-    <h3 id="安装准备">
-        安装准备
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/debian/#安装准备" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 安装准备" aria-label="锚定到： 安装准备" href="#%e5%ae%89%e8%a3%85%e5%87%86%e5%a4%87">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
-<p>使用您的 root 帐户登录到主机，然后运行以下命令来安装依赖包：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># apt install postgresql-common postgresql-client-common</span>
-</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
-    <h3 id="安装-redrock-postgres">
-        安装 Redrock Postgres
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/debian/#安装-redrock-postgres" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 安装 Redrock Postgres" aria-label="锚定到： 安装 Redrock Postgres" href="#%e5%ae%89%e8%a3%85-redrock-postgres">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
-<p>下载 <a
-  class="gdoc-markdown__link"
-  href="https://gitee.com/rockdata/redrock/releases"
-  
->Debian 的安装包</a>，并执行以下命令进行安装：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># tar xf redrock-12.1-1.debian10.x86_64-bundle.tar</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># cd redrock-12.1-1.debian10.x86_64-bundle</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># dpkg -i libpq5_12.1-1_amd64.deb redrock-client_12.1-1_amd64.deb redrock_12.1-1_amd64.deb</span>
-</span></span></code></pre></div><p>您还可以根据您的需要安装其他软件包。</p>
-<div class="gdoc-page__anchorwrap">
-    <h2 id="服务器控制">
-        服务器控制
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/debian/#服务器控制" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 服务器控制" aria-label="锚定到： 服务器控制" href="#%e6%9c%8d%e5%8a%a1%e5%99%a8%e6%8e%a7%e5%88%b6">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<p>要控制数据库服务，请使用：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># systemctl &lt;command&gt; postgresql</span>
-</span></span></code></pre></div><p>其中的 <em>command</em> 可以为:</p>
+<p>PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can subscribe DDL commands with event triggers:</p>
 <ul>
-<li><em>enable</em> : 启用开机启动</li>
-<li><em>start</em> : 启动数据库</li>
-<li><em>stop</em> : 停止数据库</li>
-<li><em>restart</em> : 重启数据库; 主要用于重要参数的变更生效</li>
-<li><em>reload</em> : 在数据库运行过程中更新配置参数</li>
+<li>In Redrock Postgres, users and tablespaces are database-level objects. Event triggers also support DDL commands for users and tablespace objects. For details, see <a
+  class="gdoc-markdown__link"
+  href="/features/event-triggers/#event-trigger-firing-matrix"
+  
+>Event Trigger Firing Matrix</a>.</li>
+<li>Support capturing events of dropping objects at the end of a command (corresponding to the <code>ddl_command_end</code> event).</li>
+<li>Add a function <a
+  class="gdoc-markdown__link"
+  href="/features/event-triggers/#deparsing-a-ddl-command"
+  
+>pg_ddl_command_deparse</a> to deparse a command from internal format of type <code>pg_ddl_command</code>, and returns a SQL statement in textual representation of type <code>text</code>.</li>
 </ul>
+<p>The following example shows how to subscribe and replicate DDL commands occured on the publisher side. You can modify the commands in the example according to the actual situation.</p>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="安装后配置调整">
-        安装后配置调整
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/debian/#安装后配置调整" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 安装后配置调整" aria-label="锚定到： 安装后配置调整" href="#%e5%ae%89%e8%a3%85%e5%90%8e%e9%85%8d%e7%bd%ae%e8%b0%83%e6%95%b4">
+    <h2 id="recording-and-publishing-ddl-commands">
+        Recording and Publishing DDL Commands
+        <a data-clipboard-text="https://doc.rockdata.net/admin/ddl-subscription/#recording-and-publishing-ddl-commands" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Recording and Publishing DDL Commands" aria-label="Anchor to: Recording and Publishing DDL Commands" href="#recording-and-publishing-ddl-commands">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>修改配置目录（默认值：/etc/postgresql/12/main/）中的pg_hba.conf文件，以定义从网络中其他主机访问 PostgreSQL 服务器使用的访问控制策略，修改IPv4网络访问控制策略：从 indent 更改为 md5，从本机地址 127.0.0.1 更改为接受所有主机访问请求。找到下面行：</p>
-<pre tabindex="0"><code># IPv4 local connections:
-host    all             all             127.0.0.1/32            ident
-</code></pre><p>并将其更改为：</p>
-<pre tabindex="0"><code># IPv4 local connections:
-host    all             all             0.0.0.0/0            md5
-</code></pre><p>修改配置目录（默认值：/etc/postgresql/12/main/ ）中的 postgresql.conf 文件，通过取消注释以下参数行并设置参数值为 * 而不是 localhost 来允许来自所有主机的访问连接：</p>
-<pre tabindex="0"><code>listen_addresses = &#39;*&#39;
-</code></pre><p>重启数据库服务以更新配置参数：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># systemctl restart postgresql</span>
-</span></span></code></pre></div><p>在生产环境中，还应设置 TLS 安全通信，并且应考虑配置数据复制或基于快照的备份。有关这些配置，请参阅 PostgreSQL 在线文档。</p>
+<p>We need to record DDL commands in a log table with event trigger on the publisher side, and publish the log table.</p>
+<ol>
+<li>
+<p>Creating a log table to record DDL commands:</p>
+<pre tabindex="0"><code>CREATE SCHEMA IF NOT EXISTS sql_audit;
+-- create table for ddl record
+CREATE TABLE IF NOT EXISTS sql_audit.ddl_history(
+  ord             int,
+  op_time         timestamp,
+  username        text,
+  command_tag     text,
+  object_type     text,
+  schema_name     text,
+  object_identity text,
+  command         text
+);
+
+-- grant privileges to all user
+GRANT USAGE ON SCHEMA sql_audit TO PUBLIC;
+GRANT SELECT, INSERT ON TABLE sql_audit.ddl_history TO PUBLIC;
+</code></pre></li>
+<li>
+<p>Publishing the log table:</p>
+<pre tabindex="0"><code>CREATE PUBLICATION ddl_publication FOR TABLE ONLY sql_audit.ddl_history;
+</code></pre></li>
+<li>
+<p>Creating a event trigger capturing DDL commands:</p>
+<pre tabindex="0"><code>-- create function for event triggers
+CREATE OR REPLACE FUNCTION sql_audit.ddl_trigger_func()
+RETURNS event_trigger
+AS $$
+BEGIN
+  INSERT INTO sql_audit.ddl_history
+    SELECT ordinality, now(), current_user, command_tag,
+           object_type, schema_name, object_identity,
+           pg_ddl_command_deparse(command)
+      FROM pg_event_trigger_ddl_commands() WITH ORDINALITY;
+END;
+$$ LANGUAGE plpgsql;
+
+-- create ddl_command_end event trigger
+CREATE EVENT TRIGGER deparse_event_trigger
+    ON ddl_command_end
+    EXECUTE PROCEDURE sql_audit.ddl_trigger_func();
+</code></pre>
+
+
+
+
+<blockquote class="gdoc-hint note">
+  <div class="gdoc-hint__title flex align-center"><i class="fa note" title="Note"></i></div>
+  <div class="gdoc-hint__text">After the preceding commands are executed, your DDL commands will be recorded in the table <code>sql_audit.ddl_history</code>.</div>
+</blockquote>
+
+</li>
+</ol>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="subscribing-and-replicating-ddl-commands">
+        Subscribing and Replicating DDL Commands
+        <a data-clipboard-text="https://doc.rockdata.net/admin/ddl-subscription/#subscribing-and-replicating-ddl-commands" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Subscribing and Replicating DDL Commands" aria-label="Anchor to: Subscribing and Replicating DDL Commands" href="#subscribing-and-replicating-ddl-commands">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>On the publisher side, we recorded the executed DDL commands in the log table <code>sql_audit.ddl_history</code>, and published the table. Subscribers can replicate and execute the DDL commands in the log table.</p>
+<ol>
+<li>
+<p>Create the same log table on the subscriber side：</p>
+<pre tabindex="0"><code>CREATE SCHEMA IF NOT EXISTS sql_audit;
+-- create table for ddl record
+CREATE TABLE IF NOT EXISTS sql_audit.ddl_history(
+  ord             int,
+  op_time         timestamp,
+  username        text,
+  command_tag     text,
+  object_type     text,
+  schema_name     text,
+  object_identity text,
+  command         text
+);
+
+-- grant privileges to all user
+GRANT USAGE ON SCHEMA sql_audit TO PUBLIC;
+GRANT SELECT, INSERT ON TABLE sql_audit.ddl_history TO PUBLIC;
+</code></pre></li>
+<li>
+<p>Subscribing the log table:</p>
+<pre tabindex="0"><code>CREATE SUBSCRIPTION ddl_subscriptin CONNECTION &#39;host=192.168.1.50 port=5432 user=testuser password=pgpass&#39; PUBLICATION ddl_publication;
+</code></pre>
+
+
+
+
+<blockquote class="gdoc-hint note">
+  <div class="gdoc-hint__title flex align-center"><i class="fa note" title="Note"></i></div>
+  <div class="gdoc-hint__text">Make sure to set the <code>wal_level</code> parameter to logical on the publisher side, and restart the database server for the change to take effect.</div>
+</blockquote>
+
+</li>
+<li>
+<p>Create a trigger for the table <code>sql_audit.ddl_history</code> on the subscriber side to replicate and execute DDL commands.</p>
+<pre tabindex="0"><code>CREATE OR REPLACE FUNCTION sql_audit.ddl_sub_trigger_func()
+RETURNS trigger
+AS $$
+BEGIN
+  EXECUTE NEW.command;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER ddl_sub_trigger
+  AFTER INSERT ON sql_audit.ddl_history
+  FOR EACH ROW
+  EXECUTE PROCEDURE sql_audit.ddl_sub_trigger_func();
+</code></pre></li>
+</ol>
 
   </article>
 
@@ -2785,14 +2837,14 @@ host    all             all             0.0.0.0/0            md5
         
           <span class="gdoc-footer__item gdoc-footer__item--row">
             <a href="https://www.rockdata.net/legal-notice/#contact-information" class="gdoc-footer__link">
-              法律声明
+              Legal Notice
             </a>
           </span>
         
         
           <span class="gdoc-footer__item gdoc-footer__item--row">
             <a href="https://www.rockdata.net/legal-notice/#privacy-policy" class="gdoc-footer__link">
-              隐私政策
+              Privacy Policy
             </a>
           </span>
         
@@ -2802,11 +2854,11 @@ host    all             all             0.0.0.0/0            md5
     
       <div class="flex flex-25 justify-end">
         <span class="gdoc-footer__item text-right">
-          <a class="gdoc-footer__link fake-link" href="#" aria-label="回到顶部">
+          <a class="gdoc-footer__link fake-link" href="#" aria-label="Back to top">
             <svg class="gdoc-icon gdoc_keyboard_arrow_up">
               <use xlink:href="#gdoc_keyboard_arrow_up"></use>
             </svg>
-            <span class="hidden-mobile">回到顶部</span>
+            <span class="hidden-mobile">Back to top</span>
           </a>
         </span>
       </div>

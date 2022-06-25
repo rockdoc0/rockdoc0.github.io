@@ -42,7 +42,7 @@
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-06-19T20:52:49+08:00"
+      content="2022-06-25T12:17:19+08:00"
     />
 
 
@@ -73,7 +73,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-19T20:52:49.00Z",
+      "dateModified": "2022-06-25T12:17:19.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1676,6 +1676,114 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     class="gdoc-nav__entry"
                   >
                     Statistics Views
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+  </ul>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="gdoc-nav__toggle" id="navtree-d9ef83eb"
+                
+              
+            />
+            <label
+              
+                for="navtree-d9ef83eb" class="flex justify-between align-center"
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/admin/"
+                    class="gdoc-nav__entry"
+                  >
+                    Server Administration
+                  </a>
+                </span>
+              
+              
+                <svg class="gdoc-icon toggle gdoc_keyboard_arrow_left">
+                  <use xlink:href="#gdoc_keyboard_arrow_left"></use>
+                </svg>
+                <svg class="gdoc-icon toggle gdoc_keyboard_arrow_down">
+                  <use xlink:href="#gdoc_keyboard_arrow_down"></use>
+                </svg>
+              
+            </label>
+
+            
+              
+  
+
+
+  <ul class="gdoc-nav__list">
+    
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/admin/ddl-subscription/"
+                    class="gdoc-nav__entry"
+                  >
+                    Subscribing DDL Commands
                   </a>
                 </span>
               
@@ -3607,7 +3715,7 @@ CREATE EVENT TRIGGER test_table_rewrite_oid
         </a>
     </h3>
 </div>
-<p><code>pg_ddl_command_deparse</code> deparses a command from internal format of type <code>pg_ddl_command</code>, and returns a command string in textual representation of type <code>text</code>.</p>
+<p><code>pg_ddl_command_deparse</code> deparses a command from internal format of type <code>pg_ddl_command</code>, and returns a SQL statement in textual representation of type <code>text</code>.</p>
 <p>The <code>pg_ddl_command_deparse</code> function can be used in an event trigger like this:</p>
 <pre tabindex="0"><code>CREATE TABLE ddl_history(
   ord             int,

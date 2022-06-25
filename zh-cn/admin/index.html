@@ -8,13 +8,11 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="安装软件包  安装准备 安装 Redrock Postgres   服务器控制 安装后配置调整      安装软件包     安装准备     使用您的 root 帐户登录到主机，然后运行以下命令来安装依赖包：
-# apt install postgresql-common postgresql-client-common 安装 Redrock Postgres     下载 Debian 的安装包，并执行以下命令进行安装：
-# tar xf redrock-12.1-1.debian10.x86_64-bundle.tar # cd redrock-12.1-1.debian10.x86_64-bundle # dpkg -i libpq5_12.1-1_amd64.deb redrock-client_12.1-1_amd64.deb redrock_12.1-1_amd64.deb 您还可以根据您的需要安装其他软件包。
-服务器控制     要控制数据库服务，请使用：
-# systemctl &lt;command&gt; postgresql 其中的 command 可以为:" />
+  <meta name="description" content="这部份覆盖了 Redrock Postgres 数据库管理员感兴趣的主题。
+目录
+   DDL操作订阅      " />
 
-    <title>Debian 安装指导 | Redrock Documentation</title>
+    <title>服务器管理 | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -35,57 +33,53 @@
     
   <meta
     property="og:title"
-    content="Debian 安装指导"
+    content="服务器管理"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="安装软件包  安装准备 安装 Redrock Postgres   服务器控制 安装后配置调整      安装软件包     安装准备     使用您的 root 帐户登录到主机，然后运行以下命令来安装依赖包：
-# apt install postgresql-common postgresql-client-common 安装 Redrock Postgres     下载 Debian 的安装包，并执行以下命令进行安装：
-# tar xf redrock-12.1-1.debian10.x86_64-bundle.tar # cd redrock-12.1-1.debian10.x86_64-bundle # dpkg -i libpq5_12.1-1_amd64.deb redrock-client_12.1-1_amd64.deb redrock_12.1-1_amd64.deb 您还可以根据您的需要安装其他软件包。
-服务器控制     要控制数据库服务，请使用：
-# systemctl &lt;command&gt; postgresql 其中的 command 可以为:" />
+  <meta property="og:description" content="这部份覆盖了 Redrock Postgres 数据库管理员感兴趣的主题。
+目录
+   DDL操作订阅      " />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://doc.rockdata.net/zh-cn/installation/debian/" />
+<meta property="og:url" content="https://doc.rockdata.net/zh-cn/admin/" />
 
-<meta property="article:section" content="Installation" />
+<meta property="article:section" content="Admin" />
     <meta
       property="article:modified_time"
-      content="2022-06-07T10:54:16+08:00"
+      content="2022-06-25T00:11:04+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Debian 安装指导" />
+<meta name="twitter:title" content="服务器管理" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="安装软件包  安装准备 安装 Redrock Postgres   服务器控制 安装后配置调整      安装软件包     安装准备     使用您的 root 帐户登录到主机，然后运行以下命令来安装依赖包：
-# apt install postgresql-common postgresql-client-common 安装 Redrock Postgres     下载 Debian 的安装包，并执行以下命令进行安装：
-# tar xf redrock-12.1-1.debian10.x86_64-bundle.tar # cd redrock-12.1-1.debian10.x86_64-bundle # dpkg -i libpq5_12.1-1_amd64.deb redrock-client_12.1-1_amd64.deb redrock_12.1-1_amd64.deb 您还可以根据您的需要安装其他软件包。
-服务器控制     要控制数据库服务，请使用：
-# systemctl &lt;command&gt; postgresql 其中的 command 可以为:" />
+  <meta name="twitter:description" content="这部份覆盖了 Redrock Postgres 数据库管理员感兴趣的主题。
+目录
+   DDL操作订阅      " />
 
 
   <script type="application/ld+json">
   {
       "@context": "http://schema.org",
       "@type": "TechArticle",
-      "articleSection": "Installation",
-      "name": "Debian 安装指导",
-      "url" : "https://doc.rockdata.net/zh-cn/installation/debian/",
-      "headline": "Debian 安装指导",
-      "description": "安装软件包  安装准备 安装 Redrock Postgres   服务器控制 安装后配置调整      安装软件包     安装准备     使用您的 root 帐户登录到主机，然后运行以下命令来安装依赖包：\n# apt install postgresql-common postgresql-client-common 安装 Redrock Postgres     下载 Debian 的安装包，并执行以下命令进行安装：\n# tar xf redrock-12.1-1.debian10.x86_64-bundle.tar # cd redrock-12.1-1.debian10.x86_64-bundle # dpkg -i libpq5_12.1-1_amd64.deb redrock-client_12.1-1_amd64.deb redrock_12.1-1_amd64.deb 您还可以根据您的需要安装其他软件包。\n服务器控制     要控制数据库服务，请使用：\n# systemctl \u003ccommand\u003e postgresql 其中的 command 可以为:",
+      "articleSection": "Admin",
+      "name": "服务器管理",
+      "url" : "https://doc.rockdata.net/zh-cn/admin/",
+      "headline": "服务器管理",
+      "description": "这部份覆盖了 Redrock Postgres 数据库管理员感兴趣的主题。\n目录\n   DDL操作订阅      ",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "111",
+      "wordCount" : "6",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://doc.rockdata.net/zh-cn/installation/debian/"
+          "@id": "https://doc.rockdata.net/zh-cn/admin/"
       },
       "copyrightHolder" : "Redrock Documentation",
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-07T10:54:16.00Z",
+      "dateModified": "2022-06-25T00:11:04.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -161,7 +155,7 @@
   href="/custom.css"
   media="all"
 />
-  <link href="https://doc.rockdata.net/zh-cn/installation/debian/" rel="canonical" type="text/html" />
+  <link href="https://doc.rockdata.net/zh-cn/admin/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -768,7 +762,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <a
                   class="flex gdoc-language__entry"
                   title="English"
-                  href="/installation/debian/"
+                  href="/admin/"
                   hreflang="en"
                   lang="en"
                 >
@@ -1041,7 +1035,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               type="checkbox"
               
                 class="gdoc-nav__toggle" id="navtree-09089698"
-                checked
+                
               
             />
             <label
@@ -1195,7 +1189,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <span class="flex">
                   <a
                     href="/zh-cn/installation/debian/"
-                    class="gdoc-nav__entry is-active"
+                    class="gdoc-nav__entry"
                   >
                     Debian 安装指导
                   </a>
@@ -1727,7 +1721,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               type="checkbox"
               
                 class="gdoc-nav__toggle" id="navtree-2c8f00d6"
-                
+                checked
               
             />
             <label
@@ -1739,7 +1733,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <span class="flex">
                   <a
                     href="/zh-cn/admin/"
-                    class="gdoc-nav__entry"
+                    class="gdoc-nav__entry is-active"
                   >
                     服务器管理
                   </a>
@@ -2428,15 +2422,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    
-    
-    
-    
-  
-  
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/installation/' href='/zh-cn/installation/'><span itemprop='name'>安装指导</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Debian 安装指导</span><meta itemprop='position' content='4' /></li>
-  
-
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>服务器管理</span><meta itemprop='position' content='3' /></li>
   
 
   
@@ -2449,7 +2435,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <span class="editpage">
         <svg class="gdoc-icon gdoc_code"><use xlink:href="#gdoc_code"></use></svg>
         <a
-          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/zh-cn/installation/debian.md"
+          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/zh-cn/admin/_index.md"
         >
           编辑页面
         </a>
@@ -2463,92 +2449,25 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <article
     class="gdoc-markdown gdoc-markdown__align--left"
   >
-    <h1>Debian 安装指导</h1>
-    <div class="gdoc-toc gdoc-toc__level--3">
-      <nav id="TableOfContents"><ul>
-        <li><a href="#安装软件包">安装软件包</a>
-          <ul>
-            <li><a href="#安装准备">安装准备</a></li>
-            <li><a href="#安装-redrock-postgres">安装 Redrock Postgres</a></li>
-          </ul>
-        </li>
-        <li><a href="#服务器控制">服务器控制</a></li>
-        <li><a href="#安装后配置调整">安装后配置调整</a></li>
-      </ul></nav>
-      <hr />
-    </div>
-<div class="gdoc-page__anchorwrap">
-    <h2 id="安装软件包">
-        安装软件包
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/debian/#安装软件包" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 安装软件包" aria-label="锚定到： 安装软件包" href="#%e5%ae%89%e8%a3%85%e8%bd%af%e4%bb%b6%e5%8c%85">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<div class="gdoc-page__anchorwrap">
-    <h3 id="安装准备">
-        安装准备
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/debian/#安装准备" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 安装准备" aria-label="锚定到： 安装准备" href="#%e5%ae%89%e8%a3%85%e5%87%86%e5%a4%87">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
-<p>使用您的 root 帐户登录到主机，然后运行以下命令来安装依赖包：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># apt install postgresql-common postgresql-client-common</span>
-</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
-    <h3 id="安装-redrock-postgres">
-        安装 Redrock Postgres
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/debian/#安装-redrock-postgres" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 安装 Redrock Postgres" aria-label="锚定到： 安装 Redrock Postgres" href="#%e5%ae%89%e8%a3%85-redrock-postgres">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
-<p>下载 <a
-  class="gdoc-markdown__link"
-  href="https://gitee.com/rockdata/redrock/releases"
-  
->Debian 的安装包</a>，并执行以下命令进行安装：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># tar xf redrock-12.1-1.debian10.x86_64-bundle.tar</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># cd redrock-12.1-1.debian10.x86_64-bundle</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># dpkg -i libpq5_12.1-1_amd64.deb redrock-client_12.1-1_amd64.deb redrock_12.1-1_amd64.deb</span>
-</span></span></code></pre></div><p>您还可以根据您的需要安装其他软件包。</p>
-<div class="gdoc-page__anchorwrap">
-    <h2 id="服务器控制">
-        服务器控制
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/debian/#服务器控制" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 服务器控制" aria-label="锚定到： 服务器控制" href="#%e6%9c%8d%e5%8a%a1%e5%99%a8%e6%8e%a7%e5%88%b6">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<p>要控制数据库服务，请使用：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># systemctl &lt;command&gt; postgresql</span>
-</span></span></code></pre></div><p>其中的 <em>command</em> 可以为:</p>
-<ul>
-<li><em>enable</em> : 启用开机启动</li>
-<li><em>start</em> : 启动数据库</li>
-<li><em>stop</em> : 停止数据库</li>
-<li><em>restart</em> : 重启数据库; 主要用于重要参数的变更生效</li>
-<li><em>reload</em> : 在数据库运行过程中更新配置参数</li>
-</ul>
-<div class="gdoc-page__anchorwrap">
-    <h2 id="安装后配置调整">
-        安装后配置调整
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/debian/#安装后配置调整" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 安装后配置调整" aria-label="锚定到： 安装后配置调整" href="#%e5%ae%89%e8%a3%85%e5%90%8e%e9%85%8d%e7%bd%ae%e8%b0%83%e6%95%b4">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<p>修改配置目录（默认值：/etc/postgresql/12/main/）中的pg_hba.conf文件，以定义从网络中其他主机访问 PostgreSQL 服务器使用的访问控制策略，修改IPv4网络访问控制策略：从 indent 更改为 md5，从本机地址 127.0.0.1 更改为接受所有主机访问请求。找到下面行：</p>
-<pre tabindex="0"><code># IPv4 local connections:
-host    all             all             127.0.0.1/32            ident
-</code></pre><p>并将其更改为：</p>
-<pre tabindex="0"><code># IPv4 local connections:
-host    all             all             0.0.0.0/0            md5
-</code></pre><p>修改配置目录（默认值：/etc/postgresql/12/main/ ）中的 postgresql.conf 文件，通过取消注释以下参数行并设置参数值为 * 而不是 localhost 来允许来自所有主机的访问连接：</p>
-<pre tabindex="0"><code>listen_addresses = &#39;*&#39;
-</code></pre><p>重启数据库服务以更新配置参数：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># systemctl restart postgresql</span>
-</span></span></code></pre></div><p>在生产环境中，还应设置 TLS 安全通信，并且应考虑配置数据复制或基于快照的备份。有关这些配置，请参阅 PostgreSQL 在线文档。</p>
+    <h1>服务器管理</h1>
+    <p>这部份覆盖了 Redrock Postgres 数据库管理员感兴趣的主题。</p>
+<p><strong>目录</strong></p>
+
+  <div class="gdoc-toc gdoc-toc__level--3">
+    
+  <ul>
+          <li>
+              <span>
+                <a href="/zh-cn/admin/ddl-subscription/" class="gdoc-toc__entry">DDL操作订阅
+                </a>
+              </span>
+          </li>
+  </ul>
+  </div>
+
+
+
+
 
   </article>
 

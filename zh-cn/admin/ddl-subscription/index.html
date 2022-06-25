@@ -8,13 +8,13 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="安装软件包  安装准备 安装 Redrock Postgres   服务器控制 安装后配置调整      安装软件包     安装准备     使用您的 root 帐户登录到主机，然后运行以下命令来安装依赖包：
-# apt install postgresql-common postgresql-client-common 安装 Redrock Postgres     下载 Debian 的安装包，并执行以下命令进行安装：
-# tar xf redrock-12.1-1.debian10.x86_64-bundle.tar # cd redrock-12.1-1.debian10.x86_64-bundle # dpkg -i libpq5_12.1-1_amd64.deb redrock-client_12.1-1_amd64.deb redrock_12.1-1_amd64.deb 您还可以根据您的需要安装其他软件包。
-服务器控制     要控制数据库服务，请使用：
-# systemctl &lt;command&gt; postgresql 其中的 command 可以为:" />
+  <meta name="description" content="记录和发布DDL操作 订阅和同步DDL操作      PostgreSQL 提供了事件触发器。事件触发器对一个特定数据库来说是全局的，并且可以捕捉该数据库中发生的 DDL 事件。Redrock Postgres 通过对 PostgreSQL 进行了如下改进，从而让用户可以通过事件触发器，实现对DDL操作的订阅：
+ 在 Redrock Postgres 中，用户和表空间都是数据库级别的对象，事件触发器也支持作用于用户和表空间对象的DDL命令，详情可参见 事件触发器触发矩阵 ； 支持在命令结束处（对应 ddl_command_end 事件）捕捉删除对象的操作； 提供函数 pg_ddl_command_deparse 将DDL命令从pg_ddl_command类型的内部格式反向解析为SQL语句；  下面将以示例的方式介绍如何实现DDL操作的订阅和同步功能，您可以根据业务情况对示例中的操作命令进行相应修改。
+记录和发布DDL操作     我们需要在发布端通过事件触发器记录DDL语句到DDL操作记录表中。
+  创建DDL操作记录表：
+CREATE SCHEMA IF NOT EXISTS sql_audit; -- create table for ddl record CREATE TABLE IF NOT EXISTS sql_audit.ddl_history( ord int, op_time timestamp, username text, command_tag text, object_type text, schema_name text, object_identity text, command text ); -- grant privileges to all user GRANT USAGE ON SCHEMA sql_audit TO PUBLIC; GRANT SELECT, INSERT ON TABLE sql_audit." />
 
-    <title>Debian 安装指导 | Redrock Documentation</title>
+    <title>DDL操作订阅 | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -35,57 +35,57 @@
     
   <meta
     property="og:title"
-    content="Debian 安装指导"
+    content="DDL操作订阅"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="安装软件包  安装准备 安装 Redrock Postgres   服务器控制 安装后配置调整      安装软件包     安装准备     使用您的 root 帐户登录到主机，然后运行以下命令来安装依赖包：
-# apt install postgresql-common postgresql-client-common 安装 Redrock Postgres     下载 Debian 的安装包，并执行以下命令进行安装：
-# tar xf redrock-12.1-1.debian10.x86_64-bundle.tar # cd redrock-12.1-1.debian10.x86_64-bundle # dpkg -i libpq5_12.1-1_amd64.deb redrock-client_12.1-1_amd64.deb redrock_12.1-1_amd64.deb 您还可以根据您的需要安装其他软件包。
-服务器控制     要控制数据库服务，请使用：
-# systemctl &lt;command&gt; postgresql 其中的 command 可以为:" />
+  <meta property="og:description" content="记录和发布DDL操作 订阅和同步DDL操作      PostgreSQL 提供了事件触发器。事件触发器对一个特定数据库来说是全局的，并且可以捕捉该数据库中发生的 DDL 事件。Redrock Postgres 通过对 PostgreSQL 进行了如下改进，从而让用户可以通过事件触发器，实现对DDL操作的订阅：
+ 在 Redrock Postgres 中，用户和表空间都是数据库级别的对象，事件触发器也支持作用于用户和表空间对象的DDL命令，详情可参见 事件触发器触发矩阵 ； 支持在命令结束处（对应 ddl_command_end 事件）捕捉删除对象的操作； 提供函数 pg_ddl_command_deparse 将DDL命令从pg_ddl_command类型的内部格式反向解析为SQL语句；  下面将以示例的方式介绍如何实现DDL操作的订阅和同步功能，您可以根据业务情况对示例中的操作命令进行相应修改。
+记录和发布DDL操作     我们需要在发布端通过事件触发器记录DDL语句到DDL操作记录表中。
+  创建DDL操作记录表：
+CREATE SCHEMA IF NOT EXISTS sql_audit; -- create table for ddl record CREATE TABLE IF NOT EXISTS sql_audit.ddl_history( ord int, op_time timestamp, username text, command_tag text, object_type text, schema_name text, object_identity text, command text ); -- grant privileges to all user GRANT USAGE ON SCHEMA sql_audit TO PUBLIC; GRANT SELECT, INSERT ON TABLE sql_audit." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://doc.rockdata.net/zh-cn/installation/debian/" />
+<meta property="og:url" content="https://doc.rockdata.net/zh-cn/admin/ddl-subscription/" />
 
-<meta property="article:section" content="Installation" />
+<meta property="article:section" content="Admin" />
     <meta
       property="article:modified_time"
-      content="2022-06-07T10:54:16+08:00"
+      content="2022-06-25T12:17:19+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Debian 安装指导" />
+<meta name="twitter:title" content="DDL操作订阅" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="安装软件包  安装准备 安装 Redrock Postgres   服务器控制 安装后配置调整      安装软件包     安装准备     使用您的 root 帐户登录到主机，然后运行以下命令来安装依赖包：
-# apt install postgresql-common postgresql-client-common 安装 Redrock Postgres     下载 Debian 的安装包，并执行以下命令进行安装：
-# tar xf redrock-12.1-1.debian10.x86_64-bundle.tar # cd redrock-12.1-1.debian10.x86_64-bundle # dpkg -i libpq5_12.1-1_amd64.deb redrock-client_12.1-1_amd64.deb redrock_12.1-1_amd64.deb 您还可以根据您的需要安装其他软件包。
-服务器控制     要控制数据库服务，请使用：
-# systemctl &lt;command&gt; postgresql 其中的 command 可以为:" />
+  <meta name="twitter:description" content="记录和发布DDL操作 订阅和同步DDL操作      PostgreSQL 提供了事件触发器。事件触发器对一个特定数据库来说是全局的，并且可以捕捉该数据库中发生的 DDL 事件。Redrock Postgres 通过对 PostgreSQL 进行了如下改进，从而让用户可以通过事件触发器，实现对DDL操作的订阅：
+ 在 Redrock Postgres 中，用户和表空间都是数据库级别的对象，事件触发器也支持作用于用户和表空间对象的DDL命令，详情可参见 事件触发器触发矩阵 ； 支持在命令结束处（对应 ddl_command_end 事件）捕捉删除对象的操作； 提供函数 pg_ddl_command_deparse 将DDL命令从pg_ddl_command类型的内部格式反向解析为SQL语句；  下面将以示例的方式介绍如何实现DDL操作的订阅和同步功能，您可以根据业务情况对示例中的操作命令进行相应修改。
+记录和发布DDL操作     我们需要在发布端通过事件触发器记录DDL语句到DDL操作记录表中。
+  创建DDL操作记录表：
+CREATE SCHEMA IF NOT EXISTS sql_audit; -- create table for ddl record CREATE TABLE IF NOT EXISTS sql_audit.ddl_history( ord int, op_time timestamp, username text, command_tag text, object_type text, schema_name text, object_identity text, command text ); -- grant privileges to all user GRANT USAGE ON SCHEMA sql_audit TO PUBLIC; GRANT SELECT, INSERT ON TABLE sql_audit." />
 
 
   <script type="application/ld+json">
   {
       "@context": "http://schema.org",
       "@type": "TechArticle",
-      "articleSection": "Installation",
-      "name": "Debian 安装指导",
-      "url" : "https://doc.rockdata.net/zh-cn/installation/debian/",
-      "headline": "Debian 安装指导",
-      "description": "安装软件包  安装准备 安装 Redrock Postgres   服务器控制 安装后配置调整      安装软件包     安装准备     使用您的 root 帐户登录到主机，然后运行以下命令来安装依赖包：\n# apt install postgresql-common postgresql-client-common 安装 Redrock Postgres     下载 Debian 的安装包，并执行以下命令进行安装：\n# tar xf redrock-12.1-1.debian10.x86_64-bundle.tar # cd redrock-12.1-1.debian10.x86_64-bundle # dpkg -i libpq5_12.1-1_amd64.deb redrock-client_12.1-1_amd64.deb redrock_12.1-1_amd64.deb 您还可以根据您的需要安装其他软件包。\n服务器控制     要控制数据库服务，请使用：\n# systemctl \u003ccommand\u003e postgresql 其中的 command 可以为:",
+      "articleSection": "Admin",
+      "name": "DDL操作订阅",
+      "url" : "https://doc.rockdata.net/zh-cn/admin/ddl-subscription/",
+      "headline": "DDL操作订阅",
+      "description": "记录和发布DDL操作 订阅和同步DDL操作      PostgreSQL 提供了事件触发器。事件触发器对一个特定数据库来说是全局的，并且可以捕捉该数据库中发生的 DDL 事件。Redrock Postgres 通过对 PostgreSQL 进行了如下改进，从而让用户可以通过事件触发器，实现对DDL操作的订阅：\n 在 Redrock Postgres 中，用户和表空间都是数据库级别的对象，事件触发器也支持作用于用户和表空间对象的DDL命令，详情可参见 事件触发器触发矩阵 ； 支持在命令结束处（对应 ddl_command_end 事件）捕捉删除对象的操作； 提供函数 pg_ddl_command_deparse 将DDL命令从pg_ddl_command类型的内部格式反向解析为SQL语句；  下面将以示例的方式介绍如何实现DDL操作的订阅和同步功能，您可以根据业务情况对示例中的操作命令进行相应修改。\n记录和发布DDL操作     我们需要在发布端通过事件触发器记录DDL语句到DDL操作记录表中。\n  创建DDL操作记录表：\nCREATE SCHEMA IF NOT EXISTS sql_audit; -- create table for ddl record CREATE TABLE IF NOT EXISTS sql_audit.ddl_history( ord int, op_time timestamp, username text, command_tag text, object_type text, schema_name text, object_identity text, command text ); -- grant privileges to all user GRANT USAGE ON SCHEMA sql_audit TO PUBLIC; GRANT SELECT, INSERT ON TABLE sql_audit.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "111",
+      "wordCount" : "248",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://doc.rockdata.net/zh-cn/installation/debian/"
+          "@id": "https://doc.rockdata.net/zh-cn/admin/ddl-subscription/"
       },
       "copyrightHolder" : "Redrock Documentation",
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-07T10:54:16.00Z",
+      "dateModified": "2022-06-25T12:17:19.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -161,7 +161,7 @@
   href="/custom.css"
   media="all"
 />
-  <link href="https://doc.rockdata.net/zh-cn/installation/debian/" rel="canonical" type="text/html" />
+  <link href="https://doc.rockdata.net/zh-cn/admin/ddl-subscription/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -768,7 +768,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <a
                   class="flex gdoc-language__entry"
                   title="English"
-                  href="/installation/debian/"
+                  href="/admin/ddl-subscription/"
                   hreflang="en"
                   lang="en"
                 >
@@ -1041,7 +1041,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               type="checkbox"
               
                 class="gdoc-nav__toggle" id="navtree-09089698"
-                checked
+                
               
             />
             <label
@@ -1195,7 +1195,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <span class="flex">
                   <a
                     href="/zh-cn/installation/debian/"
-                    class="gdoc-nav__entry is-active"
+                    class="gdoc-nav__entry"
                   >
                     Debian 安装指导
                   </a>
@@ -1727,7 +1727,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               type="checkbox"
               
                 class="gdoc-nav__toggle" id="navtree-2c8f00d6"
-                
+                checked
               
             />
             <label
@@ -1793,7 +1793,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <span class="flex">
                   <a
                     href="/zh-cn/admin/ddl-subscription/"
-                    class="gdoc-nav__entry"
+                    class="gdoc-nav__entry is-active"
                   >
                     DDL操作订阅
                   </a>
@@ -2434,7 +2434,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/installation/' href='/zh-cn/installation/'><span itemprop='name'>安装指导</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Debian 安装指导</span><meta itemprop='position' content='4' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/admin/' href='/zh-cn/admin/'><span itemprop='name'>服务器管理</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>DDL操作订阅</span><meta itemprop='position' content='4' /></li>
   
 
   
@@ -2449,7 +2449,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <span class="editpage">
         <svg class="gdoc-icon gdoc_code"><use xlink:href="#gdoc_code"></use></svg>
         <a
-          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/zh-cn/installation/debian.md"
+          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/zh-cn/admin/ddl-subscription.md"
         >
           编辑页面
         </a>
@@ -2463,92 +2463,153 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <article
     class="gdoc-markdown gdoc-markdown__align--left"
   >
-    <h1>Debian 安装指导</h1>
+    <h1>DDL操作订阅</h1>
     <div class="gdoc-toc gdoc-toc__level--3">
       <nav id="TableOfContents"><ul>
-        <li><a href="#安装软件包">安装软件包</a>
-          <ul>
-            <li><a href="#安装准备">安装准备</a></li>
-            <li><a href="#安装-redrock-postgres">安装 Redrock Postgres</a></li>
-          </ul>
-        </li>
-        <li><a href="#服务器控制">服务器控制</a></li>
-        <li><a href="#安装后配置调整">安装后配置调整</a></li>
+        <li><a href="#记录和发布ddl操作">记录和发布DDL操作</a></li>
+        <li><a href="#订阅和同步ddl操作">订阅和同步DDL操作</a></li>
       </ul></nav>
       <hr />
     </div>
-<div class="gdoc-page__anchorwrap">
-    <h2 id="安装软件包">
-        安装软件包
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/debian/#安装软件包" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 安装软件包" aria-label="锚定到： 安装软件包" href="#%e5%ae%89%e8%a3%85%e8%bd%af%e4%bb%b6%e5%8c%85">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<div class="gdoc-page__anchorwrap">
-    <h3 id="安装准备">
-        安装准备
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/debian/#安装准备" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 安装准备" aria-label="锚定到： 安装准备" href="#%e5%ae%89%e8%a3%85%e5%87%86%e5%a4%87">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
-<p>使用您的 root 帐户登录到主机，然后运行以下命令来安装依赖包：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># apt install postgresql-common postgresql-client-common</span>
-</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
-    <h3 id="安装-redrock-postgres">
-        安装 Redrock Postgres
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/debian/#安装-redrock-postgres" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 安装 Redrock Postgres" aria-label="锚定到： 安装 Redrock Postgres" href="#%e5%ae%89%e8%a3%85-redrock-postgres">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
-<p>下载 <a
-  class="gdoc-markdown__link"
-  href="https://gitee.com/rockdata/redrock/releases"
-  
->Debian 的安装包</a>，并执行以下命令进行安装：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># tar xf redrock-12.1-1.debian10.x86_64-bundle.tar</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># cd redrock-12.1-1.debian10.x86_64-bundle</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># dpkg -i libpq5_12.1-1_amd64.deb redrock-client_12.1-1_amd64.deb redrock_12.1-1_amd64.deb</span>
-</span></span></code></pre></div><p>您还可以根据您的需要安装其他软件包。</p>
-<div class="gdoc-page__anchorwrap">
-    <h2 id="服务器控制">
-        服务器控制
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/debian/#服务器控制" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 服务器控制" aria-label="锚定到： 服务器控制" href="#%e6%9c%8d%e5%8a%a1%e5%99%a8%e6%8e%a7%e5%88%b6">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<p>要控制数据库服务，请使用：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># systemctl &lt;command&gt; postgresql</span>
-</span></span></code></pre></div><p>其中的 <em>command</em> 可以为:</p>
+<p>PostgreSQL 提供了事件触发器。事件触发器对一个特定数据库来说是全局的，并且可以捕捉该数据库中发生的 DDL 事件。Redrock Postgres 通过对 PostgreSQL 进行了如下改进，从而让用户可以通过事件触发器，实现对DDL操作的订阅：</p>
 <ul>
-<li><em>enable</em> : 启用开机启动</li>
-<li><em>start</em> : 启动数据库</li>
-<li><em>stop</em> : 停止数据库</li>
-<li><em>restart</em> : 重启数据库; 主要用于重要参数的变更生效</li>
-<li><em>reload</em> : 在数据库运行过程中更新配置参数</li>
+<li>在 Redrock Postgres 中，用户和表空间都是数据库级别的对象，事件触发器也支持作用于用户和表空间对象的DDL命令，详情可参见 <a
+  class="gdoc-markdown__link"
+  href="/zh-cn/features/event-triggers/#%e4%ba%8b%e4%bb%b6%e8%a7%a6%e5%8f%91%e5%99%a8%e8%a7%a6%e5%8f%91%e7%9f%a9%e9%98%b5"
+  
+>事件触发器触发矩阵</a> ；</li>
+<li>支持在命令结束处（对应 <code>ddl_command_end</code> 事件）捕捉删除对象的操作；</li>
+<li>提供函数 <a
+  class="gdoc-markdown__link"
+  href="/zh-cn/features/event-triggers/#%e5%8f%8d%e8%a7%a3%e6%9e%90-ddl-%e5%91%bd%e4%bb%a4"
+  
+>pg_ddl_command_deparse</a> 将DDL命令从<code>pg_ddl_command</code>类型的内部格式反向解析为SQL语句；</li>
 </ul>
+<p>下面将以示例的方式介绍如何实现DDL操作的订阅和同步功能，您可以根据业务情况对示例中的操作命令进行相应修改。</p>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="安装后配置调整">
-        安装后配置调整
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/installation/debian/#安装后配置调整" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 安装后配置调整" aria-label="锚定到： 安装后配置调整" href="#%e5%ae%89%e8%a3%85%e5%90%8e%e9%85%8d%e7%bd%ae%e8%b0%83%e6%95%b4">
+    <h2 id="记录和发布ddl操作">
+        记录和发布DDL操作
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/admin/ddl-subscription/#记录和发布ddl操作" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 记录和发布DDL操作" aria-label="锚定到： 记录和发布DDL操作" href="#%e8%ae%b0%e5%bd%95%e5%92%8c%e5%8f%91%e5%b8%83ddl%e6%93%8d%e4%bd%9c">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>修改配置目录（默认值：/etc/postgresql/12/main/）中的pg_hba.conf文件，以定义从网络中其他主机访问 PostgreSQL 服务器使用的访问控制策略，修改IPv4网络访问控制策略：从 indent 更改为 md5，从本机地址 127.0.0.1 更改为接受所有主机访问请求。找到下面行：</p>
-<pre tabindex="0"><code># IPv4 local connections:
-host    all             all             127.0.0.1/32            ident
-</code></pre><p>并将其更改为：</p>
-<pre tabindex="0"><code># IPv4 local connections:
-host    all             all             0.0.0.0/0            md5
-</code></pre><p>修改配置目录（默认值：/etc/postgresql/12/main/ ）中的 postgresql.conf 文件，通过取消注释以下参数行并设置参数值为 * 而不是 localhost 来允许来自所有主机的访问连接：</p>
-<pre tabindex="0"><code>listen_addresses = &#39;*&#39;
-</code></pre><p>重启数据库服务以更新配置参数：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># systemctl restart postgresql</span>
-</span></span></code></pre></div><p>在生产环境中，还应设置 TLS 安全通信，并且应考虑配置数据复制或基于快照的备份。有关这些配置，请参阅 PostgreSQL 在线文档。</p>
+<p>我们需要在发布端通过事件触发器记录DDL语句到DDL操作记录表中。</p>
+<ol>
+<li>
+<p>创建DDL操作记录表：</p>
+<pre tabindex="0"><code>CREATE SCHEMA IF NOT EXISTS sql_audit;
+-- create table for ddl record
+CREATE TABLE IF NOT EXISTS sql_audit.ddl_history(
+  ord             int,
+  op_time         timestamp,
+  username        text,
+  command_tag     text,
+  object_type     text,
+  schema_name     text,
+  object_identity text,
+  command         text
+);
+
+-- grant privileges to all user
+GRANT USAGE ON SCHEMA sql_audit TO PUBLIC;
+GRANT SELECT, INSERT ON TABLE sql_audit.ddl_history TO PUBLIC;
+</code></pre></li>
+<li>
+<p>在发布端执行发布DDL操作记录表：</p>
+<pre tabindex="0"><code>CREATE PUBLICATION ddl_publication FOR TABLE ONLY sql_audit.ddl_history;
+</code></pre></li>
+<li>
+<p>创建DDL事件触发器：</p>
+<pre tabindex="0"><code>-- create function for event triggers
+CREATE OR REPLACE FUNCTION sql_audit.ddl_trigger_func()
+RETURNS event_trigger
+AS $$
+BEGIN
+  INSERT INTO sql_audit.ddl_history
+    SELECT ordinality, now(), current_user, command_tag,
+           object_type, schema_name, object_identity,
+           pg_ddl_command_deparse(command)
+      FROM pg_event_trigger_ddl_commands() WITH ORDINALITY;
+END;
+$$ LANGUAGE plpgsql;
+
+-- create ddl_command_end event trigger
+CREATE EVENT TRIGGER deparse_event_trigger
+    ON ddl_command_end
+    EXECUTE PROCEDURE sql_audit.ddl_trigger_func();
+</code></pre>
+
+
+
+
+<blockquote class="gdoc-hint note">
+  <div class="gdoc-hint__title flex align-center"><i class="fa note" title="Note"></i></div>
+  <div class="gdoc-hint__text">执行完以上命令后，您的DDL操作将会记录在表sql_audit.ddl_history中。</div>
+</blockquote>
+
+</li>
+</ol>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="订阅和同步ddl操作">
+        订阅和同步DDL操作
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/admin/ddl-subscription/#订阅和同步ddl操作" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 订阅和同步DDL操作" aria-label="锚定到： 订阅和同步DDL操作" href="#%e8%ae%a2%e9%98%85%e5%92%8c%e5%90%8c%e6%ad%a5ddl%e6%93%8d%e4%bd%9c">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>在发布端我们将已经执行了的DDL语句存储在sql_audit.ddl_history中。订阅端可以读取记录进行同步。</p>
+<ol>
+<li>
+<p>在订阅端创建相同的表：</p>
+<pre tabindex="0"><code>CREATE SCHEMA IF NOT EXISTS sql_audit;
+-- create table for ddl record
+CREATE TABLE IF NOT EXISTS sql_audit.ddl_history(
+  ord             int,
+  op_time         timestamp,
+  username        text,
+  command_tag     text,
+  object_type     text,
+  schema_name     text,
+  object_identity text,
+  command         text
+);
+
+-- grant privileges to all user
+GRANT USAGE ON SCHEMA sql_audit TO PUBLIC;
+GRANT SELECT, INSERT ON TABLE sql_audit.ddl_history TO PUBLIC;
+</code></pre></li>
+<li>
+<p>在订阅端创建订阅：</p>
+<pre tabindex="0"><code>CREATE SUBSCRIPTION ddl_subscriptin CONNECTION &#39;host=192.168.1.50 port=5432 user=testuser password=pgpass&#39; PUBLICATION ddl_publication;
+</code></pre>
+
+
+
+
+<blockquote class="gdoc-hint note">
+  <div class="gdoc-hint__title flex align-center"><i class="fa note" title="Note"></i></div>
+  <div class="gdoc-hint__text">需要确保发布端数据库配置参数 <code>wal_level</code> 的值为 logical，该参数修改后需要重启实例才能生效。</div>
+</blockquote>
+
+</li>
+<li>
+<p>在订阅端针对sql_audit.ddl_history表创建相应的触发器，实现DDL增量同步：</p>
+<pre tabindex="0"><code>CREATE OR REPLACE FUNCTION sql_audit.ddl_sub_trigger_func()
+RETURNS trigger
+AS $$
+BEGIN
+  EXECUTE NEW.command;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER ddl_sub_trigger
+  AFTER INSERT ON sql_audit.ddl_history
+  FOR EACH ROW
+  EXECUTE PROCEDURE sql_audit.ddl_sub_trigger_func();
+</code></pre></li>
+</ol>
 
   </article>
 
