@@ -52,7 +52,7 @@
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-06-22T15:24:12+08:00"
+      content="2022-06-26T09:31:53+08:00"
     />
 
 
@@ -88,7 +88,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-22T15:24:12.00Z",
+      "dateModified": "2022-06-26T09:31:53.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1798,7 +1798,51 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     href="/zh-cn/admin/ddl-subscription/"
                     class="gdoc-nav__entry"
                   >
-                    DDL操作订阅
+                    订阅DDL操作
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/admin/audit-trigger/"
+                    class="gdoc-nav__entry"
+                  >
+                    审计日志
                   </a>
                 </span>
               
@@ -2542,9 +2586,9 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     </h2>
 </div>
 <p>登录计算服务器，使用数据库超级用户连接到数据库服务中的 <code>postgres</code> 数据库，创建基于网络的数据库。配置的一个简单例子是：</p>
-<pre tabindex="0"><code>CREATE DATABASE netdb STORAGE remote LOCATION
-  &#39;host=192.168.1.50 port=5432 user=postgres password=pgpass&#39;;
-</code></pre>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">DATABASE</span> <span class="n">netdb</span> <span class="k">STORAGE</span> <span class="n">remote</span> <span class="k">LOCATION</span>
+</span></span><span class="line"><span class="cl">  <span class="s1">&#39;host=192.168.1.50 port=5432 user=postgres password=pgpass&#39;</span><span class="p">;</span>
+</span></span></code></pre></div>
 
 
 
@@ -2563,11 +2607,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     </h2>
 </div>
 <p>使用数据库超级用户连接到数据库服务中的新建数据库 <code>netdb</code>，创建基于网络的表空间。下面是配置的一个简单例子，使用额外的两台存储服务器创建了两个网络表空间：</p>
-<pre tabindex="0"><code>CREATE TABLESPACE netts1 STORAGE remote LOCATION
-  &#39;host=192.168.1.51 port=5432 user=postgres password=pgpass&#39;;
-CREATE TABLESPACE netts2 STORAGE remote LOCATION
-  &#39;host=192.168.1.52 port=5432 user=postgres password=pgpass&#39;;
-</code></pre><p>然后就可以使用这些网络表空间创建表和索引了。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">TABLESPACE</span> <span class="n">netts1</span> <span class="k">STORAGE</span> <span class="n">remote</span> <span class="k">LOCATION</span>
+</span></span><span class="line"><span class="cl">  <span class="s1">&#39;host=192.168.1.51 port=5432 user=postgres password=pgpass&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">TABLESPACE</span> <span class="n">netts2</span> <span class="k">STORAGE</span> <span class="n">remote</span> <span class="k">LOCATION</span>
+</span></span><span class="line"><span class="cl">  <span class="s1">&#39;host=192.168.1.52 port=5432 user=postgres password=pgpass&#39;</span><span class="p">;</span>
+</span></span></code></pre></div><p>然后就可以使用这些网络表空间创建表和索引了。</p>
 
   </article>
 

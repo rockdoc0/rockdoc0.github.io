@@ -12,9 +12,9 @@
  在 Redrock Postgres 中，用户和表空间都是数据库级别的对象，事件触发器也支持作用于用户和表空间对象的DDL命令，详情可参见 事件触发器触发矩阵 ； 支持在命令结束处（对应 ddl_command_end 事件）捕捉删除对象的操作； 提供函数 pg_ddl_command_deparse 将DDL命令从pg_ddl_command类型的内部格式反向解析为SQL语句；  下面将以示例的方式介绍如何实现DDL操作的订阅和同步功能，您可以根据业务情况对示例中的操作命令进行相应修改。
 记录和发布DDL操作     我们需要在发布端通过事件触发器记录DDL语句到DDL操作记录表中。
   创建DDL操作记录表：
-CREATE SCHEMA IF NOT EXISTS sql_audit; -- create table for ddl record CREATE TABLE IF NOT EXISTS sql_audit.ddl_history( ord int, op_time timestamp, username text, command_tag text, object_type text, schema_name text, object_identity text, command text ); -- grant privileges to all user GRANT USAGE ON SCHEMA sql_audit TO PUBLIC; GRANT SELECT, INSERT ON TABLE sql_audit." />
+CREATE SCHEMA IF NOT EXISTS audit; -- create table for ddl record CREATE TABLE IF NOT EXISTS audit.ddl_history( ord int, op_time timestamp, username text, command_tag text, object_type text, schema_name text, object_identity text, command text ); -- grant privileges to all user GRANT USAGE ON SCHEMA audit TO PUBLIC; GRANT SELECT, INSERT ON TABLE audit." />
 
-    <title>DDL操作订阅 | Redrock Documentation</title>
+    <title>订阅DDL操作 | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -35,7 +35,7 @@ CREATE SCHEMA IF NOT EXISTS sql_audit; -- create table for ddl record CREATE TAB
     
   <meta
     property="og:title"
-    content="DDL操作订阅"
+    content="订阅DDL操作"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
@@ -43,25 +43,25 @@ CREATE SCHEMA IF NOT EXISTS sql_audit; -- create table for ddl record CREATE TAB
  在 Redrock Postgres 中，用户和表空间都是数据库级别的对象，事件触发器也支持作用于用户和表空间对象的DDL命令，详情可参见 事件触发器触发矩阵 ； 支持在命令结束处（对应 ddl_command_end 事件）捕捉删除对象的操作； 提供函数 pg_ddl_command_deparse 将DDL命令从pg_ddl_command类型的内部格式反向解析为SQL语句；  下面将以示例的方式介绍如何实现DDL操作的订阅和同步功能，您可以根据业务情况对示例中的操作命令进行相应修改。
 记录和发布DDL操作     我们需要在发布端通过事件触发器记录DDL语句到DDL操作记录表中。
   创建DDL操作记录表：
-CREATE SCHEMA IF NOT EXISTS sql_audit; -- create table for ddl record CREATE TABLE IF NOT EXISTS sql_audit.ddl_history( ord int, op_time timestamp, username text, command_tag text, object_type text, schema_name text, object_identity text, command text ); -- grant privileges to all user GRANT USAGE ON SCHEMA sql_audit TO PUBLIC; GRANT SELECT, INSERT ON TABLE sql_audit." />
+CREATE SCHEMA IF NOT EXISTS audit; -- create table for ddl record CREATE TABLE IF NOT EXISTS audit.ddl_history( ord int, op_time timestamp, username text, command_tag text, object_type text, schema_name text, object_identity text, command text ); -- grant privileges to all user GRANT USAGE ON SCHEMA audit TO PUBLIC; GRANT SELECT, INSERT ON TABLE audit." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/zh-cn/admin/ddl-subscription/" />
 
 <meta property="article:section" content="Admin" />
     <meta
       property="article:modified_time"
-      content="2022-06-25T18:45:32+08:00"
+      content="2022-06-26T18:01:59+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="DDL操作订阅" />
+<meta name="twitter:title" content="订阅DDL操作" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
   <meta name="twitter:description" content="记录和发布DDL操作 订阅和同步DDL操作      PostgreSQL 提供了事件触发器。事件触发器对一个特定数据库来说是全局的，并且可以捕捉该数据库中发生的 DDL 事件。Redrock Postgres 通过对 PostgreSQL 进行了如下改进，从而让用户可以通过事件触发器，实现对DDL操作的订阅：
  在 Redrock Postgres 中，用户和表空间都是数据库级别的对象，事件触发器也支持作用于用户和表空间对象的DDL命令，详情可参见 事件触发器触发矩阵 ； 支持在命令结束处（对应 ddl_command_end 事件）捕捉删除对象的操作； 提供函数 pg_ddl_command_deparse 将DDL命令从pg_ddl_command类型的内部格式反向解析为SQL语句；  下面将以示例的方式介绍如何实现DDL操作的订阅和同步功能，您可以根据业务情况对示例中的操作命令进行相应修改。
 记录和发布DDL操作     我们需要在发布端通过事件触发器记录DDL语句到DDL操作记录表中。
   创建DDL操作记录表：
-CREATE SCHEMA IF NOT EXISTS sql_audit; -- create table for ddl record CREATE TABLE IF NOT EXISTS sql_audit.ddl_history( ord int, op_time timestamp, username text, command_tag text, object_type text, schema_name text, object_identity text, command text ); -- grant privileges to all user GRANT USAGE ON SCHEMA sql_audit TO PUBLIC; GRANT SELECT, INSERT ON TABLE sql_audit." />
+CREATE SCHEMA IF NOT EXISTS audit; -- create table for ddl record CREATE TABLE IF NOT EXISTS audit.ddl_history( ord int, op_time timestamp, username text, command_tag text, object_type text, schema_name text, object_identity text, command text ); -- grant privileges to all user GRANT USAGE ON SCHEMA audit TO PUBLIC; GRANT SELECT, INSERT ON TABLE audit." />
 
 
   <script type="application/ld+json">
@@ -69,12 +69,12 @@ CREATE SCHEMA IF NOT EXISTS sql_audit; -- create table for ddl record CREATE TAB
       "@context": "http://schema.org",
       "@type": "TechArticle",
       "articleSection": "Admin",
-      "name": "DDL操作订阅",
+      "name": "订阅DDL操作",
       "url" : "https://doc.rockdata.net/zh-cn/admin/ddl-subscription/",
-      "headline": "DDL操作订阅",
-      "description": "记录和发布DDL操作 订阅和同步DDL操作      PostgreSQL 提供了事件触发器。事件触发器对一个特定数据库来说是全局的，并且可以捕捉该数据库中发生的 DDL 事件。Redrock Postgres 通过对 PostgreSQL 进行了如下改进，从而让用户可以通过事件触发器，实现对DDL操作的订阅：\n 在 Redrock Postgres 中，用户和表空间都是数据库级别的对象，事件触发器也支持作用于用户和表空间对象的DDL命令，详情可参见 事件触发器触发矩阵 ； 支持在命令结束处（对应 ddl_command_end 事件）捕捉删除对象的操作； 提供函数 pg_ddl_command_deparse 将DDL命令从pg_ddl_command类型的内部格式反向解析为SQL语句；  下面将以示例的方式介绍如何实现DDL操作的订阅和同步功能，您可以根据业务情况对示例中的操作命令进行相应修改。\n记录和发布DDL操作     我们需要在发布端通过事件触发器记录DDL语句到DDL操作记录表中。\n  创建DDL操作记录表：\nCREATE SCHEMA IF NOT EXISTS sql_audit; -- create table for ddl record CREATE TABLE IF NOT EXISTS sql_audit.ddl_history( ord int, op_time timestamp, username text, command_tag text, object_type text, schema_name text, object_identity text, command text ); -- grant privileges to all user GRANT USAGE ON SCHEMA sql_audit TO PUBLIC; GRANT SELECT, INSERT ON TABLE sql_audit.",
+      "headline": "订阅DDL操作",
+      "description": "记录和发布DDL操作 订阅和同步DDL操作      PostgreSQL 提供了事件触发器。事件触发器对一个特定数据库来说是全局的，并且可以捕捉该数据库中发生的 DDL 事件。Redrock Postgres 通过对 PostgreSQL 进行了如下改进，从而让用户可以通过事件触发器，实现对DDL操作的订阅：\n 在 Redrock Postgres 中，用户和表空间都是数据库级别的对象，事件触发器也支持作用于用户和表空间对象的DDL命令，详情可参见 事件触发器触发矩阵 ； 支持在命令结束处（对应 ddl_command_end 事件）捕捉删除对象的操作； 提供函数 pg_ddl_command_deparse 将DDL命令从pg_ddl_command类型的内部格式反向解析为SQL语句；  下面将以示例的方式介绍如何实现DDL操作的订阅和同步功能，您可以根据业务情况对示例中的操作命令进行相应修改。\n记录和发布DDL操作     我们需要在发布端通过事件触发器记录DDL语句到DDL操作记录表中。\n  创建DDL操作记录表：\nCREATE SCHEMA IF NOT EXISTS audit; -- create table for ddl record CREATE TABLE IF NOT EXISTS audit.ddl_history( ord int, op_time timestamp, username text, command_tag text, object_type text, schema_name text, object_identity text, command text ); -- grant privileges to all user GRANT USAGE ON SCHEMA audit TO PUBLIC; GRANT SELECT, INSERT ON TABLE audit.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "248",
+      "wordCount" : "228",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -85,7 +85,7 @@ CREATE SCHEMA IF NOT EXISTS sql_audit; -- create table for ddl record CREATE TAB
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-25T18:45:32.00Z",
+      "dateModified": "2022-06-26T18:01:59.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1795,7 +1795,51 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     href="/zh-cn/admin/ddl-subscription/"
                     class="gdoc-nav__entry is-active"
                   >
-                    DDL操作订阅
+                    订阅DDL操作
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/admin/audit-trigger/"
+                    class="gdoc-nav__entry"
+                  >
+                    审计日志
                   </a>
                 </span>
               
@@ -2434,7 +2478,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/admin/' href='/zh-cn/admin/'><span itemprop='name'>服务器管理</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>DDL操作订阅</span><meta itemprop='position' content='4' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/admin/' href='/zh-cn/admin/'><span itemprop='name'>服务器管理</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>订阅DDL操作</span><meta itemprop='position' content='4' /></li>
   
 
   
@@ -2463,7 +2507,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <article
     class="gdoc-markdown gdoc-markdown__align--left"
   >
-    <h1>DDL操作订阅</h1>
+    <h1>订阅DDL操作</h1>
     <div class="gdoc-toc gdoc-toc__level--3">
       <nav id="TableOfContents"><ul>
         <li><a href="#记录和发布ddl操作">记录和发布DDL操作</a></li>
@@ -2498,54 +2542,54 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <ol>
 <li>
 <p>创建DDL操作记录表：</p>
-<pre tabindex="0"><code>CREATE SCHEMA IF NOT EXISTS sql_audit;
--- create table for ddl record
-CREATE TABLE IF NOT EXISTS sql_audit.ddl_history(
-  ord             int,
-  op_time         timestamp,
-  username        text,
-  command_tag     text,
-  object_type     text,
-  schema_name     text,
-  object_identity text,
-  command         text
-);
-
--- grant privileges to all user
-GRANT USAGE ON SCHEMA sql_audit TO PUBLIC;
-GRANT SELECT, INSERT ON TABLE sql_audit.ddl_history TO PUBLIC;
-</code></pre></li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">SCHEMA</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">audit</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">-- create table for ddl record
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_history</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="n">ord</span>             <span class="nb">int</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">op_time</span>         <span class="nb">timestamp</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">username</span>        <span class="nb">text</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">command_tag</span>     <span class="nb">text</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">object_type</span>     <span class="nb">text</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">schema_name</span>     <span class="nb">text</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">object_identity</span> <span class="nb">text</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">command</span>         <span class="nb">text</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- grant privileges to all user
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">GRANT</span> <span class="n">USAGE</span> <span class="k">ON</span> <span class="k">SCHEMA</span> <span class="n">audit</span> <span class="k">TO</span> <span class="n">PUBLIC</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">GRANT</span> <span class="k">SELECT</span><span class="p">,</span> <span class="k">INSERT</span> <span class="k">ON</span> <span class="k">TABLE</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_history</span> <span class="k">TO</span> <span class="n">PUBLIC</span><span class="p">;</span>
+</span></span></code></pre></div></li>
 <li>
 <p>在发布端执行发布DDL操作记录表：</p>
-<pre tabindex="0"><code>CREATE PUBLICATION ddl_publication FOR TABLE ONLY sql_audit.ddl_history;
-</code></pre></li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="n">PUBLICATION</span> <span class="n">ddl_publication</span> <span class="k">FOR</span> <span class="k">TABLE</span> <span class="k">ONLY</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_history</span><span class="p">;</span>
+</span></span></code></pre></div></li>
 <li>
 <p>创建DDL事件触发器：</p>
-<pre tabindex="0"><code>-- create function for event triggers
-CREATE OR REPLACE FUNCTION sql_audit.ddl_trigger_func()
-RETURNS event_trigger
-AS $$
-BEGIN
-  INSERT INTO sql_audit.ddl_history
-    SELECT ordinality, now(), current_user, command_tag,
-           object_type, schema_name, object_identity,
-           pg_ddl_command_deparse(command)
-      FROM pg_event_trigger_ddl_commands() WITH ORDINALITY;
-END;
-$$ LANGUAGE plpgsql;
-
--- create ddl_command_end event trigger
-CREATE EVENT TRIGGER deparse_event_trigger
-    ON ddl_command_end
-    EXECUTE PROCEDURE sql_audit.ddl_trigger_func();
-</code></pre>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="c1">-- create function for event triggers
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">FUNCTION</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_trigger_func</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="k">RETURNS</span> <span class="n">event_trigger</span>
+</span></span><span class="line"><span class="cl"><span class="k">AS</span> <span class="sh">$$</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">BEGIN</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">audit</span><span class="mf">.</span><span class="n">ddl_history</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="k">ordinality</span><span class="p">,</span><span class="w"> </span><span class="n">now</span><span class="p">(),</span><span class="w"> </span><span class="k">current_user</span><span class="p">,</span><span class="w"> </span><span class="n">command_tag</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">           </span><span class="n">object_type</span><span class="p">,</span><span class="w"> </span><span class="n">schema_name</span><span class="p">,</span><span class="w"> </span><span class="n">object_identity</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">           </span><span class="n">pg_ddl_command_deparse</span><span class="p">(</span><span class="n">command</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">FROM</span><span class="w"> </span><span class="n">pg_event_trigger_ddl_commands</span><span class="p">()</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="k">ORDINALITY</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">END</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="sh">$$</span> <span class="k">LANGUAGE</span> <span class="s1">plpgsql</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- create ddl_command_end event trigger
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">CREATE</span> <span class="k">EVENT</span> <span class="k">TRIGGER</span> <span class="n">deparse_event_trigger</span>
+</span></span><span class="line"><span class="cl">    <span class="k">ON</span> <span class="n">ddl_command_end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">EXECUTE</span> <span class="k">PROCEDURE</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_trigger_func</span><span class="p">();</span>
+</span></span></code></pre></div>
 
 
 
 
 <blockquote class="gdoc-hint note">
   <div class="gdoc-hint__title flex align-center"><i class="fa note" title="Note"></i></div>
-  <div class="gdoc-hint__text">执行完以上命令后，您的DDL操作将会记录在表sql_audit.ddl_history中。</div>
+  <div class="gdoc-hint__text">执行完以上命令后，您的DDL操作将会记录在表 <code>audit.ddl_history</code> 中。</div>
 </blockquote>
 
 </li>
@@ -2558,33 +2602,33 @@ CREATE EVENT TRIGGER deparse_event_trigger
         </a>
     </h2>
 </div>
-<p>在发布端我们将已经执行了的DDL语句存储在sql_audit.ddl_history中。订阅端可以读取记录进行同步。</p>
+<p>在发布端我们将已经执行了的DDL语句存储在 <code>audit.ddl_history</code> 中。订阅端可以读取记录进行同步。</p>
 <ol>
 <li>
 <p>在订阅端创建相同的表：</p>
-<pre tabindex="0"><code>CREATE SCHEMA IF NOT EXISTS sql_audit;
--- create table for ddl record
-CREATE TABLE IF NOT EXISTS sql_audit.ddl_history(
-  ord             int,
-  op_time         timestamp,
-  username        text,
-  command_tag     text,
-  object_type     text,
-  schema_name     text,
-  object_identity text,
-  command         text
-);
-
--- grant privileges to all user
-GRANT USAGE ON SCHEMA sql_audit TO PUBLIC;
-GRANT SELECT, INSERT ON TABLE sql_audit.ddl_history TO PUBLIC;
-</code></pre></li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">SCHEMA</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">audit</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">-- create table for ddl record
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_history</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="n">ord</span>             <span class="nb">int</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">op_time</span>         <span class="nb">timestamp</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">username</span>        <span class="nb">text</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">command_tag</span>     <span class="nb">text</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">object_type</span>     <span class="nb">text</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">schema_name</span>     <span class="nb">text</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">object_identity</span> <span class="nb">text</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">command</span>         <span class="nb">text</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- grant privileges to all user
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">GRANT</span> <span class="n">USAGE</span> <span class="k">ON</span> <span class="k">SCHEMA</span> <span class="n">audit</span> <span class="k">TO</span> <span class="n">PUBLIC</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">GRANT</span> <span class="k">SELECT</span><span class="p">,</span> <span class="k">INSERT</span> <span class="k">ON</span> <span class="k">TABLE</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_history</span> <span class="k">TO</span> <span class="n">PUBLIC</span><span class="p">;</span>
+</span></span></code></pre></div></li>
 <li>
 <p>在订阅端创建订阅：</p>
-<pre tabindex="0"><code>CREATE SUBSCRIPTION ddl_subscriptin CONNECTION
-  &#39;host=192.168.1.50 port=5432 user=testuser password=pgpass&#39;
-  PUBLICATION ddl_publication;
-</code></pre>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="n">SUBSCRIPTION</span> <span class="n">ddl_subscriptin</span> <span class="k">CONNECTION</span>
+</span></span><span class="line"><span class="cl">  <span class="s1">&#39;host=192.168.1.50 port=5432 user=testuser password=pgpass&#39;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">PUBLICATION</span> <span class="n">ddl_publication</span><span class="p">;</span>
+</span></span></code></pre></div>
 
 
 
@@ -2596,21 +2640,21 @@ GRANT SELECT, INSERT ON TABLE sql_audit.ddl_history TO PUBLIC;
 
 </li>
 <li>
-<p>在订阅端针对sql_audit.ddl_history表创建相应的触发器，实现DDL增量同步：</p>
-<pre tabindex="0"><code>CREATE OR REPLACE FUNCTION sql_audit.ddl_sub_trigger_func()
-RETURNS trigger
-AS $$
-BEGIN
-  EXECUTE NEW.command;
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER ddl_sub_trigger
-  AFTER INSERT ON sql_audit.ddl_history
-  FOR EACH ROW
-  EXECUTE PROCEDURE sql_audit.ddl_sub_trigger_func();
-</code></pre></li>
+<p>在订阅端针对 <code>audit.ddl_history</code> 表创建相应的触发器，实现DDL增量同步：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">FUNCTION</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_sub_trigger_func</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="k">RETURNS</span> <span class="k">trigger</span>
+</span></span><span class="line"><span class="cl"><span class="k">AS</span> <span class="sh">$$</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">BEGIN</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">EXECUTE</span><span class="w"> </span><span class="n">NEW</span><span class="mf">.</span><span class="n">command</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">RETURN</span><span class="w"> </span><span class="n">NEW</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">END</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="sh">$$</span> <span class="k">LANGUAGE</span> <span class="s1">plpgsql</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">TRIGGER</span> <span class="n">ddl_sub_trigger</span>
+</span></span><span class="line"><span class="cl">  <span class="k">AFTER</span> <span class="k">INSERT</span> <span class="k">ON</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_history</span>
+</span></span><span class="line"><span class="cl">  <span class="k">FOR</span> <span class="k">EACH</span> <span class="k">ROW</span>
+</span></span><span class="line"><span class="cl">  <span class="k">EXECUTE</span> <span class="k">PROCEDURE</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_sub_trigger_func</span><span class="p">();</span>
+</span></span></code></pre></div></li>
 </ol>
 
   </article>

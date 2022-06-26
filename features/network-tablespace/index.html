@@ -46,7 +46,7 @@ Planning     Prepare the computing server and storage server environments. The r
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-06-22T15:24:12+08:00"
+      content="2022-06-26T09:31:53+08:00"
     />
 
 
@@ -79,7 +79,7 @@ Planning     Prepare the computing server and storage server environments. The r
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-22T15:24:12.00Z",
+      "dateModified": "2022-06-26T09:31:53.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1801,6 +1801,50 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         
       
     
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/admin/audit-trigger/"
+                    class="gdoc-nav__entry"
+                  >
+                    Audit Logging
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
   </ul>
 
             
@@ -2534,9 +2578,9 @@ pg_dump or pg_dumpall).</li>
     </h2>
 </div>
 <p>Log in to the computing server, connect to the <code>postgres</code> database in the database service as the database superuser, and create a network attached database. The following is a simple configuration example:</p>
-<pre tabindex="0"><code>CREATE DATABASE netdb STORAGE remote LOCATION
-  &#39;host=192.168.1.50 port=5432 user=postgres password=pgpass&#39;;
-</code></pre>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">DATABASE</span> <span class="n">netdb</span> <span class="k">STORAGE</span> <span class="n">remote</span> <span class="k">LOCATION</span>
+</span></span><span class="line"><span class="cl">  <span class="s1">&#39;host=192.168.1.50 port=5432 user=postgres password=pgpass&#39;</span><span class="p">;</span>
+</span></span></code></pre></div>
 
 
 
@@ -2555,11 +2599,11 @@ pg_dump or pg_dumpall).</li>
     </h2>
 </div>
 <p>Use a database superuser to connect to the newly created database <code>netdb</code> in the database service to create a network attached tablespace. The following is a simple example of a configuration that creates two network attached tablespaces using two additional storage servers:</p>
-<pre tabindex="0"><code>CREATE TABLESPACE netts1 STORAGE remote LOCATION
-  &#39;host=192.168.1.51 port=5432 user=postgres password=pgpass&#39;;
-CREATE TABLESPACE netts2 STORAGE remote LOCATION
-  &#39;host=192.168.1.52 port=5432 user=postgres password=pgpass&#39;;
-</code></pre><p>You can then use these network attached tablespaces to create tables and indexes.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">TABLESPACE</span> <span class="n">netts1</span> <span class="k">STORAGE</span> <span class="n">remote</span> <span class="k">LOCATION</span>
+</span></span><span class="line"><span class="cl">  <span class="s1">&#39;host=192.168.1.51 port=5432 user=postgres password=pgpass&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">TABLESPACE</span> <span class="n">netts2</span> <span class="k">STORAGE</span> <span class="n">remote</span> <span class="k">LOCATION</span>
+</span></span><span class="line"><span class="cl">  <span class="s1">&#39;host=192.168.1.52 port=5432 user=postgres password=pgpass&#39;</span><span class="p">;</span>
+</span></span></code></pre></div><p>You can then use these network attached tablespaces to create tables and indexes.</p>
 
   </article>
 

@@ -52,7 +52,7 @@ undo 数据存储在独立的表空间中。 Redrock Postgres 提供了一种完
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-06-23T23:20:58+08:00"
+      content="2022-06-26T09:31:53+08:00"
     />
 
 
@@ -88,7 +88,7 @@ undo 数据存储在独立的表空间中。 Redrock Postgres 提供了一种完
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-23T23:20:58.00Z",
+      "dateModified": "2022-06-26T09:31:53.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1798,7 +1798,51 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     href="/zh-cn/admin/ddl-subscription/"
                     class="gdoc-nav__entry"
                   >
-                    DDL操作订阅
+                    订阅DDL操作
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/admin/audit-trigger/"
+                    class="gdoc-nav__entry"
+                  >
+                    审计日志
                   </a>
                 </span>
               
@@ -2511,11 +2555,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     </h2>
 </div>
 <p>初始化数据库集群数据目录后，数据库中默认会产生4个集群级回滚段和8个数据库级别的回滚段。用户可以使用以下语句查看当前数据库中的回滚段信息：</p>
-<pre tabindex="0"><code>SELECT c.relname, c.relisshared, u.undoid, u.undrelid,
-       pg_size_pretty(pg_relation_size(c.oid)) as undsize
-   FROM pg_undo u
-     LEFT JOIN pg_class c ON u.undrelid = c.oid;
-</code></pre>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">c</span><span class="mf">.</span><span class="n">relname</span><span class="p">,</span> <span class="n">c</span><span class="mf">.</span><span class="n">relisshared</span><span class="p">,</span> <span class="n">u</span><span class="mf">.</span><span class="n">undoid</span><span class="p">,</span> <span class="n">u</span><span class="mf">.</span><span class="n">undrelid</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">       <span class="n">pg_size_pretty</span><span class="p">(</span><span class="n">pg_relation_size</span><span class="p">(</span><span class="n">c</span><span class="mf">.</span><span class="n">oid</span><span class="p">))</span> <span class="k">AS</span> <span class="n">undsize</span>
+</span></span><span class="line"><span class="cl">   <span class="k">FROM</span> <span class="n">pg_undo</span> <span class="n">u</span>
+</span></span><span class="line"><span class="cl">     <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">pg_class</span> <span class="n">c</span> <span class="k">ON</span> <span class="n">u</span><span class="mf">.</span><span class="n">undrelid</span> <span class="o">=</span> <span class="n">c</span><span class="mf">.</span><span class="n">oid</span><span class="p">;</span>
+</span></span></code></pre></div>
   </article>
 
 

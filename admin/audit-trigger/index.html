@@ -8,10 +8,10 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="CREATE UNDO — define a new undo
-Synopsis     CREATE UNDO [ IF NOT EXISTS ] name[ WITH ( storage_parameter = value [, ... ] ) ][ TABLESPACE tablespace_name ] Description     CREATE UNDO constructs a new undo in the current database. The undo name must be distinct from the name of any existing undo in the current database. Undos are primarily used to hold old version data that has been modified in tables and indexes." />
+  <meta name="description" content="Creating Audit Table Auditing DDL Commands Auditing DML Commands      PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can audit DDL commands with event triggers:
+ In Redrock Postgres, users and tablespaces are database-level objects. Event triggers also support DDL commands for users and tablespace objects." />
 
-    <title>CREATE UNDO | Redrock Documentation</title>
+    <title>Audit Logging | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -32,51 +32,51 @@ Synopsis     CREATE UNDO [ IF NOT EXISTS ] name[ WITH ( storage_parameter = val
     
   <meta
     property="og:title"
-    content="CREATE UNDO"
+    content="Audit Logging"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="CREATE UNDO — define a new undo
-Synopsis     CREATE UNDO [ IF NOT EXISTS ] name[ WITH ( storage_parameter = value [, ... ] ) ][ TABLESPACE tablespace_name ] Description     CREATE UNDO constructs a new undo in the current database. The undo name must be distinct from the name of any existing undo in the current database. Undos are primarily used to hold old version data that has been modified in tables and indexes." />
+  <meta property="og:description" content="Creating Audit Table Auditing DDL Commands Auditing DML Commands      PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can audit DDL commands with event triggers:
+ In Redrock Postgres, users and tablespaces are database-level objects. Event triggers also support DDL commands for users and tablespace objects." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://doc.rockdata.net/commands/createundo/" />
+<meta property="og:url" content="https://doc.rockdata.net/admin/audit-trigger/" />
 
-<meta property="article:section" content="Commands" />
+<meta property="article:section" content="Admin" />
     <meta
       property="article:modified_time"
-      content="2022-06-19T17:28:24+08:00"
+      content="2022-06-26T17:56:39+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="CREATE UNDO" />
+<meta name="twitter:title" content="Audit Logging" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="CREATE UNDO — define a new undo
-Synopsis     CREATE UNDO [ IF NOT EXISTS ] name[ WITH ( storage_parameter = value [, ... ] ) ][ TABLESPACE tablespace_name ] Description     CREATE UNDO constructs a new undo in the current database. The undo name must be distinct from the name of any existing undo in the current database. Undos are primarily used to hold old version data that has been modified in tables and indexes." />
+  <meta name="twitter:description" content="Creating Audit Table Auditing DDL Commands Auditing DML Commands      PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can audit DDL commands with event triggers:
+ In Redrock Postgres, users and tablespaces are database-level objects. Event triggers also support DDL commands for users and tablespace objects." />
 
 
   <script type="application/ld+json">
   {
       "@context": "http://schema.org",
       "@type": "TechArticle",
-      "articleSection": "Commands",
-      "name": "CREATE UNDO",
-      "url" : "https://doc.rockdata.net/commands/createundo/",
-      "headline": "CREATE UNDO",
-      "description": "CREATE UNDO — define a new undo\nSynopsis     CREATE UNDO [ IF NOT EXISTS ] name\r[ WITH ( storage_parameter = value [, ... ] ) ]\r[ TABLESPACE tablespace_name ] Description     CREATE UNDO constructs a new undo in the current database. The undo name must be distinct from the name of any existing undo in the current database. Undos are primarily used to hold old version data that has been modified in tables and indexes.",
+      "articleSection": "Admin",
+      "name": "Audit Logging",
+      "url" : "https://doc.rockdata.net/admin/audit-trigger/",
+      "headline": "Audit Logging",
+      "description": "Creating Audit Table Auditing DDL Commands Auditing DML Commands      PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can audit DDL commands with event triggers:\n In Redrock Postgres, users and tablespaces are database-level objects. Event triggers also support DDL commands for users and tablespace objects.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "449",
+      "wordCount" : "393",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://doc.rockdata.net/commands/createundo/"
+          "@id": "https://doc.rockdata.net/admin/audit-trigger/"
       },
       "copyrightHolder" : "Redrock Documentation",
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-19T17:28:24.00Z",
+      "dateModified": "2022-06-26T17:56:39.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -152,7 +152,7 @@ Synopsis     CREATE UNDO [ IF NOT EXISTS ] name[ WITH ( storage_parameter = val
   href="/custom.css"
   media="all"
 />
-  <link href="https://doc.rockdata.net/commands/createundo/" rel="canonical" type="text/html" />
+  <link href="https://doc.rockdata.net/admin/audit-trigger/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -759,7 +759,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <a
                   class="flex gdoc-language__entry"
                   title="简体中文"
-                  href="/zh-cn/commands/createundo/"
+                  href="/zh-cn/admin/audit-trigger/"
                   hreflang="zh-cn"
                   lang="zh-cn"
                 >
@@ -1718,7 +1718,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               type="checkbox"
               
                 class="gdoc-nav__toggle" id="navtree-d9ef83eb"
-                
+                checked
               
             />
             <label
@@ -1828,7 +1828,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <span class="flex">
                   <a
                     href="/admin/audit-trigger/"
-                    class="gdoc-nav__entry"
+                    class="gdoc-nav__entry is-active"
                   >
                     Audit Logging
                   </a>
@@ -1870,7 +1870,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               type="checkbox"
               
                 class="gdoc-nav__toggle" id="navtree-4ac8285e"
-                checked
+                
               
             />
             <label
@@ -1972,7 +1972,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <span class="flex">
                   <a
                     href="/commands/createundo/"
-                    class="gdoc-nav__entry is-active"
+                    class="gdoc-nav__entry"
                   >
                     CREATE UNDO
                   </a>
@@ -2469,7 +2469,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/commands/' href='/commands/'><span itemprop='name'>SQL Commands</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>CREATE UNDO</span><meta itemprop='position' content='3' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/admin/' href='/admin/'><span itemprop='name'>Server Administration</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Audit Logging</span><meta itemprop='position' content='3' /></li>
   
 
   
@@ -2484,7 +2484,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <span class="editpage">
         <svg class="gdoc-icon gdoc_code"><use xlink:href="#gdoc_code"></use></svg>
         <a
-          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/en/commands/createundo.md"
+          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/en/admin/audit-trigger.md"
         >
           Edit page
         </a>
@@ -2498,117 +2498,140 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <article
     class="gdoc-markdown gdoc-markdown__align--left"
   >
-    <h1>CREATE UNDO</h1>
-    <p>CREATE UNDO — define a new undo</p>
-<div class="gdoc-page__anchorwrap">
-    <h2 id="synopsis">
-        Synopsis
-        <a data-clipboard-text="https://doc.rockdata.net/commands/createundo/#synopsis" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Synopsis" aria-label="Anchor to: Synopsis" href="#synopsis">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<pre tabindex="0"><code>CREATE UNDO [ IF NOT EXISTS ] name
-    [ WITH ( storage_parameter = value [, ... ] ) ]
-    [ TABLESPACE tablespace_name ]
-</code></pre><div class="gdoc-page__anchorwrap">
-    <h2 id="description">
-        Description
-        <a data-clipboard-text="https://doc.rockdata.net/commands/createundo/#description" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Description" aria-label="Anchor to: Description" href="#description">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<p><code>CREATE UNDO</code> constructs a new undo in the current database. The undo name must be distinct from the name of any existing undo in the current database. Undos are primarily used to hold old version data that has been modified in tables and indexes.</p>
-<p>To create a undo, the invoking user must have the <code>CREATE</code> privilege for the current database. (Of course, superusers bypass this check.)</p>
-<div class="gdoc-page__anchorwrap">
-    <h2 id="parameters">
-        Parameters
-        <a data-clipboard-text="https://doc.rockdata.net/commands/createundo/#parameters" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Parameters" aria-label="Anchor to: Parameters" href="#parameters">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
+    <h1>Audit Logging</h1>
+    <div class="gdoc-toc gdoc-toc__level--3">
+      <nav id="TableOfContents"><ul>
+        <li><a href="#creating-audit-table">Creating Audit Table</a></li>
+        <li><a href="#auditing-ddl-commands">Auditing DDL Commands</a></li>
+        <li><a href="#auditing-dml-commands">Auditing DML Commands</a></li>
+      </ul></nav>
+      <hr />
+    </div>
+<p>PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can audit DDL commands with event triggers:</p>
 <ul>
-<li>
-<p><code>IF NOT EXISTS</code></p>
-<p>Do not throw an error if a relation with the same name already exists. A notice is issued in this case. Note that there is no guarantee that the existing undo is anything like the one that would have been created.</p>
-</li>
-<li>
-<p><em><code>name</code></em></p>
-<p>The name of the undo to be created. No schema name can be included here; the undo is always created in the schema <code>pg_catalog</code>.</p>
-</li>
-<li>
-<p><em><code>storage_parameter</code></em></p>
-<p>The name of an undo-specific storage parameter. See <a
+<li>In Redrock Postgres, users and tablespaces are database-level objects. Event triggers also support DDL commands for users and tablespace objects. For details, see <a
   class="gdoc-markdown__link"
-  href="/commands/createundo/#undo-storage-parameters"
+  href="/features/event-triggers/#event-trigger-firing-matrix"
   
->Undo Storage Parameters</a> for details.</p>
-</li>
-<li>
-<p><em><code>tablespace_name</code></em></p>
-<p>The tablespace in which to create the undo. If not specified, <a
+>Event Trigger Firing Matrix</a>.</li>
+<li>Support capturing events of dropping objects at the end of a command (corresponding to the <code>ddl_command_end</code> event).</li>
+<li>Add a function <a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/runtime-config-client.html#GUC-DEFAULT-TABLESPACE"
+  href="/features/event-triggers/#deparsing-a-ddl-command"
   
->default_tablespace</a> is consulted.</p>
-</li>
+>pg_ddl_command_deparse</a> to deparse a command from internal format of type <code>pg_ddl_command</code>, and returns a SQL statement in textual representation of type <code>text</code>.</li>
 </ul>
+<p>The following example shows how to audit DDL and DML commands occured in the database. You can modify the commands in the example according to the actual situation.</p>
 <div class="gdoc-page__anchorwrap">
-    <h3 id="undo-storage-parameters">
-        Undo Storage Parameters
-        <a data-clipboard-text="https://doc.rockdata.net/commands/createundo/#undo-storage-parameters" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Undo Storage Parameters" aria-label="Anchor to: Undo Storage Parameters" href="#undo-storage-parameters">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
-<p>The optional <code>WITH</code> clause specifies <em>storage parameters</em> for the undo. Accepted parameters include:</p>
-<ul>
-<li>
-<p><code>initialpages</code></p>
-<p>Number of initial pages in undo. The default is <code>128</code>.</p>
-</li>
-<li>
-<p><code>minpages</code></p>
-<p>Minimum number of pages in undo. The default is <code>128</code>.</p>
-</li>
-<li>
-<p><code>maxpages</code></p>
-<p>Maximum number of pages in undo. The default is unlimited. It is just a hint, in fact, Redrock Postgres provides a fully automated mechanism, known as automatic undo management mode, for managing undos and space.</p>
-</li>
-</ul>
-<div class="gdoc-page__anchorwrap">
-    <h2 id="notes">
-        Notes
-        <a data-clipboard-text="https://doc.rockdata.net/commands/createundo/#notes" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Notes" aria-label="Anchor to: Notes" href="#notes">
+    <h2 id="creating-audit-table">
+        Creating Audit Table
+        <a data-clipboard-text="https://doc.rockdata.net/admin/audit-trigger/#creating-audit-table" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Creating Audit Table" aria-label="Anchor to: Creating Audit Table" href="#creating-audit-table">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>After the database cluster data directory is initialized, 4 cluster-level undos and 8 database-level undos are generated in the database by default, the cluster-level undos is mainly used to modify the data of the shared system catalogs, such as pg_database. The first page of the undo is used to store transaction table items, and a single undo can hold up to about 200 transaction items at the same time.</p>
-<p>However, if a single undo processes a large number of transactions at the same time (for example, more than 8), a corresponding page access wait event will occur due to concurrent access violations of the transaction table. In this case, you can use the <code>CREATE UNDO</code> command to create more undos in the current database to improve the transaction processing performance of the system.</p>
+<p>Creating the audit log table to record events:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">SCHEMA</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">audit</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">REVOKE</span> <span class="k">ALL</span> <span class="k">ON</span> <span class="k">SCHEMA</span> <span class="n">audit</span> <span class="k">FROM</span> <span class="n">public</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- create table for audit logging
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">audit</span><span class="mf">.</span><span class="n">logged_actions</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="n">event_time</span>      <span class="nb">timestamp</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">username</span>        <span class="nb">text</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">object_type</span>     <span class="nb">text</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">schema_name</span>     <span class="nb">text</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">object_identity</span> <span class="nb">text</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">application_name</span> <span class="nb">text</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">client_addr</span>     <span class="nb">inet</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">client_port</span>     <span class="nb">integer</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">command_tag</span>     <span class="nb">text</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">command</span>         <span class="nb">text</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- grant privileges to all user
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">GRANT</span> <span class="k">SELECT</span><span class="p">,</span> <span class="k">INSERT</span> <span class="k">ON</span> <span class="k">TABLE</span> <span class="n">audit</span><span class="mf">.</span><span class="n">logged_actions</span> <span class="k">TO</span> <span class="n">PUBLIC</span><span class="p">;</span>
+</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
+    <h2 id="auditing-ddl-commands">
+        Auditing DDL Commands
+        <a data-clipboard-text="https://doc.rockdata.net/admin/audit-trigger/#auditing-ddl-commands" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Auditing DDL Commands" aria-label="Anchor to: Auditing DDL Commands" href="#auditing-ddl-commands">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>Creating a event trigger capturing DDL commands, and record DDL commands in the audit log table:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="c1">-- create function for event trigger
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">FUNCTION</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_trigger_func</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="k">RETURNS</span> <span class="n">event_trigger</span> <span class="k">AS</span> <span class="sh">$$</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">BEGIN</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">audit</span><span class="mf">.</span><span class="n">logged_actions</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="n">now</span><span class="p">(),</span><span class="w"> </span><span class="k">current_user</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">           </span><span class="n">object_type</span><span class="p">,</span><span class="w"> </span><span class="n">schema_name</span><span class="p">,</span><span class="w"> </span><span class="n">object_identity</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">           </span><span class="n">current_setting</span><span class="p">(</span><span class="s1">&#39;application_name&#39;</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">           </span><span class="n">inet_client_addr</span><span class="p">(),</span><span class="w"> </span><span class="n">inet_client_port</span><span class="p">(),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">           </span><span class="n">command_tag</span><span class="p">,</span><span class="w"> </span><span class="n">pg_ddl_command_deparse</span><span class="p">(</span><span class="n">command</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">FROM</span><span class="w"> </span><span class="n">pg_event_trigger_ddl_commands</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">END</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="sh">$$</span> <span class="k">LANGUAGE</span> <span class="s1">plpgsql</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- create ddl_command_end event trigger
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">CREATE</span> <span class="k">EVENT</span> <span class="k">TRIGGER</span> <span class="n">ddl_event_trigger</span>
+</span></span><span class="line"><span class="cl">    <span class="k">ON</span> <span class="n">ddl_command_end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">EXECUTE</span> <span class="k">PROCEDURE</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_trigger_func</span><span class="p">();</span>
+</span></span></code></pre></div>
+
+
+
+
+<blockquote class="gdoc-hint note">
+  <div class="gdoc-hint__title flex align-center"><i class="fa note" title="Note"></i></div>
+  <div class="gdoc-hint__text">After the preceding commands are executed, your DDL commands will be recorded in the table <code>audit.logged_actions</code>.</div>
+</blockquote>
+
 <div class="gdoc-page__anchorwrap">
-    <h2 id="examples">
-        Examples
-        <a data-clipboard-text="https://doc.rockdata.net/commands/createundo/#examples" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Examples" aria-label="Anchor to: Examples" href="#examples">
+    <h2 id="auditing-dml-commands">
+        Auditing DML Commands
+        <a data-clipboard-text="https://doc.rockdata.net/admin/audit-trigger/#auditing-dml-commands" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Auditing DML Commands" aria-label="Anchor to: Auditing DML Commands" href="#auditing-dml-commands">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>Create a undo:</p>
-<pre tabindex="0"><code>CREATE UNDO undo_13;
-</code></pre><p>To create an undo and have the undo reside in the tablespace <code>undospace</code>:</p>
-<pre tabindex="0"><code>CREATE UNDO undo_14 TABLESPACE undospace;
-</code></pre><div class="gdoc-page__anchorwrap">
-    <h2 id="compatibility">
-        Compatibility
-        <a data-clipboard-text="https://doc.rockdata.net/commands/createundo/#compatibility" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Compatibility" aria-label="Anchor to: Compatibility" href="#compatibility">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<p><code>CREATE UNDO</code> is a Redrock Postgres language extension. There are no provisions for undos in the SQL standard.</p>
+<p>We can create a generic trigger function used for recording changes to tables into an audit log table. It will record the SQL statement, the table affected, the user who made the change, and a timestamp for each change.</p>
+<ol>
+<li>
+<p>Create trigger function:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">FUNCTION</span> <span class="n">audit</span><span class="mf">.</span><span class="n">if_modified_func</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="k">RETURNS</span> <span class="k">TRIGGER</span> <span class="k">AS</span> <span class="sh">$$</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">BEGIN</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">IF</span><span class="w"> </span><span class="n">TG_WHEN</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s1">&#39;AFTER&#39;</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="n">TG_LEVEL</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s1">&#39;STATEMENT&#39;</span><span class="w"> </span><span class="k">THEN</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">RAISE</span><span class="w"> </span><span class="k">EXCEPTION</span><span class="w"> </span><span class="s1">&#39;audit.if_modified_func() may only run as statement level AFTER trigger&#39;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">END</span><span class="w"> </span><span class="k">IF</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">audit</span><span class="mf">.</span><span class="n">logged_actions</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">now</span><span class="p">(),</span><span class="w"> </span><span class="k">current_user</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;table&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">TG_TABLE_SCHEMA</span><span class="p">,</span><span class="w"> </span><span class="n">TG_TABLE_NAME</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">current_setting</span><span class="p">(</span><span class="s1">&#39;application_name&#39;</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">inet_client_addr</span><span class="p">(),</span><span class="w"> </span><span class="n">inet_client_port</span><span class="p">(),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">TG_OP</span><span class="p">,</span><span class="w"> </span><span class="n">current_query</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">RETURN</span><span class="w"> </span><span class="k">NULL</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">END</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="sh">$$</span> <span class="k">LANGUAGE</span> <span class="s1">plpgsql</span><span class="p">;</span>
+</span></span></code></pre></div></li>
+<li>
+<p>Create trigger on table for audit logging:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">TRIGGER</span> <span class="n">table_modified_trg</span>
+</span></span><span class="line"><span class="cl">  <span class="k">AFTER</span> <span class="k">INSERT</span> <span class="k">OR</span> <span class="k">UPDATE</span> <span class="k">OR</span> <span class="k">DELETE</span> <span class="k">OR</span> <span class="k">TRUNCATE</span> <span class="k">ON</span> <span class="n">testtable</span>
+</span></span><span class="line"><span class="cl">  <span class="k">FOR</span> <span class="k">EACH</span> <span class="k">STATEMENT</span> <span class="k">EXECUTE</span> <span class="k">PROCEDURE</span> <span class="n">audit</span><span class="mf">.</span><span class="n">if_modified_func</span><span class="p">();</span>
+</span></span></code></pre></div>
+
+
+
+
+<blockquote class="gdoc-hint note">
+  <div class="gdoc-hint__title flex align-center"><i class="fa note" title="Note"></i></div>
+  <div class="gdoc-hint__text">You need to modify table name and trigger name in the above SQL command according to the actual case.</div>
+</blockquote>
+
+</li>
+</ol>
 
   </article>
 

@@ -42,7 +42,7 @@
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-06-25T12:17:19+08:00"
+      content="2022-06-26T09:31:53+08:00"
     />
 
 
@@ -62,7 +62,7 @@
       "headline": "Event Triggers",
       "description": "Overview of Event Trigger Behavior Event Trigger Firing Matrix Event Trigger Functions  Capturing Changes at Command End Processing Objects Dropped by a DDL Command Handling a Table Rewrite Event Deparsing a DDL command        Redrock Postgres provides event triggers. Unlike regular triggers, which are attached to a single table and capture only DML events, event triggers are global to a particular database and are capable of capturing DDL events.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "2157",
+      "wordCount" : "2104",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -73,7 +73,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-25T12:17:19.00Z",
+      "dateModified": "2022-06-26T09:31:53.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1784,6 +1784,50 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     class="gdoc-nav__entry"
                   >
                     Subscribing DDL Commands
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/admin/audit-trigger/"
+                    class="gdoc-nav__entry"
+                  >
+                    Audit Logging
                   </a>
                 </span>
               
@@ -3642,26 +3686,27 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tbody>
 </table> </div>
 <p>The <code>pg_event_trigger_dropped_objects</code> function can be used in an event trigger like this:</p>
-<pre tabindex="0"><code>CREATE FUNCTION test_event_trigger_for_drops()
-        RETURNS event_trigger LANGUAGE plpgsql AS $$
-DECLARE
-    obj record;
-BEGIN
-    FOR obj IN SELECT * FROM pg_event_trigger_dropped_objects()
-    LOOP
-        RAISE NOTICE &#39;% dropped object: % %.% %&#39;,
-                     tg_tag,
-                     obj.object_type,
-                     obj.schema_name,
-                     obj.object_name,
-                     obj.object_identity;
-    END LOOP;
-END;
-$$;
-CREATE EVENT TRIGGER test_event_trigger_for_drops
-   ON sql_drop
-   EXECUTE PROCEDURE test_event_trigger_for_drops();
-</code></pre><div class="gdoc-page__anchorwrap">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">FUNCTION</span> <span class="n">test_event_trigger_for_drops</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="k">RETURNS</span> <span class="n">event_trigger</span> <span class="k">AS</span> <span class="sh">$$</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">DECLARE</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">obj</span><span class="w"> </span><span class="nb">record</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">BEGIN</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">FOR</span><span class="w"> </span><span class="n">obj</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">pg_event_trigger_dropped_objects</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">LOOP</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">RAISE</span><span class="w"> </span><span class="k">NOTICE</span><span class="w"> </span><span class="s1">&#39;% dropped object: % %.% %&#39;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                     </span><span class="n">tg_tag</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                     </span><span class="n">obj</span><span class="mf">.</span><span class="n">object_type</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                     </span><span class="n">obj</span><span class="mf">.</span><span class="n">schema_name</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                     </span><span class="n">obj</span><span class="mf">.</span><span class="n">object_name</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                     </span><span class="n">obj</span><span class="mf">.</span><span class="n">object_identity</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">END</span><span class="w"> </span><span class="k">LOOP</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">END</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="sh">$$</span> <span class="k">LANGUAGE</span> <span class="s1">plpgsql</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">EVENT</span> <span class="k">TRIGGER</span> <span class="n">test_event_trigger_for_drops</span>
+</span></span><span class="line"><span class="cl">    <span class="k">ON</span> <span class="n">sql_drop</span>
+</span></span><span class="line"><span class="cl">    <span class="k">EXECUTE</span> <span class="k">PROCEDURE</span> <span class="n">test_event_trigger_for_drops</span><span class="p">();</span>
+</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
     <h3 id="handling-a-table-rewrite-event">
         Handling a Table Rewrite Event
         <a data-clipboard-text="https://doc.rockdata.net/features/event-triggers/#handling-a-table-rewrite-event" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Handling a Table Rewrite Event" aria-label="Anchor to: Handling a Table Rewrite Event" href="#handling-a-table-rewrite-event">
@@ -3693,21 +3738,19 @@ CREATE EVENT TRIGGER test_event_trigger_for_drops
 </tbody>
 </table> </div>
 <p>The <code>pg_event_trigger_table_rewrite_oid</code> function can be used in an event trigger like this:</p>
-<pre tabindex="0"><code>CREATE FUNCTION test_event_trigger_table_rewrite_oid()
- RETURNS event_trigger
- LANGUAGE plpgsql AS
-$$
-BEGIN
-  RAISE NOTICE &#39;rewriting table % for reason %&#39;,
-                pg_event_trigger_table_rewrite_oid()::regclass,
-                pg_event_trigger_table_rewrite_reason();
-END;
-$$;
-
-CREATE EVENT TRIGGER test_table_rewrite_oid
-                  ON table_rewrite
-   EXECUTE PROCEDURE test_event_trigger_table_rewrite_oid();
-</code></pre><div class="gdoc-page__anchorwrap">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">FUNCTION</span> <span class="n">test_event_trigger_table_rewrite_oid</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="k">RETURNS</span> <span class="n">event_trigger</span> <span class="k">AS</span> <span class="sh">$$</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">BEGIN</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">RAISE</span><span class="w"> </span><span class="k">NOTICE</span><span class="w"> </span><span class="s1">&#39;rewriting table % for reason %&#39;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">pg_event_trigger_table_rewrite_oid</span><span class="p">()</span><span class="o">::</span><span class="n">regclass</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">pg_event_trigger_table_rewrite_reason</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">END</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="sh">$$</span> <span class="k">LANGUAGE</span> <span class="s1">plpgsql</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">EVENT</span> <span class="k">TRIGGER</span> <span class="n">test_table_rewrite_oid</span>
+</span></span><span class="line"><span class="cl">    <span class="k">ON</span> <span class="n">table_rewrite</span>
+</span></span><span class="line"><span class="cl">    <span class="k">EXECUTE</span> <span class="k">PROCEDURE</span> <span class="n">test_event_trigger_table_rewrite_oid</span><span class="p">();</span>
+</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
     <h3 id="deparsing-a-ddl-command">
         Deparsing a DDL command
         <a data-clipboard-text="https://doc.rockdata.net/features/event-triggers/#deparsing-a-ddl-command" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Deparsing a DDL command" aria-label="Anchor to: Deparsing a DDL command" href="#deparsing-a-ddl-command">
@@ -3717,34 +3760,32 @@ CREATE EVENT TRIGGER test_table_rewrite_oid
 </div>
 <p><code>pg_ddl_command_deparse</code> deparses a command from internal format of type <code>pg_ddl_command</code>, and returns a SQL statement in textual representation of type <code>text</code>.</p>
 <p>The <code>pg_ddl_command_deparse</code> function can be used in an event trigger like this:</p>
-<pre tabindex="0"><code>CREATE TABLE ddl_history(
-  ord             int,
-  op_time         timestamp,
-  username        text,
-  command_tag     text,
-  object_type     text,
-  schema_name     text,
-  object_identity text,
-  command         text
-);
-
-CREATE OR REPLACE FUNCTION ddl_trigger_func()
-RETURNS event_trigger
-SECURITY DEFINER
-AS $$
-BEGIN
-  INSERT INTO ddl_history
-    SELECT ordinality, now(), current_user, command_tag,
-           object_type, schema_name, object_identity,
-           pg_ddl_command_deparse(command)
-      FROM pg_event_trigger_ddl_commands() WITH ORDINALITY;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE EVENT TRIGGER deparse_event_trigger
-    ON ddl_command_end
-    EXECUTE PROCEDURE ddl_trigger_func();
-</code></pre>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">ddl_history</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="n">ord</span>             <span class="nb">int</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">op_time</span>         <span class="nb">timestamp</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">username</span>        <span class="nb">text</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">command_tag</span>     <span class="nb">text</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">object_type</span>     <span class="nb">text</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">schema_name</span>     <span class="nb">text</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">object_identity</span> <span class="nb">text</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">command</span>         <span class="nb">text</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">FUNCTION</span> <span class="n">ddl_trigger_func</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="k">RETURNS</span> <span class="n">event_trigger</span> <span class="k">AS</span> <span class="sh">$$</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">BEGIN</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">ddl_history</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="k">ordinality</span><span class="p">,</span><span class="w"> </span><span class="n">now</span><span class="p">(),</span><span class="w"> </span><span class="k">current_user</span><span class="p">,</span><span class="w"> </span><span class="n">command_tag</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">           </span><span class="n">object_type</span><span class="p">,</span><span class="w"> </span><span class="n">schema_name</span><span class="p">,</span><span class="w"> </span><span class="n">object_identity</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">           </span><span class="n">pg_ddl_command_deparse</span><span class="p">(</span><span class="n">command</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">FROM</span><span class="w"> </span><span class="n">pg_event_trigger_ddl_commands</span><span class="p">()</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="k">ORDINALITY</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">END</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="sh">$$</span> <span class="k">LANGUAGE</span> <span class="s1">plpgsql</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">EVENT</span> <span class="k">TRIGGER</span> <span class="n">deparse_event_trigger</span>
+</span></span><span class="line"><span class="cl">    <span class="k">ON</span> <span class="n">ddl_command_end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">EXECUTE</span> <span class="k">PROCEDURE</span> <span class="n">ddl_trigger_func</span><span class="p">();</span>
+</span></span></code></pre></div>
   </article>
 
 
