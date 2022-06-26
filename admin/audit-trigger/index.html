@@ -44,7 +44,7 @@
 <meta property="article:section" content="Admin" />
     <meta
       property="article:modified_time"
-      content="2022-06-26T17:56:39+08:00"
+      content="2022-06-26T21:02:51+08:00"
     />
 
 
@@ -65,7 +65,7 @@
       "headline": "Audit Logging",
       "description": "Creating Audit Table Auditing DDL Commands Auditing DML Commands      PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can audit DDL commands with event triggers:\n In Redrock Postgres, users and tablespaces are database-level objects. Event triggers also support DDL commands for users and tablespace objects.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "393",
+      "wordCount" : "409",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -76,7 +76,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-26T17:56:39.00Z",
+      "dateModified": "2022-06-26T21:02:51.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2530,7 +2530,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         </a>
     </h2>
 </div>
-<p>Creating the audit log table to record events:</p>
+<p>Log in to the database using a superuser or database owner, and creating the audit log table to record events:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">SCHEMA</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">audit</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="k">REVOKE</span> <span class="k">ALL</span> <span class="k">ON</span> <span class="k">SCHEMA</span> <span class="n">audit</span> <span class="k">FROM</span> <span class="n">public</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
@@ -2549,7 +2549,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </span></span><span class="line"><span class="cl"><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">-- grant privileges to all user
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">GRANT</span> <span class="k">SELECT</span><span class="p">,</span> <span class="k">INSERT</span> <span class="k">ON</span> <span class="k">TABLE</span> <span class="n">audit</span><span class="mf">.</span><span class="n">logged_actions</span> <span class="k">TO</span> <span class="n">PUBLIC</span><span class="p">;</span>
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">GRANT</span> <span class="k">INSERT</span> <span class="k">ON</span> <span class="k">TABLE</span> <span class="n">audit</span><span class="mf">.</span><span class="n">logged_actions</span> <span class="k">TO</span> <span class="n">PUBLIC</span><span class="p">;</span>
 </span></span></code></pre></div><div class="gdoc-page__anchorwrap">
     <h2 id="auditing-ddl-commands">
         Auditing DDL Commands
@@ -2575,8 +2575,8 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">-- create ddl_command_end event trigger
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">CREATE</span> <span class="k">EVENT</span> <span class="k">TRIGGER</span> <span class="n">ddl_event_trigger</span>
-</span></span><span class="line"><span class="cl">    <span class="k">ON</span> <span class="n">ddl_command_end</span>
-</span></span><span class="line"><span class="cl">    <span class="k">EXECUTE</span> <span class="k">PROCEDURE</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_trigger_func</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">  <span class="k">ON</span> <span class="n">ddl_command_end</span>
+</span></span><span class="line"><span class="cl">  <span class="k">EXECUTE</span> <span class="k">PROCEDURE</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_trigger_func</span><span class="p">();</span>
 </span></span></code></pre></div>
 
 
@@ -2616,10 +2616,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="sh">$$</span> <span class="k">LANGUAGE</span> <span class="s1">plpgsql</span><span class="p">;</span>
 </span></span></code></pre></div></li>
 <li>
-<p>Create trigger on table for audit logging:</p>
+<p>Create a trigger on the table to audit table data modification operations:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">TRIGGER</span> <span class="n">table_modified_trg</span>
 </span></span><span class="line"><span class="cl">  <span class="k">AFTER</span> <span class="k">INSERT</span> <span class="k">OR</span> <span class="k">UPDATE</span> <span class="k">OR</span> <span class="k">DELETE</span> <span class="k">OR</span> <span class="k">TRUNCATE</span> <span class="k">ON</span> <span class="n">testtable</span>
-</span></span><span class="line"><span class="cl">  <span class="k">FOR</span> <span class="k">EACH</span> <span class="k">STATEMENT</span> <span class="k">EXECUTE</span> <span class="k">PROCEDURE</span> <span class="n">audit</span><span class="mf">.</span><span class="n">if_modified_func</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">  <span class="k">FOR</span> <span class="k">EACH</span> <span class="k">STATEMENT</span>
+</span></span><span class="line"><span class="cl">  <span class="k">EXECUTE</span> <span class="k">PROCEDURE</span> <span class="n">audit</span><span class="mf">.</span><span class="n">if_modified_func</span><span class="p">();</span>
 </span></span></code></pre></div>
 
 

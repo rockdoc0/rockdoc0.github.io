@@ -44,7 +44,7 @@
 <meta property="article:section" content="Admin" />
     <meta
       property="article:modified_time"
-      content="2022-06-26T18:01:59+08:00"
+      content="2022-06-26T21:02:51+08:00"
     />
 
 
@@ -65,7 +65,7 @@
       "headline": "Subscribing DDL Commands",
       "description": "Recording and Publishing DDL Commands Subscribing and Replicating DDL Commands      PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can subscribe DDL commands with event triggers:\n In Redrock Postgres, users and tablespaces are database-level objects. Event triggers also support DDL commands for users and tablespace objects.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "508",
+      "wordCount" : "536",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -76,7 +76,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-26T18:01:59.00Z",
+      "dateModified": "2022-06-26T21:02:51.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2529,11 +2529,13 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         </a>
     </h2>
 </div>
-<p>We need to record DDL commands in a log table with event trigger on the publisher side, and publish the log table.</p>
+<p>We need to record DDL commands in a log table with event trigger on the publisher side, and publish the log table. Log in to the database using a superuser or database owner and do the following:</p>
 <ol>
 <li>
 <p>Creating a log table to record DDL commands:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">SCHEMA</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">audit</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">REVOKE</span> <span class="k">ALL</span> <span class="k">ON</span> <span class="k">SCHEMA</span> <span class="n">audit</span> <span class="k">FROM</span> <span class="n">public</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">-- create table for ddl record
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_history</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">  <span class="n">ord</span>             <span class="nb">int</span><span class="p">,</span>
@@ -2547,8 +2549,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </span></span><span class="line"><span class="cl"><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">-- grant privileges to all user
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">GRANT</span> <span class="n">USAGE</span> <span class="k">ON</span> <span class="k">SCHEMA</span> <span class="n">audit</span> <span class="k">TO</span> <span class="n">PUBLIC</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="k">GRANT</span> <span class="k">SELECT</span><span class="p">,</span> <span class="k">INSERT</span> <span class="k">ON</span> <span class="k">TABLE</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_history</span> <span class="k">TO</span> <span class="n">PUBLIC</span><span class="p">;</span>
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">GRANT</span> <span class="k">INSERT</span> <span class="k">ON</span> <span class="k">TABLE</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_history</span> <span class="k">TO</span> <span class="n">PUBLIC</span><span class="p">;</span>
 </span></span></code></pre></div></li>
 <li>
 <p>Publishing the log table:</p>
@@ -2558,8 +2559,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <p>Creating a event trigger capturing DDL commands:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="c1">-- create function for event triggers
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">FUNCTION</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_trigger_func</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="k">RETURNS</span> <span class="n">event_trigger</span>
-</span></span><span class="line"><span class="cl"><span class="k">AS</span> <span class="sh">$$</span><span class="w">
+</span></span><span class="line"><span class="cl">  <span class="k">RETURNS</span> <span class="n">event_trigger</span> <span class="k">AS</span> <span class="sh">$$</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">BEGIN</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">audit</span><span class="mf">.</span><span class="n">ddl_history</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="k">ordinality</span><span class="p">,</span><span class="w"> </span><span class="n">now</span><span class="p">(),</span><span class="w"> </span><span class="k">current_user</span><span class="p">,</span><span class="w"> </span><span class="n">command_tag</span><span class="p">,</span><span class="w">
@@ -2571,9 +2571,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">-- create ddl_command_end event trigger
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">CREATE</span> <span class="k">EVENT</span> <span class="k">TRIGGER</span> <span class="n">deparse_event_trigger</span>
-</span></span><span class="line"><span class="cl">    <span class="k">ON</span> <span class="n">ddl_command_end</span>
-</span></span><span class="line"><span class="cl">    <span class="k">EXECUTE</span> <span class="k">PROCEDURE</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_trigger_func</span><span class="p">();</span>
-</span></span></code></pre></div>
+</span></span><span class="line"><span class="cl">  <span class="k">ON</span> <span class="n">ddl_command_end</span>
+</span></span><span class="line"><span class="cl">  <span class="k">EXECUTE</span> <span class="k">PROCEDURE</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_trigger_func</span><span class="p">();</span>
+</span></span></code></pre></div></li>
+</ol>
+
 
 
 
@@ -2583,8 +2585,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <div class="gdoc-hint__text">After the preceding commands are executed, your DDL commands will be recorded in the table <code>audit.ddl_history</code>.</div>
 </blockquote>
 
-</li>
-</ol>
 <div class="gdoc-page__anchorwrap">
     <h2 id="subscribing-and-replicating-ddl-commands">
         Subscribing and Replicating DDL Commands
@@ -2593,11 +2593,13 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         </a>
     </h2>
 </div>
-<p>On the publisher side, we recorded the executed DDL commands in the log table <code>audit.ddl_history</code>, and published the table. Subscribers can replicate and execute the DDL commands in the log table.</p>
+<p>On the publisher side, we recorded the executed DDL commands in the log table <code>audit.ddl_history</code>, and published the table. Subscribers can replicate and execute the DDL commands in the log table. Log in to the database using a superuser or database owner and do the following:</p>
 <ol>
 <li>
 <p>Create the same log table on the subscriber side:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">SCHEMA</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">audit</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">REVOKE</span> <span class="k">ALL</span> <span class="k">ON</span> <span class="k">SCHEMA</span> <span class="n">audit</span> <span class="k">FROM</span> <span class="n">public</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">-- create table for ddl record
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_history</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">  <span class="n">ord</span>             <span class="nb">int</span><span class="p">,</span>
@@ -2611,8 +2613,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </span></span><span class="line"><span class="cl"><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">-- grant privileges to all user
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">GRANT</span> <span class="n">USAGE</span> <span class="k">ON</span> <span class="k">SCHEMA</span> <span class="n">audit</span> <span class="k">TO</span> <span class="n">PUBLIC</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="k">GRANT</span> <span class="k">SELECT</span><span class="p">,</span> <span class="k">INSERT</span> <span class="k">ON</span> <span class="k">TABLE</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_history</span> <span class="k">TO</span> <span class="n">PUBLIC</span><span class="p">;</span>
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">GRANT</span> <span class="k">INSERT</span> <span class="k">ON</span> <span class="k">TABLE</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_history</span> <span class="k">TO</span> <span class="n">PUBLIC</span><span class="p">;</span>
 </span></span></code></pre></div></li>
 <li>
 <p>Subscribing the log table:</p>
@@ -2633,8 +2634,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <li>
 <p>Create a trigger for the table <code>audit.ddl_history</code> on the subscriber side to replicate and execute DDL commands.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">FUNCTION</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_sub_trigger_func</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="k">RETURNS</span> <span class="k">trigger</span>
-</span></span><span class="line"><span class="cl"><span class="k">AS</span> <span class="sh">$$</span><span class="w">
+</span></span><span class="line"><span class="cl">  <span class="k">RETURNS</span> <span class="k">trigger</span> <span class="k">AS</span> <span class="sh">$$</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">BEGIN</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">EXECUTE</span><span class="w"> </span><span class="n">NEW</span><span class="mf">.</span><span class="n">command</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">RETURN</span><span class="w"> </span><span class="n">NEW</span><span class="p">;</span><span class="w">

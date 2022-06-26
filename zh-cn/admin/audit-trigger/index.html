@@ -10,8 +10,8 @@
 
   <meta name="description" content="创建审计日志记录表 审计DDL操作 审计DML操作      PostgreSQL 提供了事件触发器。事件触发器对一个特定数据库来说是全局的，并且可以捕捉该数据库中发生的 DDL 事件。Redrock Postgres 通过对 PostgreSQL 进行了如下改进，从而让用户可以通过事件触发器，实现对DDL操作的审计：
  在 Redrock Postgres 中，用户和表空间都是数据库级别的对象，事件触发器也支持作用于用户和表空间对象的DDL命令，详情可参见 事件触发器触发矩阵 ； 支持在命令结束处（对应 ddl_command_end 事件）捕捉删除对象的操作； 提供函数 pg_ddl_command_deparse 将DDL命令从pg_ddl_command类型的内部格式反向解析为SQL语句；  下面将以示例的方式介绍如何审计数据库中发生的DDL和DML操作，您可以根据业务情况对示例中的操作命令进行相应修改。
-创建审计日志记录表     创建审计日志记录表，用于记录事件：
-CREATE SCHEMA IF NOT EXISTS audit; REVOKE ALL ON SCHEMA audit FROM public; -- create table for audit logging CREATE TABLE IF NOT EXISTS audit.logged_actions( event_time timestamp, username text, object_type text, schema_name text, object_identity text, application_name text, client_addr inet, client_port integer, command_tag text, command text ); -- grant privileges to all user GRANT SELECT, INSERT ON TABLE audit." />
+创建审计日志记录表     使用超级用户或者数据库拥有者登录数据库，创建审计日志记录表，用于记录事件：
+CREATE SCHEMA IF NOT EXISTS audit; REVOKE ALL ON SCHEMA audit FROM public; -- create table for audit logging CREATE TABLE IF NOT EXISTS audit.logged_actions( event_time timestamp, username text, object_type text, schema_name text, object_identity text, application_name text, client_addr inet, client_port integer, command_tag text, command text ); -- grant privileges to all user GRANT INSERT ON TABLE audit." />
 
     <title>审计日志 | Redrock Documentation</title>
 
@@ -40,15 +40,15 @@ CREATE SCHEMA IF NOT EXISTS audit; REVOKE ALL ON SCHEMA audit FROM public; -- cr
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
   <meta property="og:description" content="创建审计日志记录表 审计DDL操作 审计DML操作      PostgreSQL 提供了事件触发器。事件触发器对一个特定数据库来说是全局的，并且可以捕捉该数据库中发生的 DDL 事件。Redrock Postgres 通过对 PostgreSQL 进行了如下改进，从而让用户可以通过事件触发器，实现对DDL操作的审计：
  在 Redrock Postgres 中，用户和表空间都是数据库级别的对象，事件触发器也支持作用于用户和表空间对象的DDL命令，详情可参见 事件触发器触发矩阵 ； 支持在命令结束处（对应 ddl_command_end 事件）捕捉删除对象的操作； 提供函数 pg_ddl_command_deparse 将DDL命令从pg_ddl_command类型的内部格式反向解析为SQL语句；  下面将以示例的方式介绍如何审计数据库中发生的DDL和DML操作，您可以根据业务情况对示例中的操作命令进行相应修改。
-创建审计日志记录表     创建审计日志记录表，用于记录事件：
-CREATE SCHEMA IF NOT EXISTS audit; REVOKE ALL ON SCHEMA audit FROM public; -- create table for audit logging CREATE TABLE IF NOT EXISTS audit.logged_actions( event_time timestamp, username text, object_type text, schema_name text, object_identity text, application_name text, client_addr inet, client_port integer, command_tag text, command text ); -- grant privileges to all user GRANT SELECT, INSERT ON TABLE audit." />
+创建审计日志记录表     使用超级用户或者数据库拥有者登录数据库，创建审计日志记录表，用于记录事件：
+CREATE SCHEMA IF NOT EXISTS audit; REVOKE ALL ON SCHEMA audit FROM public; -- create table for audit logging CREATE TABLE IF NOT EXISTS audit.logged_actions( event_time timestamp, username text, object_type text, schema_name text, object_identity text, application_name text, client_addr inet, client_port integer, command_tag text, command text ); -- grant privileges to all user GRANT INSERT ON TABLE audit." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/zh-cn/admin/audit-trigger/" />
 
 <meta property="article:section" content="Admin" />
     <meta
       property="article:modified_time"
-      content="2022-06-26T17:56:39+08:00"
+      content="2022-06-26T21:02:51+08:00"
     />
 
 
@@ -57,8 +57,8 @@ CREATE SCHEMA IF NOT EXISTS audit; REVOKE ALL ON SCHEMA audit FROM public; -- cr
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
   <meta name="twitter:description" content="创建审计日志记录表 审计DDL操作 审计DML操作      PostgreSQL 提供了事件触发器。事件触发器对一个特定数据库来说是全局的，并且可以捕捉该数据库中发生的 DDL 事件。Redrock Postgres 通过对 PostgreSQL 进行了如下改进，从而让用户可以通过事件触发器，实现对DDL操作的审计：
  在 Redrock Postgres 中，用户和表空间都是数据库级别的对象，事件触发器也支持作用于用户和表空间对象的DDL命令，详情可参见 事件触发器触发矩阵 ； 支持在命令结束处（对应 ddl_command_end 事件）捕捉删除对象的操作； 提供函数 pg_ddl_command_deparse 将DDL命令从pg_ddl_command类型的内部格式反向解析为SQL语句；  下面将以示例的方式介绍如何审计数据库中发生的DDL和DML操作，您可以根据业务情况对示例中的操作命令进行相应修改。
-创建审计日志记录表     创建审计日志记录表，用于记录事件：
-CREATE SCHEMA IF NOT EXISTS audit; REVOKE ALL ON SCHEMA audit FROM public; -- create table for audit logging CREATE TABLE IF NOT EXISTS audit.logged_actions( event_time timestamp, username text, object_type text, schema_name text, object_identity text, application_name text, client_addr inet, client_port integer, command_tag text, command text ); -- grant privileges to all user GRANT SELECT, INSERT ON TABLE audit." />
+创建审计日志记录表     使用超级用户或者数据库拥有者登录数据库，创建审计日志记录表，用于记录事件：
+CREATE SCHEMA IF NOT EXISTS audit; REVOKE ALL ON SCHEMA audit FROM public; -- create table for audit logging CREATE TABLE IF NOT EXISTS audit.logged_actions( event_time timestamp, username text, object_type text, schema_name text, object_identity text, application_name text, client_addr inet, client_port integer, command_tag text, command text ); -- grant privileges to all user GRANT INSERT ON TABLE audit." />
 
 
   <script type="application/ld+json">
@@ -69,9 +69,9 @@ CREATE SCHEMA IF NOT EXISTS audit; REVOKE ALL ON SCHEMA audit FROM public; -- cr
       "name": "审计日志",
       "url" : "https://doc.rockdata.net/zh-cn/admin/audit-trigger/",
       "headline": "审计日志",
-      "description": "创建审计日志记录表 审计DDL操作 审计DML操作      PostgreSQL 提供了事件触发器。事件触发器对一个特定数据库来说是全局的，并且可以捕捉该数据库中发生的 DDL 事件。Redrock Postgres 通过对 PostgreSQL 进行了如下改进，从而让用户可以通过事件触发器，实现对DDL操作的审计：\n 在 Redrock Postgres 中，用户和表空间都是数据库级别的对象，事件触发器也支持作用于用户和表空间对象的DDL命令，详情可参见 事件触发器触发矩阵 ； 支持在命令结束处（对应 ddl_command_end 事件）捕捉删除对象的操作； 提供函数 pg_ddl_command_deparse 将DDL命令从pg_ddl_command类型的内部格式反向解析为SQL语句；  下面将以示例的方式介绍如何审计数据库中发生的DDL和DML操作，您可以根据业务情况对示例中的操作命令进行相应修改。\n创建审计日志记录表     创建审计日志记录表，用于记录事件：\nCREATE SCHEMA IF NOT EXISTS audit; REVOKE ALL ON SCHEMA audit FROM public; -- create table for audit logging CREATE TABLE IF NOT EXISTS audit.logged_actions( event_time timestamp, username text, object_type text, schema_name text, object_identity text, application_name text, client_addr inet, client_port integer, command_tag text, command text ); -- grant privileges to all user GRANT SELECT, INSERT ON TABLE audit.",
+      "description": "创建审计日志记录表 审计DDL操作 审计DML操作      PostgreSQL 提供了事件触发器。事件触发器对一个特定数据库来说是全局的，并且可以捕捉该数据库中发生的 DDL 事件。Redrock Postgres 通过对 PostgreSQL 进行了如下改进，从而让用户可以通过事件触发器，实现对DDL操作的审计：\n 在 Redrock Postgres 中，用户和表空间都是数据库级别的对象，事件触发器也支持作用于用户和表空间对象的DDL命令，详情可参见 事件触发器触发矩阵 ； 支持在命令结束处（对应 ddl_command_end 事件）捕捉删除对象的操作； 提供函数 pg_ddl_command_deparse 将DDL命令从pg_ddl_command类型的内部格式反向解析为SQL语句；  下面将以示例的方式介绍如何审计数据库中发生的DDL和DML操作，您可以根据业务情况对示例中的操作命令进行相应修改。\n创建审计日志记录表     使用超级用户或者数据库拥有者登录数据库，创建审计日志记录表，用于记录事件：\nCREATE SCHEMA IF NOT EXISTS audit; REVOKE ALL ON SCHEMA audit FROM public; -- create table for audit logging CREATE TABLE IF NOT EXISTS audit.logged_actions( event_time timestamp, username text, object_type text, schema_name text, object_identity text, application_name text, client_addr inet, client_port integer, command_tag text, command text ); -- grant privileges to all user GRANT INSERT ON TABLE audit.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "167",
+      "wordCount" : "166",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -82,7 +82,7 @@ CREATE SCHEMA IF NOT EXISTS audit; REVOKE ALL ON SCHEMA audit FROM public; -- cr
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-26T17:56:39.00Z",
+      "dateModified": "2022-06-26T21:02:51.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2536,7 +2536,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         </a>
     </h2>
 </div>
-<p>创建审计日志记录表，用于记录事件：</p>
+<p>使用超级用户或者数据库拥有者登录数据库，创建审计日志记录表，用于记录事件：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">SCHEMA</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">audit</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="k">REVOKE</span> <span class="k">ALL</span> <span class="k">ON</span> <span class="k">SCHEMA</span> <span class="n">audit</span> <span class="k">FROM</span> <span class="n">public</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
@@ -2555,7 +2555,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </span></span><span class="line"><span class="cl"><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">-- grant privileges to all user
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">GRANT</span> <span class="k">SELECT</span><span class="p">,</span> <span class="k">INSERT</span> <span class="k">ON</span> <span class="k">TABLE</span> <span class="n">audit</span><span class="mf">.</span><span class="n">logged_actions</span> <span class="k">TO</span> <span class="n">PUBLIC</span><span class="p">;</span>
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">GRANT</span> <span class="k">INSERT</span> <span class="k">ON</span> <span class="k">TABLE</span> <span class="n">audit</span><span class="mf">.</span><span class="n">logged_actions</span> <span class="k">TO</span> <span class="n">PUBLIC</span><span class="p">;</span>
 </span></span></code></pre></div><div class="gdoc-page__anchorwrap">
     <h2 id="审计ddl操作">
         审计DDL操作
@@ -2581,8 +2581,8 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">-- create ddl_command_end event trigger
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">CREATE</span> <span class="k">EVENT</span> <span class="k">TRIGGER</span> <span class="n">ddl_event_trigger</span>
-</span></span><span class="line"><span class="cl">    <span class="k">ON</span> <span class="n">ddl_command_end</span>
-</span></span><span class="line"><span class="cl">    <span class="k">EXECUTE</span> <span class="k">PROCEDURE</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_trigger_func</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">  <span class="k">ON</span> <span class="n">ddl_command_end</span>
+</span></span><span class="line"><span class="cl">  <span class="k">EXECUTE</span> <span class="k">PROCEDURE</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_trigger_func</span><span class="p">();</span>
 </span></span></code></pre></div>
 
 
@@ -2625,7 +2625,8 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <p>在表上创建触发器，用于审计表数据修改操作：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">TRIGGER</span> <span class="n">table_modified_trg</span>
 </span></span><span class="line"><span class="cl">  <span class="k">AFTER</span> <span class="k">INSERT</span> <span class="k">OR</span> <span class="k">UPDATE</span> <span class="k">OR</span> <span class="k">DELETE</span> <span class="k">OR</span> <span class="k">TRUNCATE</span> <span class="k">ON</span> <span class="n">testtable</span>
-</span></span><span class="line"><span class="cl">  <span class="k">FOR</span> <span class="k">EACH</span> <span class="k">STATEMENT</span> <span class="k">EXECUTE</span> <span class="k">PROCEDURE</span> <span class="n">audit</span><span class="mf">.</span><span class="n">if_modified_func</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">  <span class="k">FOR</span> <span class="k">EACH</span> <span class="k">STATEMENT</span>
+</span></span><span class="line"><span class="cl">  <span class="k">EXECUTE</span> <span class="k">PROCEDURE</span> <span class="n">audit</span><span class="mf">.</span><span class="n">if_modified_func</span><span class="p">();</span>
 </span></span></code></pre></div>
 
 
