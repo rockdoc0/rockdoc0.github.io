@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="color-toggle-hidden">
+<html lang="zh-cn" class="color-toggle-hidden">
   <head>
     <meta charset="UTF-8" />
 <meta name="referrer" content="no-referrer" />
@@ -8,12 +8,22 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Overview of all modified and new server configuration options based on PostgreSQL.
-   Resource Consumption Write Ahead Log Run-time Statistics Automatic Analyzing      Resource Consumption     These settings control the resource consumption of the database server.
+  <meta name="description" content="在PostgreSQL的基础上，Redrock Postgres修改或新增的服务器配置选项的概述。
+   资源消耗 预写式日志 运行时统计信息 自动分析      资源消耗     这些设置用于控制数据库服务器的资源消耗。
   threaded_execution (boolean)
-Controls whether to enable the multithreaded Postgres model. In Redrock Postgres, the multithreaded Postgres model enables Postgres processes on UNIX and Linux to run as operating system threads in separate address spaces." />
+控制是否启用多线程 Postgres 模型。在 Redrock Postgres 中，多线程 Postgres 模型使 UNIX 和 Linux 上的 Postgres 进程能够作为操作系统线程在单独的地址空间中运行。
+默认情况下，Windows上与会话相关的后端进程始终使用线程执行;其余的后台进程作为操作系统进程运行。因此，“Postgres进程”并不总是等同于“操作系统进程”。
+  预写式日志     有几个WAL相关的配置参数会影响数据库性能。
+  data_checksums (boolean)
+控制是否在写数据块时计算校验和（根据块中存储的所有字节计算的数字），并在将数据块写入磁盘时将校验和存储在每个数据块的页头中。如果此参数为on，并且块的最后一次写入存储了校验和，那么在读取块时，校验和将被验证。此外，Postgres还会在应用更新/删除语句中的更改之前验证校验和，并在应用更改后重新计算校验和。此外，Postgres在将每个WAL记录写入磁盘之前都会为其提供校验和。
+如果此参数设置为off，则关闭数据校验和。
+校验和允许Postgres检测由底层磁盘、存储系统或I/O系统引起的损坏。打开数据校验和仅导致额外1%到2%的开销。
+  运行时统计信息     这些参数控制服务器范围的统计数据收集特性。当统计收集被启用时，被产生的数据可以通过pg_stat和pg_statio系统视图族访问。详见运行统计视图。
+  track_wait_events (boolean)
+启用有关每个会话中发生的等待事件的信息的收集，包括发生的等待次数和耗时信息。该参数默认开启。注意即使被启用，这些信息也不是对所有用户可见，只有超级用户和拥有报告信息的会话的用户可见，因此它不会表现为一个安全风险。只有超级用户可以更改这个设置。
+  自动分析     这些设置控制自动分析特性的行为。详情请参考 第 24." />
 
-    <title>Configuration | Redrock Documentation</title>
+    <title>参数配置 | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -34,55 +44,75 @@ Controls whether to enable the multithreaded Postgres model. In Redrock Postgres
     
   <meta
     property="og:title"
-    content="Configuration"
+    content="参数配置"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Overview of all modified and new server configuration options based on PostgreSQL.
-   Resource Consumption Write Ahead Log Run-time Statistics Automatic Analyzing      Resource Consumption     These settings control the resource consumption of the database server.
+  <meta property="og:description" content="在PostgreSQL的基础上，Redrock Postgres修改或新增的服务器配置选项的概述。
+   资源消耗 预写式日志 运行时统计信息 自动分析      资源消耗     这些设置用于控制数据库服务器的资源消耗。
   threaded_execution (boolean)
-Controls whether to enable the multithreaded Postgres model. In Redrock Postgres, the multithreaded Postgres model enables Postgres processes on UNIX and Linux to run as operating system threads in separate address spaces." />
+控制是否启用多线程 Postgres 模型。在 Redrock Postgres 中，多线程 Postgres 模型使 UNIX 和 Linux 上的 Postgres 进程能够作为操作系统线程在单独的地址空间中运行。
+默认情况下，Windows上与会话相关的后端进程始终使用线程执行;其余的后台进程作为操作系统进程运行。因此，“Postgres进程”并不总是等同于“操作系统进程”。
+  预写式日志     有几个WAL相关的配置参数会影响数据库性能。
+  data_checksums (boolean)
+控制是否在写数据块时计算校验和（根据块中存储的所有字节计算的数字），并在将数据块写入磁盘时将校验和存储在每个数据块的页头中。如果此参数为on，并且块的最后一次写入存储了校验和，那么在读取块时，校验和将被验证。此外，Postgres还会在应用更新/删除语句中的更改之前验证校验和，并在应用更改后重新计算校验和。此外，Postgres在将每个WAL记录写入磁盘之前都会为其提供校验和。
+如果此参数设置为off，则关闭数据校验和。
+校验和允许Postgres检测由底层磁盘、存储系统或I/O系统引起的损坏。打开数据校验和仅导致额外1%到2%的开销。
+  运行时统计信息     这些参数控制服务器范围的统计数据收集特性。当统计收集被启用时，被产生的数据可以通过pg_stat和pg_statio系统视图族访问。详见运行统计视图。
+  track_wait_events (boolean)
+启用有关每个会话中发生的等待事件的信息的收集，包括发生的等待次数和耗时信息。该参数默认开启。注意即使被启用，这些信息也不是对所有用户可见，只有超级用户和拥有报告信息的会话的用户可见，因此它不会表现为一个安全风险。只有超级用户可以更改这个设置。
+  自动分析     这些设置控制自动分析特性的行为。详情请参考 第 24." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://doc.rockdata.net/usage/configuration/" />
+<meta property="og:url" content="https://doc.rockdata.net/zh-cn/admin/configuration/" />
 
-<meta property="article:section" content="Usage" />
+<meta property="article:section" content="Admin" />
     <meta
       property="article:modified_time"
-      content="2022-06-21T21:12:41+08:00"
+      content="2022-06-27T23:08:30+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Configuration" />
+<meta name="twitter:title" content="参数配置" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Overview of all modified and new server configuration options based on PostgreSQL.
-   Resource Consumption Write Ahead Log Run-time Statistics Automatic Analyzing      Resource Consumption     These settings control the resource consumption of the database server.
+  <meta name="twitter:description" content="在PostgreSQL的基础上，Redrock Postgres修改或新增的服务器配置选项的概述。
+   资源消耗 预写式日志 运行时统计信息 自动分析      资源消耗     这些设置用于控制数据库服务器的资源消耗。
   threaded_execution (boolean)
-Controls whether to enable the multithreaded Postgres model. In Redrock Postgres, the multithreaded Postgres model enables Postgres processes on UNIX and Linux to run as operating system threads in separate address spaces." />
+控制是否启用多线程 Postgres 模型。在 Redrock Postgres 中，多线程 Postgres 模型使 UNIX 和 Linux 上的 Postgres 进程能够作为操作系统线程在单独的地址空间中运行。
+默认情况下，Windows上与会话相关的后端进程始终使用线程执行;其余的后台进程作为操作系统进程运行。因此，“Postgres进程”并不总是等同于“操作系统进程”。
+  预写式日志     有几个WAL相关的配置参数会影响数据库性能。
+  data_checksums (boolean)
+控制是否在写数据块时计算校验和（根据块中存储的所有字节计算的数字），并在将数据块写入磁盘时将校验和存储在每个数据块的页头中。如果此参数为on，并且块的最后一次写入存储了校验和，那么在读取块时，校验和将被验证。此外，Postgres还会在应用更新/删除语句中的更改之前验证校验和，并在应用更改后重新计算校验和。此外，Postgres在将每个WAL记录写入磁盘之前都会为其提供校验和。
+如果此参数设置为off，则关闭数据校验和。
+校验和允许Postgres检测由底层磁盘、存储系统或I/O系统引起的损坏。打开数据校验和仅导致额外1%到2%的开销。
+  运行时统计信息     这些参数控制服务器范围的统计数据收集特性。当统计收集被启用时，被产生的数据可以通过pg_stat和pg_statio系统视图族访问。详见运行统计视图。
+  track_wait_events (boolean)
+启用有关每个会话中发生的等待事件的信息的收集，包括发生的等待次数和耗时信息。该参数默认开启。注意即使被启用，这些信息也不是对所有用户可见，只有超级用户和拥有报告信息的会话的用户可见，因此它不会表现为一个安全风险。只有超级用户可以更改这个设置。
+  自动分析     这些设置控制自动分析特性的行为。详情请参考 第 24." />
 
 
   <script type="application/ld+json">
   {
       "@context": "http://schema.org",
       "@type": "TechArticle",
-      "articleSection": "Usage",
-      "name": "Configuration",
-      "url" : "https://doc.rockdata.net/usage/configuration/",
-      "headline": "Configuration",
-      "description": "Overview of all modified and new server configuration options based on PostgreSQL.\n   Resource Consumption Write Ahead Log Run-time Statistics Automatic Analyzing      Resource Consumption     These settings control the resource consumption of the database server.\n  threaded_execution (boolean)\nControls whether to enable the multithreaded Postgres model. In Redrock Postgres, the multithreaded Postgres model enables Postgres processes on UNIX and Linux to run as operating system threads in separate address spaces.",
+      "articleSection": "Admin",
+      "name": "参数配置",
+      "url" : "https://doc.rockdata.net/zh-cn/admin/configuration/",
+      "headline": "参数配置",
+      "description": "在PostgreSQL的基础上，Redrock Postgres修改或新增的服务器配置选项的概述。\n   资源消耗 预写式日志 运行时统计信息 自动分析      资源消耗     这些设置用于控制数据库服务器的资源消耗。\n  threaded_execution (boolean)\n控制是否启用多线程 Postgres 模型。在 Redrock Postgres 中，多线程 Postgres 模型使 UNIX 和 Linux 上的 Postgres 进程能够作为操作系统线程在单独的地址空间中运行。\n默认情况下，Windows上与会话相关的后端进程始终使用线程执行;其余的后台进程作为操作系统进程运行。因此，“Postgres进程”并不总是等同于“操作系统进程”。\n  预写式日志     有几个WAL相关的配置参数会影响数据库性能。\n  data_checksums (boolean)\n控制是否在写数据块时计算校验和（根据块中存储的所有字节计算的数字），并在将数据块写入磁盘时将校验和存储在每个数据块的页头中。如果此参数为on，并且块的最后一次写入存储了校验和，那么在读取块时，校验和将被验证。此外，Postgres还会在应用更新\/删除语句中的更改之前验证校验和，并在应用更改后重新计算校验和。此外，Postgres在将每个WAL记录写入磁盘之前都会为其提供校验和。\n如果此参数设置为off，则关闭数据校验和。\n校验和允许Postgres检测由底层磁盘、存储系统或I\/O系统引起的损坏。打开数据校验和仅导致额外1%到2%的开销。\n  运行时统计信息     这些参数控制服务器范围的统计数据收集特性。当统计收集被启用时，被产生的数据可以通过pg_stat和pg_statio系统视图族访问。详见运行统计视图。\n  track_wait_events (boolean)\n启用有关每个会话中发生的等待事件的信息的收集，包括发生的等待次数和耗时信息。该参数默认开启。注意即使被启用，这些信息也不是对所有用户可见，只有超级用户和拥有报告信息的会话的用户可见，因此它不会表现为一个安全风险。只有超级用户可以更改这个设置。\n  自动分析     这些设置控制自动分析特性的行为。详情请参考 第 24.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "806",
-      "inLanguage": "en",
+      "wordCount" : "72",
+      "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://doc.rockdata.net/usage/configuration/"
+          "@id": "https://doc.rockdata.net/zh-cn/admin/configuration/"
       },
       "copyrightHolder" : "Redrock Documentation",
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-21T21:12:41.00Z",
+      "dateModified": "2022-06-27T23:08:30.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -158,7 +188,7 @@ Controls whether to enable the multithreaded Postgres model. In Redrock Postgres
   href="/custom.css"
   media="all"
 />
-  <link href="https://doc.rockdata.net/usage/configuration/" rel="canonical" type="text/html" />
+  <link href="https://doc.rockdata.net/zh-cn/admin/configuration/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -650,11 +680,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
       <label for="menu-control" class="gdoc-nav__control" tabindex="0">
         <svg class="gdoc-icon gdoc_menu">
-          <title>Open Navigation</title>
+          <title>打开导航</title>
           <use xlink:href="#gdoc_menu"></use>
         </svg>
         <svg class="gdoc-icon gdoc_arrow_back">
-          <title>Close Navigation</title>
+          <title>关闭导航</title>
           <use xlink:href="#gdoc_arrow_back"></use>
         </svg>
       </label>
@@ -720,15 +750,15 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
         <span id="gdoc-dark-mode">
           <svg class="gdoc-icon gdoc_brightness_dark">
-            <title>Toggle Dark/Light/Auto mode</title>
+            <title>切换暗/亮/自动模式</title>
             <use xlink:href="#gdoc_brightness_dark"></use>
           </svg>
           <svg class="gdoc-icon gdoc_brightness_light">
-            <title>Toggle Dark/Light/Auto mode</title>
+            <title>切换暗/亮/自动模式</title>
             <use xlink:href="#gdoc_brightness_light"></use>
           </svg>
           <svg class="gdoc-icon gdoc_brightness_auto">
-            <title>Toggle Dark/Light/Auto mode</title>
+            <title>切换暗/亮/自动模式</title>
             <use xlink:href="#gdoc_brightness_auto"></use>
           </svg>
         </span>
@@ -736,7 +766,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         <span class="gdoc-menu-header__home">
           <a href="https://doc.rockdata.net/" class="gdoc-header__link">
             <svg class="gdoc-icon gdoc_home">
-              <title>Back to homepage</title>
+              <title>返回首页</title>
               <use xlink:href="#gdoc_home"></use>
             </svg>
           </a>
@@ -748,12 +778,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <li>
         
           
+        
+          
             <span class="flex align-center">
               <svg class="gdoc-icon gdoc_language"><use xlink:href="#gdoc_language"></use></svg>
-              <span>EN</span>
+              <span>ZH-CN</span>
             </span>
-          
-        
           
         
 
@@ -764,12 +794,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               <li>
                 <a
                   class="flex gdoc-language__entry"
-                  title="简体中文"
-                  href="/zh-cn/usage/configuration/"
-                  hreflang="zh-cn"
-                  lang="zh-cn"
+                  title="English"
+                  href="/admin/configuration/"
+                  hreflang="en"
+                  lang="en"
                 >
-                  简体中文
+                  English
                 </a>
               </li>
             
@@ -786,7 +816,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
           <label for="menu-header-control">
             <svg class="gdoc-icon gdoc_keyboard_arrow_right">
               <use xlink:href="#gdoc_keyboard_arrow_right"></use>
-              <title>Close Menu Bar</title>
+              <title>关闭菜单栏</title>
             </svg>
           </label>
         </span>
@@ -794,7 +824,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <label for="menu-header-control" class="gdoc-menu-header__control">
         <svg class="gdoc-icon gdoc_keyboard_arrow_left">
           <use xlink:href="#gdoc_keyboard_arrow_left"></use>
-          <title>Open Menu Bar</title>
+          <title>打开菜单栏</title>
         </svg>
       </label>
     </div>
@@ -814,11 +844,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       type="text"
       id="gdoc-search-input"
       class="gdoc-search__input"
-      placeholder="Search"
-      aria-label="Search"
+      placeholder="搜索"
+      aria-label="搜索"
       maxlength="64"
       data-site-base-url="https://doc.rockdata.net/"
-      data-site-lang="en"
+      data-site-lang="zh-cn"
     />
     <div class="gdoc-search__spinner spinner hidden"></div>
     <ul id="gdoc-search-results" class="gdoc-search__list"></ul>
@@ -828,7 +858,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
 
   <section class="gdoc-nav--main">
-    <h2>Navigation</h2>
+    <h2>导航</h2>
     
       
 
@@ -865,7 +895,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">Usage</span>
+                <span class="flex">使用介绍</span>
               
               
             </label>
@@ -907,10 +937,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/usage/why-redrock/"
+                    href="/zh-cn/usage/why-redrock/"
                     class="gdoc-nav__entry"
                   >
-                    Why Redrock Postgres?
+                    为什么选择Redrock Postgres？
                   </a>
                 </span>
               
@@ -951,54 +981,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/usage/getting-started/"
+                    href="/zh-cn/usage/getting-started/"
                     class="gdoc-nav__entry"
                   >
-                    Getting Started
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/usage/configuration/"
-                    class="gdoc-nav__entry is-active"
-                  >
-                    Configuration
+                    开始上手
                   </a>
                 </span>
               
@@ -1037,22 +1023,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-46385245"
+                class="gdoc-nav__toggle" id="navtree-09089698"
                 
               
             />
             <label
               
-                for="navtree-46385245" class="flex justify-between align-center"
+                for="navtree-09089698" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/installation/"
+                    href="/zh-cn/installation/"
                     class="gdoc-nav__entry"
                   >
-                    Installation
+                    安装指导
                   </a>
                 </span>
               
@@ -1103,10 +1089,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/installation/windows/"
+                    href="/zh-cn/installation/windows/"
                     class="gdoc-nav__entry"
                   >
-                    Installing on Windows
+                    Windows 安装指导
                   </a>
                 </span>
               
@@ -1147,10 +1133,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/installation/redhat/"
+                    href="/zh-cn/installation/redhat/"
                     class="gdoc-nav__entry"
                   >
-                    Installing on Red Hat
+                    Red Hat/CentOS 安装指导
                   </a>
                 </span>
               
@@ -1191,321 +1177,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/installation/debian/"
+                    href="/zh-cn/installation/debian/"
                     class="gdoc-nav__entry"
                   >
-                    Installing on Debian
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-  </ul>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">Features</span>
-              
-              
-            </label>
-
-            
-              
-  
-
-
-  <ul class="gdoc-nav__list">
-    
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/features/undo/"
-                    class="gdoc-nav__entry"
-                  >
-                    Undo
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/features/recyclebin/"
-                    class="gdoc-nav__entry"
-                  >
-                    Recycle Bin
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/features/statement-atomicity/"
-                    class="gdoc-nav__entry"
-                  >
-                    Statement Level Atomicity
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/features/network-tablespace/"
-                    class="gdoc-nav__entry"
-                  >
-                    Network Attached Tablespace
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/features/event-triggers/"
-                    class="gdoc-nav__entry"
-                  >
-                    Event Triggers
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/features/postgres-compatibility/"
-                    class="gdoc-nav__entry"
-                  >
-                    Compatibility with PostgreSQL
+                    Debian 安装指导
                   </a>
                 </span>
               
@@ -1551,7 +1226,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">Advanced</span>
+                <span class="flex">基础特性</span>
               
               
             </label>
@@ -1593,10 +1268,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/advanced/textsearch/"
+                    href="/zh-cn/features/undo/"
                     class="gdoc-nav__entry"
                   >
-                    Chinese Text Search
+                    回滚段
                   </a>
                 </span>
               
@@ -1637,7 +1312,318 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/advanced/plscheme/"
+                    href="/zh-cn/features/recyclebin/"
+                    class="gdoc-nav__entry"
+                  >
+                    回收站
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/features/statement-atomicity/"
+                    class="gdoc-nav__entry"
+                  >
+                    语句级原子性
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/features/network-tablespace/"
+                    class="gdoc-nav__entry"
+                  >
+                    网络表空间
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/features/event-triggers/"
+                    class="gdoc-nav__entry"
+                  >
+                    事件触发器
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/features/postgres-compatibility/"
+                    class="gdoc-nav__entry"
+                  >
+                    同 PostgreSQL 的兼容性
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+  </ul>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">高级特性</span>
+              
+              
+            </label>
+
+            
+              
+  
+
+
+  <ul class="gdoc-nav__list">
+    
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/advanced/textsearch/"
+                    class="gdoc-nav__entry"
+                  >
+                    中文搜索
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/advanced/plscheme/"
                     class="gdoc-nav__entry"
                   >
                     PL/Scheme
@@ -1681,10 +1667,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/advanced/monitor-stats/"
+                    href="/zh-cn/advanced/monitor-stats/"
                     class="gdoc-nav__entry"
                   >
-                    Statistics Views
+                    运行统计视图
                   </a>
                 </span>
               
@@ -1723,22 +1709,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-d9ef83eb"
-                
+                class="gdoc-nav__toggle" id="navtree-2c8f00d6"
+                checked
               
             />
             <label
               
-                for="navtree-d9ef83eb" class="flex justify-between align-center"
+                for="navtree-2c8f00d6" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/admin/"
+                    href="/zh-cn/admin/"
                     class="gdoc-nav__entry"
                   >
-                    Server Administration
+                    数据库管理
                   </a>
                 </span>
               
@@ -1789,10 +1775,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/admin/ddl-subscription/"
-                    class="gdoc-nav__entry"
+                    href="/zh-cn/admin/configuration/"
+                    class="gdoc-nav__entry is-active"
                   >
-                    Subscribing DDL Commands
+                    参数配置
                   </a>
                 </span>
               
@@ -1833,10 +1819,54 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/admin/audit-trigger/"
+                    href="/zh-cn/admin/ddl-subscription/"
                     class="gdoc-nav__entry"
                   >
-                    Audit Logging
+                    订阅DDL操作
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/admin/audit-trigger/"
+                    class="gdoc-nav__entry"
+                  >
+                    审计日志
                   </a>
                 </span>
               
@@ -1875,22 +1905,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-4ac8285e"
+                class="gdoc-nav__toggle" id="navtree-a5b7adb4"
                 
               
             />
             <label
               
-                for="navtree-4ac8285e" class="flex justify-between align-center"
+                for="navtree-a5b7adb4" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/commands/"
+                    href="/zh-cn/commands/"
                     class="gdoc-nav__entry"
                   >
-                    SQL Commands
+                    SQL 命令
                   </a>
                 </span>
               
@@ -1941,7 +1971,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/commands/alterundo/"
+                    href="/zh-cn/commands/alterundo/"
                     class="gdoc-nav__entry"
                   >
                     ALTER UNDO
@@ -1977,7 +2007,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/commands/createundo/"
+                    href="/zh-cn/commands/createundo/"
                     class="gdoc-nav__entry"
                   >
                     CREATE UNDO
@@ -2013,7 +2043,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/commands/dropundo/"
+                    href="/zh-cn/commands/dropundo/"
                     class="gdoc-nav__entry"
                   >
                     DROP UNDO
@@ -2049,7 +2079,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/commands/vacuum/"
+                    href="/zh-cn/commands/vacuum/"
                     class="gdoc-nav__entry"
                   >
                     VACUUM
@@ -2079,8 +2109,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
       
         
-      
-        
           
           
           
@@ -2093,22 +2121,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-0ef779f7"
+                class="gdoc-nav__toggle" id="navtree-7171e5f3"
                 
               
             />
             <label
               
-                for="navtree-0ef779f7" class="flex justify-between align-center"
+                for="navtree-7171e5f3" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/catalogs/"
+                    href="/zh-cn/catalogs/"
                     class="gdoc-nav__entry"
                   >
-                    System Catalogs
+                    系统表
                   </a>
                 </span>
               
@@ -2159,7 +2187,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/catalogs/recyclebin/"
+                    href="/zh-cn/catalogs/recyclebin/"
                     class="gdoc-nav__entry"
                   >
                     pg_recyclebin
@@ -2195,7 +2223,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/catalogs/ts-lexicon/"
+                    href="/zh-cn/catalogs/ts-lexicon/"
                     class="gdoc-nav__entry"
                   >
                     pg_ts_lexicon
@@ -2231,7 +2259,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/catalogs/undo/"
+                    href="/zh-cn/catalogs/undo/"
                     class="gdoc-nav__entry"
                   >
                     pg_undo
@@ -2252,6 +2280,8 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
           </li>
         
       
+        
+      
     
   </ul>
 
@@ -2268,7 +2298,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
   <section class="gdoc-nav--more">
     
-      <h2>More</h2>
+      <h2>更多</h2>
       
 
   
@@ -2309,10 +2339,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                   <svg class="gdoc-icon gdoc_notification"><use xlink:href="#gdoc_notification"></use></svg>
                 
                 <a
-                  href="/posts/"
+                  href="/zh-cn/posts/"
                   class="gdoc-nav__entry"
                 >
-                  News
+                  新闻
                 </a>
               </span>
               
@@ -2359,7 +2389,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     https://gitee.com/rockdata/redrock/releases"
                   class="gdoc-nav__entry"
                 >
-                  Releases
+                  下载
                 </a>
               </span>
               
@@ -2406,7 +2436,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     https://gitee.com/rockdata/redrock"
                   class="gdoc-nav__entry"
                 >
-                  View Source
+                  项目仓库
                 </a>
               </span>
               
@@ -2475,7 +2505,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/usage/' href='/usage/'><span itemprop='name'>Usage</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Configuration</span><meta itemprop='position' content='3' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/admin/' href='/zh-cn/admin/'><span itemprop='name'>数据库管理</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>参数配置</span><meta itemprop='position' content='4' /></li>
   
 
   
@@ -2490,9 +2520,9 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <span class="editpage">
         <svg class="gdoc-icon gdoc_code"><use xlink:href="#gdoc_code"></use></svg>
         <a
-          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/en/usage/configuration.md"
+          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/zh-cn/admin/configuration.md"
         >
-          Edit page
+          编辑页面
         </a>
       </span>
     </div>
@@ -2504,114 +2534,114 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <article
     class="gdoc-markdown gdoc-markdown__align--left"
   >
-    <h1>Configuration</h1>
-    <p>Overview of all modified and new server configuration options based on PostgreSQL.</p>
+    <h1>参数配置</h1>
+    <p>在PostgreSQL的基础上，Redrock Postgres修改或新增的服务器配置选项的概述。</p>
 <div class="gdoc-toc gdoc-toc__level--3">
       <nav id="TableOfContents"><ul>
-        <li><a href="#resource-consumption">Resource Consumption</a></li>
-        <li><a href="#write-ahead-log">Write Ahead Log</a></li>
-        <li><a href="#run-time-statistics">Run-time Statistics</a></li>
-        <li><a href="#automatic-analyzing">Automatic Analyzing</a></li>
+        <li><a href="#资源消耗">资源消耗</a></li>
+        <li><a href="#预写式日志">预写式日志</a></li>
+        <li><a href="#运行时统计信息">运行时统计信息</a></li>
+        <li><a href="#自动分析">自动分析</a></li>
       </ul></nav>
       <hr />
     </div>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="resource-consumption">
-        Resource Consumption
-        <a data-clipboard-text="https://doc.rockdata.net/usage/configuration/#resource-consumption" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Resource Consumption" aria-label="Anchor to: Resource Consumption" href="#resource-consumption">
+    <h2 id="资源消耗">
+        资源消耗
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/admin/configuration/#资源消耗" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 资源消耗" aria-label="锚定到： 资源消耗" href="#%e8%b5%84%e6%ba%90%e6%b6%88%e8%80%97">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>These settings control the resource consumption of the database server.</p>
+<p>这些设置用于控制数据库服务器的资源消耗。</p>
 <ul>
 <li>
 <p><code>threaded_execution</code> (<code>boolean</code>)</p>
-<p>Controls whether to enable the multithreaded Postgres model. In Redrock Postgres, the multithreaded Postgres model enables Postgres processes on UNIX and Linux to run as operating system threads in separate address spaces.</p>
-<p>By default, session related backend processes on Windows always use threaded execution; the remaining background processes run as operating system processes. Thus, an &ldquo;Postgres process&rdquo; is not always equivalent to an &ldquo;operating system process.&rdquo;</p>
+<p>控制是否启用多线程 Postgres 模型。在 Redrock Postgres 中，多线程 Postgres 模型使 UNIX 和 Linux 上的 Postgres 进程能够作为操作系统线程在单独的地址空间中运行。</p>
+<p>默认情况下，Windows上与会话相关的后端进程始终使用线程执行;其余的后台进程作为操作系统进程运行。因此，“Postgres进程”并不总是等同于“操作系统进程”。</p>
 </li>
 </ul>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="write-ahead-log">
-        Write Ahead Log
-        <a data-clipboard-text="https://doc.rockdata.net/usage/configuration/#write-ahead-log" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Write Ahead Log" aria-label="Anchor to: Write Ahead Log" href="#write-ahead-log">
+    <h2 id="预写式日志">
+        预写式日志
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/admin/configuration/#预写式日志" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 预写式日志" aria-label="锚定到： 预写式日志" href="#%e9%a2%84%e5%86%99%e5%bc%8f%e6%97%a5%e5%bf%97">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>There are several WAL-related configuration parameters that affect database performance.</p>
+<p>有几个WAL相关的配置参数会影响数据库性能。</p>
 <ul>
 <li>
 <p><code>data_checksums</code> (<code>boolean</code>)</p>
-<p>Determines whether to calculate a checksum when writing a data block (a number calculated from all the bytes stored in the block) and store it in the page header of every data block when writing it to disk. Checksums are verified when a block is read - only if this parameter is <code>on</code> and the last write of the block stored a checksum. Besides, Postgres also verifies the checksum before a change application from update/delete statements and recomputes it after the change is applied. In addition, Postgres gives every WAL record a checksum before writing it to disk.</p>
-<p>If this parameter is set to <code>off</code>, data checksums are turned off.</p>
-<p>Checksums allow Postgres to detect corruption caused by underlying disks, storage systems, or I/O systems. Turning on data checksums causes only an additional 1% to 2% overhead.</p>
+<p>控制是否在写数据块时计算校验和（根据块中存储的所有字节计算的数字），并在将数据块写入磁盘时将校验和存储在每个数据块的页头中。如果此参数为<code>on</code>，并且块的最后一次写入存储了校验和，那么在读取块时，校验和将被验证。此外，Postgres还会在应用更新/删除语句中的更改之前验证校验和，并在应用更改后重新计算校验和。此外，Postgres在将每个WAL记录写入磁盘之前都会为其提供校验和。</p>
+<p>如果此参数设置为<code>off</code>，则关闭数据校验和。</p>
+<p>校验和允许Postgres检测由底层磁盘、存储系统或I/O系统引起的损坏。打开数据校验和仅导致额外1%到2%的开销。</p>
 </li>
 </ul>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="run-time-statistics">
-        Run-time Statistics
-        <a data-clipboard-text="https://doc.rockdata.net/usage/configuration/#run-time-statistics" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Run-time Statistics" aria-label="Anchor to: Run-time Statistics" href="#run-time-statistics">
+    <h2 id="运行时统计信息">
+        运行时统计信息
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/admin/configuration/#运行时统计信息" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 运行时统计信息" aria-label="锚定到： 运行时统计信息" href="#%e8%bf%90%e8%a1%8c%e6%97%b6%e7%bb%9f%e8%ae%a1%e4%bf%a1%e6%81%af">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>These parameters control server-wide statistics collection features. When statistics collection is enabled, the data that is produced can be accessed via the <code>pg_stat</code> and <code>pg_statio</code> family of system views. Refer to <a
+<p>这些参数控制服务器范围的统计数据收集特性。当统计收集被启用时，被产生的数据可以通过<code>pg_stat</code>和<code>pg_statio</code>系统视图族访问。详见<a
   class="gdoc-markdown__link"
-  href="/advanced/monitor-stats/"
+  href="/zh-cn/advanced/monitor-stats/"
   
->Statistics Views</a> for more information.</p>
+>运行统计视图</a>。</p>
 <ul>
 <li>
 <p><code>track_wait_events</code> (<code>boolean</code>)</p>
-<p>Enables the collection of information on the wait events occured in each session, include occured times and timing information. This parameter is on by default. Note that even when enabled, this information is not visible to all users, only to superusers and the user owning the session being reported on, so it should not represent a security risk. Only superusers can change this setting.</p>
+<p>启用有关每个会话中发生的等待事件的信息的收集，包括发生的等待次数和耗时信息。该参数默认开启。注意即使被启用，这些信息也不是对所有用户可见，只有超级用户和拥有报告信息的会话的用户可见，因此它不会表现为一个安全风险。只有超级用户可以更改这个设置。</p>
 </li>
 </ul>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="automatic-analyzing">
-        Automatic Analyzing
-        <a data-clipboard-text="https://doc.rockdata.net/usage/configuration/#automatic-analyzing" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Automatic Analyzing" aria-label="Anchor to: Automatic Analyzing" href="#automatic-analyzing">
+    <h2 id="自动分析">
+        自动分析
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/admin/configuration/#自动分析" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 自动分析" aria-label="锚定到： 自动分析" href="#%e8%87%aa%e5%8a%a8%e5%88%86%e6%9e%90">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>These settings control the behavior of the <em>autoanalyze</em> feature. Refer to <a
+<p>这些设置控制<em>自动分析</em>特性的行为。详情请参考 <a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/routine-vacuuming.html#AUTOVACUUM"
+  href="http://www.postgres.cn/docs/12/routine-vacuuming.html#AUTOVACUUM"
   
->Section 24.1.6</a> for more information. Note that many of these settings can be overridden on a per-table basis; see <a
+>第 24.1.6 节</a>。注意很多这些设置可以被针对每个表的设置所覆盖，请见<a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/sql-createtable.html#SQL-CREATETABLE-STORAGE-PARAMETERS"
+  href="http://www.postgres.cn/docs/12/sql-createtable.html#SQL-CREATETABLE-STORAGE-PARAMETERS"
   
->Storage Parameters</a>.</p>
+>存储参数</a>。</p>
 <ul>
 <li>
 <p><code>autoanalyze</code> (<code>boolean</code>)</p>
-<p>Controls whether the server should run the autoanalyze launcher daemon. This is on by default; however, <a
+<p>控制服务器是否运行自动分析启动器后台进程。默认为开启， 不过要自动分析正常工作还需要启用<a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/runtime-config-statistics.html#GUC-TRACK-COUNTS"
+  href="http://www.postgres.cn/docs/12/runtime-config-statistics.html#GUC-TRACK-COUNTS"
   
->track_counts</a> must also be enabled for autoanalyze to work. This parameter can only be set in the <code>postgresql.conf</code> file or on the server command line; however, autoanalyzing can be disabled for individual tables by changing table storage parameters.</p>
+>track_counts</a>。 该参数只能在<code>postgresql.conf</code>文件或服务器命令行中设置， 不过，通过更改表存储参数可以为表禁用自动分析。</p>
 </li>
 <li>
 <p><code>log_autoanalyze_min_duration</code> (<code>integer</code>)</p>
-<p>Causes each action executed by autoanalyze to be logged if it ran for at least the specified amount of time. Setting this to zero logs all autoanalyze actions. <code>-1</code> (the default) disables logging autoanalyze actions. If this value is specified without units, it is taken as milliseconds. For example, if you set this to <code>250ms</code> then all automatic analyzes that run 250ms or longer will be logged. In addition, when this parameter is set to any value other than <code>-1</code>, a message will be logged if an autoanalyze action is skipped due to a conflicting lock or a concurrently dropped relation. Enabling this parameter can be helpful in tracking autoanalyze activity. This parameter can only be set in the <code>postgresql.conf</code> file or on the server command line; but the setting can be overridden for individual tables by changing table storage parameters.</p>
+<p>如果自动分析运行至少该值所指定的时间量，被自动分析执行的每一个动作都会被日志记录。 将该参数设置为0会记录所有的自动分析动作。 <code>-1</code>（默认值）将禁用对自动分析动作的记录。 如果指定值时没有单位，则以毫秒为单位。 例如，如果你将它设置为<code>250ms</code>，则所有运行250ms或更长时间的自动分析将被记录。此外，当该参数被设置为除<code>-1</code>外的任何值时， 如果一个自动分析动作由于一个锁冲突或者被并发删除的关系而被跳过，将会为此记录一个消息。 开启这个参数对于追踪自动分析活动非常有用。这个参数只能在 <code>postgresql.conf</code>文件或者服务器命令行中设置。但是可以通过更改表的存储参数为个别表覆盖这个设置。</p>
 </li>
 <li>
 <p><code>autoanalyze_max_workers</code> (<code>integer</code>)</p>
-<p>Specifies the maximum number of autoanalyze processes (other than the autoanalyze launcher) that may be running at any one time. The default is three. This parameter can only be set at server start.</p>
+<p>指定能同时运行的自动分析进程（除了自动分析启动器之外）的最大数量。默认值为3。该参数只能在服务器启动时设置。</p>
 </li>
 <li>
 <p><code>autoanalyze_naptime</code> (<code>integer</code>)</p>
-<p>Specifies the minimum delay between autoanalyze runs on any given database. In each round the daemon examines the database and issues <code>ANALYZE</code> commands as needed for tables in that database. If this value is specified without units, it is taken as seconds. The default is one minute (<code>1min</code>). This parameter can only be set in the <code>postgresql.conf</code> file or on the server command line.</p>
+<p>指定自动清理在任意给定数据库上运行的最小延迟。在每一轮中后台进程检查数据库并根据需要为数据库中的表发出<code>ANALYZE</code>命令。 如果指定值时没有单位，则以秒为单位。默认值为1分钟（<code>1min</code>）。该参数只能在<code>postgresql.conf</code>文件或在服务器命令行上设置。</p>
 </li>
 <li>
 <p><code>autoanalyze_base_threshold</code> (<code>integer</code>)</p>
-<p>Specifies the minimum number of inserted, updated or deleted tuples needed to trigger an <code>ANALYZE</code> in any one table. The default is 50 tuples. This parameter can only be set in the <code>postgresql.conf</code> file or on the server command line; but the setting can be overridden for individual tables by changing table storage parameters.</p>
+<p>指定能在一个表上触发<code>ANALYZE</code>的被插入、被更新或被删除元组的最小数量。默认值为50个元组。该参数只能在<code>postgresql.conf</code>文件或在服务器命令中设置。但是对个别表可以通过修改表存储参数来覆盖该设置。</p>
 </li>
 <li>
 <p><code>autoanalyze_scale_factor</code> (<code>floating point</code>)</p>
-<p>Specifies a fraction of the table size to add to <code>autoanalyze_base_threshold</code> when deciding whether to trigger an <code>ANALYZE</code>. The default is 0.1 (10% of table size). This parameter can only be set in the <code>postgresql.conf</code> file or on the server command line; but the setting can be overridden for individual tables by changing table storage parameters.</p>
+<p>指定一个表尺寸的分数，在决定是否触发<code>ANALYZE</code>时将它加到<code>autoanalyze_base_threshold</code>上。默认值为0.1（表尺寸的10%）。该参数只能在<code>postgresql.conf</code>文件或在服务器命令中设置。但是对个别表可以通过修改表存储参数来覆盖该设置。</p>
 </li>
 </ul>
 
@@ -2850,14 +2880,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         
           <span class="gdoc-footer__item gdoc-footer__item--row">
             <a href="https://www.rockdata.net/legal-notice/#contact-information" class="gdoc-footer__link">
-              Legal Notice
+              法律声明
             </a>
           </span>
         
         
           <span class="gdoc-footer__item gdoc-footer__item--row">
             <a href="https://www.rockdata.net/legal-notice/#privacy-policy" class="gdoc-footer__link">
-              Privacy Policy
+              隐私政策
             </a>
           </span>
         
@@ -2867,11 +2897,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
       <div class="flex flex-25 justify-end">
         <span class="gdoc-footer__item text-right">
-          <a class="gdoc-footer__link fake-link" href="#" aria-label="Back to top">
+          <a class="gdoc-footer__link fake-link" href="#" aria-label="回到顶部">
             <svg class="gdoc-icon gdoc_keyboard_arrow_up">
               <use xlink:href="#gdoc_keyboard_arrow_up"></use>
             </svg>
-            <span class="hidden-mobile">Back to top</span>
+            <span class="hidden-mobile">回到顶部</span>
           </a>
         </span>
       </div>
