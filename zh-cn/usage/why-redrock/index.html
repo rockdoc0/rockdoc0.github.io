@@ -8,9 +8,9 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="为什么选择Postgres？     Postgres是一个高级关系数据库管理系统，支持SQL标准的扩展子集，包括事务，外键，子查询，触发器，用户定义的类型和函数。简而言之，Postgres在数据一致性、稳定性、高性能、功能丰富、开发人员友好等方面已经获得了良好的声誉。
-为什么选择Redrock Postgres？     尽管Postgres在大多数场景下表现良好，但仍有一些需要改进的地方，这正是Redrock Postgres为实现的目标：
- 更好地控制膨胀。Redrock Postgres将通过在常见情况下允许就地更新以及在执行删除或非就地更新的事务提交后立即重用空间来防止膨胀。简而言之，只要有可能，我们就会从一开始就避免产生膨胀。 通过避免重写堆页，并通过在不更新每个索引的情况下执行相关索引列的更新，减少写入放大。 通过收缩元组头部来减小元组大小。 标记删除索引记录：这将允许在索引列修改时进行就地更新，而且还可以去除那个用来进行零散的空间回收操作的垃圾清理进程。此外，索引扫描计划将会执行得更加稳定。 语句级回滚，同主流关系数据库保持兼容的事务处理行为。 没有vacuum，没有冻结，也没有事务号翻转的问题。  " />
+  <meta name="description" content="Postgres是一个高级的关系数据库管理系统，支持SQL标准的扩展子集，包括事务，外键，子查询，触发器，用户定义的类型和函数。简而言之，Postgres在数据一致性、稳定性、高性能、功能丰富、开发人员友好等方面已经获得了良好的声誉。
+尽管Postgres在大多数场景下表现良好，但仍有一些需要改进的地方，这正是Redrock Postgres为实现的目标：
+   Feature Customer benefits     通过引入回滚日志和标记删除索引记录，实现就地更新，以及在执行删除或非就地更新的事务提交后立即重用空间 让应用的UPDATE/DELETE操作执行得更加稳定，提高存储空间利用率   在不更新每个索引的情况下执行相关索引列的更新，减少写入放大 提高存储IO利用率，延长存储设备的可用周期   给索引记录标记事务状态信息 基于索引扫描的SELECT操作将会执行得更加稳定   采用回滚段事务表记录项标识事务ID，解决事务号翻转的问题 系统无需定期触发高风险的冻结操作，让系统常年处于可预期的稳定运行状态中   去除用来进行零散的空间回收操作的周期性垃圾清理进程 让您的数据库系统整体运行更加稳定   支持语句级原子性，同主流关系数据库保持兼容的事务处理行为 降低从其他数据库迁移到Postgres的风险   在Windows上面采用多线程Postgres模型运行 您可以在Windows上面轻松部署和高效运行Postgres   革命性的网络表空间技术 您可以通过网络表空间弹性和灵活地应对业务数据量的增长   数据库多租户能力 使用数据库的多租户能力，支撑您的SaaS应用运行   完善的事件触发器机制 灵活地进行审计、发布和订阅DDL操作    " />
 
     <title>为什么选择Redrock Postgres？ | Redrock Documentation</title>
 
@@ -37,25 +37,25 @@
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="为什么选择Postgres？     Postgres是一个高级关系数据库管理系统，支持SQL标准的扩展子集，包括事务，外键，子查询，触发器，用户定义的类型和函数。简而言之，Postgres在数据一致性、稳定性、高性能、功能丰富、开发人员友好等方面已经获得了良好的声誉。
-为什么选择Redrock Postgres？     尽管Postgres在大多数场景下表现良好，但仍有一些需要改进的地方，这正是Redrock Postgres为实现的目标：
- 更好地控制膨胀。Redrock Postgres将通过在常见情况下允许就地更新以及在执行删除或非就地更新的事务提交后立即重用空间来防止膨胀。简而言之，只要有可能，我们就会从一开始就避免产生膨胀。 通过避免重写堆页，并通过在不更新每个索引的情况下执行相关索引列的更新，减少写入放大。 通过收缩元组头部来减小元组大小。 标记删除索引记录：这将允许在索引列修改时进行就地更新，而且还可以去除那个用来进行零散的空间回收操作的垃圾清理进程。此外，索引扫描计划将会执行得更加稳定。 语句级回滚，同主流关系数据库保持兼容的事务处理行为。 没有vacuum，没有冻结，也没有事务号翻转的问题。  " />
+  <meta property="og:description" content="Postgres是一个高级的关系数据库管理系统，支持SQL标准的扩展子集，包括事务，外键，子查询，触发器，用户定义的类型和函数。简而言之，Postgres在数据一致性、稳定性、高性能、功能丰富、开发人员友好等方面已经获得了良好的声誉。
+尽管Postgres在大多数场景下表现良好，但仍有一些需要改进的地方，这正是Redrock Postgres为实现的目标：
+   Feature Customer benefits     通过引入回滚日志和标记删除索引记录，实现就地更新，以及在执行删除或非就地更新的事务提交后立即重用空间 让应用的UPDATE/DELETE操作执行得更加稳定，提高存储空间利用率   在不更新每个索引的情况下执行相关索引列的更新，减少写入放大 提高存储IO利用率，延长存储设备的可用周期   给索引记录标记事务状态信息 基于索引扫描的SELECT操作将会执行得更加稳定   采用回滚段事务表记录项标识事务ID，解决事务号翻转的问题 系统无需定期触发高风险的冻结操作，让系统常年处于可预期的稳定运行状态中   去除用来进行零散的空间回收操作的周期性垃圾清理进程 让您的数据库系统整体运行更加稳定   支持语句级原子性，同主流关系数据库保持兼容的事务处理行为 降低从其他数据库迁移到Postgres的风险   在Windows上面采用多线程Postgres模型运行 您可以在Windows上面轻松部署和高效运行Postgres   革命性的网络表空间技术 您可以通过网络表空间弹性和灵活地应对业务数据量的增长   数据库多租户能力 使用数据库的多租户能力，支撑您的SaaS应用运行   完善的事件触发器机制 灵活地进行审计、发布和订阅DDL操作    " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/zh-cn/usage/why-redrock/" />
 
 <meta property="article:section" content="Usage" />
     <meta
       property="article:modified_time"
-      content="2022-06-08T14:31:15+08:00"
+      content="2022-06-29T22:12:54+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="为什么选择Redrock Postgres？" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="为什么选择Postgres？     Postgres是一个高级关系数据库管理系统，支持SQL标准的扩展子集，包括事务，外键，子查询，触发器，用户定义的类型和函数。简而言之，Postgres在数据一致性、稳定性、高性能、功能丰富、开发人员友好等方面已经获得了良好的声誉。
-为什么选择Redrock Postgres？     尽管Postgres在大多数场景下表现良好，但仍有一些需要改进的地方，这正是Redrock Postgres为实现的目标：
- 更好地控制膨胀。Redrock Postgres将通过在常见情况下允许就地更新以及在执行删除或非就地更新的事务提交后立即重用空间来防止膨胀。简而言之，只要有可能，我们就会从一开始就避免产生膨胀。 通过避免重写堆页，并通过在不更新每个索引的情况下执行相关索引列的更新，减少写入放大。 通过收缩元组头部来减小元组大小。 标记删除索引记录：这将允许在索引列修改时进行就地更新，而且还可以去除那个用来进行零散的空间回收操作的垃圾清理进程。此外，索引扫描计划将会执行得更加稳定。 语句级回滚，同主流关系数据库保持兼容的事务处理行为。 没有vacuum，没有冻结，也没有事务号翻转的问题。  " />
+  <meta name="twitter:description" content="Postgres是一个高级的关系数据库管理系统，支持SQL标准的扩展子集，包括事务，外键，子查询，触发器，用户定义的类型和函数。简而言之，Postgres在数据一致性、稳定性、高性能、功能丰富、开发人员友好等方面已经获得了良好的声誉。
+尽管Postgres在大多数场景下表现良好，但仍有一些需要改进的地方，这正是Redrock Postgres为实现的目标：
+   Feature Customer benefits     通过引入回滚日志和标记删除索引记录，实现就地更新，以及在执行删除或非就地更新的事务提交后立即重用空间 让应用的UPDATE/DELETE操作执行得更加稳定，提高存储空间利用率   在不更新每个索引的情况下执行相关索引列的更新，减少写入放大 提高存储IO利用率，延长存储设备的可用周期   给索引记录标记事务状态信息 基于索引扫描的SELECT操作将会执行得更加稳定   采用回滚段事务表记录项标识事务ID，解决事务号翻转的问题 系统无需定期触发高风险的冻结操作，让系统常年处于可预期的稳定运行状态中   去除用来进行零散的空间回收操作的周期性垃圾清理进程 让您的数据库系统整体运行更加稳定   支持语句级原子性，同主流关系数据库保持兼容的事务处理行为 降低从其他数据库迁移到Postgres的风险   在Windows上面采用多线程Postgres模型运行 您可以在Windows上面轻松部署和高效运行Postgres   革命性的网络表空间技术 您可以通过网络表空间弹性和灵活地应对业务数据量的增长   数据库多租户能力 使用数据库的多租户能力，支撑您的SaaS应用运行   完善的事件触发器机制 灵活地进行审计、发布和订阅DDL操作    " />
 
 
   <script type="application/ld+json">
@@ -66,9 +66,9 @@
       "name": "为什么选择Redrock Postgres？",
       "url" : "https://doc.rockdata.net/zh-cn/usage/why-redrock/",
       "headline": "为什么选择Redrock Postgres？",
-      "description": "为什么选择Postgres？     Postgres是一个高级关系数据库管理系统，支持SQL标准的扩展子集，包括事务，外键，子查询，触发器，用户定义的类型和函数。简而言之，Postgres在数据一致性、稳定性、高性能、功能丰富、开发人员友好等方面已经获得了良好的声誉。\n为什么选择Redrock Postgres？     尽管Postgres在大多数场景下表现良好，但仍有一些需要改进的地方，这正是Redrock Postgres为实现的目标：\n 更好地控制膨胀。Redrock Postgres将通过在常见情况下允许就地更新以及在执行删除或非就地更新的事务提交后立即重用空间来防止膨胀。简而言之，只要有可能，我们就会从一开始就避免产生膨胀。 通过避免重写堆页，并通过在不更新每个索引的情况下执行相关索引列的更新，减少写入放大。 通过收缩元组头部来减小元组大小。 标记删除索引记录：这将允许在索引列修改时进行就地更新，而且还可以去除那个用来进行零散的空间回收操作的垃圾清理进程。此外，索引扫描计划将会执行得更加稳定。 语句级回滚，同主流关系数据库保持兼容的事务处理行为。 没有vacuum，没有冻结，也没有事务号翻转的问题。  ",
+      "description": "Postgres是一个高级的关系数据库管理系统，支持SQL标准的扩展子集，包括事务，外键，子查询，触发器，用户定义的类型和函数。简而言之，Postgres在数据一致性、稳定性、高性能、功能丰富、开发人员友好等方面已经获得了良好的声誉。\n尽管Postgres在大多数场景下表现良好，但仍有一些需要改进的地方，这正是Redrock Postgres为实现的目标：\n   Feature Customer benefits     通过引入回滚日志和标记删除索引记录，实现就地更新，以及在执行删除或非就地更新的事务提交后立即重用空间 让应用的UPDATE\/DELETE操作执行得更加稳定，提高存储空间利用率   在不更新每个索引的情况下执行相关索引列的更新，减少写入放大 提高存储IO利用率，延长存储设备的可用周期   给索引记录标记事务状态信息 基于索引扫描的SELECT操作将会执行得更加稳定   采用回滚段事务表记录项标识事务ID，解决事务号翻转的问题 系统无需定期触发高风险的冻结操作，让系统常年处于可预期的稳定运行状态中   去除用来进行零散的空间回收操作的周期性垃圾清理进程 让您的数据库系统整体运行更加稳定   支持语句级原子性，同主流关系数据库保持兼容的事务处理行为 降低从其他数据库迁移到Postgres的风险   在Windows上面采用多线程Postgres模型运行 您可以在Windows上面轻松部署和高效运行Postgres   革命性的网络表空间技术 您可以通过网络表空间弹性和灵活地应对业务数据量的增长   数据库多租户能力 使用数据库的多租户能力，支撑您的SaaS应用运行   完善的事件触发器机制 灵活地进行审计、发布和订阅DDL操作    ",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "13",
+      "wordCount" : "26",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -79,7 +79,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-08T14:31:15.00Z",
+      "dateModified": "2022-06-29T22:12:54.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2502,32 +2502,58 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     class="gdoc-markdown gdoc-markdown__align--left"
   >
     <h1>为什么选择Redrock Postgres？</h1>
-    <div class="gdoc-page__anchorwrap">
-    <h2 id="为什么选择postgres">
-        为什么选择Postgres？
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/usage/why-redrock/#为什么选择postgres" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 为什么选择Postgres？" aria-label="锚定到： 为什么选择Postgres？" href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e9%80%89%e6%8b%a9postgres">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<p>Postgres是一个高级关系数据库管理系统，支持SQL标准的扩展子集，包括事务，外键，子查询，触发器，用户定义的类型和函数。简而言之，Postgres在数据一致性、稳定性、高性能、功能丰富、开发人员友好等方面已经获得了良好的声誉。</p>
-<div class="gdoc-page__anchorwrap">
-    <h2 id="为什么选择redrock-postgres">
-        为什么选择Redrock Postgres？
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/usage/why-redrock/#为什么选择redrock-postgres" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 为什么选择Redrock Postgres？" aria-label="锚定到： 为什么选择Redrock Postgres？" href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e9%80%89%e6%8b%a9redrock-postgres">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
+    <p>Postgres是一个高级的关系数据库管理系统，支持SQL标准的扩展子集，包括事务，外键，子查询，触发器，用户定义的类型和函数。简而言之，Postgres在数据一致性、稳定性、高性能、功能丰富、开发人员友好等方面已经获得了良好的声誉。</p>
 <p>尽管Postgres在大多数场景下表现良好，但仍有一些需要改进的地方，这正是Redrock Postgres为实现的目标：</p>
-<ul>
-<li>更好地控制膨胀。Redrock Postgres将通过在常见情况下允许就地更新以及在执行删除或非就地更新的事务提交后立即重用空间来防止膨胀。简而言之，只要有可能，我们就会从一开始就避免产生膨胀。</li>
-<li>通过避免重写堆页，并通过在不更新每个索引的情况下执行相关索引列的更新，减少写入放大。</li>
-<li>通过收缩元组头部来减小元组大小。</li>
-<li>标记删除索引记录：这将允许在索引列修改时进行就地更新，而且还可以去除那个用来进行零散的空间回收操作的垃圾清理进程。此外，索引扫描计划将会执行得更加稳定。</li>
-<li>语句级回滚，同主流关系数据库保持兼容的事务处理行为。</li>
-<li>没有vacuum，没有冻结，也没有事务号翻转的问题。</li>
-</ul>
+<div class="table-wrap"> <table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Customer benefits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>通过引入回滚日志和标记删除索引记录，实现就地更新，以及在执行删除或非就地更新的事务提交后立即重用空间</td>
+<td>让应用的UPDATE/DELETE操作执行得更加稳定，提高存储空间利用率</td>
+</tr>
+<tr>
+<td>在不更新每个索引的情况下执行相关索引列的更新，减少写入放大</td>
+<td>提高存储IO利用率，延长存储设备的可用周期</td>
+</tr>
+<tr>
+<td>给索引记录标记事务状态信息</td>
+<td>基于索引扫描的SELECT操作将会执行得更加稳定</td>
+</tr>
+<tr>
+<td>采用回滚段事务表记录项标识事务ID，解决事务号翻转的问题</td>
+<td>系统无需定期触发高风险的冻结操作，让系统常年处于可预期的稳定运行状态中</td>
+</tr>
+<tr>
+<td>去除用来进行零散的空间回收操作的周期性垃圾清理进程</td>
+<td>让您的数据库系统整体运行更加稳定</td>
+</tr>
+<tr>
+<td>支持语句级原子性，同主流关系数据库保持兼容的事务处理行为</td>
+<td>降低从其他数据库迁移到Postgres的风险</td>
+</tr>
+<tr>
+<td>在Windows上面采用多线程Postgres模型运行</td>
+<td>您可以在Windows上面轻松部署和高效运行Postgres</td>
+</tr>
+<tr>
+<td>革命性的网络表空间技术</td>
+<td>您可以通过网络表空间弹性和灵活地应对业务数据量的增长</td>
+</tr>
+<tr>
+<td>数据库多租户能力</td>
+<td>使用数据库的多租户能力，支撑您的SaaS应用运行</td>
+</tr>
+<tr>
+<td>完善的事件触发器机制</td>
+<td>灵活地进行审计、发布和订阅DDL操作</td>
+</tr>
+</tbody>
+</table> </div>
 
   </article>
 
