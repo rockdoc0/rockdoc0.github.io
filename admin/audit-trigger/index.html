@@ -8,8 +8,8 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Creating Audit Table Auditing DDL Commands Auditing DML Commands      PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can audit DDL commands with event triggers:
- In Redrock Postgres, users and tablespaces are database-level objects. Event triggers also support DDL commands for users and tablespace objects." />
+  <meta name="description" content="Create Audit Table Audit DDL Commands Audit DML Commands  Create trigger function Audit DML commands on tables        PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can audit DDL commands with event triggers:
+ In Redrock Postgres, users and tablespaces are database-level objects." />
 
     <title>Audit Logging | Redrock Documentation</title>
 
@@ -36,23 +36,23 @@
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Creating Audit Table Auditing DDL Commands Auditing DML Commands      PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can audit DDL commands with event triggers:
- In Redrock Postgres, users and tablespaces are database-level objects. Event triggers also support DDL commands for users and tablespace objects." />
+  <meta property="og:description" content="Create Audit Table Audit DDL Commands Audit DML Commands  Create trigger function Audit DML commands on tables        PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can audit DDL commands with event triggers:
+ In Redrock Postgres, users and tablespaces are database-level objects." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/admin/audit-trigger/" />
 
 <meta property="article:section" content="Admin" />
     <meta
       property="article:modified_time"
-      content="2022-06-30T00:18:47+08:00"
+      content="2022-06-30T21:59:20+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Audit Logging" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Creating Audit Table Auditing DDL Commands Auditing DML Commands      PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can audit DDL commands with event triggers:
- In Redrock Postgres, users and tablespaces are database-level objects. Event triggers also support DDL commands for users and tablespace objects." />
+  <meta name="twitter:description" content="Create Audit Table Audit DDL Commands Audit DML Commands  Create trigger function Audit DML commands on tables        PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can audit DDL commands with event triggers:
+ In Redrock Postgres, users and tablespaces are database-level objects." />
 
 
   <script type="application/ld+json">
@@ -63,9 +63,9 @@
       "name": "Audit Logging",
       "url" : "https://doc.rockdata.net/admin/audit-trigger/",
       "headline": "Audit Logging",
-      "description": "Creating Audit Table Auditing DDL Commands Auditing DML Commands      PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can audit DDL commands with event triggers:\n In Redrock Postgres, users and tablespaces are database-level objects. Event triggers also support DDL commands for users and tablespace objects.",
+      "description": "Create Audit Table Audit DDL Commands Audit DML Commands  Create trigger function Audit DML commands on tables        PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can audit DDL commands with event triggers:\n In Redrock Postgres, users and tablespaces are database-level objects.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "531",
+      "wordCount" : "533",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -76,7 +76,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-30T00:18:47.00Z",
+      "dateModified": "2022-06-30T21:59:20.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1786,7 +1786,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     href="/admin/ddl-subscription/"
                     class="gdoc-nav__entry"
                   >
-                    Subscribing DDL Commands
+                    Subscribe DDL Commands
                   </a>
                 </span>
               
@@ -2501,9 +2501,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     <h1>Audit Logging</h1>
     <div class="gdoc-toc gdoc-toc__level--3">
       <nav id="TableOfContents"><ul>
-        <li><a href="#creating-audit-table">Creating Audit Table</a></li>
-        <li><a href="#auditing-ddl-commands">Auditing DDL Commands</a></li>
-        <li><a href="#auditing-dml-commands">Auditing DML Commands</a></li>
+        <li><a href="#create-audit-table">Create Audit Table</a></li>
+        <li><a href="#audit-ddl-commands">Audit DDL Commands</a></li>
+        <li><a href="#audit-dml-commands">Audit DML Commands</a>
+          <ul>
+            <li><a href="#create-trigger-function">Create trigger function</a></li>
+            <li><a href="#audit-dml-commands-on-tables">Audit DML commands on tables</a></li>
+          </ul>
+        </li>
       </ul></nav>
       <hr />
     </div>
@@ -2523,14 +2528,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </ul>
 <p>The following example shows how to audit DDL and DML commands occured in the database. You can modify the commands in the example according to the actual situation.</p>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="creating-audit-table">
-        Creating Audit Table
-        <a data-clipboard-text="https://doc.rockdata.net/admin/audit-trigger/#creating-audit-table" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Creating Audit Table" aria-label="Anchor to: Creating Audit Table" href="#creating-audit-table">
+    <h2 id="create-audit-table">
+        Create Audit Table
+        <a data-clipboard-text="https://doc.rockdata.net/admin/audit-trigger/#create-audit-table" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Create Audit Table" aria-label="Anchor to: Create Audit Table" href="#create-audit-table">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>Login to the database using a superuser or database owner, and creating the audit log table to record events:</p>
+<p>Login to the database using a superuser or database owner, and create the audit log table to record events:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">SCHEMA</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">audit</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="k">REVOKE</span> <span class="k">ALL</span> <span class="k">ON</span> <span class="k">SCHEMA</span> <span class="n">audit</span> <span class="k">FROM</span> <span class="n">public</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
@@ -2555,67 +2560,56 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <thead>
 <tr>
 <th>Name</th>
-<th>Type</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>event_time</code></td>
-<td><code>timestamp</code></td>
 <td>The time when the DDL command was executed</td>
 </tr>
 <tr>
 <td><code>username</code></td>
-<td><code>text</code></td>
 <td>The user who executed the DDL command</td>
 </tr>
 <tr>
 <td><code>object_type</code></td>
-<td><code>text</code></td>
 <td>Type of the object</td>
 </tr>
 <tr>
 <td><code>schema_name</code></td>
-<td><code>text</code></td>
 <td>Name of the schema the object belongs in, if any; otherwise <code>NULL</code>. No quoting is applied.</td>
 </tr>
 <tr>
 <td><code>object_identity</code></td>
-<td><code>text</code></td>
 <td>Text rendering of the object identity, schema-qualified. Each identifier included in the identity is quoted if necessary.</td>
 </tr>
 <tr>
 <td><code>application_name</code></td>
-<td><code>text</code></td>
 <td>The name of the client application that performed the operation</td>
 </tr>
 <tr>
 <td><code>client_addr</code></td>
-<td><code>inet</code></td>
 <td>The client network address from where the operation is performed</td>
 </tr>
 <tr>
 <td><code>client_port</code></td>
-<td><code>integer</code></td>
 <td>The client network port from where the operation is performed</td>
 </tr>
 <tr>
 <td><code>command_tag</code></td>
-<td><code>text</code></td>
 <td>Command tag</td>
 </tr>
 <tr>
 <td><code>command</code></td>
-<td><code>text</code></td>
 <td>the DDL command in textual representation</td>
 </tr>
 </tbody>
 </table> </div>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="auditing-ddl-commands">
-        Auditing DDL Commands
-        <a data-clipboard-text="https://doc.rockdata.net/admin/audit-trigger/#auditing-ddl-commands" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Auditing DDL Commands" aria-label="Anchor to: Auditing DDL Commands" href="#auditing-ddl-commands">
+    <h2 id="audit-ddl-commands">
+        Audit DDL Commands
+        <a data-clipboard-text="https://doc.rockdata.net/admin/audit-trigger/#audit-ddl-commands" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Audit DDL Commands" aria-label="Anchor to: Audit DDL Commands" href="#audit-ddl-commands">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
@@ -2650,17 +2644,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </blockquote>
 
 <div class="gdoc-page__anchorwrap">
-    <h2 id="auditing-dml-commands">
-        Auditing DML Commands
-        <a data-clipboard-text="https://doc.rockdata.net/admin/audit-trigger/#auditing-dml-commands" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Auditing DML Commands" aria-label="Anchor to: Auditing DML Commands" href="#auditing-dml-commands">
+    <h2 id="audit-dml-commands">
+        Audit DML Commands
+        <a data-clipboard-text="https://doc.rockdata.net/admin/audit-trigger/#audit-dml-commands" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Audit DML Commands" aria-label="Anchor to: Audit DML Commands" href="#audit-dml-commands">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
 <p>We can create a generic trigger function used for recording changes to tables into an audit log table. It will record the SQL statement, the table affected, the user who made the change, and a timestamp for each change.</p>
-<ol>
-<li>
-<p>Create trigger function:</p>
+<div class="gdoc-page__anchorwrap">
+    <h3 id="create-trigger-function">
+        Create trigger function
+        <a data-clipboard-text="https://doc.rockdata.net/admin/audit-trigger/#create-trigger-function" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Create trigger function" aria-label="Anchor to: Create trigger function" href="#create-trigger-function">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">FUNCTION</span> <span class="n">audit</span><span class="mf">.</span><span class="n">if_modified_func</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">  <span class="k">RETURNS</span> <span class="k">TRIGGER</span> <span class="k">AS</span> <span class="sh">$$</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">BEGIN</span><span class="w">
@@ -2673,14 +2672,19 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">current_setting</span><span class="p">(</span><span class="s1">&#39;application_name&#39;</span><span class="p">),</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">inet_client_addr</span><span class="p">(),</span><span class="w"> </span><span class="n">inet_client_port</span><span class="p">(),</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">TG_OP</span><span class="p">,</span><span class="w"> </span><span class="n">current_query</span><span class="p">());</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">RETURN</span><span class="w"> </span><span class="k">NULL</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">END</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="sh">$$</span> <span class="k">LANGUAGE</span> <span class="s1">plpgsql</span><span class="p">;</span>
-</span></span></code></pre></div></li>
-<li>
+</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
+    <h3 id="audit-dml-commands-on-tables">
+        Audit DML commands on tables
+        <a data-clipboard-text="https://doc.rockdata.net/admin/audit-trigger/#audit-dml-commands-on-tables" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Audit DML commands on tables" aria-label="Anchor to: Audit DML commands on tables" href="#audit-dml-commands-on-tables">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
 <p>Create triggers on tables that need to be audited to audit table data modification operations:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">TRIGGER</span> <span class="n">table_modified_trg</span>
-</span></span><span class="line"><span class="cl">  <span class="k">AFTER</span> <span class="k">INSERT</span> <span class="k">OR</span> <span class="k">UPDATE</span> <span class="k">OR</span> <span class="k">DELETE</span> <span class="k">OR</span> <span class="k">TRUNCATE</span> <span class="k">ON</span> <span class="n">testtable</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">TRIGGER</span> <span class="n">trigger_audit_testtbl</span>
+</span></span><span class="line"><span class="cl">  <span class="k">AFTER</span> <span class="k">INSERT</span> <span class="k">OR</span> <span class="k">UPDATE</span> <span class="k">OR</span> <span class="k">DELETE</span> <span class="k">OR</span> <span class="k">TRUNCATE</span> <span class="k">ON</span> <span class="n">testtbl</span>
 </span></span><span class="line"><span class="cl">  <span class="k">FOR</span> <span class="k">EACH</span> <span class="k">STATEMENT</span>
 </span></span><span class="line"><span class="cl">  <span class="k">EXECUTE</span> <span class="k">PROCEDURE</span> <span class="n">audit</span><span class="mf">.</span><span class="n">if_modified_func</span><span class="p">();</span>
 </span></span></code></pre></div>
@@ -2693,8 +2697,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <div class="gdoc-hint__text">You need to modify table name and trigger name in the above SQL command according to the actual case.</div>
 </blockquote>
 
-</li>
-</ol>
 
   </article>
 

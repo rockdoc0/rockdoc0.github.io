@@ -8,10 +8,9 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Recording and Publishing DDL Commands Subscribing and Replicating DDL Commands      PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can subscribe DDL commands with event triggers:
- In Redrock Postgres, users and tablespaces are database-level objects. Event triggers also support DDL commands for users and tablespace objects." />
+  <meta name="description" content="Record and Publish DDL Commands  Create DDL history table Publish DDL history table Create event trigger capturing DDL commands   Subscribe and Replicate DDL Commands  Create the same DDL history table Subscribe DDL history table Replicate DDL commands with table level triggers        PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database." />
 
-    <title>Subscribing DDL Commands | Redrock Documentation</title>
+    <title>Subscribe DDL Commands | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -32,27 +31,25 @@
     
   <meta
     property="og:title"
-    content="Subscribing DDL Commands"
+    content="Subscribe DDL Commands"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Recording and Publishing DDL Commands Subscribing and Replicating DDL Commands      PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can subscribe DDL commands with event triggers:
- In Redrock Postgres, users and tablespaces are database-level objects. Event triggers also support DDL commands for users and tablespace objects." />
+  <meta property="og:description" content="Record and Publish DDL Commands  Create DDL history table Publish DDL history table Create event trigger capturing DDL commands   Subscribe and Replicate DDL Commands  Create the same DDL history table Subscribe DDL history table Replicate DDL commands with table level triggers        PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/admin/ddl-subscription/" />
 
 <meta property="article:section" content="Admin" />
     <meta
       property="article:modified_time"
-      content="2022-06-30T00:18:47+08:00"
+      content="2022-06-30T21:59:20+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Subscribing DDL Commands" />
+<meta name="twitter:title" content="Subscribe DDL Commands" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Recording and Publishing DDL Commands Subscribing and Replicating DDL Commands      PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can subscribe DDL commands with event triggers:
- In Redrock Postgres, users and tablespaces are database-level objects. Event triggers also support DDL commands for users and tablespace objects." />
+  <meta name="twitter:description" content="Record and Publish DDL Commands  Create DDL history table Publish DDL history table Create event trigger capturing DDL commands   Subscribe and Replicate DDL Commands  Create the same DDL history table Subscribe DDL history table Replicate DDL commands with table level triggers        PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database." />
 
 
   <script type="application/ld+json">
@@ -60,12 +57,12 @@
       "@context": "http://schema.org",
       "@type": "TechArticle",
       "articleSection": "Admin",
-      "name": "Subscribing DDL Commands",
+      "name": "Subscribe DDL Commands",
       "url" : "https://doc.rockdata.net/admin/ddl-subscription/",
-      "headline": "Subscribing DDL Commands",
-      "description": "Recording and Publishing DDL Commands Subscribing and Replicating DDL Commands      PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can subscribe DDL commands with event triggers:\n In Redrock Postgres, users and tablespaces are database-level objects. Event triggers also support DDL commands for users and tablespace objects.",
+      "headline": "Subscribe DDL Commands",
+      "description": "Record and Publish DDL Commands  Create DDL history table Publish DDL history table Create event trigger capturing DDL commands   Subscribe and Replicate DDL Commands  Create the same DDL history table Subscribe DDL history table Replicate DDL commands with table level triggers        PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "642",
+      "wordCount" : "695",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -76,7 +73,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-30T00:18:47.00Z",
+      "dateModified": "2022-06-30T21:59:20.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1786,7 +1783,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     href="/admin/ddl-subscription/"
                     class="gdoc-nav__entry is-active"
                   >
-                    Subscribing DDL Commands
+                    Subscribe DDL Commands
                   </a>
                 </span>
               
@@ -2469,7 +2466,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/admin/' href='/admin/'><span itemprop='name'>Server Administration</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Subscribing DDL Commands</span><meta itemprop='position' content='3' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/admin/' href='/admin/'><span itemprop='name'>Server Administration</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Subscribe DDL Commands</span><meta itemprop='position' content='3' /></li>
   
 
   
@@ -2498,11 +2495,23 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <article
     class="gdoc-markdown gdoc-markdown__align--left"
   >
-    <h1>Subscribing DDL Commands</h1>
+    <h1>Subscribe DDL Commands</h1>
     <div class="gdoc-toc gdoc-toc__level--3">
       <nav id="TableOfContents"><ul>
-        <li><a href="#recording-and-publishing-ddl-commands">Recording and Publishing DDL Commands</a></li>
-        <li><a href="#subscribing-and-replicating-ddl-commands">Subscribing and Replicating DDL Commands</a></li>
+        <li><a href="#record-and-publish-ddl-commands">Record and Publish DDL Commands</a>
+          <ul>
+            <li><a href="#create-ddl-history-table">Create DDL history table</a></li>
+            <li><a href="#publish-ddl-history-table">Publish DDL history table</a></li>
+            <li><a href="#create-event-trigger-capturing-ddl-commands">Create event trigger capturing DDL commands</a></li>
+          </ul>
+        </li>
+        <li><a href="#subscribe-and-replicate-ddl-commands">Subscribe and Replicate DDL Commands</a>
+          <ul>
+            <li><a href="#create-the-same-ddl-history-table">Create the same DDL history table</a></li>
+            <li><a href="#subscribe-ddl-history-table">Subscribe DDL history table</a></li>
+            <li><a href="#replicate-ddl-commands-with-table-level-triggers">Replicate DDL commands with table level triggers</a></li>
+          </ul>
+        </li>
       </ul></nav>
       <hr />
     </div>
@@ -2522,16 +2531,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </ul>
 <p>The following example shows how to subscribe and replicate DDL commands occured on the publisher side. You can modify the commands in the example according to the actual situation.</p>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="recording-and-publishing-ddl-commands">
-        Recording and Publishing DDL Commands
-        <a data-clipboard-text="https://doc.rockdata.net/admin/ddl-subscription/#recording-and-publishing-ddl-commands" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Recording and Publishing DDL Commands" aria-label="Anchor to: Recording and Publishing DDL Commands" href="#recording-and-publishing-ddl-commands">
+    <h2 id="record-and-publish-ddl-commands">
+        Record and Publish DDL Commands
+        <a data-clipboard-text="https://doc.rockdata.net/admin/ddl-subscription/#record-and-publish-ddl-commands" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Record and Publish DDL Commands" aria-label="Anchor to: Record and Publish DDL Commands" href="#record-and-publish-ddl-commands">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
 <p>We need to record DDL commands in a log table with event trigger on the publisher side, and publish the log table. Before proceeding, make sure the value of the configuration parameter <code>wal_level</code> on the publisher side is logical, and the database server needs to be restarted to take effect after the parameter is modified. Then, you can login to the database using a superuser or database owner and do the following:</p>
-<ol>
-<li>
+<div class="gdoc-page__anchorwrap">
+    <h3 id="create-ddl-history-table">
+        Create DDL history table
+        <a data-clipboard-text="https://doc.rockdata.net/admin/ddl-subscription/#create-ddl-history-table" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Create DDL history table" aria-label="Anchor to: Create DDL history table" href="#create-ddl-history-table">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
 <p>Creating a log table to record DDL commands:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">SCHEMA</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">audit</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="k">REVOKE</span> <span class="k">ALL</span> <span class="k">ON</span> <span class="k">SCHEMA</span> <span class="n">audit</span> <span class="k">FROM</span> <span class="n">public</span><span class="p">;</span>
@@ -2555,60 +2570,62 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <thead>
 <tr>
 <th>Name</th>
-<th>Type</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>ord</code></td>
-<td><code>integer</code></td>
 <td>The number of DDL subcommand decomposed from the current DDL query</td>
 </tr>
 <tr>
 <td><code>op_time</code></td>
-<td><code>timestamp</code></td>
 <td>The time when the DDL command was executed</td>
 </tr>
 <tr>
 <td><code>username</code></td>
-<td><code>text</code></td>
 <td>The user who executed the DDL command</td>
 </tr>
 <tr>
 <td><code>command_tag</code></td>
-<td><code>text</code></td>
 <td>Command tag</td>
 </tr>
 <tr>
 <td><code>object_type</code></td>
-<td><code>text</code></td>
 <td>Type of the object</td>
 </tr>
 <tr>
 <td><code>schema_name</code></td>
-<td><code>text</code></td>
 <td>Name of the schema the object belongs in, if any; otherwise <code>NULL</code>. No quoting is applied.</td>
 </tr>
 <tr>
 <td><code>object_identity</code></td>
-<td><code>text</code></td>
 <td>Text rendering of the object identity, schema-qualified. Each identifier included in the identity is quoted if necessary.</td>
 </tr>
 <tr>
 <td><code>command</code></td>
-<td><code>text</code></td>
 <td>the DDL command in textual representation</td>
 </tr>
 </tbody>
 </table> </div>
-</li>
-<li>
-<p>Publishing the log table:</p>
+<div class="gdoc-page__anchorwrap">
+    <h3 id="publish-ddl-history-table">
+        Publish DDL history table
+        <a data-clipboard-text="https://doc.rockdata.net/admin/ddl-subscription/#publish-ddl-history-table" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Publish DDL history table" aria-label="Anchor to: Publish DDL history table" href="#publish-ddl-history-table">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p>Publish the log table:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="n">PUBLICATION</span> <span class="n">ddl_publication</span> <span class="k">FOR</span> <span class="k">TABLE</span> <span class="k">ONLY</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_history</span><span class="p">;</span>
-</span></span></code></pre></div></li>
-<li>
-<p>Creating a event trigger capturing DDL commands:</p>
+</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
+    <h3 id="create-event-trigger-capturing-ddl-commands">
+        Create event trigger capturing DDL commands
+        <a data-clipboard-text="https://doc.rockdata.net/admin/ddl-subscription/#create-event-trigger-capturing-ddl-commands" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Create event trigger capturing DDL commands" aria-label="Anchor to: Create event trigger capturing DDL commands" href="#create-event-trigger-capturing-ddl-commands">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="c1">-- create function for event triggers
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">FUNCTION</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_pub_trigger_func</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">  <span class="k">RETURNS</span> <span class="n">event_trigger</span> <span class="k">AS</span> <span class="sh">$$</span><span class="w">
@@ -2622,12 +2639,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="sh">$$</span> <span class="k">LANGUAGE</span> <span class="s1">plpgsql</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">-- create ddl_command_end event trigger
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">CREATE</span> <span class="k">EVENT</span> <span class="k">TRIGGER</span> <span class="n">audit_event_trigger</span>
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">CREATE</span> <span class="k">EVENT</span> <span class="k">TRIGGER</span> <span class="n">ddl_event_trigger</span>
 </span></span><span class="line"><span class="cl">  <span class="k">ON</span> <span class="n">ddl_command_end</span>
 </span></span><span class="line"><span class="cl">  <span class="k">EXECUTE</span> <span class="k">PROCEDURE</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_pub_trigger_func</span><span class="p">();</span>
-</span></span></code></pre></div></li>
-</ol>
-
+</span></span></code></pre></div>
 
 
 
@@ -2638,17 +2653,23 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </blockquote>
 
 <div class="gdoc-page__anchorwrap">
-    <h2 id="subscribing-and-replicating-ddl-commands">
-        Subscribing and Replicating DDL Commands
-        <a data-clipboard-text="https://doc.rockdata.net/admin/ddl-subscription/#subscribing-and-replicating-ddl-commands" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Subscribing and Replicating DDL Commands" aria-label="Anchor to: Subscribing and Replicating DDL Commands" href="#subscribing-and-replicating-ddl-commands">
+    <h2 id="subscribe-and-replicate-ddl-commands">
+        Subscribe and Replicate DDL Commands
+        <a data-clipboard-text="https://doc.rockdata.net/admin/ddl-subscription/#subscribe-and-replicate-ddl-commands" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Subscribe and Replicate DDL Commands" aria-label="Anchor to: Subscribe and Replicate DDL Commands" href="#subscribe-and-replicate-ddl-commands">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>On the publisher side, we recorded the executed DDL commands in the log table <code>audit.ddl_history</code>, and published the table. Subscribers can replicate and execute the DDL commands in the log table. Log in to the database using a superuser or database owner and do the following:</p>
-<ol>
-<li>
-<p>Create the same log table on the subscriber side:</p>
+<p>On the publisher side, we recorded the executed DDL commands in the log table <code>audit.ddl_history</code>, and published the table. Subscribers can replicate and execute the DDL commands in the log table. Login to the database using a superuser or database owner and do the following:</p>
+<div class="gdoc-page__anchorwrap">
+    <h3 id="create-the-same-ddl-history-table">
+        Create the same DDL history table
+        <a data-clipboard-text="https://doc.rockdata.net/admin/ddl-subscription/#create-the-same-ddl-history-table" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Create the same DDL history table" aria-label="Anchor to: Create the same DDL history table" href="#create-the-same-ddl-history-table">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p>On the subscriber side, create a DDL history table same as the table on the publisher side:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">SCHEMA</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">audit</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="k">REVOKE</span> <span class="k">ALL</span> <span class="k">ON</span> <span class="k">SCHEMA</span> <span class="n">audit</span> <span class="k">FROM</span> <span class="n">public</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
@@ -2666,9 +2687,15 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">-- grant privileges to all user
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">GRANT</span> <span class="k">INSERT</span> <span class="k">ON</span> <span class="k">TABLE</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_history</span> <span class="k">TO</span> <span class="n">PUBLIC</span><span class="p">;</span>
-</span></span></code></pre></div></li>
-<li>
-<p>Subscribing the log table:</p>
+</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
+    <h3 id="subscribe-ddl-history-table">
+        Subscribe DDL history table
+        <a data-clipboard-text="https://doc.rockdata.net/admin/ddl-subscription/#subscribe-ddl-history-table" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Subscribe DDL history table" aria-label="Anchor to: Subscribe DDL history table" href="#subscribe-ddl-history-table">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p>Subscribe the log table:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="n">SUBSCRIPTION</span> <span class="n">ddl_subscriptin</span> <span class="k">CONNECTION</span>
 </span></span><span class="line"><span class="cl">  <span class="s1">&#39;host=192.168.1.50 port=5432 user=testuser password=pgpass&#39;</span>
 </span></span><span class="line"><span class="cl">  <span class="n">PUBLICATION</span> <span class="n">ddl_publication</span><span class="p">;</span>
@@ -2682,8 +2709,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <div class="gdoc-hint__text">You need to modify the access information of the publisher in the above SQL command according to the actual deployment environment.</div>
 </blockquote>
 
-</li>
-<li>
+<div class="gdoc-page__anchorwrap">
+    <h3 id="replicate-ddl-commands-with-table-level-triggers">
+        Replicate DDL commands with table level triggers
+        <a data-clipboard-text="https://doc.rockdata.net/admin/ddl-subscription/#replicate-ddl-commands-with-table-level-triggers" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Replicate DDL commands with table level triggers" aria-label="Anchor to: Replicate DDL commands with table level triggers" href="#replicate-ddl-commands-with-table-level-triggers">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
 <p>Create a trigger for the table <code>audit.ddl_history</code> on the subscriber side to replicate and execute DDL commands.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">FUNCTION</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_sub_trigger_func</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">  <span class="k">RETURNS</span> <span class="k">trigger</span> <span class="k">AS</span> <span class="sh">$$</span><span class="w">
@@ -2697,9 +2730,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </span></span><span class="line"><span class="cl">  <span class="k">AFTER</span> <span class="k">INSERT</span> <span class="k">ON</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_history</span>
 </span></span><span class="line"><span class="cl">  <span class="k">FOR</span> <span class="k">EACH</span> <span class="k">ROW</span>
 </span></span><span class="line"><span class="cl">  <span class="k">EXECUTE</span> <span class="k">PROCEDURE</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_sub_trigger_func</span><span class="p">();</span>
-</span></span></code></pre></div></li>
-</ol>
-
+</span></span></code></pre></div>
   </article>
 
 
