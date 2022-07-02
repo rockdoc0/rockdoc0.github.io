@@ -48,7 +48,7 @@
 <meta property="article:section" content="Admin" />
     <meta
       property="article:modified_time"
-      content="2022-07-02T19:36:23+08:00"
+      content="2022-07-02T19:52:35+08:00"
     />
 
 
@@ -71,7 +71,7 @@
       "headline": "订阅DDL操作",
       "description": "记录和发布DDL操作  创建DDL操作记录表 发布DDL操作记录表 创建DDL事件触发器 配置DDL操作的记录和发布   订阅和同步DDL操作  创建相同的DDL操作记录表 订阅DDL操作记录表 使用表级触发器同步DDL操作 配置DDL操作的同步        PostgreSQL 提供了事件触发器。事件触发器对一个特定数据库来说是全局的，并且可以捕捉该数据库中发生的 DDL 事件。Redrock Postgres 通过对 PostgreSQL 进行了如下改进，从而让用户可以通过事件触发器，实现对DDL操作的订阅：\n 在 Redrock Postgres 中，用户和表空间都是数据库级别的对象，事件触发器也支持作用于用户和表空间对象的DDL命令，详情可参见 事件触发器触发矩阵 ； 支持在命令结束处（对应 ddl_command_end 事件）捕捉删除对象的操作； 提供函数 pg_ddl_command_deparse 将DDL命令从pg_ddl_command类型的内部格式反向解析为SQL语句；  下面将以示例的方式介绍如何实现DDL操作的订阅和同步功能，您可以根据业务情况对示例中的操作命令进行相应修改。\n记录和发布DDL操作     我们需要在发布端通过事件触发器记录DDL语句到DDL操作记录表中。在操作之前，请确保发布端数据库配置参数 wal_level 的值为 logical，该参数修改后需要重启实例才能生效。然后，就可以使用超级用户或者数据库拥有者登录数据库，执行如下操作：\n创建DDL操作记录表     CREATE SCHEMA IF NOT EXISTS audit; REVOKE ALL ON SCHEMA audit FROM public; -- create table for ddl record CREATE TABLE IF NOT EXISTS audit.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "325",
+      "wordCount" : "327",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -82,7 +82,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-02T19:36:23.00Z",
+      "dateModified": "2022-07-02T19:52:35.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2598,7 +2598,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 <tr>
 <td><code>object_type</code></td>
-<td>对象的类型。可能的类型是 <code>table</code>, <code>index</code>, <code>sequence</code>, <code>view</code>, <code>materialized view</code>, <code>foreign table</code>, <code>type</code>, <code>cast</code>, <code>collation</code>, <code>rule</code>, <code>trigger</code>, <code>schema</code>, <code>role</code>, <code>tablespace</code>, <code>foreign data wrapper</code>, <code>server</code>, <code>user mapping</code>, <code>extension</code>, <code>policy</code>, <code>publication</code> 以及 <code>subscription</code>。</td>
+<td>对象的类型。可能的类型是 <code>table</code>, <code>index</code>, <code>sequence</code>, <code>view</code>, <code>materialized view</code>, <code>foreign table</code>, <code>aggregate</code>, <code>function</code>, <code>type</code>, <code>cast</code>, <code>collation</code>, <code>rule</code>, <code>trigger</code>, <code>schema</code>, <code>role</code>, <code>tablespace</code>, <code>foreign data wrapper</code>, <code>server</code>, <code>user mapping</code>, <code>extension</code>, <code>policy</code>, <code>publication</code> 以及 <code>subscription</code>。</td>
 </tr>
 <tr>
 <td><code>schema_name</code></td>
