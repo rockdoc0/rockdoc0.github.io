@@ -8,7 +8,7 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Record and Publish DDL Commands  Create DDL history table Publish DDL history table Create event trigger capturing DDL commands   Subscribe and Replicate DDL Commands  Create the same DDL history table Subscribe DDL history table Replicate DDL commands with table level triggers        PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database." />
+  <meta name="description" content="Record and Publish DDL Commands  Create DDL history table Publish DDL history table Create event trigger capturing DDL commands Configure the recording and publishing   Subscribe and Replicate DDL Commands  Create the same DDL history table Subscribe DDL history table Replicate DDL commands with table level triggers Configure the DDL replication        PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database." />
 
     <title>Subscribe DDL Commands | Redrock Documentation</title>
 
@@ -35,21 +35,21 @@
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Record and Publish DDL Commands  Create DDL history table Publish DDL history table Create event trigger capturing DDL commands   Subscribe and Replicate DDL Commands  Create the same DDL history table Subscribe DDL history table Replicate DDL commands with table level triggers        PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database." />
+  <meta property="og:description" content="Record and Publish DDL Commands  Create DDL history table Publish DDL history table Create event trigger capturing DDL commands Configure the recording and publishing   Subscribe and Replicate DDL Commands  Create the same DDL history table Subscribe DDL history table Replicate DDL commands with table level triggers Configure the DDL replication        PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/admin/ddl-subscription/" />
 
 <meta property="article:section" content="Admin" />
     <meta
       property="article:modified_time"
-      content="2022-06-30T21:59:20+08:00"
+      content="2022-07-02T19:36:23+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Subscribe DDL Commands" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Record and Publish DDL Commands  Create DDL history table Publish DDL history table Create event trigger capturing DDL commands   Subscribe and Replicate DDL Commands  Create the same DDL history table Subscribe DDL history table Replicate DDL commands with table level triggers        PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database." />
+  <meta name="twitter:description" content="Record and Publish DDL Commands  Create DDL history table Publish DDL history table Create event trigger capturing DDL commands Configure the recording and publishing   Subscribe and Replicate DDL Commands  Create the same DDL history table Subscribe DDL history table Replicate DDL commands with table level triggers Configure the DDL replication        PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database." />
 
 
   <script type="application/ld+json">
@@ -60,9 +60,9 @@
       "name": "Subscribe DDL Commands",
       "url" : "https://doc.rockdata.net/admin/ddl-subscription/",
       "headline": "Subscribe DDL Commands",
-      "description": "Record and Publish DDL Commands  Create DDL history table Publish DDL history table Create event trigger capturing DDL commands   Subscribe and Replicate DDL Commands  Create the same DDL history table Subscribe DDL history table Replicate DDL commands with table level triggers        PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database.",
+      "description": "Record and Publish DDL Commands  Create DDL history table Publish DDL history table Create event trigger capturing DDL commands Configure the recording and publishing   Subscribe and Replicate DDL Commands  Create the same DDL history table Subscribe DDL history table Replicate DDL commands with table level triggers Configure the DDL replication        PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "695",
+      "wordCount" : "920",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -73,7 +73,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-30T21:59:20.00Z",
+      "dateModified": "2022-07-02T19:36:23.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2503,6 +2503,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <li><a href="#create-ddl-history-table">Create DDL history table</a></li>
             <li><a href="#publish-ddl-history-table">Publish DDL history table</a></li>
             <li><a href="#create-event-trigger-capturing-ddl-commands">Create event trigger capturing DDL commands</a></li>
+            <li><a href="#configure-the-recording-and-publishing">Configure the recording and publishing</a></li>
           </ul>
         </li>
         <li><a href="#subscribe-and-replicate-ddl-commands">Subscribe and Replicate DDL Commands</a>
@@ -2510,6 +2511,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <li><a href="#create-the-same-ddl-history-table">Create the same DDL history table</a></li>
             <li><a href="#subscribe-ddl-history-table">Subscribe DDL history table</a></li>
             <li><a href="#replicate-ddl-commands-with-table-level-triggers">Replicate DDL commands with table level triggers</a></li>
+            <li><a href="#configure-the-ddl-replication">Configure the DDL replication</a></li>
           </ul>
         </li>
       </ul></nav>
@@ -2554,12 +2556,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </span></span><span class="line"><span class="cl"><span class="c1">-- create table for ddl record
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_history</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">  <span class="n">ord</span>             <span class="nb">int</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">  <span class="n">op_time</span>         <span class="nb">timestamp</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">event_time</span>      <span class="nb">timestamp</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">  <span class="n">username</span>        <span class="nb">text</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">  <span class="n">command_tag</span>     <span class="nb">text</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">  <span class="n">object_type</span>     <span class="nb">text</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">  <span class="n">schema_name</span>     <span class="nb">text</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">  <span class="n">object_identity</span> <span class="nb">text</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">command_tag</span>     <span class="nb">text</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">  <span class="n">command</span>         <span class="nb">text</span>
 </span></span><span class="line"><span class="cl"><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
@@ -2579,7 +2581,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>The number of DDL subcommand decomposed from the current DDL query</td>
 </tr>
 <tr>
-<td><code>op_time</code></td>
+<td><code>event_time</code></td>
 <td>The time when the DDL command was executed</td>
 </tr>
 <tr>
@@ -2587,12 +2589,8 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <td>The user who executed the DDL command</td>
 </tr>
 <tr>
-<td><code>command_tag</code></td>
-<td>Command tag</td>
-</tr>
-<tr>
 <td><code>object_type</code></td>
-<td>Type of the object</td>
+<td>Type of the object. Possible types are <code>table</code>, <code>index</code>, <code>sequence</code>, <code>view</code>, <code>materialized view</code>, <code>foreign table</code>, <code>type</code>, <code>cast</code>, <code>collation</code>, <code>rule</code>, <code>trigger</code>, <code>schema</code>, <code>role</code>, <code>tablespace</code>, <code>foreign data wrapper</code>, <code>server</code>, <code>user mapping</code>, <code>extension</code>, <code>policy</code>, <code>publication</code> and <code>subscription</code>.</td>
 </tr>
 <tr>
 <td><code>schema_name</code></td>
@@ -2601,6 +2599,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <tr>
 <td><code>object_identity</code></td>
 <td>Text rendering of the object identity, schema-qualified. Each identifier included in the identity is quoted if necessary.</td>
+</tr>
+<tr>
+<td><code>command_tag</code></td>
+<td>Command tag. Possible values see <a
+  class="gdoc-markdown__link"
+  href="/features/event-triggers/#event-trigger-firing-matrix"
+  
+>Event Trigger Support by Command Tag</a>.</td>
 </tr>
 <tr>
 <td><code>command</code></td>
@@ -2631,9 +2637,9 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </span></span><span class="line"><span class="cl">  <span class="k">RETURNS</span> <span class="n">event_trigger</span> <span class="k">AS</span> <span class="sh">$$</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">BEGIN</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">audit</span><span class="mf">.</span><span class="n">ddl_history</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="k">ordinality</span><span class="p">,</span><span class="w"> </span><span class="n">now</span><span class="p">(),</span><span class="w"> </span><span class="k">current_user</span><span class="p">,</span><span class="w"> </span><span class="n">command_tag</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="k">ordinality</span><span class="p">,</span><span class="w"> </span><span class="n">now</span><span class="p">(),</span><span class="w"> </span><span class="k">current_user</span><span class="p">,</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">           </span><span class="n">object_type</span><span class="p">,</span><span class="w"> </span><span class="n">schema_name</span><span class="p">,</span><span class="w"> </span><span class="n">object_identity</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">           </span><span class="n">pg_ddl_command_deparse</span><span class="p">(</span><span class="n">command</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">           </span><span class="n">command_tag</span><span class="p">,</span><span class="w"> </span><span class="n">pg_ddl_command_deparse</span><span class="p">(</span><span class="n">command</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">FROM</span><span class="w"> </span><span class="n">pg_event_trigger_ddl_commands</span><span class="p">()</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="k">ORDINALITY</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">END</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="sh">$$</span> <span class="k">LANGUAGE</span> <span class="s1">plpgsql</span><span class="p">;</span>
@@ -2652,6 +2658,28 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <div class="gdoc-hint__text">After the preceding commands are executed, your DDL commands will be recorded in the table <code>audit.ddl_history</code>.</div>
 </blockquote>
 
+<div class="gdoc-page__anchorwrap">
+    <h3 id="configure-the-recording-and-publishing">
+        Configure the recording and publishing
+        <a data-clipboard-text="https://doc.rockdata.net/admin/ddl-subscription/#configure-the-recording-and-publishing" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Configure the recording and publishing" aria-label="Anchor to: Configure the recording and publishing" href="#configure-the-recording-and-publishing">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p>You can configure the recording and publishing of DDL commands by modifying the DDL event trigger function definition. For example, we can modify the definition of the above event trigger function <code>audit.ddl_pub_trigger_func</code> to limit the schemas and object types involved in the recorded and published DDL commands as follows:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">FUNCTION</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_pub_trigger_func</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="k">RETURNS</span> <span class="n">event_trigger</span> <span class="k">AS</span> <span class="sh">$$</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">BEGIN</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">audit</span><span class="mf">.</span><span class="n">ddl_history</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="k">ordinality</span><span class="p">,</span><span class="w"> </span><span class="n">now</span><span class="p">(),</span><span class="w"> </span><span class="k">current_user</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">           </span><span class="n">object_type</span><span class="p">,</span><span class="w"> </span><span class="n">schema_name</span><span class="p">,</span><span class="w"> </span><span class="n">object_identity</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">           </span><span class="n">command_tag</span><span class="p">,</span><span class="w"> </span><span class="n">pg_ddl_command_deparse</span><span class="p">(</span><span class="n">command</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">FROM</span><span class="w"> </span><span class="n">pg_event_trigger_ddl_commands</span><span class="p">()</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="k">ORDINALITY</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">WHERE</span><span class="w"> </span><span class="n">schema_name</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;testschema&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;myschema&#39;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">AND</span><span class="w"> </span><span class="n">object_type</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;table&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;index&#39;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">END</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="sh">$$</span> <span class="k">LANGUAGE</span> <span class="s1">plpgsql</span><span class="p">;</span>
+</span></span></code></pre></div><p>In the example above, we limit the schemas involved in DDL commands to <code>testschema</code> and <code>myschema</code>, and limit the object types to <code>table</code> and <code>index</code>.</p>
 <div class="gdoc-page__anchorwrap">
     <h2 id="subscribe-and-replicate-ddl-commands">
         Subscribe and Replicate DDL Commands
@@ -2676,12 +2704,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </span></span><span class="line"><span class="cl"><span class="c1">-- create table for ddl record
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_history</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">  <span class="n">ord</span>             <span class="nb">int</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">  <span class="n">op_time</span>         <span class="nb">timestamp</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">event_time</span>      <span class="nb">timestamp</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">  <span class="n">username</span>        <span class="nb">text</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">  <span class="n">command_tag</span>     <span class="nb">text</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">  <span class="n">object_type</span>     <span class="nb">text</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">  <span class="n">schema_name</span>     <span class="nb">text</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">  <span class="n">object_identity</span> <span class="nb">text</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">command_tag</span>     <span class="nb">text</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">  <span class="n">command</span>         <span class="nb">text</span>
 </span></span><span class="line"><span class="cl"><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
@@ -2697,7 +2725,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </div>
 <p>Subscribe the log table:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="n">SUBSCRIPTION</span> <span class="n">ddl_subscriptin</span> <span class="k">CONNECTION</span>
-</span></span><span class="line"><span class="cl">  <span class="s1">&#39;host=192.168.1.50 port=5432 user=testuser password=pgpass&#39;</span>
+</span></span><span class="line"><span class="cl">  <span class="s1">&#39;host=192.168.1.50 port=5432 dbname=testdb user=testuser password=pgpass&#39;</span>
 </span></span><span class="line"><span class="cl">  <span class="n">PUBLICATION</span> <span class="n">ddl_publication</span><span class="p">;</span>
 </span></span></code></pre></div>
 
@@ -2730,7 +2758,28 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </span></span><span class="line"><span class="cl">  <span class="k">AFTER</span> <span class="k">INSERT</span> <span class="k">ON</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_history</span>
 </span></span><span class="line"><span class="cl">  <span class="k">FOR</span> <span class="k">EACH</span> <span class="k">ROW</span>
 </span></span><span class="line"><span class="cl">  <span class="k">EXECUTE</span> <span class="k">PROCEDURE</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_sub_trigger_func</span><span class="p">();</span>
-</span></span></code></pre></div>
+</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
+    <h3 id="configure-the-ddl-replication">
+        Configure the DDL replication
+        <a data-clipboard-text="https://doc.rockdata.net/admin/ddl-subscription/#configure-the-ddl-replication" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Configure the DDL replication" aria-label="Anchor to: Configure the DDL replication" href="#configure-the-ddl-replication">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p>You can configure the replication of DDL commands by modifying the table level trigger function definition. For example, we can modify the definition of the above table level trigger function <code>audit.ddl_sub_trigger_func</code> to limit the schemas and object types involved in the replicated DDL commands as follows:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">FUNCTION</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_sub_trigger_func</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="k">RETURNS</span> <span class="k">trigger</span> <span class="k">AS</span> <span class="sh">$$</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">BEGIN</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">IF</span><span class="w"> </span><span class="n">NEW</span><span class="mf">.</span><span class="n">schema_name</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;testschema&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;myschema&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AND</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="n">NEW</span><span class="mf">.</span><span class="n">object_type</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;table&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;index&#39;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">THEN</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">EXECUTE</span><span class="w"> </span><span class="n">NEW</span><span class="mf">.</span><span class="n">command</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">END</span><span class="w"> </span><span class="k">IF</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">RETURN</span><span class="w"> </span><span class="n">NEW</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">END</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="sh">$$</span> <span class="k">LANGUAGE</span> <span class="s1">plpgsql</span><span class="p">;</span>
+</span></span></code></pre></div><p>In the example above, we limit the schemas involved in DDL commands to <code>testschema</code> and <code>myschema</code>, and limit the object types to <code>table</code> and <code>index</code>.</p>
+
   </article>
 
 

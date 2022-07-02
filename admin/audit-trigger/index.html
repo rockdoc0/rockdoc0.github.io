@@ -8,8 +8,7 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Create Audit Table Audit DDL Commands Audit DML Commands  Create trigger function Audit DML commands on tables        PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can audit DDL commands with event triggers:
- In Redrock Postgres, users and tablespaces are database-level objects." />
+  <meta name="description" content="Create Audit Table Audit DDL Commands  Create event trigger capturing DDL commands Configure auditing of DDL commands   Audit DML Commands  Create trigger function Audit DML commands on tables        PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can audit DDL commands with event triggers:" />
 
     <title>Audit Logging | Redrock Documentation</title>
 
@@ -36,23 +35,21 @@
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Create Audit Table Audit DDL Commands Audit DML Commands  Create trigger function Audit DML commands on tables        PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can audit DDL commands with event triggers:
- In Redrock Postgres, users and tablespaces are database-level objects." />
+  <meta property="og:description" content="Create Audit Table Audit DDL Commands  Create event trigger capturing DDL commands Configure auditing of DDL commands   Audit DML Commands  Create trigger function Audit DML commands on tables        PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can audit DDL commands with event triggers:" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/admin/audit-trigger/" />
 
 <meta property="article:section" content="Admin" />
     <meta
       property="article:modified_time"
-      content="2022-06-30T22:45:13+08:00"
+      content="2022-07-02T19:36:23+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Audit Logging" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Create Audit Table Audit DDL Commands Audit DML Commands  Create trigger function Audit DML commands on tables        PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can audit DDL commands with event triggers:
- In Redrock Postgres, users and tablespaces are database-level objects." />
+  <meta name="twitter:description" content="Create Audit Table Audit DDL Commands  Create event trigger capturing DDL commands Configure auditing of DDL commands   Audit DML Commands  Create trigger function Audit DML commands on tables        PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can audit DDL commands with event triggers:" />
 
 
   <script type="application/ld+json">
@@ -63,9 +60,9 @@
       "name": "Audit Logging",
       "url" : "https://doc.rockdata.net/admin/audit-trigger/",
       "headline": "Audit Logging",
-      "description": "Create Audit Table Audit DDL Commands Audit DML Commands  Create trigger function Audit DML commands on tables        PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can audit DDL commands with event triggers:\n In Redrock Postgres, users and tablespaces are database-level objects.",
+      "description": "Create Audit Table Audit DDL Commands  Create event trigger capturing DDL commands Configure auditing of DDL commands   Audit DML Commands  Create trigger function Audit DML commands on tables        PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database. Redrock Postgres makes the following improvements to PostgreSQL so that users can audit DDL commands with event triggers:",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "529",
+      "wordCount" : "668",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -76,7 +73,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-30T22:45:13.00Z",
+      "dateModified": "2022-07-02T19:36:23.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2502,7 +2499,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     <div class="gdoc-toc gdoc-toc__level--3">
       <nav id="TableOfContents"><ul>
         <li><a href="#create-audit-table">Create Audit Table</a></li>
-        <li><a href="#audit-ddl-commands">Audit DDL Commands</a></li>
+        <li><a href="#audit-ddl-commands">Audit DDL Commands</a>
+          <ul>
+            <li><a href="#create-event-trigger-capturing-ddl-commands">Create event trigger capturing DDL commands</a></li>
+            <li><a href="#configure-auditing-of-ddl-commands">Configure auditing of DDL commands</a></li>
+          </ul>
+        </li>
         <li><a href="#audit-dml-commands">Audit DML Commands</a>
           <ul>
             <li><a href="#create-trigger-function">Create trigger function</a></li>
@@ -2574,7 +2576,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 <tr>
 <td><code>object_type</code></td>
-<td>Type of the object</td>
+<td>Type of the object. Possible types are <code>table</code>, <code>index</code>, <code>sequence</code>, <code>view</code>, <code>materialized view</code>, <code>foreign table</code>, <code>type</code>, <code>cast</code>, <code>collation</code>, <code>rule</code>, <code>trigger</code>, <code>schema</code>, <code>role</code>, <code>tablespace</code>, <code>foreign data wrapper</code>, <code>server</code>, <code>user mapping</code>, <code>extension</code>, <code>policy</code>, <code>publication</code> and <code>subscription</code>.</td>
 </tr>
 <tr>
 <td><code>schema_name</code></td>
@@ -2598,7 +2600,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 <tr>
 <td><code>command_tag</code></td>
-<td>Command tag</td>
+<td>Command tag. Possible values see <a
+  class="gdoc-markdown__link"
+  href="/features/event-triggers/#event-trigger-firing-matrix"
+  
+>Event Trigger Support by Command Tag</a>.</td>
 </tr>
 <tr>
 <td><code>command</code></td>
@@ -2614,7 +2620,15 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         </a>
     </h2>
 </div>
-<p>Creating a event trigger capturing DDL commands, and record DDL commands in the audit log table:</p>
+<p>We can use event trigger to capture DDL events that occur in the database, and record DDL commands into the audit log table.</p>
+<div class="gdoc-page__anchorwrap">
+    <h3 id="create-event-trigger-capturing-ddl-commands">
+        Create event trigger capturing DDL commands
+        <a data-clipboard-text="https://doc.rockdata.net/admin/audit-trigger/#create-event-trigger-capturing-ddl-commands" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Create event trigger capturing DDL commands" aria-label="Anchor to: Create event trigger capturing DDL commands" href="#create-event-trigger-capturing-ddl-commands">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="c1">-- create function for event trigger
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">FUNCTION</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_trigger_func</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">  <span class="k">RETURNS</span> <span class="n">event_trigger</span> <span class="k">AS</span> <span class="sh">$$</span><span class="w">
@@ -2643,6 +2657,29 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <div class="gdoc-hint__text">After the preceding commands are executed, your DDL commands will be recorded in the table <code>audit.logged_actions</code>.</div>
 </blockquote>
 
+<div class="gdoc-page__anchorwrap">
+    <h3 id="configure-auditing-of-ddl-commands">
+        Configure auditing of DDL commands
+        <a data-clipboard-text="https://doc.rockdata.net/admin/audit-trigger/#configure-auditing-of-ddl-commands" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Configure auditing of DDL commands" aria-label="Anchor to: Configure auditing of DDL commands" href="#configure-auditing-of-ddl-commands">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p>You can configure the auditing of DDL commands by modifying the DDL event trigger function definition. For example, we can modify the definition of the above event trigger function <code>audit.ddl_trigger_func</code> to limit the object types involved in the audited DDL commands as follows:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">FUNCTION</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_trigger_func</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="k">RETURNS</span> <span class="n">event_trigger</span> <span class="k">AS</span> <span class="sh">$$</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">BEGIN</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">audit</span><span class="mf">.</span><span class="n">logged_actions</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="n">now</span><span class="p">(),</span><span class="w"> </span><span class="k">current_user</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">           </span><span class="n">object_type</span><span class="p">,</span><span class="w"> </span><span class="n">schema_name</span><span class="p">,</span><span class="w"> </span><span class="n">object_identity</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">           </span><span class="n">current_setting</span><span class="p">(</span><span class="s1">&#39;application_name&#39;</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">           </span><span class="n">inet_client_addr</span><span class="p">(),</span><span class="w"> </span><span class="n">inet_client_port</span><span class="p">(),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">           </span><span class="n">command_tag</span><span class="p">,</span><span class="w"> </span><span class="n">pg_ddl_command_deparse</span><span class="p">(</span><span class="n">command</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">FROM</span><span class="w"> </span><span class="n">pg_event_trigger_ddl_commands</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">WHERE</span><span class="w"> </span><span class="n">object_type</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;table&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;role&#39;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">END</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="sh">$$</span> <span class="k">LANGUAGE</span> <span class="s1">plpgsql</span><span class="p">;</span>
+</span></span></code></pre></div><p>In the example above, we limit the object types involved in DDL commands to <code>table</code> and <code>role</code>.</p>
 <div class="gdoc-page__anchorwrap">
     <h2 id="audit-dml-commands">
         Audit DML Commands
