@@ -8,9 +8,10 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Redrock Postgres Database Product Documentation" />
+  <meta name="description" content="Prerequisites and Configuration Changes Schema Dumps Publication/Subscription creation Verification Clean up      We can make an online upgrade through logical replication. While logical replication can help to achieve a zero-downtime, online upgrade, there are still some things to consider.
+Logical replication can be useful if you have a few test databases that you don’t want to replicate to the upgrade destination. This is possible with logical replication, where pg_upgrade is all or nothing." />
 
-    <title>Tags | Redrock Documentation</title>
+    <title>Online Upgrades | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -31,23 +32,64 @@
     
   <meta
     property="og:title"
-    content="Tags"
+    content="Online Upgrades"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Redrock Postgres Database Product Documentation" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://doc.rockdata.net/tags/" />
+  <meta property="og:description" content="Prerequisites and Configuration Changes Schema Dumps Publication/Subscription creation Verification Clean up      We can make an online upgrade through logical replication. While logical replication can help to achieve a zero-downtime, online upgrade, there are still some things to consider.
+Logical replication can be useful if you have a few test databases that you don’t want to replicate to the upgrade destination. This is possible with logical replication, where pg_upgrade is all or nothing." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://doc.rockdata.net/admin/online-upgrade/" />
 
-
+<meta property="article:section" content="Admin" />
+    <meta
+      property="article:modified_time"
+      content="2022-07-04T21:35:40+08:00"
+    />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Tags" />
+<meta name="twitter:title" content="Online Upgrades" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Redrock Postgres Database Product Documentation" />
+  <meta name="twitter:description" content="Prerequisites and Configuration Changes Schema Dumps Publication/Subscription creation Verification Clean up      We can make an online upgrade through logical replication. While logical replication can help to achieve a zero-downtime, online upgrade, there are still some things to consider.
+Logical replication can be useful if you have a few test databases that you don’t want to replicate to the upgrade destination. This is possible with logical replication, where pg_upgrade is all or nothing." />
 
 
+  <script type="application/ld+json">
+  {
+      "@context": "http://schema.org",
+      "@type": "TechArticle",
+      "articleSection": "Admin",
+      "name": "Online Upgrades",
+      "url" : "https://doc.rockdata.net/admin/online-upgrade/",
+      "headline": "Online Upgrades",
+      "description": "Prerequisites and Configuration Changes Schema Dumps Publication\/Subscription creation Verification Clean up      We can make an online upgrade through logical replication. While logical replication can help to achieve a zero-downtime, online upgrade, there are still some things to consider.\nLogical replication can be useful if you have a few test databases that you don’t want to replicate to the upgrade destination. This is possible with logical replication, where pg_upgrade is all or nothing.",
+      "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
+      "wordCount" : "853",
+      "inLanguage": "en",
+      "isFamilyFriendly": "true",
+      "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://doc.rockdata.net/admin/online-upgrade/"
+      },
+      "copyrightHolder" : "Redrock Documentation",
+      "copyrightYear" : "0001",
+      "dateCreated": "0001-01-01T00:00:00.00Z",
+      "datePublished": "0001-01-01T00:00:00.00Z",
+      "dateModified": "2022-07-04T21:35:40.00Z",
+      "publisher":{
+          "@type":"Organization",
+          "name": "Redrock Documentation",
+          "url": "https://doc.rockdata.net/",
+          "logo": {
+              "@type": "ImageObject",
+              "url": "https://doc.rockdata.net/brand.svg",
+              "width":"32",
+              "height":"32"
+          }
+      }
+  }
+  </script>
 
 
     <script src="/js/main-4f8bb62c.bundle.min.js"></script>
@@ -110,7 +152,7 @@
   href="/custom.css"
   media="all"
 />
-  <link href="https://doc.rockdata.net/tags/" rel="canonical" type="text/html" />
+  <link href="https://doc.rockdata.net/admin/online-upgrade/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -717,7 +759,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <a
                   class="flex gdoc-language__entry"
                   title="简体中文"
-                  href="/zh-cn/tags/"
+                  href="/zh-cn/admin/online-upgrade/"
                   hreflang="zh-cn"
                   lang="zh-cn"
                 >
@@ -1632,7 +1674,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               type="checkbox"
               
                 class="gdoc-nav__toggle" id="navtree-d9ef83eb"
-                
+                checked
               
             />
             <label
@@ -1830,7 +1872,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <span class="flex">
                   <a
                     href="/admin/online-upgrade/"
-                    class="gdoc-nav__entry"
+                    class="gdoc-nav__entry is-active"
                   >
                     Online Upgrades
                   </a>
@@ -2260,14 +2302,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   </section>
 
   
-    <section class="gdoc-nav--tags">
-      <h2>Tags</h2>
-      <ul class="gdoc-nav__list">
-        
-        
-      </ul>
-    </section>
-  
 
 
   <section class="gdoc-nav--more">
@@ -2439,6 +2473,219 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         <div class="gdoc-page">
           
   
+
+
+  
+
+
+
+
+
+
+<div
+  class="gdoc-page__header flex flex-wrap
+  
+    justify-between
+  
+  
+  "
+  itemprop="breadcrumb"
+>
+  
+    <div>
+      <svg class="gdoc-icon gdoc_path hidden-mobile"><use xlink:href="#gdoc_path"></use></svg>
+      <ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+        
+        
+        
+        
+  
+  
+    
+    
+    
+    
+  
+  
+    
+    
+    
+    
+  
+  
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/admin/' href='/admin/'><span itemprop='name'>Server Administration</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Online Upgrades</span><meta itemprop='position' content='3' /></li>
+  
+
+  
+
+  
+
+      </ol>
+    </div>
+  
+  
+    <div>
+      <span class="editpage">
+        <svg class="gdoc-icon gdoc_code"><use xlink:href="#gdoc_code"></use></svg>
+        <a
+          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/en/admin/online-upgrade.md"
+        >
+          Edit page
+        </a>
+      </span>
+    </div>
+  
+</div>
+
+
+
+  <article
+    class="gdoc-markdown gdoc-markdown__align--left"
+  >
+    <h1>Online Upgrades</h1>
+    <div class="gdoc-toc gdoc-toc__level--3">
+      <nav id="TableOfContents"><ul>
+        <li><a href="#prerequisites-and-configuration-changes">Prerequisites and Configuration Changes</a></li>
+        <li><a href="#schema-dumps">Schema Dumps</a></li>
+        <li><a href="#publicationsubscription-creation">Publication/Subscription creation</a></li>
+        <li><a href="#verification">Verification</a></li>
+        <li><a href="#clean-up">Clean up</a></li>
+      </ul></nav>
+      <hr />
+    </div>
+<p>We can make an online upgrade through <a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/logical-replication.html"
+  
+>logical replication</a>. While logical replication can help to achieve a zero-downtime, online upgrade, there are still some things to consider.</p>
+<p><a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/logical-replication.html"
+  
+>Logical replication</a> can be useful if you have a few test databases that you don’t want to replicate to the upgrade destination. This is possible with logical replication, where pg_upgrade is all or nothing.</p>
+<p>If your database is large, it can take a bit of time to traverse the network. Additionally, this upgrade method is only capable of &ldquo;per DB&rdquo; or &ldquo;per table&rdquo; replication unlike pg_upgrade. We’ll be going over the former in the steps ahead.</p>
+<p>There are quite a few preliminary steps needed to set up logical replication for an upgrade. For example, you&rsquo;ll need to change the <code>wal_level</code> in the postgresql.conf to <code>logical</code>, which will require a restart of the cluster.</p>
+<p>Throughout this section we&rsquo;re going to perform an online upgrade on the &ldquo;lrtest&rdquo; database.</p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="prerequisites-and-configuration-changes">
+        Prerequisites and Configuration Changes
+        <a data-clipboard-text="https://doc.rockdata.net/admin/online-upgrade/#prerequisites-and-configuration-changes" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Prerequisites and Configuration Changes" aria-label="Anchor to: Prerequisites and Configuration Changes" href="#prerequisites-and-configuration-changes">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>Create Primary Keys if you don&rsquo;t already have primary keys in use for each table that you plan to replicate. This query shows you which tables don’t have primary keys. This should show 0 tables before you start the upgrade.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span>
+</span></span><span class="line"><span class="cl">  <span class="n">n</span><span class="mf">.</span><span class="n">nspname</span> <span class="k">as</span> <span class="k">schema</span><span class="p">,</span> <span class="n">c</span><span class="mf">.</span><span class="n">relname</span> <span class="k">as</span> <span class="k">table</span>
+</span></span><span class="line"><span class="cl"><span class="k">FROM</span> <span class="n">pg_class</span> <span class="n">c</span> <span class="k">JOIN</span> <span class="n">pg_namespace</span> <span class="n">n</span>
+</span></span><span class="line"><span class="cl">  <span class="k">ON</span> <span class="n">n</span><span class="mf">.</span><span class="n">oid</span> <span class="o">=</span> <span class="n">c</span><span class="mf">.</span><span class="n">relnamespace</span>
+</span></span><span class="line"><span class="cl"><span class="k">WHERE</span> <span class="n">c</span><span class="mf">.</span><span class="n">relkind</span> <span class="o">=</span> <span class="s1">&#39;r&#39;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">AND</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="k">SELECT</span> <span class="mf">1</span> <span class="k">FROM</span> <span class="n">pg_constraint</span> <span class="n">con</span>
+</span></span><span class="line"><span class="cl">      <span class="k">WHERE</span> <span class="n">con</span><span class="mf">.</span><span class="n">conrelid</span> <span class="o">=</span> <span class="n">c</span><span class="mf">.</span><span class="n">oid</span> <span class="k">AND</span> <span class="n">con</span><span class="mf">.</span><span class="n">contype</span> <span class="o">=</span> <span class="s1">&#39;p&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">AND</span> <span class="n">n</span><span class="mf">.</span><span class="n">nspname</span> <span class="k">NOT</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">&#39;pg_catalog&#39;</span><span class="p">,</span> <span class="s1">&#39;pg_recyclebin&#39;</span><span class="p">,</span> <span class="s1">&#39;information_schema&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> <span class="k">schema</span> <span class="o">|</span> <span class="k">table</span>
+</span></span><span class="line"><span class="cl"><span class="c1">--------+-------
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">(</span><span class="mf">0</span> <span class="k">rows</span><span class="p">)</span>
+</span></span></code></pre></div><p>If you don&rsquo;t get a value of 0 rows here, stop and solve for that by creating primary keys on your tables. Another important thing to note is that if you’ve tuned your postgresql.conf for memory, max connections, etc., those parameters are not replicated in the logical replication process. As always, it’s incredibly important to test your application on the newest Redrock Postgres version and ensure the destination postgresql.conf is tuned appropriately.</p>
+<p>We need to allow for replication connections. Let’s edit the pg_hba.conf on both nodes (substitute 0.0.0.0/0 to match the appropriate IP/CIDR). Since we’re changing the pg_hba.conf on both nodes, we’ll need to restart both nodes later on. Add the following lines, but keep in mind that the pg_hba.conf is read from top to bottom. This means you&rsquo;ll need to place these lines appropriately per the <a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/auth-pg-hba-conf.html"
+  
+>documentation</a>:</p>
+<pre tabindex="0"><code>host   lrtest  logicalrep  192.168.1.51/32  md5
+</code></pre><p>Since logical replication requires a replication role/user, we’ll create one now. Here, we’ll technically create a &ldquo;role&rdquo; with login permissions which is effectively a user. We&rsquo;ll do this on the source cluster.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">ROLE</span> <span class="n">logicalrep</span> <span class="n">LOGIN</span> <span class="n">REPLICATION</span> <span class="k">PASSWORD</span> <span class="s1">&#39;pgpass&#39;</span><span class="p">;</span>
+</span></span></code></pre></div><p>Do note that depending on your log settings, the password listed here will show in the PostgreSQL logs. I&rsquo;ll also set <code>wal_level</code> to <code>logical</code> before I connect to the <code>lrtest</code> user while I’m still connected.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">ALTER</span> <span class="k">SYSTEM</span> <span class="k">SET</span> <span class="n">wal_level</span> <span class="k">TO</span> <span class="n">logical</span><span class="p">;</span>
+</span></span></code></pre></div><p>We&rsquo;ve updated all of the parameters that will require either a reload or a restart at this point. Let’s restart the database (source) so the configuration changes are captured.</p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="schema-dumps">
+        Schema Dumps
+        <a data-clipboard-text="https://doc.rockdata.net/admin/online-upgrade/#schema-dumps" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Schema Dumps" aria-label="Anchor to: Schema Dumps" href="#schema-dumps">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>For the source database you want to replicate, run a schema only dump. This will allow us to restore the schema information on the destination.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pg_dump -Fc -s -d lrtest -U postgres -f /tmp/lrtest_schema.dmp
+</span></span></code></pre></div><p>We need to do this step because schema information is <em>not</em> replicated over in logical replication. Keep this in mind should you change schema information on your source with logical replication in place. Next, copy the schema dump to the destination location and restore.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pg_restore -C -d postgres -U postgres /tmp/lrtest_schema.dmp
+</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
+    <h2 id="publicationsubscription-creation">
+        Publication/Subscription creation
+        <a data-clipboard-text="https://doc.rockdata.net/admin/online-upgrade/#publicationsubscription-creation" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Publication/Subscription creation" aria-label="Anchor to: Publication/Subscription creation" href="#publicationsubscription-creation">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>Now that the schemas are all in place on the destination, we can create the publication by running the following on the source cluster. As mentioned above, I’m upgrading all tables in the database. If you only wanted to replicate a single table, but had multiple tables in the database, you would pass FOR TABLE, per the <a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/sql-createpublication.html"
+  
+>documentation</a>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="n">PUBLICATION</span> <span class="n">lrtest_upgrade</span> <span class="k">FOR</span> <span class="k">ALL</span> <span class="k">TABLES</span><span class="p">;</span>
+</span></span></code></pre></div><p>Subscribe all tables data and changes:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="n">SUBSCRIPTION</span> <span class="n">lrtest_upgrade</span> <span class="k">CONNECTION</span>
+</span></span><span class="line"><span class="cl">  <span class="s1">&#39;host=192.168.1.50 dbname=lrtest user=logicalrep password=pgpass&#39;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">PUBLICATION</span> <span class="n">lrtest_upgrade</span><span class="p">;</span>
+</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
+    <h2 id="verification">
+        Verification
+        <a data-clipboard-text="https://doc.rockdata.net/admin/online-upgrade/#verification" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Verification" aria-label="Anchor to: Verification" href="#verification">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>At this point everything looks good in the logs, but we should verify.</p>
+<p><strong>To verify the data is present on the destination</strong>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">testtbl</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="k">count</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">-------
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">   </span><span class="mi">100</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">row</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></div><p><strong>Verify that number with the number on the source</strong>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">testtbl</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="k">count</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">-------
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">   </span><span class="mi">100</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">row</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></div><p>After verifying the row count matches the source, let’s add a row to check and ensure it carries over from the source to the destination.</p>
+<p><strong>Create row</strong>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">testtbl</span><span class="w"> </span><span class="k">VALUES</span><span class="p">(</span><span class="k">default</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;rockdata&#39;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="s1">&#39;8437276045&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;redrock data software&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;info@rockdata.net&#39;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">testtbl</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;rockdata&#39;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="n">id</span><span class="w">  </span><span class="o">|</span><span class="w">	</span><span class="n">name</span><span class="w">    </span><span class="o">|</span><span class="w">    </span><span class="n">phone</span><span class="w">   </span><span class="o">|</span><span class="w">       </span><span class="n">company</span><span class="w">         </span><span class="o">|</span><span class="w">       </span><span class="n">email</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">-----+----------+------------+-----------------------+-------------------
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w"> </span><span class="mi">101</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">rockdata</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">8437276045</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">redrock</span><span class="w"> </span><span class="k">data</span><span class="w"> </span><span class="n">software</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">info</span><span class="o">@</span><span class="n">rockdata</span><span class="p">.</span><span class="n">net</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">row</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></div><p><strong>Check for row on destination</strong>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">testtbl</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;rockdata&#39;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="n">id</span><span class="w">  </span><span class="o">|</span><span class="w">	</span><span class="n">name</span><span class="w">    </span><span class="o">|</span><span class="w">    </span><span class="n">phone</span><span class="w">   </span><span class="o">|</span><span class="w">       </span><span class="n">company</span><span class="w">         </span><span class="o">|</span><span class="w">       </span><span class="n">email</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">-----+----------+------------+-----------------------+-------------------
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w"> </span><span class="mi">101</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">rockdata</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">8437276045</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">redrock</span><span class="w"> </span><span class="k">data</span><span class="w"> </span><span class="n">software</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">info</span><span class="o">@</span><span class="n">rockdata</span><span class="p">.</span><span class="n">net</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">row</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">testtbl</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="k">count</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">-------
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">   </span><span class="mi">101</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">row</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></div><div class="gdoc-page__anchorwrap">
+    <h2 id="clean-up">
+        Clean up
+        <a data-clipboard-text="https://doc.rockdata.net/admin/online-upgrade/#clean-up" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Clean up" aria-label="Anchor to: Clean up" href="#clean-up">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>The original 100 rows from source cluster, have successfully replicated over to the destination cluster. We’ve even gone a step further by ensuring that post upgrade replication works if a new row is added. At this point with logical replication running, you can leave it in place until you are ready to do the cut-over. If all of your data has been replicated, and you&rsquo;ve already done the cut-over, you can drop the subscription.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">DROP</span> <span class="n">SUBSCRIPTION</span> <span class="n">lrtest_upgrade</span><span class="p">;</span>
+</span></span></code></pre></div><p>Now that the online upgrade procedure has successfully completed, we can remove the old cluster if you no longer need it around.</p>
+
+  </article>
 
 
 
