@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="color-toggle-hidden">
+<html lang="zh-cn" class="color-toggle-hidden">
   <head>
     <meta charset="UTF-8" />
 <meta name="referrer" content="no-referrer" />
@@ -8,10 +8,12 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Prerequisites and Configuration Changes Schema Dumps Publication/Subscription creation Verification Clean up      We can make an online upgrade through logical replication. While logical replication can help to achieve a zero-downtime, online upgrade, there are still some things to consider.
-Logical replication can be useful if you have a few test databases that you don’t want to replicate to the upgrade destination. This is possible with logical replication, where pg_upgrade is all or nothing." />
+  <meta name="description" content="初始检查 配置修改 模式转储 创建发布和订阅 数据校验 清理      PostgreSQL 提供了 逻辑复制 的能力，通过逻辑复制可以实现零停机的在线迁移，在线迁移可以应用在如下这些场景：
+ 升级数据库软件的版本； 升级操作系统软件的版本，或者变更操作系统类型，比如从Windows变更成Linux； 升级硬件的规格，或者变更硬件的架构，比如从X86变更成ARM； 调整数据库部署架构，比如将一个大的数据库拆分成多个小的数据库；  如果您的数据库很大，则可能需要一些时间来通过网络进行传输。 另外，基于逻辑复制的在线迁移只支持以数据库为单位或以表为单位的迁移。 我们将在下面的步骤中介绍以数据库为单位的迁移。在本节中，我们将对 &ldquo;lrtest&rdquo; 数据库进行在线迁移。
+初始检查     如果您还没有为您计划复制的每个表使用主键，请创建主键。下面的查询会显示出哪些表没有主键。在您开始迁移之前查询应该显示为 0 个表。
+SELECT n.nspname as schema, c.relname as table FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace WHERE c.relkind = &#39;r&#39; AND NOT EXISTS ( SELECT 1 FROM pg_constraint con WHERE con.conrelid = c." />
 
-    <title>Online Upgrades | Redrock Documentation</title>
+    <title>在线迁移 | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -32,27 +34,31 @@ Logical replication can be useful if you have a few test databases that you don�
     
   <meta
     property="og:title"
-    content="Online Upgrades"
+    content="在线迁移"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Prerequisites and Configuration Changes Schema Dumps Publication/Subscription creation Verification Clean up      We can make an online upgrade through logical replication. While logical replication can help to achieve a zero-downtime, online upgrade, there are still some things to consider.
-Logical replication can be useful if you have a few test databases that you don’t want to replicate to the upgrade destination. This is possible with logical replication, where pg_upgrade is all or nothing." />
+  <meta property="og:description" content="初始检查 配置修改 模式转储 创建发布和订阅 数据校验 清理      PostgreSQL 提供了 逻辑复制 的能力，通过逻辑复制可以实现零停机的在线迁移，在线迁移可以应用在如下这些场景：
+ 升级数据库软件的版本； 升级操作系统软件的版本，或者变更操作系统类型，比如从Windows变更成Linux； 升级硬件的规格，或者变更硬件的架构，比如从X86变更成ARM； 调整数据库部署架构，比如将一个大的数据库拆分成多个小的数据库；  如果您的数据库很大，则可能需要一些时间来通过网络进行传输。 另外，基于逻辑复制的在线迁移只支持以数据库为单位或以表为单位的迁移。 我们将在下面的步骤中介绍以数据库为单位的迁移。在本节中，我们将对 “lrtest” 数据库进行在线迁移。
+初始检查     如果您还没有为您计划复制的每个表使用主键，请创建主键。下面的查询会显示出哪些表没有主键。在您开始迁移之前查询应该显示为 0 个表。
+SELECT n.nspname as schema, c.relname as table FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace WHERE c.relkind = &#39;r&#39; AND NOT EXISTS ( SELECT 1 FROM pg_constraint con WHERE con.conrelid = c." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://doc.rockdata.net/admin/online-upgrade/" />
+<meta property="og:url" content="https://doc.rockdata.net/zh-cn/admin/online-migration/" />
 
 <meta property="article:section" content="Admin" />
     <meta
       property="article:modified_time"
-      content="2022-07-04T21:35:40+08:00"
+      content="2022-07-08T17:43:56+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Online Upgrades" />
+<meta name="twitter:title" content="在线迁移" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Prerequisites and Configuration Changes Schema Dumps Publication/Subscription creation Verification Clean up      We can make an online upgrade through logical replication. While logical replication can help to achieve a zero-downtime, online upgrade, there are still some things to consider.
-Logical replication can be useful if you have a few test databases that you don’t want to replicate to the upgrade destination. This is possible with logical replication, where pg_upgrade is all or nothing." />
+  <meta name="twitter:description" content="初始检查 配置修改 模式转储 创建发布和订阅 数据校验 清理      PostgreSQL 提供了 逻辑复制 的能力，通过逻辑复制可以实现零停机的在线迁移，在线迁移可以应用在如下这些场景：
+ 升级数据库软件的版本； 升级操作系统软件的版本，或者变更操作系统类型，比如从Windows变更成Linux； 升级硬件的规格，或者变更硬件的架构，比如从X86变更成ARM； 调整数据库部署架构，比如将一个大的数据库拆分成多个小的数据库；  如果您的数据库很大，则可能需要一些时间来通过网络进行传输。 另外，基于逻辑复制的在线迁移只支持以数据库为单位或以表为单位的迁移。 我们将在下面的步骤中介绍以数据库为单位的迁移。在本节中，我们将对 “lrtest” 数据库进行在线迁移。
+初始检查     如果您还没有为您计划复制的每个表使用主键，请创建主键。下面的查询会显示出哪些表没有主键。在您开始迁移之前查询应该显示为 0 个表。
+SELECT n.nspname as schema, c.relname as table FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace WHERE c.relkind = &#39;r&#39; AND NOT EXISTS ( SELECT 1 FROM pg_constraint con WHERE con.conrelid = c." />
 
 
   <script type="application/ld+json">
@@ -60,23 +66,23 @@ Logical replication can be useful if you have a few test databases that you don�
       "@context": "http://schema.org",
       "@type": "TechArticle",
       "articleSection": "Admin",
-      "name": "Online Upgrades",
-      "url" : "https://doc.rockdata.net/admin/online-upgrade/",
-      "headline": "Online Upgrades",
-      "description": "Prerequisites and Configuration Changes Schema Dumps Publication\/Subscription creation Verification Clean up      We can make an online upgrade through logical replication. While logical replication can help to achieve a zero-downtime, online upgrade, there are still some things to consider.\nLogical replication can be useful if you have a few test databases that you don’t want to replicate to the upgrade destination. This is possible with logical replication, where pg_upgrade is all or nothing.",
+      "name": "在线迁移",
+      "url" : "https://doc.rockdata.net/zh-cn/admin/online-migration/",
+      "headline": "在线迁移",
+      "description": "初始检查 配置修改 模式转储 创建发布和订阅 数据校验 清理      PostgreSQL 提供了 逻辑复制 的能力，通过逻辑复制可以实现零停机的在线迁移，在线迁移可以应用在如下这些场景：\n 升级数据库软件的版本； 升级操作系统软件的版本，或者变更操作系统类型，比如从Windows变更成Linux； 升级硬件的规格，或者变更硬件的架构，比如从X86变更成ARM； 调整数据库部署架构，比如将一个大的数据库拆分成多个小的数据库；  如果您的数据库很大，则可能需要一些时间来通过网络进行传输。 另外，基于逻辑复制的在线迁移只支持以数据库为单位或以表为单位的迁移。 我们将在下面的步骤中介绍以数据库为单位的迁移。在本节中，我们将对 “lrtest” 数据库进行在线迁移。\n初始检查     如果您还没有为您计划复制的每个表使用主键，请创建主键。下面的查询会显示出哪些表没有主键。在您开始迁移之前查询应该显示为 0 个表。\nSELECT n.nspname as schema, c.relname as table FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace WHERE c.relkind = \u0027r\u0027 AND NOT EXISTS ( SELECT 1 FROM pg_constraint con WHERE con.conrelid = c.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "853",
-      "inLanguage": "en",
+      "wordCount" : "196",
+      "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://doc.rockdata.net/admin/online-upgrade/"
+          "@id": "https://doc.rockdata.net/zh-cn/admin/online-migration/"
       },
       "copyrightHolder" : "Redrock Documentation",
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-04T21:35:40.00Z",
+      "dateModified": "2022-07-08T17:43:56.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -152,7 +158,7 @@ Logical replication can be useful if you have a few test databases that you don�
   href="/custom.css"
   media="all"
 />
-  <link href="https://doc.rockdata.net/admin/online-upgrade/" rel="canonical" type="text/html" />
+  <link href="https://doc.rockdata.net/zh-cn/admin/online-migration/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -644,11 +650,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
       <label for="menu-control" class="gdoc-nav__control" tabindex="0">
         <svg class="gdoc-icon gdoc_menu">
-          <title>Open Navigation</title>
+          <title>打开导航</title>
           <use xlink:href="#gdoc_menu"></use>
         </svg>
         <svg class="gdoc-icon gdoc_arrow_back">
-          <title>Close Navigation</title>
+          <title>关闭导航</title>
           <use xlink:href="#gdoc_arrow_back"></use>
         </svg>
       </label>
@@ -714,15 +720,15 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
         <span id="gdoc-dark-mode">
           <svg class="gdoc-icon gdoc_brightness_dark">
-            <title>Toggle Dark/Light/Auto mode</title>
+            <title>切换暗/亮/自动模式</title>
             <use xlink:href="#gdoc_brightness_dark"></use>
           </svg>
           <svg class="gdoc-icon gdoc_brightness_light">
-            <title>Toggle Dark/Light/Auto mode</title>
+            <title>切换暗/亮/自动模式</title>
             <use xlink:href="#gdoc_brightness_light"></use>
           </svg>
           <svg class="gdoc-icon gdoc_brightness_auto">
-            <title>Toggle Dark/Light/Auto mode</title>
+            <title>切换暗/亮/自动模式</title>
             <use xlink:href="#gdoc_brightness_auto"></use>
           </svg>
         </span>
@@ -730,7 +736,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         <span class="gdoc-menu-header__home">
           <a href="https://doc.rockdata.net/" class="gdoc-header__link">
             <svg class="gdoc-icon gdoc_home">
-              <title>Back to homepage</title>
+              <title>返回首页</title>
               <use xlink:href="#gdoc_home"></use>
             </svg>
           </a>
@@ -742,12 +748,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <li>
         
           
+        
+          
             <span class="flex align-center">
               <svg class="gdoc-icon gdoc_language"><use xlink:href="#gdoc_language"></use></svg>
-              <span>EN</span>
+              <span>ZH-CN</span>
             </span>
-          
-        
           
         
 
@@ -758,12 +764,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               <li>
                 <a
                   class="flex gdoc-language__entry"
-                  title="简体中文"
-                  href="/zh-cn/admin/online-upgrade/"
-                  hreflang="zh-cn"
-                  lang="zh-cn"
+                  title="English"
+                  href="/admin/online-migration/"
+                  hreflang="en"
+                  lang="en"
                 >
-                  简体中文
+                  English
                 </a>
               </li>
             
@@ -780,7 +786,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
           <label for="menu-header-control">
             <svg class="gdoc-icon gdoc_keyboard_arrow_right">
               <use xlink:href="#gdoc_keyboard_arrow_right"></use>
-              <title>Close Menu Bar</title>
+              <title>关闭菜单栏</title>
             </svg>
           </label>
         </span>
@@ -788,7 +794,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <label for="menu-header-control" class="gdoc-menu-header__control">
         <svg class="gdoc-icon gdoc_keyboard_arrow_left">
           <use xlink:href="#gdoc_keyboard_arrow_left"></use>
-          <title>Open Menu Bar</title>
+          <title>打开菜单栏</title>
         </svg>
       </label>
     </div>
@@ -808,11 +814,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       type="text"
       id="gdoc-search-input"
       class="gdoc-search__input"
-      placeholder="Search"
-      aria-label="Search"
+      placeholder="搜索"
+      aria-label="搜索"
       maxlength="64"
       data-site-base-url="https://doc.rockdata.net/"
-      data-site-lang="en"
+      data-site-lang="zh-cn"
     />
     <div class="gdoc-search__spinner spinner hidden"></div>
     <ul id="gdoc-search-results" class="gdoc-search__list"></ul>
@@ -822,7 +828,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
 
   <section class="gdoc-nav--main">
-    <h2>Navigation</h2>
+    <h2>导航</h2>
     
       
 
@@ -859,7 +865,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">Usage</span>
+                <span class="flex">使用介绍</span>
               
               
             </label>
@@ -901,10 +907,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/usage/why-redrock/"
+                    href="/zh-cn/usage/why-redrock/"
                     class="gdoc-nav__entry"
                   >
-                    Why Redrock Postgres?
+                    为什么选择Redrock Postgres？
                   </a>
                 </span>
               
@@ -945,10 +951,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/usage/getting-started/"
+                    href="/zh-cn/usage/getting-started/"
                     class="gdoc-nav__entry"
                   >
-                    Getting Started
+                    开始上手
                   </a>
                 </span>
               
@@ -987,22 +993,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-46385245"
+                class="gdoc-nav__toggle" id="navtree-09089698"
                 
               
             />
             <label
               
-                for="navtree-46385245" class="flex justify-between align-center"
+                for="navtree-09089698" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/installation/"
+                    href="/zh-cn/installation/"
                     class="gdoc-nav__entry"
                   >
-                    Installation
+                    安装指导
                   </a>
                 </span>
               
@@ -1053,10 +1059,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/installation/windows/"
+                    href="/zh-cn/installation/windows/"
                     class="gdoc-nav__entry"
                   >
-                    Installing on Windows
+                    Windows 安装指导
                   </a>
                 </span>
               
@@ -1097,10 +1103,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/installation/redhat/"
+                    href="/zh-cn/installation/redhat/"
                     class="gdoc-nav__entry"
                   >
-                    Installing on Red Hat
+                    Red Hat/CentOS 安装指导
                   </a>
                 </span>
               
@@ -1141,321 +1147,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/installation/debian/"
+                    href="/zh-cn/installation/debian/"
                     class="gdoc-nav__entry"
                   >
-                    Installing on Debian
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-  </ul>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">Features</span>
-              
-              
-            </label>
-
-            
-              
-  
-
-
-  <ul class="gdoc-nav__list">
-    
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/features/undo/"
-                    class="gdoc-nav__entry"
-                  >
-                    Undo
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/features/recyclebin/"
-                    class="gdoc-nav__entry"
-                  >
-                    Recycle Bin
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/features/statement-atomicity/"
-                    class="gdoc-nav__entry"
-                  >
-                    Statement Level Atomicity
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/features/network-tablespace/"
-                    class="gdoc-nav__entry"
-                  >
-                    Network Attached Tablespace
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/features/event-triggers/"
-                    class="gdoc-nav__entry"
-                  >
-                    Event Triggers
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/features/postgres-compatibility/"
-                    class="gdoc-nav__entry"
-                  >
-                    Compatibility with PostgreSQL
+                    Debian 安装指导
                   </a>
                 </span>
               
@@ -1501,7 +1196,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">Advanced</span>
+                <span class="flex">基础特性</span>
               
               
             </label>
@@ -1543,10 +1238,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/advanced/textsearch/"
+                    href="/zh-cn/features/undo/"
                     class="gdoc-nav__entry"
                   >
-                    Chinese Text Search
+                    回滚段
                   </a>
                 </span>
               
@@ -1587,7 +1282,318 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/advanced/plscheme/"
+                    href="/zh-cn/features/recyclebin/"
+                    class="gdoc-nav__entry"
+                  >
+                    回收站
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/features/statement-atomicity/"
+                    class="gdoc-nav__entry"
+                  >
+                    语句级原子性
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/features/network-tablespace/"
+                    class="gdoc-nav__entry"
+                  >
+                    网络表空间
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/features/event-triggers/"
+                    class="gdoc-nav__entry"
+                  >
+                    事件触发器
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/features/postgres-compatibility/"
+                    class="gdoc-nav__entry"
+                  >
+                    同 PostgreSQL 的兼容性
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+  </ul>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">高级特性</span>
+              
+              
+            </label>
+
+            
+              
+  
+
+
+  <ul class="gdoc-nav__list">
+    
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/advanced/textsearch/"
+                    class="gdoc-nav__entry"
+                  >
+                    中文搜索
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/advanced/plscheme/"
                     class="gdoc-nav__entry"
                   >
                     PL/Scheme
@@ -1631,10 +1637,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/advanced/monitor-stats/"
+                    href="/zh-cn/advanced/monitor-stats/"
                     class="gdoc-nav__entry"
                   >
-                    Statistics Views
+                    运行统计视图
                   </a>
                 </span>
               
@@ -1673,22 +1679,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-d9ef83eb"
+                class="gdoc-nav__toggle" id="navtree-2c8f00d6"
                 checked
               
             />
             <label
               
-                for="navtree-d9ef83eb" class="flex justify-between align-center"
+                for="navtree-2c8f00d6" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/admin/"
+                    href="/zh-cn/admin/"
                     class="gdoc-nav__entry"
                   >
-                    Server Administration
+                    数据库管理
                   </a>
                 </span>
               
@@ -1739,10 +1745,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/admin/configuration/"
+                    href="/zh-cn/admin/configuration/"
                     class="gdoc-nav__entry"
                   >
-                    Configuration
+                    参数配置
                   </a>
                 </span>
               
@@ -1783,10 +1789,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/admin/ddl-subscription/"
+                    href="/zh-cn/admin/ddl-subscription/"
                     class="gdoc-nav__entry"
                   >
-                    Subscribe DDL Commands
+                    订阅DDL操作
                   </a>
                 </span>
               
@@ -1827,10 +1833,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/admin/audit-trigger/"
+                    href="/zh-cn/admin/audit-trigger/"
                     class="gdoc-nav__entry"
                   >
-                    Audit Logging
+                    审计日志
                   </a>
                 </span>
               
@@ -1871,10 +1877,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/admin/online-upgrade/"
+                    href="/zh-cn/admin/online-migration/"
                     class="gdoc-nav__entry is-active"
                   >
-                    Online Upgrades
+                    在线迁移
                   </a>
                 </span>
               
@@ -1913,22 +1919,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-4ac8285e"
+                class="gdoc-nav__toggle" id="navtree-a5b7adb4"
                 
               
             />
             <label
               
-                for="navtree-4ac8285e" class="flex justify-between align-center"
+                for="navtree-a5b7adb4" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/commands/"
+                    href="/zh-cn/commands/"
                     class="gdoc-nav__entry"
                   >
-                    SQL Commands
+                    SQL 命令
                   </a>
                 </span>
               
@@ -1979,7 +1985,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/commands/alterundo/"
+                    href="/zh-cn/commands/alterundo/"
                     class="gdoc-nav__entry"
                   >
                     ALTER UNDO
@@ -2015,7 +2021,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/commands/createundo/"
+                    href="/zh-cn/commands/createundo/"
                     class="gdoc-nav__entry"
                   >
                     CREATE UNDO
@@ -2051,7 +2057,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/commands/dropundo/"
+                    href="/zh-cn/commands/dropundo/"
                     class="gdoc-nav__entry"
                   >
                     DROP UNDO
@@ -2087,7 +2093,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/commands/vacuum/"
+                    href="/zh-cn/commands/vacuum/"
                     class="gdoc-nav__entry"
                   >
                     VACUUM
@@ -2117,8 +2123,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
       
         
-      
-        
           
           
           
@@ -2131,22 +2135,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-0ef779f7"
+                class="gdoc-nav__toggle" id="navtree-7171e5f3"
                 
               
             />
             <label
               
-                for="navtree-0ef779f7" class="flex justify-between align-center"
+                for="navtree-7171e5f3" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/catalogs/"
+                    href="/zh-cn/catalogs/"
                     class="gdoc-nav__entry"
                   >
-                    System Catalogs
+                    系统表
                   </a>
                 </span>
               
@@ -2197,7 +2201,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/catalogs/recyclebin/"
+                    href="/zh-cn/catalogs/recyclebin/"
                     class="gdoc-nav__entry"
                   >
                     pg_recyclebin
@@ -2233,7 +2237,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/catalogs/ts-lexicon/"
+                    href="/zh-cn/catalogs/ts-lexicon/"
                     class="gdoc-nav__entry"
                   >
                     pg_ts_lexicon
@@ -2269,7 +2273,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/catalogs/undo/"
+                    href="/zh-cn/catalogs/undo/"
                     class="gdoc-nav__entry"
                   >
                     pg_undo
@@ -2290,6 +2294,8 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
           </li>
         
       
+        
+      
     
   </ul>
 
@@ -2306,7 +2312,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
   <section class="gdoc-nav--more">
     
-      <h2>More</h2>
+      <h2>更多</h2>
       
 
   
@@ -2347,10 +2353,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                   <svg class="gdoc-icon gdoc_notification"><use xlink:href="#gdoc_notification"></use></svg>
                 
                 <a
-                  href="/posts/"
+                  href="/zh-cn/posts/"
                   class="gdoc-nav__entry"
                 >
-                  News
+                  新闻
                 </a>
               </span>
               
@@ -2397,7 +2403,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     https://gitee.com/rockdata/redrock/releases"
                   class="gdoc-nav__entry"
                 >
-                  Releases
+                  下载
                 </a>
               </span>
               
@@ -2444,7 +2450,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     https://gitee.com/rockdata/redrock"
                   class="gdoc-nav__entry"
                 >
-                  View Source
+                  项目仓库
                 </a>
               </span>
               
@@ -2513,7 +2519,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/admin/' href='/admin/'><span itemprop='name'>Server Administration</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Online Upgrades</span><meta itemprop='position' content='3' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/admin/' href='/zh-cn/admin/'><span itemprop='name'>数据库管理</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>在线迁移</span><meta itemprop='position' content='4' /></li>
   
 
   
@@ -2528,9 +2534,9 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <span class="editpage">
         <svg class="gdoc-icon gdoc_code"><use xlink:href="#gdoc_code"></use></svg>
         <a
-          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/en/admin/online-upgrade.md"
+          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/zh-cn/admin/online-migration.md"
         >
-          Edit page
+          编辑页面
         </a>
       </span>
     </div>
@@ -2542,39 +2548,39 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <article
     class="gdoc-markdown gdoc-markdown__align--left"
   >
-    <h1>Online Upgrades</h1>
+    <h1>在线迁移</h1>
     <div class="gdoc-toc gdoc-toc__level--3">
       <nav id="TableOfContents"><ul>
-        <li><a href="#prerequisites-and-configuration-changes">Prerequisites and Configuration Changes</a></li>
-        <li><a href="#schema-dumps">Schema Dumps</a></li>
-        <li><a href="#publicationsubscription-creation">Publication/Subscription creation</a></li>
-        <li><a href="#verification">Verification</a></li>
-        <li><a href="#clean-up">Clean up</a></li>
+        <li><a href="#初始检查">初始检查</a></li>
+        <li><a href="#配置修改">配置修改</a></li>
+        <li><a href="#模式转储">模式转储</a></li>
+        <li><a href="#创建发布和订阅">创建发布和订阅</a></li>
+        <li><a href="#数据校验">数据校验</a></li>
+        <li><a href="#清理">清理</a></li>
       </ul></nav>
       <hr />
     </div>
-<p>We can make an online upgrade through <a
+<p>PostgreSQL 提供了 <a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/logical-replication.html"
+  href="http://www.postgres.cn/docs/12/logical-replication.html"
   
->logical replication</a>. While logical replication can help to achieve a zero-downtime, online upgrade, there are still some things to consider.</p>
-<p><a
-  class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/logical-replication.html"
-  
->Logical replication</a> can be useful if you have a few test databases that you don’t want to replicate to the upgrade destination. This is possible with logical replication, where pg_upgrade is all or nothing.</p>
-<p>If your database is large, it can take a bit of time to traverse the network. Additionally, this upgrade method is only capable of &ldquo;per DB&rdquo; or &ldquo;per table&rdquo; replication unlike pg_upgrade. We’ll be going over the former in the steps ahead.</p>
-<p>There are quite a few preliminary steps needed to set up logical replication for an upgrade. For example, you&rsquo;ll need to change the <code>wal_level</code> in the postgresql.conf to <code>logical</code>, which will require a restart of the cluster.</p>
-<p>Throughout this section we&rsquo;re going to perform an online upgrade on the &ldquo;lrtest&rdquo; database.</p>
+>逻辑复制</a> 的能力，通过逻辑复制可以实现零停机的在线迁移，在线迁移可以应用在如下这些场景：</p>
+<ul>
+<li>升级数据库软件的版本；</li>
+<li>升级操作系统软件的版本，或者变更操作系统类型，比如从Windows变更成Linux；</li>
+<li>升级硬件的规格，或者变更硬件的架构，比如从X86变更成ARM；</li>
+<li>调整数据库部署架构，比如将一个大的数据库拆分成多个小的数据库；</li>
+</ul>
+<p>如果您的数据库很大，则可能需要一些时间来通过网络进行传输。 另外，基于逻辑复制的在线迁移只支持以数据库为单位或以表为单位的迁移。 我们将在下面的步骤中介绍以数据库为单位的迁移。在本节中，我们将对 &ldquo;lrtest&rdquo; 数据库进行在线迁移。</p>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="prerequisites-and-configuration-changes">
-        Prerequisites and Configuration Changes
-        <a data-clipboard-text="https://doc.rockdata.net/admin/online-upgrade/#prerequisites-and-configuration-changes" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Prerequisites and Configuration Changes" aria-label="Anchor to: Prerequisites and Configuration Changes" href="#prerequisites-and-configuration-changes">
+    <h2 id="初始检查">
+        初始检查
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/admin/online-migration/#初始检查" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 初始检查" aria-label="锚定到： 初始检查" href="#%e5%88%9d%e5%a7%8b%e6%a3%80%e6%9f%a5">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>Create Primary Keys if you don&rsquo;t already have primary keys in use for each table that you plan to replicate. This query shows you which tables don’t have primary keys. This should show 0 tables before you start the upgrade.</p>
+<p>如果您还没有为您计划复制的每个表使用主键，请创建主键。下面的查询会显示出哪些表没有主键。在您开始迁移之前查询应该显示为 0 个表。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span>
 </span></span><span class="line"><span class="cl">  <span class="n">n</span><span class="mf">.</span><span class="n">nspname</span> <span class="k">as</span> <span class="k">schema</span><span class="p">,</span> <span class="n">c</span><span class="mf">.</span><span class="n">relname</span> <span class="k">as</span> <span class="k">table</span>
 </span></span><span class="line"><span class="cl"><span class="k">FROM</span> <span class="n">pg_class</span> <span class="n">c</span> <span class="k">JOIN</span> <span class="n">pg_namespace</span> <span class="n">n</span>
@@ -2584,75 +2590,86 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </span></span><span class="line"><span class="cl">    <span class="k">SELECT</span> <span class="mf">1</span> <span class="k">FROM</span> <span class="n">pg_constraint</span> <span class="n">con</span>
 </span></span><span class="line"><span class="cl">      <span class="k">WHERE</span> <span class="n">con</span><span class="mf">.</span><span class="n">conrelid</span> <span class="o">=</span> <span class="n">c</span><span class="mf">.</span><span class="n">oid</span> <span class="k">AND</span> <span class="n">con</span><span class="mf">.</span><span class="n">contype</span> <span class="o">=</span> <span class="s1">&#39;p&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="k">AND</span> <span class="n">n</span><span class="mf">.</span><span class="n">nspname</span> <span class="k">NOT</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">&#39;pg_catalog&#39;</span><span class="p">,</span> <span class="s1">&#39;pg_recyclebin&#39;</span><span class="p">,</span> <span class="s1">&#39;information_schema&#39;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"> <span class="k">schema</span> <span class="o">|</span> <span class="k">table</span>
-</span></span><span class="line"><span class="cl"><span class="c1">--------+-------
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">(</span><span class="mf">0</span> <span class="k">rows</span><span class="p">)</span>
-</span></span></code></pre></div><p>If you don&rsquo;t get a value of 0 rows here, stop and solve for that by creating primary keys on your tables. Another important thing to note is that if you’ve tuned your postgresql.conf for memory, max connections, etc., those parameters are not replicated in the logical replication process. As always, it’s incredibly important to test your application on the newest Redrock Postgres version and ensure the destination postgresql.conf is tuned appropriately.</p>
-<p>We need to allow for replication connections. Let’s edit the pg_hba.conf on both nodes (substitute 0.0.0.0/0 to match the appropriate IP/CIDR). Since we’re changing the pg_hba.conf on both nodes, we’ll need to restart both nodes later on. Add the following lines, but keep in mind that the pg_hba.conf is read from top to bottom. This means you&rsquo;ll need to place these lines appropriately per the <a
-  class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/auth-pg-hba-conf.html"
-  
->documentation</a>:</p>
-<pre tabindex="0"><code>host   lrtest  logicalrep  192.168.1.51/32  md5
-</code></pre><p>Since logical replication requires a replication role/user, we’ll create one now. Here, we’ll technically create a &ldquo;role&rdquo; with login permissions which is effectively a user. We&rsquo;ll do this on the source cluster.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">ROLE</span> <span class="n">logicalrep</span> <span class="n">LOGIN</span> <span class="n">REPLICATION</span> <span class="k">PASSWORD</span> <span class="s1">&#39;pgpass&#39;</span><span class="p">;</span>
-</span></span></code></pre></div><p>Do note that depending on your log settings, the password listed here will show in the PostgreSQL logs. I&rsquo;ll also set <code>wal_level</code> to <code>logical</code> before I connect to the <code>lrtest</code> user while I’m still connected.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">ALTER</span> <span class="k">SYSTEM</span> <span class="k">SET</span> <span class="n">wal_level</span> <span class="k">TO</span> <span class="n">logical</span><span class="p">;</span>
-</span></span></code></pre></div><p>We&rsquo;ve updated all of the parameters that will require either a reload or a restart at this point. Let’s restart the database (source) so the configuration changes are captured.</p>
+</span></span></code></pre></div><p>如果您在此处未获得 0 行的值，您需要在查询出来的表上创建主键来进行表的复制。</p>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="schema-dumps">
-        Schema Dumps
-        <a data-clipboard-text="https://doc.rockdata.net/admin/online-upgrade/#schema-dumps" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Schema Dumps" aria-label="Anchor to: Schema Dumps" href="#schema-dumps">
+    <h2 id="配置修改">
+        配置修改
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/admin/online-migration/#配置修改" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 配置修改" aria-label="锚定到： 配置修改" href="#%e9%85%8d%e7%bd%ae%e4%bf%ae%e6%94%b9">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>For the source database you want to replicate, run a schema only dump. This will allow us to restore the schema information on the destination.</p>
+<p>一个需要注意的重要事项是，如果您已针对内存、最大连接数等调整了 postgresql.conf，则这些参数不会在逻辑复制过程中复制。在迁移之前，请在原数据库和目标数据库上分别执行下面的查询，并对查询结果进行细致的对比。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="k">name</span><span class="p">,</span> <span class="n">setting</span><span class="p">,</span> <span class="n">unit</span><span class="p">,</span> <span class="n">boot_val</span> <span class="k">FROM</span> <span class="n">pg_settings</span><span class="p">;</span>
+</span></span></code></pre></div><p>其中，视图 <a
+  class="gdoc-markdown__link"
+  href="http://www.postgres.cn/docs/12/view-pg-settings.html"
+  
+>pg_settings</a> 提供了数据库服务器运行时的参数信息。如果您在参数对比过程中，发现原数据库和目标数据库存在有差异的参数值，您可能需要在目标数据库修改对应的参数配置。</p>
+<p>我们需要允许复制连接。 让我们在两个节点上编辑 pg_hba.conf（替换 0.0.0.0/0 以匹配适当的 IP/CIDR）。 由于我们要更改两个节点上的 pg_hba.conf，我们需要稍后重新启动两个节点。 添加以下行，但请记住，pg_hba.conf 是从上往下读取的。 这意味着您需要根据 <a
+  class="gdoc-markdown__link"
+  href="http://www.postgres.cn/docs/12/auth-pg-hba-conf.html"
+  
+>文档</a> 适当地放置这些行：</p>
+<pre tabindex="0"><code>host   lrtest  logicalrep  192.168.1.51/32  md5
+</code></pre><p>由于逻辑复制需要复制角色/用户，我们现在将创建一个。在这里，我们将在技术上创建一个具有登录权限的&quot;角色&quot;，它实际上是一个用户。我们将在原数据库上执行此操作。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">ROLE</span> <span class="n">logicalrep</span> <span class="n">LOGIN</span> <span class="n">REPLICATION</span> <span class="k">PASSWORD</span> <span class="s1">&#39;pgpass&#39;</span><span class="p">;</span>
+</span></span></code></pre></div><p>请注意，根据您的日志设置，此处列出的密码将显示在 Postgres 日志中。 在我仍然连接到 <code>lrtest</code> 用户之前，我还将把 <code>wal_level</code> 设置为 <code>logical</code>。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">ALTER</span> <span class="k">SYSTEM</span> <span class="k">SET</span> <span class="n">wal_level</span> <span class="k">TO</span> <span class="n">logical</span><span class="p">;</span>
+</span></span></code></pre></div><p>我们已经更新了此时需要重新加载或重新启动的所有参数。 让我们重新启动原数据库，以便让配置更改生效。</p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="模式转储">
+        模式转储
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/admin/online-migration/#模式转储" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 模式转储" aria-label="锚定到： 模式转储" href="#%e6%a8%a1%e5%bc%8f%e8%bd%ac%e5%82%a8">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>对于要复制的原数据库，使用pg_dump进行模式转储。 这将允许我们在目标数据库恢复模式信息。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pg_dump -Fc -s -d lrtest -U postgres -f /tmp/lrtest_schema.dmp
-</span></span></code></pre></div><p>We need to do this step because schema information is <em>not</em> replicated over in logical replication. Keep this in mind should you change schema information on your source with logical replication in place. Next, copy the schema dump to the destination location and restore.</p>
+</span></span></code></pre></div><p>我们需要执行此步骤，因为模式信息在逻辑复制中不会复制。 如果您会在逻辑复制的过程中更改原数据库上的模式信息，请记住这一点。 接下来，将模式转储导入到目标数据库。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pg_restore -C -d postgres -U postgres /tmp/lrtest_schema.dmp
 </span></span></code></pre></div><div class="gdoc-page__anchorwrap">
-    <h2 id="publicationsubscription-creation">
-        Publication/Subscription creation
-        <a data-clipboard-text="https://doc.rockdata.net/admin/online-upgrade/#publicationsubscription-creation" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Publication/Subscription creation" aria-label="Anchor to: Publication/Subscription creation" href="#publicationsubscription-creation">
+    <h2 id="创建发布和订阅">
+        创建发布和订阅
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/admin/online-migration/#创建发布和订阅" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 创建发布和订阅" aria-label="锚定到： 创建发布和订阅" href="#%e5%88%9b%e5%bb%ba%e5%8f%91%e5%b8%83%e5%92%8c%e8%ae%a2%e9%98%85">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>Now that the schemas are all in place on the destination, we can create the publication by running the following on the source cluster. As mentioned above, I’m upgrading all tables in the database. If you only wanted to replicate a single table, but had multiple tables in the database, you would pass FOR TABLE, per the <a
+<p>现在模式信息已经导入到目标数据库了，我们可以通过在原数据库上运行以下命令来创建发布。 如上所述，我们即将升级数据库中的所有表。 如果您只想复制一个表，但在数据库中有多个表，您可以根据 <a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/sql-createpublication.html"
+  href="http://www.postgres.cn/docs/12/sql-createpublication.html"
   
->documentation</a>.</p>
+>文档</a> 传递 FOR TABLE。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="n">PUBLICATION</span> <span class="n">lrtest_upgrade</span> <span class="k">FOR</span> <span class="k">ALL</span> <span class="k">TABLES</span><span class="p">;</span>
-</span></span></code></pre></div><p>Subscribe all tables data and changes:</p>
+</span></span></code></pre></div><p>订阅所有表数据和更改：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="n">SUBSCRIPTION</span> <span class="n">lrtest_upgrade</span> <span class="k">CONNECTION</span>
 </span></span><span class="line"><span class="cl">  <span class="s1">&#39;host=192.168.1.50 dbname=lrtest user=logicalrep password=pgpass&#39;</span>
 </span></span><span class="line"><span class="cl">  <span class="n">PUBLICATION</span> <span class="n">lrtest_upgrade</span><span class="p">;</span>
 </span></span></code></pre></div><div class="gdoc-page__anchorwrap">
-    <h2 id="verification">
-        Verification
-        <a data-clipboard-text="https://doc.rockdata.net/admin/online-upgrade/#verification" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Verification" aria-label="Anchor to: Verification" href="#verification">
+    <h2 id="数据校验">
+        数据校验
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/admin/online-migration/#数据校验" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 数据校验" aria-label="锚定到： 数据校验" href="#%e6%95%b0%e6%8d%ae%e6%a0%a1%e9%aa%8c">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>At this point everything looks good in the logs, but we should verify.</p>
-<p><strong>To verify the data is present on the destination</strong>:</p>
+<p>此时，日志中的一切看起来都不错，但我们应该验证一下。</p>
+<p>验证数据是否存在于目标数据库：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">testtbl</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="k">count</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">-------
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">   </span><span class="mi">100</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">row</span><span class="p">)</span><span class="w">
-</span></span></span></code></pre></div><p><strong>Verify that number with the number on the source</strong>:</p>
+</span></span></span></code></pre></div><p>使用原数据库的表记录数验证目标数据库的表记录数：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">testtbl</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="k">count</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">-------
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">   </span><span class="mi">100</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">row</span><span class="p">)</span><span class="w">
-</span></span></span></code></pre></div><p>After verifying the row count matches the source, let’s add a row to check and ensure it carries over from the source to the destination.</p>
-<p><strong>Create row</strong>:</p>
+</span></span></span></code></pre></div><p>在验证表记录数与原数据库匹配后，让我们添加一行来检查并确保它从原数据库复制到目标数据库。</p>
+<p>新增行：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">testtbl</span><span class="w"> </span><span class="k">VALUES</span><span class="p">(</span><span class="k">default</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;rockdata&#39;</span><span class="p">,</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="s1">&#39;8437276045&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;redrock data software&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;info@rockdata.net&#39;</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
@@ -2661,7 +2678,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">-----+----------+------------+-----------------------+-------------------
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w"> </span><span class="mi">101</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">rockdata</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">8437276045</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">redrock</span><span class="w"> </span><span class="k">data</span><span class="w"> </span><span class="n">software</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">info</span><span class="o">@</span><span class="n">rockdata</span><span class="p">.</span><span class="n">net</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">row</span><span class="p">)</span><span class="w">
-</span></span></span></code></pre></div><p><strong>Check for row on destination</strong>:</p>
+</span></span></span></code></pre></div><p>检查目标数据库的行：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">testtbl</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;rockdata&#39;</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="n">id</span><span class="w">  </span><span class="o">|</span><span class="w">	</span><span class="n">name</span><span class="w">    </span><span class="o">|</span><span class="w">    </span><span class="n">phone</span><span class="w">   </span><span class="o">|</span><span class="w">       </span><span class="n">company</span><span class="w">         </span><span class="o">|</span><span class="w">       </span><span class="n">email</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">-----+----------+------------+-----------------------+-------------------
@@ -2674,16 +2691,16 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">   </span><span class="mi">101</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">row</span><span class="p">)</span><span class="w">
 </span></span></span></code></pre></div><div class="gdoc-page__anchorwrap">
-    <h2 id="clean-up">
-        Clean up
-        <a data-clipboard-text="https://doc.rockdata.net/admin/online-upgrade/#clean-up" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Clean up" aria-label="Anchor to: Clean up" href="#clean-up">
+    <h2 id="清理">
+        清理
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/admin/online-migration/#清理" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 清理" aria-label="锚定到： 清理" href="#%e6%b8%85%e7%90%86">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>The original 100 rows from source cluster, have successfully replicated over to the destination cluster. We’ve even gone a step further by ensuring that post upgrade replication works if a new row is added. At this point with logical replication running, you can leave it in place until you are ready to do the cut-over. If all of your data has been replicated, and you&rsquo;ve already done the cut-over, you can drop the subscription.</p>
+<p>原数据库中的 100 行记录已成功复制到目标数据库。我们甚至更进一步，确保在添加新行时升级后复制工作正常。此时逻辑复制正在运行，您可以将其保留在原位，直到您准备好进行切换。如果您的所有数据都已复制，并且您已经完成了转换，您可以删除订阅。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">DROP</span> <span class="n">SUBSCRIPTION</span> <span class="n">lrtest_upgrade</span><span class="p">;</span>
-</span></span></code></pre></div><p>Now that the online upgrade procedure has successfully completed, we can remove the old cluster if you no longer need it around.</p>
+</span></span></code></pre></div><p>现在在线升级过程已成功完成，如果您不再需要原数据库，我们可以将其移除。</p>
 
   </article>
 
@@ -2920,14 +2937,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         
           <span class="gdoc-footer__item gdoc-footer__item--row">
             <a href="https://www.rockdata.net/legal-notice/#contact-information" class="gdoc-footer__link">
-              Legal Notice
+              法律声明
             </a>
           </span>
         
         
           <span class="gdoc-footer__item gdoc-footer__item--row">
             <a href="https://www.rockdata.net/legal-notice/#privacy-policy" class="gdoc-footer__link">
-              Privacy Policy
+              隐私政策
             </a>
           </span>
         
@@ -2937,11 +2954,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
       <div class="flex flex-25 justify-end">
         <span class="gdoc-footer__item text-right">
-          <a class="gdoc-footer__link fake-link" href="#" aria-label="Back to top">
+          <a class="gdoc-footer__link fake-link" href="#" aria-label="回到顶部">
             <svg class="gdoc-icon gdoc_keyboard_arrow_up">
               <use xlink:href="#gdoc_keyboard_arrow_up"></use>
             </svg>
-            <span class="hidden-mobile">Back to top</span>
+            <span class="hidden-mobile">回到顶部</span>
           </a>
         </span>
       </div>

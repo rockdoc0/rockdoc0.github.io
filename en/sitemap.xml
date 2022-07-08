@@ -327,17 +327,17 @@
                 href="https://doc.rockdata.net/admin/audit-trigger/"
                 />
   </url><url>
-    <loc>https://doc.rockdata.net/admin/online-upgrade/</loc>
-    <lastmod>2022-07-04T21:35:40+08:00</lastmod>
+    <loc>https://doc.rockdata.net/admin/online-migration/</loc>
+    <lastmod>2022-07-07T08:51:54+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://doc.rockdata.net/zh-cn/admin/online-upgrade/"
+                href="https://doc.rockdata.net/zh-cn/admin/online-migration/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://doc.rockdata.net/admin/online-upgrade/"
+                href="https://doc.rockdata.net/admin/online-migration/"
                 />
   </url><url>
     <loc>https://doc.rockdata.net/posts/initial-release/</loc>
