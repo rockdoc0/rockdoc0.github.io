@@ -8,10 +8,10 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="初始检查 配置修改 迁移模式 迁移表数据 数据校验 清理      PostgreSQL 提供了 逻辑复制 的能力，通过逻辑复制可以实现零停机的在线迁移，在线迁移可以应用在如下这些场景：
- 升级数据库软件的版本； 升级操作系统软件的版本，或者变更操作系统类型，比如从Windows变更成Linux； 升级硬件的规格，或者变更硬件的架构，比如从X86变更成ARM； 调整数据库部署架构，比如将一个大的数据库拆分成多个小的数据库； 迁移数据库部署环境，比如从某一个公有云的服务器迁移到另一个公有云上面；  如果您的数据库很大，则可能需要一些时间来通过网络进行传输。 另外，基于逻辑复制的在线迁移只支持以数据库为单位或以表为单位的迁移。 我们将在下面的步骤中介绍以数据库为单位的迁移。在本节中，我们将对 &ldquo;lrtest&rdquo; 数据库进行在线迁移。
+  <meta name="description" content="初始检查 配置修改 迁移模式 迁移表数据 数据校验 清理      PostgreSQL 提供了逻辑复制的能力，通过逻辑复制可以实现零停机的在线迁移，在线迁移可以应用在如下这些场景：
+ 升级数据库软件的版本； 升级操作系统软件的版本，或者变更操作系统类型，比如从Windows变更成Linux； 升级硬件的规格，或者变更硬件的架构，比如从X86变更成ARM； 调整数据库部署架构，比如将一个大的数据库拆分成多个小的数据库； 迁移数据库部署环境，比如从某一个公有云的服务器迁移到另一个公有云上面；  如果您的数据库很大，则可能需要一些时间来通过网络进行传输。 另外，基于逻辑复制的在线迁移只支持以数据库为单位或以表为单位的迁移。 我们将在下面的步骤中介绍以数据库为单位的迁移。在本节中，我们将对 lrtest 数据库进行在线迁移。
 初始检查     如果您还没有为您计划复制的每个表使用主键，请创建主键。下面的查询会显示出哪些表没有主键。在您开始迁移之前查询应该显示为 0 个表。
-SELECT n.nspname AS schema, c.relname AS table FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace WHERE c.relkind = &#39;r&#39; AND NOT EXISTS ( SELECT 1 FROM pg_constraint con WHERE con.conrelid = c." />
+SELECT n.nspname AS schema, c.relname AS table FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace WHERE c.relkind = &#39;r&#39; AND NOT EXISTS ( SELECT 1 FROM pg_constraint con WHERE con.conrelid = c.oid AND con." />
 
     <title>在线迁移 | Redrock Documentation</title>
 
@@ -38,27 +38,27 @@ SELECT n.nspname AS schema, c.relname AS table FROM pg_class c JOIN pg_namespace
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="初始检查 配置修改 迁移模式 迁移表数据 数据校验 清理      PostgreSQL 提供了 逻辑复制 的能力，通过逻辑复制可以实现零停机的在线迁移，在线迁移可以应用在如下这些场景：
- 升级数据库软件的版本； 升级操作系统软件的版本，或者变更操作系统类型，比如从Windows变更成Linux； 升级硬件的规格，或者变更硬件的架构，比如从X86变更成ARM； 调整数据库部署架构，比如将一个大的数据库拆分成多个小的数据库； 迁移数据库部署环境，比如从某一个公有云的服务器迁移到另一个公有云上面；  如果您的数据库很大，则可能需要一些时间来通过网络进行传输。 另外，基于逻辑复制的在线迁移只支持以数据库为单位或以表为单位的迁移。 我们将在下面的步骤中介绍以数据库为单位的迁移。在本节中，我们将对 “lrtest” 数据库进行在线迁移。
+  <meta property="og:description" content="初始检查 配置修改 迁移模式 迁移表数据 数据校验 清理      PostgreSQL 提供了逻辑复制的能力，通过逻辑复制可以实现零停机的在线迁移，在线迁移可以应用在如下这些场景：
+ 升级数据库软件的版本； 升级操作系统软件的版本，或者变更操作系统类型，比如从Windows变更成Linux； 升级硬件的规格，或者变更硬件的架构，比如从X86变更成ARM； 调整数据库部署架构，比如将一个大的数据库拆分成多个小的数据库； 迁移数据库部署环境，比如从某一个公有云的服务器迁移到另一个公有云上面；  如果您的数据库很大，则可能需要一些时间来通过网络进行传输。 另外，基于逻辑复制的在线迁移只支持以数据库为单位或以表为单位的迁移。 我们将在下面的步骤中介绍以数据库为单位的迁移。在本节中，我们将对 lrtest 数据库进行在线迁移。
 初始检查     如果您还没有为您计划复制的每个表使用主键，请创建主键。下面的查询会显示出哪些表没有主键。在您开始迁移之前查询应该显示为 0 个表。
-SELECT n.nspname AS schema, c.relname AS table FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace WHERE c.relkind = &#39;r&#39; AND NOT EXISTS ( SELECT 1 FROM pg_constraint con WHERE con.conrelid = c." />
+SELECT n.nspname AS schema, c.relname AS table FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace WHERE c.relkind = &#39;r&#39; AND NOT EXISTS ( SELECT 1 FROM pg_constraint con WHERE con.conrelid = c.oid AND con." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/zh-cn/admin/online-migration/" />
 
 <meta property="article:section" content="Admin" />
     <meta
       property="article:modified_time"
-      content="2022-07-09T11:51:55+08:00"
+      content="2022-07-09T17:41:33+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="在线迁移" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="初始检查 配置修改 迁移模式 迁移表数据 数据校验 清理      PostgreSQL 提供了 逻辑复制 的能力，通过逻辑复制可以实现零停机的在线迁移，在线迁移可以应用在如下这些场景：
- 升级数据库软件的版本； 升级操作系统软件的版本，或者变更操作系统类型，比如从Windows变更成Linux； 升级硬件的规格，或者变更硬件的架构，比如从X86变更成ARM； 调整数据库部署架构，比如将一个大的数据库拆分成多个小的数据库； 迁移数据库部署环境，比如从某一个公有云的服务器迁移到另一个公有云上面；  如果您的数据库很大，则可能需要一些时间来通过网络进行传输。 另外，基于逻辑复制的在线迁移只支持以数据库为单位或以表为单位的迁移。 我们将在下面的步骤中介绍以数据库为单位的迁移。在本节中，我们将对 “lrtest” 数据库进行在线迁移。
+  <meta name="twitter:description" content="初始检查 配置修改 迁移模式 迁移表数据 数据校验 清理      PostgreSQL 提供了逻辑复制的能力，通过逻辑复制可以实现零停机的在线迁移，在线迁移可以应用在如下这些场景：
+ 升级数据库软件的版本； 升级操作系统软件的版本，或者变更操作系统类型，比如从Windows变更成Linux； 升级硬件的规格，或者变更硬件的架构，比如从X86变更成ARM； 调整数据库部署架构，比如将一个大的数据库拆分成多个小的数据库； 迁移数据库部署环境，比如从某一个公有云的服务器迁移到另一个公有云上面；  如果您的数据库很大，则可能需要一些时间来通过网络进行传输。 另外，基于逻辑复制的在线迁移只支持以数据库为单位或以表为单位的迁移。 我们将在下面的步骤中介绍以数据库为单位的迁移。在本节中，我们将对 lrtest 数据库进行在线迁移。
 初始检查     如果您还没有为您计划复制的每个表使用主键，请创建主键。下面的查询会显示出哪些表没有主键。在您开始迁移之前查询应该显示为 0 个表。
-SELECT n.nspname AS schema, c.relname AS table FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace WHERE c.relkind = &#39;r&#39; AND NOT EXISTS ( SELECT 1 FROM pg_constraint con WHERE con.conrelid = c." />
+SELECT n.nspname AS schema, c.relname AS table FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace WHERE c.relkind = &#39;r&#39; AND NOT EXISTS ( SELECT 1 FROM pg_constraint con WHERE con.conrelid = c.oid AND con." />
 
 
   <script type="application/ld+json">
@@ -69,9 +69,9 @@ SELECT n.nspname AS schema, c.relname AS table FROM pg_class c JOIN pg_namespace
       "name": "在线迁移",
       "url" : "https://doc.rockdata.net/zh-cn/admin/online-migration/",
       "headline": "在线迁移",
-      "description": "初始检查 配置修改 迁移模式 迁移表数据 数据校验 清理      PostgreSQL 提供了 逻辑复制 的能力，通过逻辑复制可以实现零停机的在线迁移，在线迁移可以应用在如下这些场景：\n 升级数据库软件的版本； 升级操作系统软件的版本，或者变更操作系统类型，比如从Windows变更成Linux； 升级硬件的规格，或者变更硬件的架构，比如从X86变更成ARM； 调整数据库部署架构，比如将一个大的数据库拆分成多个小的数据库； 迁移数据库部署环境，比如从某一个公有云的服务器迁移到另一个公有云上面；  如果您的数据库很大，则可能需要一些时间来通过网络进行传输。 另外，基于逻辑复制的在线迁移只支持以数据库为单位或以表为单位的迁移。 我们将在下面的步骤中介绍以数据库为单位的迁移。在本节中，我们将对 “lrtest” 数据库进行在线迁移。\n初始检查     如果您还没有为您计划复制的每个表使用主键，请创建主键。下面的查询会显示出哪些表没有主键。在您开始迁移之前查询应该显示为 0 个表。\nSELECT n.nspname AS schema, c.relname AS table FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace WHERE c.relkind = \u0027r\u0027 AND NOT EXISTS ( SELECT 1 FROM pg_constraint con WHERE con.conrelid = c.",
+      "description": "初始检查 配置修改 迁移模式 迁移表数据 数据校验 清理      PostgreSQL 提供了逻辑复制的能力，通过逻辑复制可以实现零停机的在线迁移，在线迁移可以应用在如下这些场景：\n 升级数据库软件的版本； 升级操作系统软件的版本，或者变更操作系统类型，比如从Windows变更成Linux； 升级硬件的规格，或者变更硬件的架构，比如从X86变更成ARM； 调整数据库部署架构，比如将一个大的数据库拆分成多个小的数据库； 迁移数据库部署环境，比如从某一个公有云的服务器迁移到另一个公有云上面；  如果您的数据库很大，则可能需要一些时间来通过网络进行传输。 另外，基于逻辑复制的在线迁移只支持以数据库为单位或以表为单位的迁移。 我们将在下面的步骤中介绍以数据库为单位的迁移。在本节中，我们将对 lrtest 数据库进行在线迁移。\n初始检查     如果您还没有为您计划复制的每个表使用主键，请创建主键。下面的查询会显示出哪些表没有主键。在您开始迁移之前查询应该显示为 0 个表。\nSELECT n.nspname AS schema, c.relname AS table FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace WHERE c.relkind = \u0027r\u0027 AND NOT EXISTS ( SELECT 1 FROM pg_constraint con WHERE con.conrelid = c.oid AND con.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "251",
+      "wordCount" : "229",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -82,7 +82,7 @@ SELECT n.nspname AS schema, c.relname AS table FROM pg_class c JOIN pg_namespace
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-09T11:51:55.00Z",
+      "dateModified": "2022-07-09T17:41:33.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2560,11 +2560,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       </ul></nav>
       <hr />
     </div>
-<p>PostgreSQL 提供了 <a
+<p>PostgreSQL 提供了<a
   class="gdoc-markdown__link"
   href="http://www.postgres.cn/docs/12/logical-replication.html"
   
->逻辑复制</a> 的能力，通过逻辑复制可以实现零停机的在线迁移，在线迁移可以应用在如下这些场景：</p>
+>逻辑复制</a>的能力，通过逻辑复制可以实现零停机的在线迁移，在线迁移可以应用在如下这些场景：</p>
 <ul>
 <li>升级数据库软件的版本；</li>
 <li>升级操作系统软件的版本，或者变更操作系统类型，比如从Windows变更成Linux；</li>
@@ -2572,7 +2572,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <li>调整数据库部署架构，比如将一个大的数据库拆分成多个小的数据库；</li>
 <li>迁移数据库部署环境，比如从某一个公有云的服务器迁移到另一个公有云上面；</li>
 </ul>
-<p>如果您的数据库很大，则可能需要一些时间来通过网络进行传输。 另外，基于逻辑复制的在线迁移只支持以数据库为单位或以表为单位的迁移。 我们将在下面的步骤中介绍以数据库为单位的迁移。在本节中，我们将对 &ldquo;lrtest&rdquo; 数据库进行在线迁移。</p>
+<p>如果您的数据库很大，则可能需要一些时间来通过网络进行传输。 另外，基于逻辑复制的在线迁移只支持以数据库为单位或以表为单位的迁移。 我们将在下面的步骤中介绍以数据库为单位的迁移。在本节中，我们将对 <code>lrtest</code> 数据库进行在线迁移。</p>
 <div class="gdoc-page__anchorwrap">
     <h2 id="初始检查">
         初始检查
@@ -2599,24 +2599,24 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         </a>
     </h2>
 </div>
-<p>一个需要注意的重要事项是，如果您已针对内存、最大连接数等调整了 postgresql.conf，则这些参数不会在逻辑复制过程中复制。在迁移之前，请在原数据库和目标数据库上分别执行下面的查询，并对查询结果进行细致的对比。</p>
+<p>一个需要注意的重要事项是，如果您已针对内存、最大连接数等调整了 <code>postgresql.conf</code>，则这些参数不会在逻辑复制过程中复制。在迁移之前，请在原数据库和目标数据库上分别执行下面的查询，并对查询结果进行细致的对比。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="k">name</span><span class="p">,</span> <span class="n">setting</span><span class="p">,</span> <span class="n">unit</span><span class="p">,</span> <span class="n">boot_val</span> <span class="k">FROM</span> <span class="n">pg_settings</span><span class="p">;</span>
 </span></span></code></pre></div><p>其中，视图 <a
   class="gdoc-markdown__link"
   href="http://www.postgres.cn/docs/12/view-pg-settings.html"
   
->pg_settings</a> 提供了数据库服务器运行时的参数信息。如果您在参数对比过程中，发现原数据库和目标数据库存在有差异的参数值，您可能需要在目标数据库修改对应的参数配置。</p>
-<p>我们需要允许复制连接。 让我们在两个节点上编辑 pg_hba.conf（替换 0.0.0.0/0 以匹配适当的 IP/CIDR）。 由于我们要更改两个节点上的 pg_hba.conf，我们需要稍后重新启动两个节点。 添加以下行，但请记住，pg_hba.conf 是从上往下读取的。 这意味着您需要根据 <a
+>pg_settings</a> 提供了数据库服务器运行时的参数信息。如果您在参数对比过程中，发现原数据库和目标数据库存在有差异的参数值，您可能需要在目标数据库修改对应的参数配置，并重启目标数据库，以便让配置更改生效。</p>
+<p>由于逻辑复制需要复制用户，我们将在原数据库上执行下面的查询，创建一个具有复制权限的用户。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">USER</span> <span class="n">logicalrep</span> <span class="n">REPLICATION</span> <span class="k">PASSWORD</span> <span class="s1">&#39;pgpass&#39;</span><span class="p">;</span>
+</span></span></code></pre></div><p>在创建完复制用户后，我们需要更改原数据库上的<code>pg_hba.conf</code>配置文件，以允许目标数据库连接到原数据库上复制数据。由于数据库服务器是从上往下读取<code>pg_hba.conf</code>的，这意味着您需要根据<a
   class="gdoc-markdown__link"
   href="http://www.postgres.cn/docs/12/auth-pg-hba-conf.html"
   
->文档</a> 适当地放置这些行：</p>
+>配置规则</a>适当地放置这些行：</p>
 <pre tabindex="0"><code>host   lrtest  logicalrep  192.168.1.51/32  md5
-</code></pre><p>由于逻辑复制需要复制角色/用户，我们现在将创建一个。在这里，我们将在技术上创建一个具有登录权限的&quot;角色&quot;，它实际上是一个用户。我们将在原数据库上执行此操作。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">ROLE</span> <span class="n">logicalrep</span> <span class="n">LOGIN</span> <span class="n">REPLICATION</span> <span class="k">PASSWORD</span> <span class="s1">&#39;pgpass&#39;</span><span class="p">;</span>
-</span></span></code></pre></div><p>请注意，根据您的日志设置，此处列出的密码将显示在 Postgres 日志中。 在我仍然连接到 <code>lrtest</code> 用户之前，我还将把 <code>wal_level</code> 设置为 <code>logical</code>。</p>
+</code></pre><p>在更改完<code>pg_hba.conf</code>后，我们需要将原数据库的<code>wal_level</code>参数设置为<code>logical</code>。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">ALTER</span> <span class="k">SYSTEM</span> <span class="k">SET</span> <span class="n">wal_level</span> <span class="k">TO</span> <span class="n">logical</span><span class="p">;</span>
-</span></span></code></pre></div><p>我们已经更新了此时需要重新加载或重新启动的所有参数。 让我们重新启动原数据库，以便让配置更改生效。</p>
+</span></span></code></pre></div><p>在我们更改完上面的配置后，我们需要重新启动原数据库，以便让配置更改生效。</p>
 <div class="gdoc-page__anchorwrap">
     <h2 id="迁移模式">
         迁移模式
@@ -2625,19 +2625,28 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         </a>
     </h2>
 </div>
-<p>对于要迁移的原数据库，使用pg_dump进行模式转储。 这将允许我们在目标数据库恢复模式信息。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pg_dump -Fc -s -d lrtest -U postgres -f /tmp/lrtest_schema.dmp
-</span></span></code></pre></div><p>将模式转储导入到目标数据库。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pg_restore -C -d lrtest -U postgres /tmp/lrtest_schema.dmp
-</span></span></code></pre></div><p>在原数据库配置 <a
+<p>对于要迁移的原数据库，使用 <a
+  class="gdoc-markdown__link"
+  href="http://www.postgres.cn/docs/12/app-pgdump.html"
+  
+>pg_dump</a> 进行模式转储。 这将允许我们在目标数据库恢复模式信息。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pg_dump -Fc -s -h 192.168.1.50 -d lrtest -U postgres -f /tmp/lrtest_schema.dmp
+</span></span></code></pre></div><p>使用 <a
+  class="gdoc-markdown__link"
+  href="http://www.postgres.cn/docs/12/app-pgrestore.html"
+  
+>pg_restore</a> 将模式转储导入到目标数据库。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pg_restore -C -h 192.168.1.51 -d lrtest -U postgres /tmp/lrtest_schema.dmp
+</span></span></code></pre></div><p>在原数据库设置<a
   class="gdoc-markdown__link"
   href="/zh-cn/admin/ddl-subscription/#%e8%ae%b0%e5%bd%95%e5%92%8c%e5%8f%91%e5%b8%83ddl%e6%93%8d%e4%bd%9c"
   
->记录和发布DDL操作</a>，并在目标数据库配置 <a
+>记录和发布DDL操作</a>，并在目标数据库设置<a
   class="gdoc-markdown__link"
   href="/zh-cn/admin/ddl-subscription/#%e8%ae%a2%e9%98%85%e5%92%8c%e5%90%8c%e6%ad%a5ddl%e6%93%8d%e4%bd%9c"
   
->订阅和同步DDL操作</a>。这样，在逻辑复制的过程中更改原数据库上的模式信息，就可以实时同步到目标数据库了。</p>
+>订阅和同步DDL操作</a>。请注意，如果您需要在下面的步骤中迁移数据库中的所有表数据，那么您并不需要在原数据库上发布表 <code>audit.ddl_history</code>，同时也不需要在目标数据库上订阅表 <code>audit.ddl_history</code>。</p>
+<p>这样，在逻辑复制的过程中更改原数据库上的模式信息，就可以实时同步到目标数据库了。</p>
 <div class="gdoc-page__anchorwrap">
     <h2 id="迁移表数据">
         迁移表数据
@@ -2646,7 +2655,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         </a>
     </h2>
 </div>
-<p>现在模式信息已经导入到目标数据库了，我们可以通过在原数据库上运行以下命令来创建发布。 如上所述，我们即将迁移数据库中的所有表。 如果您只想复制一个表，但在数据库中有多个表，您可以在使用 <a
+<p>现在模式信息已经导入到目标数据库了，我们可以通过在原数据库上运行以下命令来创建发布。 如上所述，我们即将迁移数据库中的所有表。 如果您只想复制数据库中某些表，您可以在使用 <a
   class="gdoc-markdown__link"
   href="http://www.postgres.cn/docs/12/sql-createpublication.html"
   
@@ -2665,23 +2674,21 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     </h2>
 </div>
 <p>接下来，我们需要验证原数据库和目标数据库的数据是否一致。执行下面的查询，创建用于计算表数据校验和的聚集函数。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">FUNCTION</span> <span class="n">md5_agg_sfunc</span><span class="p">(</span><span class="nb">text</span><span class="p">,</span> <span class="nb">anyelement</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="k">RETURNS</span> <span class="nb">text</span> <span class="k">AS</span> <span class="sh">$$</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">SELECT</span><span class="w"> </span><span class="n">md5</span><span class="p">(</span><span class="err">$</span><span class="mi">1</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="err">$</span><span class="mi">2</span><span class="p">::</span><span class="nb">text</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="sh">$$</span> <span class="k">LANGUAGE</span> <span class="s1">sql</span><span class="p">;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">FUNCTION</span> <span class="n">md5_agg_sfunc</span><span class="p">(</span><span class="nb">text</span><span class="p">,</span> <span class="nb">anyelement</span><span class="p">)</span> <span class="k">RETURNS</span> <span class="nb">text</span>
+</span></span><span class="line"><span class="cl">  <span class="k">AS</span> <span class="s1">&#39;SELECT md5($1 || $2::text)&#39;</span> <span class="k">LANGUAGE</span> <span class="n">sql</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">AGGREGATE</span> <span class="n">md5_agg</span><span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="nb">anyelement</span><span class="p">)</span> <span class="p">(</span>
 </span></span><span class="line"><span class="cl">  <span class="n">STYPE</span> <span class="o">=</span> <span class="nb">text</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">  <span class="n">SFUNC</span> <span class="o">=</span> <span class="n">md5_agg_sfunc</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">  <span class="n">INITCOND</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
 </span></span><span class="line"><span class="cl"><span class="p">);</span>
-</span></span></code></pre></div><p>然后，我们可以在原数据库和目标数据库上分别执行下面的查询，并确认两边查询的结果是一致的。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">md5_agg</span><span class="p">()</span> <span class="k">WITHIN</span> <span class="k">GROUP</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">testtbl</span><span class="p">)</span> <span class="k">AS</span> <span class="n">checksum</span>
-</span></span><span class="line"><span class="cl">  <span class="k">FROM</span> <span class="n">testtbl</span><span class="p">;</span>
+</span></span></code></pre></div><p>然后，对于数据库中的每个表，我们可以在原数据库和目标数据库上分别执行下面的查询，并确认两边查询的结果是一致的。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">md5_agg</span><span class="p">()</span> <span class="k">AS</span> <span class="n">checksum</span> <span class="k">FROM</span> <span class="n">t_table</span>
+</span></span><span class="line"><span class="cl">  <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">table_key</span><span class="p">;</span>
 </span></span></code></pre></div><p>如果发现原数据库和目标数据库存在有差异的数据表，可以在两个数据库上分别执行下面的查询，对表中的数据进行分批的校验。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">md5_agg</span><span class="p">()</span> <span class="k">AS</span> <span class="n">checksum</span><span class="p">,</span> <span class="n">max</span><span class="p">(</span><span class="n">tbl_key</span><span class="p">)</span> <span class="k">AS</span> <span class="n">maxval</span> <span class="k">FROM</span> <span class="n">testtbl</span>
-</span></span><span class="line"><span class="cl">  <span class="k">WHERE</span> <span class="n">tbl_key</span> <span class="o">&gt;</span> <span class="n">key_val</span>
-</span></span><span class="line"><span class="cl">  <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">tbl_key</span> <span class="k">LIMIT</span> <span class="mf">100000</span><span class="p">;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">md5_agg</span><span class="p">()</span> <span class="k">AS</span> <span class="n">checksum</span><span class="p">,</span> <span class="n">max</span><span class="p">(</span><span class="n">table_key</span><span class="p">)</span> <span class="k">AS</span> <span class="n">maxval</span> <span class="k">FROM</span> <span class="n">t_table</span>
+</span></span><span class="line"><span class="cl">  <span class="k">WHERE</span> <span class="n">table_key</span> <span class="o">&gt;</span> <span class="n">key_val</span>
+</span></span><span class="line"><span class="cl">  <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">table_key</span> <span class="k">LIMIT</span> <span class="mf">100000</span><span class="p">;</span>
 </span></span></code></pre></div>
 
 
@@ -2689,7 +2696,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
 <blockquote class="gdoc-hint note">
   <div class="gdoc-hint__title flex align-center"><i class="fa note" title="Note"></i></div>
-  <div class="gdoc-hint__text">在上面的查询中，<code>tbl_key</code> 为表 <code>testtbl</code> 中的主键字段，<code>key_val</code> 为主键列值。在开始第一次查询时，请将 <code>key_val</code> 设置为小于表中的最小主键列值，并在接下来的分批校验过程中，将 <code>key_val</code> 设置为上一步查询返回的最大主键列值。</div>
+  <div class="gdoc-hint__text">在上面的查询中，<code>table_key</code>为表<code>t_table</code>中的主键字段，<code>key_val</code>为主键列值。在开始第一次查询时，请将<code>key_val</code>设置为小于表中的最小主键列值，并在接下来的分批校验过程中，将<code>key_val</code>设置为上一步查询返回的最大主键列值。</div>
 </blockquote>
 
 <div class="gdoc-page__anchorwrap">
