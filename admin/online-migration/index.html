@@ -8,8 +8,8 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Prerequisites and Configuration Changes Schema Dumps Publication/Subscription creation Verification Clean up      We can make an online upgrade through logical replication. While logical replication can help to achieve a zero-downtime, online upgrade, there are still some things to consider.
-Logical replication can be useful if you have a few test databases that you don’t want to replicate to the upgrade destination. This is possible with logical replication, where pg_upgrade is all or nothing." />
+  <meta name="description" content="Initial Checks Configuration Changes Schema Migration Migrate table data Verification Clean up      PostgreSQL provides the ability of logical replication. We can make an zero-downtime online migration through logical replication, and online migration can be applied in the following scenarios:
+ Upgrade the version of the database software; Upgrade the version of the operating system software, or change the operating system type, such as from Windows to Linux; Upgrade the specifications of the hardware, or change the architecture of the hardware, such as changing from X86 to ARM; Adjust the database deployment schema, such as splitting a large database into multiple smaller databases; Migrate a database deployment environment, such as from a server in one public cloud to another;  If your database is large, it may take some time to transfer over the network." />
 
     <title>Online Migration | Redrock Documentation</title>
 
@@ -36,23 +36,23 @@ Logical replication can be useful if you have a few test databases that you don�
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Prerequisites and Configuration Changes Schema Dumps Publication/Subscription creation Verification Clean up      We can make an online upgrade through logical replication. While logical replication can help to achieve a zero-downtime, online upgrade, there are still some things to consider.
-Logical replication can be useful if you have a few test databases that you don’t want to replicate to the upgrade destination. This is possible with logical replication, where pg_upgrade is all or nothing." />
+  <meta property="og:description" content="Initial Checks Configuration Changes Schema Migration Migrate table data Verification Clean up      PostgreSQL provides the ability of logical replication. We can make an zero-downtime online migration through logical replication, and online migration can be applied in the following scenarios:
+ Upgrade the version of the database software; Upgrade the version of the operating system software, or change the operating system type, such as from Windows to Linux; Upgrade the specifications of the hardware, or change the architecture of the hardware, such as changing from X86 to ARM; Adjust the database deployment schema, such as splitting a large database into multiple smaller databases; Migrate a database deployment environment, such as from a server in one public cloud to another;  If your database is large, it may take some time to transfer over the network." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/admin/online-migration/" />
 
 <meta property="article:section" content="Admin" />
     <meta
       property="article:modified_time"
-      content="2022-07-07T08:51:54+08:00"
+      content="2022-07-09T21:04:34+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Online Migration" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Prerequisites and Configuration Changes Schema Dumps Publication/Subscription creation Verification Clean up      We can make an online upgrade through logical replication. While logical replication can help to achieve a zero-downtime, online upgrade, there are still some things to consider.
-Logical replication can be useful if you have a few test databases that you don’t want to replicate to the upgrade destination. This is possible with logical replication, where pg_upgrade is all or nothing." />
+  <meta name="twitter:description" content="Initial Checks Configuration Changes Schema Migration Migrate table data Verification Clean up      PostgreSQL provides the ability of logical replication. We can make an zero-downtime online migration through logical replication, and online migration can be applied in the following scenarios:
+ Upgrade the version of the database software; Upgrade the version of the operating system software, or change the operating system type, such as from Windows to Linux; Upgrade the specifications of the hardware, or change the architecture of the hardware, such as changing from X86 to ARM; Adjust the database deployment schema, such as splitting a large database into multiple smaller databases; Migrate a database deployment environment, such as from a server in one public cloud to another;  If your database is large, it may take some time to transfer over the network." />
 
 
   <script type="application/ld+json">
@@ -63,9 +63,9 @@ Logical replication can be useful if you have a few test databases that you don�
       "name": "Online Migration",
       "url" : "https://doc.rockdata.net/admin/online-migration/",
       "headline": "Online Migration",
-      "description": "Prerequisites and Configuration Changes Schema Dumps Publication\/Subscription creation Verification Clean up      We can make an online upgrade through logical replication. While logical replication can help to achieve a zero-downtime, online upgrade, there are still some things to consider.\nLogical replication can be useful if you have a few test databases that you don’t want to replicate to the upgrade destination. This is possible with logical replication, where pg_upgrade is all or nothing.",
+      "description": "Initial Checks Configuration Changes Schema Migration Migrate table data Verification Clean up      PostgreSQL provides the ability of logical replication. We can make an zero-downtime online migration through logical replication, and online migration can be applied in the following scenarios:\n Upgrade the version of the database software; Upgrade the version of the operating system software, or change the operating system type, such as from Windows to Linux; Upgrade the specifications of the hardware, or change the architecture of the hardware, such as changing from X86 to ARM; Adjust the database deployment schema, such as splitting a large database into multiple smaller databases; Migrate a database deployment environment, such as from a server in one public cloud to another;  If your database is large, it may take some time to transfer over the network.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "853",
+      "wordCount" : "1067",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -76,7 +76,7 @@ Logical replication can be useful if you have a few test databases that you don�
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-07T08:51:54.00Z",
+      "dateModified": "2022-07-09T21:04:34.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2545,91 +2545,119 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     <h1>Online Migration</h1>
     <div class="gdoc-toc gdoc-toc__level--3">
       <nav id="TableOfContents"><ul>
-        <li><a href="#prerequisites-and-configuration-changes">Prerequisites and Configuration Changes</a></li>
-        <li><a href="#schema-dumps">Schema Dumps</a></li>
-        <li><a href="#publicationsubscription-creation">Publication/Subscription creation</a></li>
+        <li><a href="#initial-checks">Initial Checks</a></li>
+        <li><a href="#configuration-changes">Configuration Changes</a></li>
+        <li><a href="#schema-migration">Schema Migration</a></li>
+        <li><a href="#migrate-table-data">Migrate table data</a></li>
         <li><a href="#verification">Verification</a></li>
         <li><a href="#clean-up">Clean up</a></li>
       </ul></nav>
       <hr />
     </div>
-<p>We can make an online upgrade through <a
+<p>PostgreSQL provides the ability of <a
   class="gdoc-markdown__link"
   href="https://www.postgresql.org/docs/12/logical-replication.html"
   
->logical replication</a>. While logical replication can help to achieve a zero-downtime, online upgrade, there are still some things to consider.</p>
-<p><a
-  class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/logical-replication.html"
-  
->Logical replication</a> can be useful if you have a few test databases that you don’t want to replicate to the upgrade destination. This is possible with logical replication, where pg_upgrade is all or nothing.</p>
-<p>If your database is large, it can take a bit of time to traverse the network. Additionally, this upgrade method is only capable of &ldquo;per DB&rdquo; or &ldquo;per table&rdquo; replication unlike pg_upgrade. We’ll be going over the former in the steps ahead.</p>
-<p>There are quite a few preliminary steps needed to set up logical replication for an upgrade. For example, you&rsquo;ll need to change the <code>wal_level</code> in the postgresql.conf to <code>logical</code>, which will require a restart of the cluster.</p>
-<p>Throughout this section we&rsquo;re going to perform an online upgrade on the &ldquo;lrtest&rdquo; database.</p>
+>logical replication</a>. We can make an zero-downtime online migration through logical replication, and online migration can be applied in the following scenarios:</p>
+<ul>
+<li>Upgrade the version of the database software;</li>
+<li>Upgrade the version of the operating system software, or change the operating system type, such as from Windows to Linux;</li>
+<li>Upgrade the specifications of the hardware, or change the architecture of the hardware, such as changing from X86 to ARM;</li>
+<li>Adjust the database deployment schema, such as splitting a large database into multiple smaller databases;</li>
+<li>Migrate a database deployment environment, such as from a server in one public cloud to another;</li>
+</ul>
+<p>If your database is large, it may take some time to transfer over the network. In addition, online migration based on logical replication supports only database-based or table-based migrations. We&rsquo;ll cover database-based migrations in the following steps. In this section, we will perform an online migration of the <code>lrtest</code> database.</p>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="prerequisites-and-configuration-changes">
-        Prerequisites and Configuration Changes
-        <a data-clipboard-text="https://doc.rockdata.net/admin/online-migration/#prerequisites-and-configuration-changes" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Prerequisites and Configuration Changes" aria-label="Anchor to: Prerequisites and Configuration Changes" href="#prerequisites-and-configuration-changes">
+    <h2 id="initial-checks">
+        Initial Checks
+        <a data-clipboard-text="https://doc.rockdata.net/admin/online-migration/#initial-checks" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Initial Checks" aria-label="Anchor to: Initial Checks" href="#initial-checks">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>Create Primary Keys if you don&rsquo;t already have primary keys in use for each table that you plan to replicate. This query shows you which tables don’t have primary keys. This should show 0 tables before you start the upgrade.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span>
-</span></span><span class="line"><span class="cl">  <span class="n">n</span><span class="mf">.</span><span class="n">nspname</span> <span class="k">as</span> <span class="k">schema</span><span class="p">,</span> <span class="n">c</span><span class="mf">.</span><span class="n">relname</span> <span class="k">as</span> <span class="k">table</span>
-</span></span><span class="line"><span class="cl"><span class="k">FROM</span> <span class="n">pg_class</span> <span class="n">c</span> <span class="k">JOIN</span> <span class="n">pg_namespace</span> <span class="n">n</span>
-</span></span><span class="line"><span class="cl">  <span class="k">ON</span> <span class="n">n</span><span class="mf">.</span><span class="n">oid</span> <span class="o">=</span> <span class="n">c</span><span class="mf">.</span><span class="n">relnamespace</span>
-</span></span><span class="line"><span class="cl"><span class="k">WHERE</span> <span class="n">c</span><span class="mf">.</span><span class="n">relkind</span> <span class="o">=</span> <span class="s1">&#39;r&#39;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">AND</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="p">(</span>
-</span></span><span class="line"><span class="cl">    <span class="k">SELECT</span> <span class="mf">1</span> <span class="k">FROM</span> <span class="n">pg_constraint</span> <span class="n">con</span>
-</span></span><span class="line"><span class="cl">      <span class="k">WHERE</span> <span class="n">con</span><span class="mf">.</span><span class="n">conrelid</span> <span class="o">=</span> <span class="n">c</span><span class="mf">.</span><span class="n">oid</span> <span class="k">AND</span> <span class="n">con</span><span class="mf">.</span><span class="n">contype</span> <span class="o">=</span> <span class="s1">&#39;p&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="k">AND</span> <span class="n">n</span><span class="mf">.</span><span class="n">nspname</span> <span class="k">NOT</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">&#39;pg_catalog&#39;</span><span class="p">,</span> <span class="s1">&#39;pg_recyclebin&#39;</span><span class="p">,</span> <span class="s1">&#39;information_schema&#39;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"> <span class="k">schema</span> <span class="o">|</span> <span class="k">table</span>
-</span></span><span class="line"><span class="cl"><span class="c1">--------+-------
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">(</span><span class="mf">0</span> <span class="k">rows</span><span class="p">)</span>
-</span></span></code></pre></div><p>If you don&rsquo;t get a value of 0 rows here, stop and solve for that by creating primary keys on your tables. Another important thing to note is that if you’ve tuned your postgresql.conf for memory, max connections, etc., those parameters are not replicated in the logical replication process. As always, it’s incredibly important to test your application on the newest Redrock Postgres version and ensure the destination postgresql.conf is tuned appropriately.</p>
-<p>We need to allow for replication connections. Let’s edit the pg_hba.conf on both nodes (substitute 0.0.0.0/0 to match the appropriate IP/CIDR). Since we’re changing the pg_hba.conf on both nodes, we’ll need to restart both nodes later on. Add the following lines, but keep in mind that the pg_hba.conf is read from top to bottom. This means you&rsquo;ll need to place these lines appropriately per the <a
+<p>If you don&rsquo;t already have a primary key for each table that you plan to replicate, create a primary key. The following query shows which tables do not have a primary key. The query should appear as 0 tables before you start the migration.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">n</span><span class="mf">.</span><span class="n">nspname</span> <span class="k">AS</span> <span class="k">schema</span><span class="p">,</span> <span class="n">c</span><span class="mf">.</span><span class="n">relname</span> <span class="k">AS</span> <span class="k">table</span>
+</span></span><span class="line"><span class="cl">  <span class="k">FROM</span> <span class="n">pg_class</span> <span class="n">c</span> <span class="k">JOIN</span> <span class="n">pg_namespace</span> <span class="n">n</span>
+</span></span><span class="line"><span class="cl">    <span class="k">ON</span> <span class="n">n</span><span class="mf">.</span><span class="n">oid</span> <span class="o">=</span> <span class="n">c</span><span class="mf">.</span><span class="n">relnamespace</span>
+</span></span><span class="line"><span class="cl">  <span class="k">WHERE</span> <span class="n">c</span><span class="mf">.</span><span class="n">relkind</span> <span class="o">=</span> <span class="s1">&#39;r&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">AND</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">      <span class="k">SELECT</span> <span class="mf">1</span> <span class="k">FROM</span> <span class="n">pg_constraint</span> <span class="n">con</span>
+</span></span><span class="line"><span class="cl">        <span class="k">WHERE</span> <span class="n">con</span><span class="mf">.</span><span class="n">conrelid</span> <span class="o">=</span> <span class="n">c</span><span class="mf">.</span><span class="n">oid</span> <span class="k">AND</span> <span class="n">con</span><span class="mf">.</span><span class="n">contype</span> <span class="o">=</span> <span class="s1">&#39;p&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">AND</span> <span class="n">n</span><span class="mf">.</span><span class="n">nspname</span> <span class="k">NOT</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">&#39;pg_catalog&#39;</span><span class="p">,</span> <span class="s1">&#39;pg_recyclebin&#39;</span><span class="p">,</span> <span class="s1">&#39;information_schema&#39;</span><span class="p">);</span>
+</span></span></code></pre></div><p>If you do not get a value of row 0 here, you need to create a primary key on the queried table to replicate the table.</p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="configuration-changes">
+        Configuration Changes
+        <a data-clipboard-text="https://doc.rockdata.net/admin/online-migration/#configuration-changes" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Configuration Changes" aria-label="Anchor to: Configuration Changes" href="#configuration-changes">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>An important thing to note is that if you have adjusted <code>postgresql.conf</code> for memory, maximum number of connections, etc., these parameters will not be copied during logical copying. Before migration, execute the following queries on the original and target databases, and compare the query results in detail.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="k">name</span><span class="p">,</span> <span class="n">setting</span><span class="p">,</span> <span class="n">unit</span><span class="p">,</span> <span class="n">boot_val</span> <span class="k">FROM</span> <span class="n">pg_settings</span><span class="p">;</span>
+</span></span></code></pre></div><p>Where the view <a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/view-pg-settings.html"
+  
+>pg_settings</a> provides parameter information when the database server is running. If you find that there are differences between the parameter values between the original database and the target database during the parameter comparison process, you may need to modify the corresponding parameter configuration in the target database and restart the target database so that the configuration changes take effect.</p>
+<p>Since logical replication requires a replicating user, we will execute the following query on the original database to create a user with replication permission.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">USER</span> <span class="n">logicalrep</span> <span class="n">REPLICATION</span> <span class="k">PASSWORD</span> <span class="s1">&#39;pgpass&#39;</span><span class="p">;</span>
+</span></span></code></pre></div><p>After creating the replication user, we need to change the <code>pg_hba.conf</code> configuration file on the original database to allow the target database to connect to the replication data on the original database. Since the database server reads &lsquo;pg_hba.conf&rsquo; from top to bottom, this means that you need to place these rows appropriately according to the <a
   class="gdoc-markdown__link"
   href="https://www.postgresql.org/docs/12/auth-pg-hba-conf.html"
   
->documentation</a>:</p>
+>configuration rules</a>:</p>
 <pre tabindex="0"><code>host   lrtest  logicalrep  192.168.1.51/32  md5
-</code></pre><p>Since logical replication requires a replication role/user, we’ll create one now. Here, we’ll technically create a &ldquo;role&rdquo; with login permissions which is effectively a user. We&rsquo;ll do this on the source cluster.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">ROLE</span> <span class="n">logicalrep</span> <span class="n">LOGIN</span> <span class="n">REPLICATION</span> <span class="k">PASSWORD</span> <span class="s1">&#39;pgpass&#39;</span><span class="p">;</span>
-</span></span></code></pre></div><p>Do note that depending on your log settings, the password listed here will show in the PostgreSQL logs. I&rsquo;ll also set <code>wal_level</code> to <code>logical</code> before I connect to the <code>lrtest</code> user while I’m still connected.</p>
+</code></pre><p>After changing the <code>pg_hba.conf</code>, we need to set the <code>wal_level</code> parameter of the original database to <code>logical</code>.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">ALTER</span> <span class="k">SYSTEM</span> <span class="k">SET</span> <span class="n">wal_level</span> <span class="k">TO</span> <span class="n">logical</span><span class="p">;</span>
-</span></span></code></pre></div><p>We&rsquo;ve updated all of the parameters that will require either a reload or a restart at this point. Let’s restart the database (source) so the configuration changes are captured.</p>
+</span></span></code></pre></div><p>After we have changed the configuration above, we need to restart the original database for the configuration changes to take effect.</p>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="schema-dumps">
-        Schema Dumps
-        <a data-clipboard-text="https://doc.rockdata.net/admin/online-migration/#schema-dumps" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Schema Dumps" aria-label="Anchor to: Schema Dumps" href="#schema-dumps">
+    <h2 id="schema-migration">
+        Schema Migration
+        <a data-clipboard-text="https://doc.rockdata.net/admin/online-migration/#schema-migration" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Schema Migration" aria-label="Anchor to: Schema Migration" href="#schema-migration">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>For the source database you want to replicate, run a schema only dump. This will allow us to restore the schema information on the destination.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pg_dump -Fc -s -d lrtest -U postgres -f /tmp/lrtest_schema.dmp
-</span></span></code></pre></div><p>We need to do this step because schema information is <em>not</em> replicated over in logical replication. Keep this in mind should you change schema information on your source with logical replication in place. Next, copy the schema dump to the destination location and restore.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pg_restore -C -d postgres -U postgres /tmp/lrtest_schema.dmp
-</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
-    <h2 id="publicationsubscription-creation">
-        Publication/Subscription creation
-        <a data-clipboard-text="https://doc.rockdata.net/admin/online-migration/#publicationsubscription-creation" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Publication/Subscription creation" aria-label="Anchor to: Publication/Subscription creation" href="#publicationsubscription-creation">
+<p>For the original database to be migrated, use <a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/app-pgdump.html"
+  
+>pg_dump</a> for schema dump. This will allow us to recover the schema information in the target database.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pg_dump -Fc -s -h 192.168.1.50 -d lrtest -U postgres -f /tmp/lrtest_schema.dmp
+</span></span></code></pre></div><p>Use <a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/app-pgrestore.html"
+  
+>pg_restore</a> to import a schema dump to the target database.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pg_restore -C -h 192.168.1.51 -d lrtest -U postgres /tmp/lrtest_schema.dmp
+</span></span></code></pre></div><p>Setup <a
+  class="gdoc-markdown__link"
+  href="/admin/ddl-subscription/#%e8%ae%b0%e5%bd%95%e5%92%8c%e5%8f%91%e5%b8%83ddl%e6%93%8d%e4%bd%9c"
+  
+>Record and Publish DDL Operations</a> in the original database and <a
+  class="gdoc-markdown__link"
+  href="/admin/ddl-subscription/#%e8%ae%a2%e9%98%85%e5%92%8c%e5%90%8c%e6%ad%a5ddl%e6%93%8d%e4%bd%9c"
+  
+>Subscribe and Synchronize DDL Operations</a> in the target database. Note that if you need to migrate all table data in the database in the following steps, you do not need to publish the table <code>audit.ddl_history</code> on the original database, nor do you need to subscribe to the table <code>audit.ddl_history</code> on the target database.</p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="migrate-table-data">
+        Migrate table data
+        <a data-clipboard-text="https://doc.rockdata.net/admin/online-migration/#migrate-table-data" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Migrate table data" aria-label="Anchor to: Migrate table data" href="#migrate-table-data">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>Now that the schemas are all in place on the destination, we can create the publication by running the following on the source cluster. As mentioned above, I’m upgrading all tables in the database. If you only wanted to replicate a single table, but had multiple tables in the database, you would pass FOR TABLE, per the <a
+<p>Now that the schema information has been imported into the target database, we can create a publication by running the following command on the original database. As mentioned above, we are about to migrate all the tables in the database. If you only want to copy certain tables in the database, you can pass the FOR TABLE when using the <a
   class="gdoc-markdown__link"
   href="https://www.postgresql.org/docs/12/sql-createpublication.html"
   
->documentation</a>.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="n">PUBLICATION</span> <span class="n">lrtest_upgrade</span> <span class="k">FOR</span> <span class="k">ALL</span> <span class="k">TABLES</span><span class="p">;</span>
+>CREATE PUBLICATION</a> command.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="n">PUBLICATION</span> <span class="n">lrtest_migrate</span> <span class="k">FOR</span> <span class="k">ALL</span> <span class="k">TABLES</span><span class="p">;</span>
 </span></span></code></pre></div><p>Subscribe all tables data and changes:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="n">SUBSCRIPTION</span> <span class="n">lrtest_upgrade</span> <span class="k">CONNECTION</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="n">SUBSCRIPTION</span> <span class="n">lrtest_migrate</span> <span class="k">CONNECTION</span>
 </span></span><span class="line"><span class="cl">  <span class="s1">&#39;host=192.168.1.50 dbname=lrtest user=logicalrep password=pgpass&#39;</span>
-</span></span><span class="line"><span class="cl">  <span class="n">PUBLICATION</span> <span class="n">lrtest_upgrade</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">PUBLICATION</span> <span class="n">lrtest_migrate</span><span class="p">;</span>
 </span></span></code></pre></div><div class="gdoc-page__anchorwrap">
     <h2 id="verification">
         Verification
@@ -2638,42 +2666,33 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         </a>
     </h2>
 </div>
-<p>At this point everything looks good in the logs, but we should verify.</p>
-<p><strong>To verify the data is present on the destination</strong>:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">testtbl</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="k">count</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">-------
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">   </span><span class="mi">100</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">row</span><span class="p">)</span><span class="w">
-</span></span></span></code></pre></div><p><strong>Verify that number with the number on the source</strong>:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">testtbl</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="k">count</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">-------
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">   </span><span class="mi">100</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">row</span><span class="p">)</span><span class="w">
-</span></span></span></code></pre></div><p>After verifying the row count matches the source, let’s add a row to check and ensure it carries over from the source to the destination.</p>
-<p><strong>Create row</strong>:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">testtbl</span><span class="w"> </span><span class="k">VALUES</span><span class="p">(</span><span class="k">default</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;rockdata&#39;</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="s1">&#39;8437276045&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;redrock data software&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;info@rockdata.net&#39;</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">testtbl</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;rockdata&#39;</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="n">id</span><span class="w">  </span><span class="o">|</span><span class="w">	</span><span class="n">name</span><span class="w">    </span><span class="o">|</span><span class="w">    </span><span class="n">phone</span><span class="w">   </span><span class="o">|</span><span class="w">       </span><span class="n">company</span><span class="w">         </span><span class="o">|</span><span class="w">       </span><span class="n">email</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">-----+----------+------------+-----------------------+-------------------
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w"> </span><span class="mi">101</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">rockdata</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">8437276045</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">redrock</span><span class="w"> </span><span class="k">data</span><span class="w"> </span><span class="n">software</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">info</span><span class="o">@</span><span class="n">rockdata</span><span class="p">.</span><span class="n">net</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">row</span><span class="p">)</span><span class="w">
-</span></span></span></code></pre></div><p><strong>Check for row on destination</strong>:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">testtbl</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;rockdata&#39;</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="n">id</span><span class="w">  </span><span class="o">|</span><span class="w">	</span><span class="n">name</span><span class="w">    </span><span class="o">|</span><span class="w">    </span><span class="n">phone</span><span class="w">   </span><span class="o">|</span><span class="w">       </span><span class="n">company</span><span class="w">         </span><span class="o">|</span><span class="w">       </span><span class="n">email</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">-----+----------+------------+-----------------------+-------------------
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w"> </span><span class="mi">101</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">rockdata</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">8437276045</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">redrock</span><span class="w"> </span><span class="k">data</span><span class="w"> </span><span class="n">software</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">info</span><span class="o">@</span><span class="n">rockdata</span><span class="p">.</span><span class="n">net</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">row</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">testtbl</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="k">count</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">-------
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">   </span><span class="mi">101</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">row</span><span class="p">)</span><span class="w">
-</span></span></span></code></pre></div><div class="gdoc-page__anchorwrap">
+<p>Next, we need to verify that the data of the original database and the target database are consistent. Execute the following query to create an aggregate function that calculates the checksum of the table data.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">FUNCTION</span> <span class="n">md5_agg_sfunc</span><span class="p">(</span><span class="nb">text</span><span class="p">,</span> <span class="nb">anyelement</span><span class="p">)</span> <span class="k">RETURNS</span> <span class="nb">text</span>
+</span></span><span class="line"><span class="cl">  <span class="k">AS</span> <span class="s1">&#39;SELECT md5($1 || $2::text)&#39;</span> <span class="k">LANGUAGE</span> <span class="n">sql</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">AGGREGATE</span> <span class="n">md5_agg</span><span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="nb">anyelement</span><span class="p">)</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="n">STYPE</span> <span class="o">=</span> <span class="nb">text</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">SFUNC</span> <span class="o">=</span> <span class="n">md5_agg_sfunc</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">INITCOND</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span></code></pre></div><p>Then, for each table in the database, we can execute the following query on the original and target databases separately and confirm that the results of the queries on both sides are consistent.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">md5_agg</span><span class="p">()</span> <span class="k">AS</span> <span class="n">checksum</span> <span class="k">FROM</span> <span class="n">t_table</span>
+</span></span><span class="line"><span class="cl">  <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">table_key</span><span class="p">;</span>
+</span></span></code></pre></div><p>If you find that there is a difference between the original database and the target database, you can execute the following query on each of the two databases to verify the data in the table in batches.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">md5_agg</span><span class="p">()</span> <span class="k">AS</span> <span class="n">checksum</span><span class="p">,</span> <span class="n">max</span><span class="p">(</span><span class="n">table_key</span><span class="p">)</span> <span class="k">AS</span> <span class="n">maxval</span> <span class="k">FROM</span> <span class="n">t_table</span>
+</span></span><span class="line"><span class="cl">  <span class="k">WHERE</span> <span class="n">table_key</span> <span class="o">&gt;</span> <span class="n">key_val</span>
+</span></span><span class="line"><span class="cl">  <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">table_key</span> <span class="k">LIMIT</span> <span class="mf">100000</span><span class="p">;</span>
+</span></span></code></pre></div>
+
+
+
+
+<blockquote class="gdoc-hint note">
+  <div class="gdoc-hint__title flex align-center"><i class="fa note" title="Note"></i></div>
+  <div class="gdoc-hint__text">In the query above, <code>table_key</code> is the primary key field in the table <code>t_table</code> and <code>key_val</code> is the primary key column value. When you start your first query, set <code>key_val</code> to be less than the minimum primary key column value in the table, and in the subsequent batch validation process, set <code>key_val</code> to the maximum primary key column value returned by the previous query.</div>
+</blockquote>
+
+<div class="gdoc-page__anchorwrap">
     <h2 id="clean-up">
         Clean up
         <a data-clipboard-text="https://doc.rockdata.net/admin/online-migration/#clean-up" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Clean up" aria-label="Anchor to: Clean up" href="#clean-up">
@@ -2681,9 +2700,9 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         </a>
     </h2>
 </div>
-<p>The original 100 rows from source cluster, have successfully replicated over to the destination cluster. We’ve even gone a step further by ensuring that post upgrade replication works if a new row is added. At this point with logical replication running, you can leave it in place until you are ready to do the cut-over. If all of your data has been replicated, and you&rsquo;ve already done the cut-over, you can drop the subscription.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">DROP</span> <span class="n">SUBSCRIPTION</span> <span class="n">lrtest_upgrade</span><span class="p">;</span>
-</span></span></code></pre></div><p>Now that the online upgrade procedure has successfully completed, we can remove the old cluster if you no longer need it around.</p>
+<p>The data from the original database was successfully copied to the target database. We went even further and confirmed that the original and target database data were consistent. At this point the logical replication is running, and you can leave it in place until you are ready to switch. If all your data has been copied and you have completed the conversion, you can delete the subscription.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">DROP</span> <span class="n">SUBSCRIPTION</span> <span class="n">lrtest_migrate</span><span class="p">;</span>
+</span></span></code></pre></div><p>Now that the online migration process has completed successfully, we can remove the original database if you no longer need it.</p>
 
   </article>
 
