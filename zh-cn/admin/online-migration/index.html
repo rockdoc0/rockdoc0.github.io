@@ -48,7 +48,7 @@ SELECT n.nspname AS schema, c.relname AS table FROM pg_class c JOIN pg_namespace
 <meta property="article:section" content="Admin" />
     <meta
       property="article:modified_time"
-      content="2022-07-09T17:41:33+08:00"
+      content="2022-07-10T16:37:39+08:00"
     />
 
 
@@ -71,7 +71,7 @@ SELECT n.nspname AS schema, c.relname AS table FROM pg_class c JOIN pg_namespace
       "headline": "在线迁移",
       "description": "初始检查 配置修改 迁移模式 迁移表数据 数据校验 清理      PostgreSQL 提供了逻辑复制的能力，通过逻辑复制可以实现零停机的在线迁移，在线迁移可以应用在如下这些场景：\n 升级数据库软件的版本； 升级操作系统软件的版本，或者变更操作系统类型，比如从Windows变更成Linux； 升级硬件的规格，或者变更硬件的架构，比如从X86变更成ARM； 调整数据库部署架构，比如将一个大的数据库拆分成多个小的数据库； 迁移数据库部署环境，比如从某一个公有云的服务器迁移到另一个公有云上面；  如果您的数据库很大，则可能需要一些时间来通过网络进行传输。 另外，基于逻辑复制的在线迁移只支持以数据库为单位或以表为单位的迁移。 我们将在下面的步骤中介绍以数据库为单位的迁移。在本节中，我们将对 lrtest 数据库进行在线迁移。\n初始检查     如果您还没有为您计划复制的每个表使用主键，请创建主键。下面的查询会显示出哪些表没有主键。在您开始迁移之前查询应该显示为 0 个表。\nSELECT n.nspname AS schema, c.relname AS table FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace WHERE c.relkind = \u0027r\u0027 AND NOT EXISTS ( SELECT 1 FROM pg_constraint con WHERE con.conrelid = c.oid AND con.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "229",
+      "wordCount" : "242",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -82,7 +82,7 @@ SELECT n.nspname AS schema, c.relname AS table FROM pg_class c JOIN pg_namespace
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-09T17:41:33.00Z",
+      "dateModified": "2022-07-10T16:37:39.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2674,21 +2674,24 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     </h2>
 </div>
 <p>接下来，我们需要验证原数据库和目标数据库的数据是否一致。执行下面的查询，创建用于计算表数据校验和的聚集函数。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">FUNCTION</span> <span class="n">md5_agg_sfunc</span><span class="p">(</span><span class="nb">text</span><span class="p">,</span> <span class="nb">anyelement</span><span class="p">)</span> <span class="k">RETURNS</span> <span class="nb">text</span>
-</span></span><span class="line"><span class="cl">  <span class="k">AS</span> <span class="s1">&#39;SELECT md5($1 || $2::text)&#39;</span> <span class="k">LANGUAGE</span> <span class="n">sql</span><span class="p">;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">FUNCTION</span> <span class="n">md5_agg_sfunc</span><span class="p">(</span><span class="nb">text</span><span class="p">,</span> <span class="nb">text</span><span class="p">)</span> <span class="k">RETURNS</span> <span class="nb">text</span>
+</span></span><span class="line"><span class="cl">  <span class="k">AS</span> <span class="s1">&#39;SELECT md5($1 || $2)&#39;</span> <span class="k">LANGUAGE</span> <span class="n">sql</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">AGGREGATE</span> <span class="n">md5_agg</span><span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="nb">anyelement</span><span class="p">)</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">AGGREGATE</span> <span class="n">md5_agg</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="n">BASETYPE</span> <span class="o">=</span> <span class="nb">text</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">  <span class="n">STYPE</span> <span class="o">=</span> <span class="nb">text</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">  <span class="n">SFUNC</span> <span class="o">=</span> <span class="n">md5_agg_sfunc</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">  <span class="n">INITCOND</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
 </span></span><span class="line"><span class="cl"><span class="p">);</span>
 </span></span></code></pre></div><p>然后，对于数据库中的每个表，我们可以在原数据库和目标数据库上分别执行下面的查询，并确认两边查询的结果是一致的。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">md5_agg</span><span class="p">()</span> <span class="k">AS</span> <span class="n">checksum</span> <span class="k">FROM</span> <span class="n">t_table</span>
-</span></span><span class="line"><span class="cl">  <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">table_key</span><span class="p">;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">md5_agg</span><span class="p">(</span><span class="n">t</span><span class="o">::</span><span class="nb">text</span><span class="p">)</span> <span class="k">AS</span> <span class="n">checksum</span> <span class="k">FROM</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t_table</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">table_key</span><span class="p">)</span> <span class="k">AS</span> <span class="n">t</span><span class="p">;</span>
 </span></span></code></pre></div><p>如果发现原数据库和目标数据库存在有差异的数据表，可以在两个数据库上分别执行下面的查询，对表中的数据进行分批的校验。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">md5_agg</span><span class="p">()</span> <span class="k">AS</span> <span class="n">checksum</span><span class="p">,</span> <span class="n">max</span><span class="p">(</span><span class="n">table_key</span><span class="p">)</span> <span class="k">AS</span> <span class="n">maxval</span> <span class="k">FROM</span> <span class="n">t_table</span>
-</span></span><span class="line"><span class="cl">  <span class="k">WHERE</span> <span class="n">table_key</span> <span class="o">&gt;</span> <span class="n">key_val</span>
-</span></span><span class="line"><span class="cl">  <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">table_key</span> <span class="k">LIMIT</span> <span class="mf">100000</span><span class="p">;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">md5_agg</span><span class="p">(</span><span class="n">t</span><span class="o">::</span><span class="nb">text</span><span class="p">)</span> <span class="k">AS</span> <span class="n">checksum</span><span class="p">,</span> <span class="n">max</span><span class="p">(</span><span class="n">table_key</span><span class="p">)</span> <span class="k">AS</span> <span class="n">maxval</span> <span class="k">FROM</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t_table</span>
+</span></span><span class="line"><span class="cl">    <span class="k">WHERE</span> <span class="n">table_key</span> <span class="o">&gt;</span> <span class="n">key_val</span>
+</span></span><span class="line"><span class="cl">    <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">table_key</span> <span class="k">LIMIT</span> <span class="mf">100000</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="k">AS</span> <span class="n">t</span><span class="p">;</span>
 </span></span></code></pre></div>
 
 
