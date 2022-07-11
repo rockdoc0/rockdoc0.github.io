@@ -185,7 +185,7 @@
                 />
   </url><url>
     <loc>https://doc.rockdata.net/features/recyclebin/</loc>
-    <lastmod>2022-06-15T16:49:37+08:00</lastmod>
+    <lastmod>2022-07-11T19:32:27+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
@@ -197,30 +197,30 @@
                 href="https://doc.rockdata.net/features/recyclebin/"
                 />
   </url><url>
-    <loc>https://doc.rockdata.net/features/statement-atomicity/</loc>
-    <lastmod>2022-06-19T20:52:49+08:00</lastmod>
+    <loc>https://doc.rockdata.net/features/transaction/</loc>
+    <lastmod>2022-07-11T21:44:44+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://doc.rockdata.net/zh-cn/features/statement-atomicity/"
+                href="https://doc.rockdata.net/zh-cn/features/transaction/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://doc.rockdata.net/features/statement-atomicity/"
+                href="https://doc.rockdata.net/features/transaction/"
                 />
   </url><url>
-    <loc>https://doc.rockdata.net/features/network-tablespace/</loc>
-    <lastmod>2022-06-26T09:31:53+08:00</lastmod>
+    <loc>https://doc.rockdata.net/admin/network-tablespace/</loc>
+    <lastmod>2022-07-11T15:14:02+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://doc.rockdata.net/zh-cn/features/network-tablespace/"
+                href="https://doc.rockdata.net/zh-cn/admin/network-tablespace/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://doc.rockdata.net/features/network-tablespace/"
+                href="https://doc.rockdata.net/admin/network-tablespace/"
                 />
   </url><url>
     <loc>https://doc.rockdata.net/commands/</loc>
@@ -247,6 +247,19 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://doc.rockdata.net/advanced/monitor-stats/"
+                />
+  </url><url>
+    <loc>https://doc.rockdata.net/features/tablespace/</loc>
+    <lastmod>2022-07-11T19:32:27+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://doc.rockdata.net/zh-cn/features/tablespace/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://doc.rockdata.net/features/tablespace/"
                 />
   </url><url>
     <loc>https://doc.rockdata.net/features/event-triggers/</loc>

@@ -8,13 +8,11 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Sample Transaction: Account Debit and Credit     To illustrate the concept of a transaction, consider a banking database. When a customer transfers money from a savings account to a checking account, the transaction must consist of three separate operations:
-  Decrement the savings account
-  Increment the checking account
-  Record the transaction in the transaction journal
-  Redrock Postgres must allow for two situations." />
+  <meta name="description" content="Planning Deploying Compute Server Deploying Storage Server Create a Network Attached Database Create a Network Attached Tablespace      Redrock Postgres supports network attached tablespaces. Based on this capability, Redrock Postgres can deploy database computing and storage separately.
+Planning     Prepare the computing server and storage server environments. The recommended environment configurations are as follows:
+ Computing servers should use high processor and memory configurations." />
 
-    <title>Statement Level Atomicity | Redrock Documentation</title>
+    <title>Network Attached Tablespace | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -35,57 +33,53 @@
     
   <meta
     property="og:title"
-    content="Statement Level Atomicity"
+    content="Network Attached Tablespace"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Sample Transaction: Account Debit and Credit     To illustrate the concept of a transaction, consider a banking database. When a customer transfers money from a savings account to a checking account, the transaction must consist of three separate operations:
-  Decrement the savings account
-  Increment the checking account
-  Record the transaction in the transaction journal
-  Redrock Postgres must allow for two situations." />
+  <meta property="og:description" content="Planning Deploying Compute Server Deploying Storage Server Create a Network Attached Database Create a Network Attached Tablespace      Redrock Postgres supports network attached tablespaces. Based on this capability, Redrock Postgres can deploy database computing and storage separately.
+Planning     Prepare the computing server and storage server environments. The recommended environment configurations are as follows:
+ Computing servers should use high processor and memory configurations." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://doc.rockdata.net/features/statement-atomicity/" />
+<meta property="og:url" content="https://doc.rockdata.net/admin/network-tablespace/" />
 
-<meta property="article:section" content="Features" />
+<meta property="article:section" content="Admin" />
     <meta
       property="article:modified_time"
-      content="2022-06-19T20:52:49+08:00"
+      content="2022-07-11T15:14:02+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Statement Level Atomicity" />
+<meta name="twitter:title" content="Network Attached Tablespace" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Sample Transaction: Account Debit and Credit     To illustrate the concept of a transaction, consider a banking database. When a customer transfers money from a savings account to a checking account, the transaction must consist of three separate operations:
-  Decrement the savings account
-  Increment the checking account
-  Record the transaction in the transaction journal
-  Redrock Postgres must allow for two situations." />
+  <meta name="twitter:description" content="Planning Deploying Compute Server Deploying Storage Server Create a Network Attached Database Create a Network Attached Tablespace      Redrock Postgres supports network attached tablespaces. Based on this capability, Redrock Postgres can deploy database computing and storage separately.
+Planning     Prepare the computing server and storage server environments. The recommended environment configurations are as follows:
+ Computing servers should use high processor and memory configurations." />
 
 
   <script type="application/ld+json">
   {
       "@context": "http://schema.org",
       "@type": "TechArticle",
-      "articleSection": "Features",
-      "name": "Statement Level Atomicity",
-      "url" : "https://doc.rockdata.net/features/statement-atomicity/",
-      "headline": "Statement Level Atomicity",
-      "description": "Sample Transaction: Account Debit and Credit     To illustrate the concept of a transaction, consider a banking database. When a customer transfers money from a savings account to a checking account, the transaction must consist of three separate operations:\n  Decrement the savings account\n  Increment the checking account\n  Record the transaction in the transaction journal\n  Redrock Postgres must allow for two situations.",
+      "articleSection": "Admin",
+      "name": "Network Attached Tablespace",
+      "url" : "https://doc.rockdata.net/admin/network-tablespace/",
+      "headline": "Network Attached Tablespace",
+      "description": "Planning Deploying Compute Server Deploying Storage Server Create a Network Attached Database Create a Network Attached Tablespace      Redrock Postgres supports network attached tablespaces. Based on this capability, Redrock Postgres can deploy database computing and storage separately.\nPlanning     Prepare the computing server and storage server environments. The recommended environment configurations are as follows:\n Computing servers should use high processor and memory configurations.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "474",
+      "wordCount" : "416",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://doc.rockdata.net/features/statement-atomicity/"
+          "@id": "https://doc.rockdata.net/admin/network-tablespace/"
       },
       "copyrightHolder" : "Redrock Documentation",
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-19T20:52:49.00Z",
+      "dateModified": "2022-07-11T15:14:02.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -161,7 +155,7 @@
   href="/custom.css"
   media="all"
 />
-  <link href="https://doc.rockdata.net/features/statement-atomicity/" rel="canonical" type="text/html" />
+  <link href="https://doc.rockdata.net/admin/network-tablespace/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -768,7 +762,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <a
                   class="flex gdoc-language__entry"
                   title="简体中文"
-                  href="/zh-cn/features/statement-atomicity/"
+                  href="/zh-cn/admin/network-tablespace/"
                   hreflang="zh-cn"
                   lang="zh-cn"
                 >
@@ -1329,10 +1323,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/features/statement-atomicity/"
-                    class="gdoc-nav__entry is-active"
+                    href="/features/transaction/"
+                    class="gdoc-nav__entry"
                   >
-                    Statement Level Atomicity
+                    Transactions
                   </a>
                 </span>
               
@@ -1373,10 +1367,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/features/network-tablespace/"
+                    href="/features/tablespace/"
                     class="gdoc-nav__entry"
                   >
-                    Network Attached Tablespace
+                    Tablespaces
                   </a>
                 </span>
               
@@ -1683,7 +1677,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               type="checkbox"
               
                 class="gdoc-nav__toggle" id="navtree-d9ef83eb"
-                
+                checked
               
             />
             <label
@@ -1752,6 +1746,50 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     class="gdoc-nav__entry"
                   >
                     Configuration
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/admin/network-tablespace/"
+                    class="gdoc-nav__entry is-active"
+                  >
+                    Network Attached Tablespace
                   </a>
                 </span>
               
@@ -2522,7 +2560,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/features/' href='/features/'><span itemprop='name'>Features</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Statement Level Atomicity</span><meta itemprop='position' content='3' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/admin/' href='/admin/'><span itemprop='name'>Server Administration</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Network Attached Tablespace</span><meta itemprop='position' content='3' /></li>
   
 
   
@@ -2537,7 +2575,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <span class="editpage">
         <svg class="gdoc-icon gdoc_code"><use xlink:href="#gdoc_code"></use></svg>
         <a
-          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/en/features/statement-atomicity/_index.md"
+          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/en/admin/network-tablespace.md"
         >
           Edit page
         </a>
@@ -2551,90 +2589,109 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <article
     class="gdoc-markdown gdoc-markdown__align--left"
   >
-    <h1>Statement Level Atomicity</h1>
-    <div class="gdoc-page__anchorwrap">
-    <h2 id="sample-transaction-account-debit-and-credit">
-        Sample Transaction: Account Debit and Credit
-        <a data-clipboard-text="https://doc.rockdata.net/features/statement-atomicity/#sample-transaction-account-debit-and-credit" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Sample Transaction: Account Debit and Credit" aria-label="Anchor to: Sample Transaction: Account Debit and Credit" href="#sample-transaction-account-debit-and-credit">
+    <h1>Network Attached Tablespace</h1>
+    <div class="gdoc-toc gdoc-toc__level--3">
+      <nav id="TableOfContents"><ul>
+        <li><a href="#planning">Planning</a></li>
+        <li><a href="#deploying-compute-server">Deploying Compute Server</a></li>
+        <li><a href="#deploying-storage-server">Deploying Storage Server</a></li>
+        <li><a href="#create-a-network-attached-database">Create a Network Attached Database</a></li>
+        <li><a href="#create-a-network-attached-tablespace">Create a Network Attached Tablespace</a></li>
+      </ul></nav>
+      <hr />
+    </div>
+<p>Redrock Postgres supports network attached tablespaces. Based on this capability, Redrock Postgres can deploy database computing and storage separately.</p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="planning">
+        Planning
+        <a data-clipboard-text="https://doc.rockdata.net/admin/network-tablespace/#planning" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Planning" aria-label="Anchor to: Planning" href="#planning">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>To illustrate the concept of a transaction, consider a banking database. When a customer transfers money from a savings account to a checking account, the transaction must consist of three separate operations:</p>
+<p>Prepare the computing server and storage server environments. The recommended environment configurations are as follows:</p>
 <ul>
-<li>
-<p>Decrement the savings account</p>
-</li>
-<li>
-<p>Increment the checking account</p>
-</li>
-<li>
-<p>Record the transaction in the transaction journal</p>
-</li>
+<li>Computing servers should use high processor and memory configurations.</li>
+<li>The storage server should use the storage device with high I/O throughput, and the storage space must meet the data storage requirements.</li>
+<li>Use high-bandwidth and low-latency networks between computing servers and storage servers.</li>
 </ul>
-<p>Redrock Postgres must allow for two situations. If all three SQL statements maintain the accounts in proper balance, then the effects of the transaction can be applied to the database. However, if a problem such as insufficient funds, invalid account number, or a hardware failure prevents one or two of the statements in the transaction from completing, then the database must roll back the entire transaction so that the balance of all accounts is correct.</p>
-<p>Figure 1 illustrates a banking transaction. The first statement subtracts $500 from savings account 3209. The second statement adds $500 to checking account 3208. The third statement inserts a record of the transfer into the journal table. The final statement commits the transaction.</p>
-
-
-
-
-
-
+<p>If you need to create multiple network tablespaces on the database server, you need to prepare multiple storage servers.</p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="deploying-compute-server">
+        Deploying Compute Server
+        <a data-clipboard-text="https://doc.rockdata.net/admin/network-tablespace/#deploying-compute-server" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Deploying Compute Server" aria-label="Anchor to: Deploying Compute Server" href="#deploying-compute-server">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>To deploy a compute server, perform the following steps:</p>
+<ol>
+<li>Install the software package by referring to Redrock Postgres <a
+  class="gdoc-markdown__link"
+  href="/installation/"
   
-
+>Installation Guide</a>.</li>
+<li>Stop the server, if it&rsquo;s running.</li>
+<li>Perform the backup, using any convenient file-system-backup tool such as tar or cpio (not
+pg_dump or pg_dumpall).</li>
+<li>Start the server.</li>
+</ol>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="deploying-storage-server">
+        Deploying Storage Server
+        <a data-clipboard-text="https://doc.rockdata.net/admin/network-tablespace/#deploying-storage-server" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Deploying Storage Server" aria-label="Anchor to: Deploying Storage Server" href="#deploying-storage-server">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>To deploy the storage server, perform the following steps:</p>
+<ol>
+<li>Install the software package by referring to Redrock Postgres <a
+  class="gdoc-markdown__link"
+  href="/installation/"
   
-  
-  
-  
+>Installation Guide</a>.</li>
+<li>Stop the server, if it&rsquo;s running.</li>
+<li>Remove all existing files and subdirectories under the cluster data directory.</li>
+<li>Restore the database files from your file system backup. Be sure that they are restored with the right ownership (the database system user, not root!) and with the right permissions.</li>
+<li>Set the listening address and port in <code>postgresql.conf</code> and create a <code>storage.signal</code> file in the cluster data directory. Modify <code>pg_hba.conf</code> to allow connections from the compute server.</li>
+<li>Start the server.</li>
+</ol>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="create-a-network-attached-database">
+        Create a Network Attached Database
+        <a data-clipboard-text="https://doc.rockdata.net/admin/network-tablespace/#create-a-network-attached-database" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Create a Network Attached Database" aria-label="Anchor to: Create a Network Attached Database" href="#create-a-network-attached-database">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>Log in to the computing server, connect to the <code>postgres</code> database in the database service as the database superuser, and create a network attached database. The following is a simple configuration example:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">DATABASE</span> <span class="n">netdb</span> <span class="k">STORAGE</span> <span class="n">remote</span> <span class="k">LOCATION</span>
+</span></span><span class="line"><span class="cl">  <span class="s1">&#39;host=192.168.1.50 port=5432 user=postgres password=pgpass&#39;</span><span class="p">;</span>
+</span></span></code></pre></div>
 
-  
 
 
-  <div class="flex justify-center">
-    <figure class="gdoc-markdown__figure">
-      <a class="gdoc-markdown__link--raw" href="https://doc.rockdata.net/features/statement-atomicity/banking-transaction.png">
-        <picture>
-          <source
-            
-              srcset="https://doc.rockdata.net/features/statement-atomicity/banking-transaction_hu053bdb97f02c3c169022b3f2aec6eea1_23235_600x0_resize_box_3.png"
-            
-          />
-          <img
-            
-            src="https://doc.rockdata.net/features/statement-atomicity/banking-transaction_hu053bdb97f02c3c169022b3f2aec6eea1_23235_1800x0_resize_box_3.png"
-            alt="Figure 1 A Banking Transaction"
-          />
-        </picture>
-      </a>
-      <figcaption>
-          Figure 1 A Banking Transaction
-        </figcaption>
-    </figure>
-  </div>
 
+<blockquote class="gdoc-hint note">
+  <div class="gdoc-hint__title flex align-center"><i class="fa note" title="Note"></i></div>
+  <div class="gdoc-hint__text">In Redrock Postgres, creating a database creates a default tablespace in the database, and the newly created database in the example above produces a default network tablespace.</div>
+</blockquote>
 
 <div class="gdoc-page__anchorwrap">
-    <h2 id="statement-level-atomicity">
-        Statement Level Atomicity
-        <a data-clipboard-text="https://doc.rockdata.net/features/statement-atomicity/#statement-level-atomicity" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Statement Level Atomicity" aria-label="Anchor to: Statement Level Atomicity" href="#statement-level-atomicity">
+    <h2 id="create-a-network-attached-tablespace">
+        Create a Network Attached Tablespace
+        <a data-clipboard-text="https://doc.rockdata.net/admin/network-tablespace/#create-a-network-attached-tablespace" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Create a Network Attached Tablespace" aria-label="Anchor to: Create a Network Attached Tablespace" href="#create-a-network-attached-tablespace">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>Redrock Postgres supports <strong>statement-level atomicity</strong>, which means that a SQL statement is an atomic unit of work and either completely succeeds or completely fails.</p>
-<p>A successful statement is different from a committed transaction. A single SQL statement executes successfully if the database parses and runs it without error as an atomic unit, as when all rows are changed in a multirow update.</p>
-<p>If a SQL statement causes an error during execution, then it is not successful and so all effects of the statement are rolled back. This operation is a statement-level rollback. This operation has the following characteristics:</p>
-<ul>
-<li>
-<p>A SQL statement that does not succeed causes the loss only of work it would have performed itself.</p>
-<p>The unsuccessful statement does not cause the loss of any work that preceded it in the current transaction. For example, if the execution of the second UPDATE statement in Figure 1 causes an error and is rolled back, then the work performed by the first UPDATE statement is not rolled back. The first UPDATE statement can be committed or rolled back explicitly by the user.</p>
-</li>
-<li>
-<p>The effect of the rollback is as if the statement had never been run.</p>
-<p>Any side effects of an atomic statement, for example, triggers invoked upon execution of the statement, are considered part of the atomic statement. Either all work generated as part of the atomic statement succeeds or none does.</p>
-</li>
-</ul>
-<p>An example of an error causing a statement-level rollback is an attempt to insert a duplicate primary key. Single SQL statements involved in a deadlock, which is competition for the same data, can also cause a statement-level rollback. However, errors discovered during SQL statement parsing, such as a syntax error, have not yet been run and so do not cause a statement-level rollback.</p>
+<p>Use a database superuser to connect to the newly created database <code>netdb</code> in the database service to create a network attached tablespace. The following is a simple example of a configuration that creates two network attached tablespaces using two additional storage servers:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">TABLESPACE</span> <span class="n">netts1</span> <span class="k">STORAGE</span> <span class="n">remote</span> <span class="k">LOCATION</span>
+</span></span><span class="line"><span class="cl">  <span class="s1">&#39;host=192.168.1.51 port=5432 user=postgres password=pgpass&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">TABLESPACE</span> <span class="n">netts2</span> <span class="k">STORAGE</span> <span class="n">remote</span> <span class="k">LOCATION</span>
+</span></span><span class="line"><span class="cl">  <span class="s1">&#39;host=192.168.1.52 port=5432 user=postgres password=pgpass&#39;</span><span class="p">;</span>
+</span></span></code></pre></div><p>You can then use these network attached tablespaces to create tables and indexes.</p>
 
   </article>
 

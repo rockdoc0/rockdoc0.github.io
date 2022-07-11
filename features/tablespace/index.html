@@ -8,11 +8,10 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Planning Deploying Compute Server Deploying Storage Server Create a Network Attached Database Create a Network Attached Tablespace      Redrock Postgres supports network attached tablespaces. Based on this capability, Redrock Postgres can deploy database computing and storage separately.
-Planning     Prepare the computing server and storage server environments. The recommended environment configurations are as follows:
- Computing servers should use high processor and memory configurations." />
+  <meta name="description" content="Tablespaces in PostgreSQL allow database administrators to define locations in the file system where the files representing database objects can be stored. Once created, a tablespace can be referred to by name when creating database objects.
+By using tablespaces, an administrator can control the disk layout of a PostgreSQL installation. This is useful in at least two ways. First, if the partition or volume on which the cluster was initialized runs out of space and cannot be extended, a tablespace can be created on a different partition and used until the system can be reconfigured." />
 
-    <title>Network Attached Tablespace | Redrock Documentation</title>
+    <title>Tablespaces | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -33,29 +32,27 @@ Planning     Prepare the computing server and storage server environments. The r
     
   <meta
     property="og:title"
-    content="Network Attached Tablespace"
+    content="Tablespaces"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Planning Deploying Compute Server Deploying Storage Server Create a Network Attached Database Create a Network Attached Tablespace      Redrock Postgres supports network attached tablespaces. Based on this capability, Redrock Postgres can deploy database computing and storage separately.
-Planning     Prepare the computing server and storage server environments. The recommended environment configurations are as follows:
- Computing servers should use high processor and memory configurations." />
+  <meta property="og:description" content="Tablespaces in PostgreSQL allow database administrators to define locations in the file system where the files representing database objects can be stored. Once created, a tablespace can be referred to by name when creating database objects.
+By using tablespaces, an administrator can control the disk layout of a PostgreSQL installation. This is useful in at least two ways. First, if the partition or volume on which the cluster was initialized runs out of space and cannot be extended, a tablespace can be created on a different partition and used until the system can be reconfigured." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://doc.rockdata.net/features/network-tablespace/" />
+<meta property="og:url" content="https://doc.rockdata.net/features/tablespace/" />
 
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-06-26T09:31:53+08:00"
+      content="2022-07-11T19:32:27+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Network Attached Tablespace" />
+<meta name="twitter:title" content="Tablespaces" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Planning Deploying Compute Server Deploying Storage Server Create a Network Attached Database Create a Network Attached Tablespace      Redrock Postgres supports network attached tablespaces. Based on this capability, Redrock Postgres can deploy database computing and storage separately.
-Planning     Prepare the computing server and storage server environments. The recommended environment configurations are as follows:
- Computing servers should use high processor and memory configurations." />
+  <meta name="twitter:description" content="Tablespaces in PostgreSQL allow database administrators to define locations in the file system where the files representing database objects can be stored. Once created, a tablespace can be referred to by name when creating database objects.
+By using tablespaces, an administrator can control the disk layout of a PostgreSQL installation. This is useful in at least two ways. First, if the partition or volume on which the cluster was initialized runs out of space and cannot be extended, a tablespace can be created on a different partition and used until the system can be reconfigured." />
 
 
   <script type="application/ld+json">
@@ -63,23 +60,23 @@ Planning     Prepare the computing server and storage server environments. The r
       "@context": "http://schema.org",
       "@type": "TechArticle",
       "articleSection": "Features",
-      "name": "Network Attached Tablespace",
-      "url" : "https://doc.rockdata.net/features/network-tablespace/",
-      "headline": "Network Attached Tablespace",
-      "description": "Planning Deploying Compute Server Deploying Storage Server Create a Network Attached Database Create a Network Attached Tablespace      Redrock Postgres supports network attached tablespaces. Based on this capability, Redrock Postgres can deploy database computing and storage separately.\nPlanning     Prepare the computing server and storage server environments. The recommended environment configurations are as follows:\n Computing servers should use high processor and memory configurations.",
+      "name": "Tablespaces",
+      "url" : "https://doc.rockdata.net/features/tablespace/",
+      "headline": "Tablespaces",
+      "description": "Tablespaces in PostgreSQL allow database administrators to define locations in the file system where the files representing database objects can be stored. Once created, a tablespace can be referred to by name when creating database objects.\nBy using tablespaces, an administrator can control the disk layout of a PostgreSQL installation. This is useful in at least two ways. First, if the partition or volume on which the cluster was initialized runs out of space and cannot be extended, a tablespace can be created on a different partition and used until the system can be reconfigured.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "416",
+      "wordCount" : "881",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://doc.rockdata.net/features/network-tablespace/"
+          "@id": "https://doc.rockdata.net/features/tablespace/"
       },
       "copyrightHolder" : "Redrock Documentation",
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-26T09:31:53.00Z",
+      "dateModified": "2022-07-11T19:32:27.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -155,7 +152,7 @@ Planning     Prepare the computing server and storage server environments. The r
   href="/custom.css"
   media="all"
 />
-  <link href="https://doc.rockdata.net/features/network-tablespace/" rel="canonical" type="text/html" />
+  <link href="https://doc.rockdata.net/features/tablespace/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -762,7 +759,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <a
                   class="flex gdoc-language__entry"
                   title="简体中文"
-                  href="/zh-cn/features/network-tablespace/"
+                  href="/zh-cn/features/tablespace/"
                   hreflang="zh-cn"
                   lang="zh-cn"
                 >
@@ -1323,10 +1320,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/features/statement-atomicity/"
+                    href="/features/transaction/"
                     class="gdoc-nav__entry"
                   >
-                    Statement Level Atomicity
+                    Transactions
                   </a>
                 </span>
               
@@ -1367,10 +1364,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/features/network-tablespace/"
+                    href="/features/tablespace/"
                     class="gdoc-nav__entry is-active"
                   >
-                    Network Attached Tablespace
+                    Tablespaces
                   </a>
                 </span>
               
@@ -1746,6 +1743,50 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     class="gdoc-nav__entry"
                   >
                     Configuration
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/admin/network-tablespace/"
+                    class="gdoc-nav__entry"
+                  >
+                    Network Attached Tablespace
                   </a>
                 </span>
               
@@ -2516,7 +2557,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/features/' href='/features/'><span itemprop='name'>Features</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Network Attached Tablespace</span><meta itemprop='position' content='3' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/features/' href='/features/'><span itemprop='name'>Features</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Tablespaces</span><meta itemprop='position' content='3' /></li>
   
 
   
@@ -2531,7 +2572,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <span class="editpage">
         <svg class="gdoc-icon gdoc_code"><use xlink:href="#gdoc_code"></use></svg>
         <a
-          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/en/features/network-tablespace.md"
+          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/en/features/tablespace.md"
         >
           Edit page
         </a>
@@ -2545,109 +2586,74 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <article
     class="gdoc-markdown gdoc-markdown__align--left"
   >
-    <h1>Network Attached Tablespace</h1>
-    <div class="gdoc-toc gdoc-toc__level--3">
-      <nav id="TableOfContents"><ul>
-        <li><a href="#planning">Planning</a></li>
-        <li><a href="#deploying-compute-server">Deploying Compute Server</a></li>
-        <li><a href="#deploying-storage-server">Deploying Storage Server</a></li>
-        <li><a href="#create-a-network-attached-database">Create a Network Attached Database</a></li>
-        <li><a href="#create-a-network-attached-tablespace">Create a Network Attached Tablespace</a></li>
-      </ul></nav>
-      <hr />
-    </div>
-<p>Redrock Postgres supports network attached tablespaces. Based on this capability, Redrock Postgres can deploy database computing and storage separately.</p>
-<div class="gdoc-page__anchorwrap">
-    <h2 id="planning">
-        Planning
-        <a data-clipboard-text="https://doc.rockdata.net/features/network-tablespace/#planning" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Planning" aria-label="Anchor to: Planning" href="#planning">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<p>Prepare the computing server and storage server environments. The recommended environment configurations are as follows:</p>
-<ul>
-<li>Computing servers should use high processor and memory configurations.</li>
-<li>The storage server should use the storage device with high I/O throughput, and the storage space must meet the data storage requirements.</li>
-<li>Use high-bandwidth and low-latency networks between computing servers and storage servers.</li>
-</ul>
-<p>If you need to create multiple network tablespaces on the database server, you need to prepare multiple storage servers.</p>
-<div class="gdoc-page__anchorwrap">
-    <h2 id="deploying-compute-server">
-        Deploying Compute Server
-        <a data-clipboard-text="https://doc.rockdata.net/features/network-tablespace/#deploying-compute-server" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Deploying Compute Server" aria-label="Anchor to: Deploying Compute Server" href="#deploying-compute-server">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<p>To deploy a compute server, perform the following steps:</p>
-<ol>
-<li>Install the software package by referring to Redrock Postgres <a
+    <h1>Tablespaces</h1>
+    <p>Tablespaces in PostgreSQL allow database administrators to define locations in the file system where the files representing database objects can be stored. Once created, a tablespace can be referred to by name when creating database objects.</p>
+<p>By using tablespaces, an administrator can control the disk layout of a PostgreSQL installation. This is useful in at least two ways. First, if the partition or volume on which the cluster was initialized runs out of space and cannot be extended, a tablespace can be created on a different partition and used until the system can be reconfigured.</p>
+<p>Second, tablespaces allow an administrator to use knowledge of the usage pattern of database objects to optimize performance. For example, an index which is very heavily used can be placed on a very fast, highly available disk, such as an expensive solid state device. At the same time a table storing archived data which is rarely used or not performance critical could be stored on a less expensive, slower disk system.</p>
+
+
+
+
+
+<blockquote class="gdoc-hint warning">
+  <div class="gdoc-hint__title flex align-center"><i class="fa warning" title="Warning"></i></div>
+  <div class="gdoc-hint__text">Even though located outside the main PostgreSQL data directory, tablespaces are an integral part of the database cluster and <em>cannot</em> be treated as an autonomous collection of data files. They are dependent on metadata contained in the main data directory, and therefore cannot be attached to a different database cluster or backed up individually. Similarly, if you lose a tablespace (file deletion, disk failure, etc), the database cluster might become unreadable or unable to start. Placing a tablespace on a temporary file system like a RAM disk risks the reliability of the entire cluster.</div>
+</blockquote>
+
+<p>To define a tablespace, use the <a
   class="gdoc-markdown__link"
-  href="/installation/"
+  href="https://www.postgresql.org/docs/12/sql-createtablespace.html"
   
->Installation Guide</a>.</li>
-<li>Stop the server, if it&rsquo;s running.</li>
-<li>Perform the backup, using any convenient file-system-backup tool such as tar or cpio (not
-pg_dump or pg_dumpall).</li>
-<li>Start the server.</li>
-</ol>
-<div class="gdoc-page__anchorwrap">
-    <h2 id="deploying-storage-server">
-        Deploying Storage Server
-        <a data-clipboard-text="https://doc.rockdata.net/features/network-tablespace/#deploying-storage-server" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Deploying Storage Server" aria-label="Anchor to: Deploying Storage Server" href="#deploying-storage-server">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<p>To deploy the storage server, perform the following steps:</p>
-<ol>
-<li>Install the software package by referring to Redrock Postgres <a
-  class="gdoc-markdown__link"
-  href="/installation/"
-  
->Installation Guide</a>.</li>
-<li>Stop the server, if it&rsquo;s running.</li>
-<li>Remove all existing files and subdirectories under the cluster data directory.</li>
-<li>Restore the database files from your file system backup. Be sure that they are restored with the right ownership (the database system user, not root!) and with the right permissions.</li>
-<li>Set the listening address and port in <code>postgresql.conf</code> and create a <code>storage.signal</code> file in the cluster data directory. Modify <code>pg_hba.conf</code> to allow connections from the compute server.</li>
-<li>Start the server.</li>
-</ol>
-<div class="gdoc-page__anchorwrap">
-    <h2 id="create-a-network-attached-database">
-        Create a Network Attached Database
-        <a data-clipboard-text="https://doc.rockdata.net/features/network-tablespace/#create-a-network-attached-database" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Create a Network Attached Database" aria-label="Anchor to: Create a Network Attached Database" href="#create-a-network-attached-database">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<p>Log in to the computing server, connect to the <code>postgres</code> database in the database service as the database superuser, and create a network attached database. The following is a simple configuration example:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">DATABASE</span> <span class="n">netdb</span> <span class="k">STORAGE</span> <span class="n">remote</span> <span class="k">LOCATION</span>
-</span></span><span class="line"><span class="cl">  <span class="s1">&#39;host=192.168.1.50 port=5432 user=postgres password=pgpass&#39;</span><span class="p">;</span>
-</span></span></code></pre></div>
+>CREATE TABLESPACE</a> command, for example::</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">TABLESPACE</span> <span class="n">fastspace</span> <span class="k">LOCATION</span> <span class="s1">&#39;/ssd1/postgresql/data&#39;</span><span class="p">;</span>
+</span></span></code></pre></div><p>The location must be an existing, empty directory that is owned by the PostgreSQL operating system user. All objects subsequently created within the tablespace will be stored in files underneath this directory. The location must not be on removable or transient storage, as the cluster might fail to function if the tablespace is missing or lost.</p>
+
 
 
 
 
 <blockquote class="gdoc-hint note">
   <div class="gdoc-hint__title flex align-center"><i class="fa note" title="Note"></i></div>
-  <div class="gdoc-hint__text">In Redrock Postgres, creating a database creates a default tablespace in the database, and the newly created database in the example above produces a default network tablespace.</div>
+  <div class="gdoc-hint__text">There is usually not much point in making more than one tablespace per logical file system, since you cannot control the location of individual files within a logical file system. However, PostgreSQL does not enforce any such limitation, and indeed it is not directly aware of the file system boundaries on your system. It just stores files in the directories you tell it to use.</div>
 </blockquote>
 
-<div class="gdoc-page__anchorwrap">
-    <h2 id="create-a-network-attached-tablespace">
-        Create a Network Attached Tablespace
-        <a data-clipboard-text="https://doc.rockdata.net/features/network-tablespace/#create-a-network-attached-tablespace" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Create a Network Attached Tablespace" aria-label="Anchor to: Create a Network Attached Tablespace" href="#create-a-network-attached-tablespace">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<p>Use a database superuser to connect to the newly created database <code>netdb</code> in the database service to create a network attached tablespace. The following is a simple example of a configuration that creates two network attached tablespaces using two additional storage servers:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">TABLESPACE</span> <span class="n">netts1</span> <span class="k">STORAGE</span> <span class="n">remote</span> <span class="k">LOCATION</span>
-</span></span><span class="line"><span class="cl">  <span class="s1">&#39;host=192.168.1.51 port=5432 user=postgres password=pgpass&#39;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">TABLESPACE</span> <span class="n">netts2</span> <span class="k">STORAGE</span> <span class="n">remote</span> <span class="k">LOCATION</span>
-</span></span><span class="line"><span class="cl">  <span class="s1">&#39;host=192.168.1.52 port=5432 user=postgres password=pgpass&#39;</span><span class="p">;</span>
-</span></span></code></pre></div><p>You can then use these network attached tablespaces to create tables and indexes.</p>
+<p>Creation of the tablespace itself must be done as a database superuser, but after that you can allow ordinary database users to use it. To do that, grant them the <code>CREATE</code> privilege on it.</p>
+<p>Tables, indexes, undos and entire databases can be assigned to particular tablespaces. To do so, a user with the <code>CREATE</code> privilege on a given tablespace must pass the tablespace name as a parameter to the relevant command. For example, the following creates a table in the tablespace <code>space1</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">foo</span><span class="p">(</span><span class="n">i</span> <span class="nb">int</span><span class="p">)</span> <span class="k">TABLESPACE</span> <span class="n">space1</span><span class="p">;</span>
+</span></span></code></pre></div><p>Alternatively, use the <a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/runtime-config-client.html#GUC-DEFAULT-TABLESPACE"
+  
+>default_tablespace</a> parameter:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SET</span> <span class="n">default_tablespace</span> <span class="o">=</span> <span class="n">space1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">foo</span><span class="p">(</span><span class="n">i</span> <span class="nb">int</span><span class="p">);</span>
+</span></span></code></pre></div><p>When <code>default_tablespace</code> is set to anything but an empty string, it supplies an implicit <code>TABLESPACE</code> clause for <code>CREATE TABLE</code> and <code>CREATE INDEX</code> commands that do not have an explicit one.</p>
+<p>There is also a <a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/runtime-config-client.html#GUC-TEMP-TABLESPACES"
+  
+>temp_tablespaces</a> parameter, which determines the placement of temporary tables and indexes, as well as temporary files that are used for purposes such as sorting large data sets. This can be a list of tablespace names, rather than only one, so that the load associated with temporary objects can be spread over multiple tablespaces. A random member of the list is picked each time a temporary object is to be created.</p>
+<p>The tablespace associated with a database is used to store the system catalogs of that database. Furthermore, it is the default tablespace used for tables, indexes, and temporary files created within the database, if no <code>TABLESPACE</code> clause is given and no other selection is specified by <code>default_tablespace</code> or <code>temp_tablespaces</code> (as appropriate). If a database is created without specifying a tablespace for it, it uses the same tablespace as the template database it is copied from.</p>
+<p>Two tablespaces are automatically created when the database cluster is initialized. The <code>pg_global</code> tablespace is used for shared system catalogs. The <code>pg_default</code> tablespace is the default tablespace of the <code>template1</code> and <code>template0</code> databases (and, therefore, will be the default tablespace for other databases as well, unless overridden by a <code>TABLESPACE</code> clause in <code>CREATE DATABASE</code>).</p>
+<p>Once created, a tablespace can be used from any database, provided the requesting user has sufficient privilege. This means that a tablespace cannot be dropped until all objects in all databases using the tablespace have been removed.</p>
+<p>To remove an empty tablespace, use the <a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/sql-droptablespace.html"
+  
+>DROP TABLESPACE</a> command.</p>
+<p>To determine the set of existing tablespaces, examine the <a
+  class="gdoc-markdown__link--code"
+  href="https://www.postgresql.org/docs/12/catalog-pg-tablespace.html"
+  
+><code>pg_tablespace</code></a> system catalog, for example</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">spcname</span> <span class="k">FROM</span> <span class="n">pg_tablespace</span><span class="p">;</span>
+</span></span></code></pre></div><p>The <a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/app-psql.html"
+  
+>psql</a> program&rsquo;s <code>\db</code> meta-command is also useful for listing the existing tablespaces.</p>
+<p>PostgreSQL makes use of symbolic links to simplify the implementation of tablespaces. This means that tablespaces can be used <em>only</em> on systems that support symbolic links.</p>
+<p>The directory <code>$PGDATA/pg_tblspc</code> contains symbolic links that point to each of the non-built-in tablespaces defined in the cluster. Although not recommended, it is possible to adjust the tablespace layout by hand by redefining these links. Under no circumstances perform this operation while the server is running.</p>
 
   </article>
 

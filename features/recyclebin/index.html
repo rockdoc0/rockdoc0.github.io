@@ -42,7 +42,7 @@
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-06-15T16:49:37+08:00"
+      content="2022-07-11T19:32:27+08:00"
     />
 
 
@@ -73,7 +73,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-15T16:49:37.00Z",
+      "dateModified": "2022-07-11T19:32:27.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1317,10 +1317,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/features/statement-atomicity/"
+                    href="/features/transaction/"
                     class="gdoc-nav__entry"
                   >
-                    Statement Level Atomicity
+                    Transactions
                   </a>
                 </span>
               
@@ -1361,10 +1361,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/features/network-tablespace/"
+                    href="/features/tablespace/"
                     class="gdoc-nav__entry"
                   >
-                    Network Attached Tablespace
+                    Tablespaces
                   </a>
                 </span>
               
@@ -1740,6 +1740,50 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     class="gdoc-nav__entry"
                   >
                     Configuration
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/admin/network-tablespace/"
+                    class="gdoc-nav__entry"
+                  >
+                    Network Attached Tablespace
                   </a>
                 </span>
               
@@ -2565,9 +2609,9 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <p>The recycle bin is actually a data dictionary table containing information about dropped objects. Dropped tables and any associated objects such as indexes, constraints, types, and so on are not removed and still occupy space.</p>
 <p>They continue to count against user space quotas, until specifically purged from the recycle bin or the unlikely situation where they must be purged by the database because of tablespace space constraints.</p>
 <p>Each user can be thought of as having his own recycle bin, because, unless a user has the <code>SUPERUSER</code> privilege, the only objects that the user has access to in the recycle bin are those that the user owns. A user can view the objects in his schema in the recycle bin using the following statement:</p>
-<pre tabindex="0"><code>SELECT * FROM pg_catalog.pg_recyclebin
-   WHERE namespace = to_regnamespace(CURRENT_SCHEMA)::oid;
-</code></pre><p>Objects dropped by the DDL command are moved to the recycle bin. Dropped objects that are moved to the recycle bin can include the following types of objects:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">pg_catalog</span><span class="mf">.</span><span class="n">pg_recyclebin</span>
+</span></span><span class="line"><span class="cl">   <span class="k">WHERE</span> <span class="n">namespace</span> <span class="o">=</span> <span class="n">to_regnamespace</span><span class="p">(</span><span class="k">CURRENT_SCHEMA</span><span class="p">)</span><span class="o">::</span><span class="n">oid</span><span class="p">;</span>
+</span></span></code></pre></div><p>Objects dropped by the DDL command are moved to the recycle bin. Dropped objects that are moved to the recycle bin can include the following types of objects:</p>
 <ul>
 <li>Tables</li>
 <li>Undos</li>
@@ -2618,8 +2662,8 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 pg_dropped_table_18762 | employees
 </code></pre><p>You can also view the contents of the recycle bin using the GUI management tool like DBeaver, pgAdmin 4, expand the system schema <code>pg_recyclebin</code> under a specified database to view all the dropped objects.</p>
 <p>You can query objects that are in the recycle bin, just as you can query other objects. However, you must specify the name of the object as it is identified in the recycle bin. For example:</p>
-<pre tabindex="0"><code>SELECT * FROM pg_recyclebin.pg_dropped_table_18762;
-</code></pre><div class="gdoc-page__anchorwrap">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">pg_recyclebin</span><span class="mf">.</span><span class="n">pg_dropped_table_18762</span><span class="p">;</span>
+</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
     <h2 id="purging-objects-in-the-recycle-bin">
         Purging Objects in the Recycle Bin
         <a data-clipboard-text="https://doc.rockdata.net/features/recyclebin/#purging-objects-in-the-recycle-bin" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Purging Objects in the Recycle Bin" aria-label="Anchor to: Purging Objects in the Recycle Bin" href="#purging-objects-in-the-recycle-bin">
@@ -2633,12 +2677,12 @@ pg_dropped_table_18762 | employees
   href="/features/recyclebin/#viewing-and-querying-objects-in-the-recycle-bin"
   
 >Viewing and Querying Objects in the Recycle Bin</a>&rdquo;. The following hypothetical example purges the table <code>hr.employees</code>, which was renamed to <code>pg_recyclebin.pg_dropped_table_18762</code> when it was placed in the recycle bin:</p>
-<pre tabindex="0"><code>VACUUM pg_recyclebin.pg_dropped_table_18762;
-</code></pre><p>You can achieve the same result with the following statement:</p>
-<pre tabindex="0"><code>VACUUM hr.employees;
-</code></pre><p>If you have the <code>SUPERUSER</code> privilege or you are the current database owner, then you can purge the entire recycle bin, and release space for objects, by using the following statement:</p>
-<pre tabindex="0"><code>VACUUM;
-</code></pre><p>You can also use the <code>VACUUM</code> statement to purge an index or undo from the recycle bin.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">VACUUM</span> <span class="n">pg_recyclebin</span><span class="mf">.</span><span class="n">pg_dropped_table_18762</span><span class="p">;</span>
+</span></span></code></pre></div><p>You can achieve the same result with the following statement:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">VACUUM</span> <span class="n">hr</span><span class="mf">.</span><span class="n">employees</span><span class="p">;</span>
+</span></span></code></pre></div><p>If you have the <code>SUPERUSER</code> privilege or you are the current database owner, then you can purge the entire recycle bin, and release space for objects, by using the following statement:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">VACUUM</span><span class="p">;</span>
+</span></span></code></pre></div><p>You can also use the <code>VACUUM</code> statement to purge an index or undo from the recycle bin.</p>
 <div class="gdoc-page__anchorwrap">
     <h2 id="restoring-tables-from-the-recycle-bin">
         Restoring Tables from the Recycle Bin
@@ -2654,9 +2698,9 @@ pg_dropped_table_18762 | employees
   
 >Viewing and Querying Objects in the Recycle Bin</a>&rdquo;. To use the <code>CREATE</code> <code>TABLE</code> &hellip; <code>LIKE</code> statement, you need the <code>SELECT</code> privileges required to access the dropped table.</p>
 <p>The following example restores <code>employees</code> table and assigns to it a new name:</p>
-<pre tabindex="0"><code>CREATE TABLE hr.employees2 (LIKE pg_recyclebin.pg_dropped_table_18762 INCLUDING ALL);
-INSERT INTO hr.employees2 SELECT * FROM pg_recyclebin.pg_dropped_table_18762;
-</code></pre><p>The system-generated recycle bin name is very useful if you have dropped a table multiple times. For example, suppose you have three versions of the <code>employees</code> table in the recycle bin and you want to recover the second version. You can query the recycle bin and then restore to the appropriate system-generated name, as shown in the following example. Including the drop time in the query can help you verify that you are restoring the correct table.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">hr</span><span class="mf">.</span><span class="n">employees2</span> <span class="p">(</span><span class="k">LIKE</span> <span class="n">pg_recyclebin</span><span class="mf">.</span><span class="n">pg_dropped_table_18762</span> <span class="k">INCLUDING</span> <span class="k">ALL</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">hr</span><span class="mf">.</span><span class="n">employees2</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">pg_recyclebin</span><span class="mf">.</span><span class="n">pg_dropped_table_18762</span><span class="p">;</span>
+</span></span></code></pre></div><p>The system-generated recycle bin name is very useful if you have dropped a table multiple times. For example, suppose you have three versions of the <code>employees</code> table in the recycle bin and you want to recover the second version. You can query the recycle bin and then restore to the appropriate system-generated name, as shown in the following example. Including the drop time in the query can help you verify that you are restoring the correct table.</p>
 <pre tabindex="0"><code>SELECT objname, oldname, droptime FROM pg_catalog.pg_recyclebin;
 
        objname         |  oldname  |      droptime

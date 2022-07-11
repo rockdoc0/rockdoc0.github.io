@@ -185,7 +185,7 @@
                 />
   </url><url>
     <loc>https://doc.rockdata.net/zh-cn/features/recyclebin/</loc>
-    <lastmod>2022-06-17T17:34:43+08:00</lastmod>
+    <lastmod>2022-07-11T19:32:27+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -197,17 +197,17 @@
                 href="https://doc.rockdata.net/zh-cn/features/recyclebin/"
                 />
   </url><url>
-    <loc>https://doc.rockdata.net/zh-cn/features/statement-atomicity/</loc>
-    <lastmod>2022-06-19T20:52:49+08:00</lastmod>
+    <loc>https://doc.rockdata.net/zh-cn/features/transaction/</loc>
+    <lastmod>2022-07-11T21:44:44+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://doc.rockdata.net/features/statement-atomicity/"
+                href="https://doc.rockdata.net/features/transaction/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://doc.rockdata.net/zh-cn/features/statement-atomicity/"
+                href="https://doc.rockdata.net/zh-cn/features/transaction/"
                 />
   </url><url>
     <loc>https://doc.rockdata.net/zh-cn/commands/</loc>
@@ -223,17 +223,30 @@
                 href="https://doc.rockdata.net/zh-cn/commands/"
                 />
   </url><url>
-    <loc>https://doc.rockdata.net/zh-cn/features/network-tablespace/</loc>
-    <lastmod>2022-06-26T09:31:53+08:00</lastmod>
+    <loc>https://doc.rockdata.net/zh-cn/features/tablespace/</loc>
+    <lastmod>2022-07-11T19:32:27+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://doc.rockdata.net/features/network-tablespace/"
+                href="https://doc.rockdata.net/features/tablespace/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://doc.rockdata.net/zh-cn/features/network-tablespace/"
+                href="https://doc.rockdata.net/zh-cn/features/tablespace/"
+                />
+  </url><url>
+    <loc>https://doc.rockdata.net/zh-cn/admin/network-tablespace/</loc>
+    <lastmod>2022-07-11T15:14:02+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://doc.rockdata.net/admin/network-tablespace/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://doc.rockdata.net/zh-cn/admin/network-tablespace/"
                 />
   </url><url>
     <loc>https://doc.rockdata.net/zh-cn/advanced/monitor-stats/</loc>
@@ -393,7 +406,7 @@
                 />
   </url><url>
     <loc>https://doc.rockdata.net/zh-cn/catalogs/recyclebin/</loc>
-    <lastmod>2022-06-18T15:39:08+08:00</lastmod>
+    <lastmod>2022-07-11T19:32:27+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -406,7 +419,7 @@
                 />
   </url><url>
     <loc>https://doc.rockdata.net/zh-cn/catalogs/ts-lexicon/</loc>
-    <lastmod>2022-06-18T18:45:30+08:00</lastmod>
+    <lastmod>2022-07-11T19:32:27+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -419,7 +432,7 @@
                 />
   </url><url>
     <loc>https://doc.rockdata.net/zh-cn/catalogs/undo/</loc>
-    <lastmod>2022-06-18T18:45:30+08:00</lastmod>
+    <lastmod>2022-07-11T19:32:27+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"

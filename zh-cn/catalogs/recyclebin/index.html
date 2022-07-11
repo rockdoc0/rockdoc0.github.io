@@ -8,7 +8,7 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="目录 pg_recyclebin 记录数据库中已删除对象的部分信息。其他信息大部分在 pg_class、pg_type、pg_proc 和 pg_constraint 中。
+  <meta name="description" content="系统表 pg_recyclebin 记录数据库中已删除对象的部分信息。其他信息大部分在 pg_class、pg_type、pg_proc 和 pg_constraint 中。
 表. pg_recyclebin的列
    名称 类型 引用 描述     classid oid pg_class.oid 已删除对象所在的系统目录OID   objid oid 任意OID列 已删除对象的OID   objsubid oid  当 classid 为系统表 pg_namespace 的OID时，表示模式拥有者的用户OID。对于所有其他对象类型，此列为0。   namespace oid pg_namespace.oid 已删除对象所在的模式OID   objname name 任意NAME列 该对象被删除后的新名称   oldname name 任意NAME列 该对象被删除前的名称   command char  该对象被删除的触发操作： d - DROP操作 r - 重写操作，如：ALTER TABLE  t - TRUNCATE操作   droptime timestamptz  该对象被删除的时间    " />
 
@@ -37,7 +37,7 @@
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="目录 pg_recyclebin 记录数据库中已删除对象的部分信息。其他信息大部分在 pg_class、pg_type、pg_proc 和 pg_constraint 中。
+  <meta property="og:description" content="系统表 pg_recyclebin 记录数据库中已删除对象的部分信息。其他信息大部分在 pg_class、pg_type、pg_proc 和 pg_constraint 中。
 表. pg_recyclebin的列
    名称 类型 引用 描述     classid oid pg_class.oid 已删除对象所在的系统目录OID   objid oid 任意OID列 已删除对象的OID   objsubid oid  当 classid 为系统表 pg_namespace 的OID时，表示模式拥有者的用户OID。对于所有其他对象类型，此列为0。   namespace oid pg_namespace.oid 已删除对象所在的模式OID   objname name 任意NAME列 该对象被删除后的新名称   oldname name 任意NAME列 该对象被删除前的名称   command char  该对象被删除的触发操作： d - DROP操作 r - 重写操作，如：ALTER TABLE  t - TRUNCATE操作   droptime timestamptz  该对象被删除的时间    " />
 <meta property="og:type" content="article" />
@@ -46,14 +46,14 @@
 <meta property="article:section" content="Catalogs" />
     <meta
       property="article:modified_time"
-      content="2022-06-18T15:39:08+08:00"
+      content="2022-07-11T19:32:27+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="pg_recyclebin" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="目录 pg_recyclebin 记录数据库中已删除对象的部分信息。其他信息大部分在 pg_class、pg_type、pg_proc 和 pg_constraint 中。
+  <meta name="twitter:description" content="系统表 pg_recyclebin 记录数据库中已删除对象的部分信息。其他信息大部分在 pg_class、pg_type、pg_proc 和 pg_constraint 中。
 表. pg_recyclebin的列
    名称 类型 引用 描述     classid oid pg_class.oid 已删除对象所在的系统目录OID   objid oid 任意OID列 已删除对象的OID   objsubid oid  当 classid 为系统表 pg_namespace 的OID时，表示模式拥有者的用户OID。对于所有其他对象类型，此列为0。   namespace oid pg_namespace.oid 已删除对象所在的模式OID   objname name 任意NAME列 该对象被删除后的新名称   oldname name 任意NAME列 该对象被删除前的名称   command char  该对象被删除的触发操作： d - DROP操作 r - 重写操作，如：ALTER TABLE  t - TRUNCATE操作   droptime timestamptz  该对象被删除的时间    " />
 
@@ -66,7 +66,7 @@
       "name": "pg_recyclebin",
       "url" : "https://doc.rockdata.net/zh-cn/catalogs/recyclebin/",
       "headline": "pg_recyclebin",
-      "description": "目录 pg_recyclebin 记录数据库中已删除对象的部分信息。其他信息大部分在 pg_class、pg_type、pg_proc 和 pg_constraint 中。\n表. pg_recyclebin的列\n   名称 类型 引用 描述     classid oid pg_class.oid 已删除对象所在的系统目录OID   objid oid 任意OID列 已删除对象的OID   objsubid oid  当 classid 为系统表 pg_namespace 的OID时，表示模式拥有者的用户OID。对于所有其他对象类型，此列为0。   namespace oid pg_namespace.oid 已删除对象所在的模式OID   objname name 任意NAME列 该对象被删除后的新名称   oldname name 任意NAME列 该对象被删除前的名称   command char  该对象被删除的触发操作： d - DROP操作 r - 重写操作，如：ALTER TABLE  t - TRUNCATE操作   droptime timestamptz  该对象被删除的时间    ",
+      "description": "系统表 pg_recyclebin 记录数据库中已删除对象的部分信息。其他信息大部分在 pg_class、pg_type、pg_proc 和 pg_constraint 中。\n表. pg_recyclebin的列\n   名称 类型 引用 描述     classid oid pg_class.oid 已删除对象所在的系统目录OID   objid oid 任意OID列 已删除对象的OID   objsubid oid  当 classid 为系统表 pg_namespace 的OID时，表示模式拥有者的用户OID。对于所有其他对象类型，此列为0。   namespace oid pg_namespace.oid 已删除对象所在的模式OID   objname name 任意NAME列 该对象被删除后的新名称   oldname name 任意NAME列 该对象被删除前的名称   command char  该对象被删除的触发操作： d - DROP操作 r - 重写操作，如：ALTER TABLE  t - TRUNCATE操作   droptime timestamptz  该对象被删除的时间    ",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
       "wordCount" : "56",
       "inLanguage": "zh-cn",
@@ -79,7 +79,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-18T15:39:08.00Z",
+      "dateModified": "2022-07-11T19:32:27.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1323,10 +1323,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/features/statement-atomicity/"
+                    href="/zh-cn/features/transaction/"
                     class="gdoc-nav__entry"
                   >
-                    语句级原子性
+                    事务
                   </a>
                 </span>
               
@@ -1367,10 +1367,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/features/network-tablespace/"
+                    href="/zh-cn/features/tablespace/"
                     class="gdoc-nav__entry"
                   >
-                    网络表空间
+                    表空间
                   </a>
                 </span>
               
@@ -1746,6 +1746,50 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     class="gdoc-nav__entry"
                   >
                     参数配置
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/admin/network-tablespace/"
+                    class="gdoc-nav__entry"
+                  >
+                    网络表空间
                   </a>
                 </span>
               
@@ -2546,7 +2590,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     class="gdoc-markdown gdoc-markdown__align--left"
   >
     <h1>pg_recyclebin</h1>
-    <p>目录 <code>pg_recyclebin</code> 记录数据库中已删除对象的部分信息。其他信息大部分在 <code>pg_class</code>、<code>pg_type</code>、<code>pg_proc</code> 和 <code>pg_constraint</code> 中。</p>
+    <p>系统表 <code>pg_recyclebin</code> 记录数据库中已删除对象的部分信息。其他信息大部分在 <code>pg_class</code>、<code>pg_type</code>、<code>pg_proc</code> 和 <code>pg_constraint</code> 中。</p>
 <p><strong>表. <code>pg_recyclebin</code>的列</strong></p>
 <div class="table-wrap"> <table>
 <thead>

@@ -8,22 +8,16 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="示例事务：帐户借贷     为了说明事务的概念，考虑一个银行数据库。当一个客户将钱从储蓄账户转移到支票帐户时，事务必须由三个单独的操作组成：
-  减少储蓄账户余额
-  增加支票账户余额
-  在事务日志中记录这笔交易
-  Redrock Postgres 必须考虑两种情况。如果所有三个 SQL 语句都对该账号维持了正确的余额，则事务的效果可以应用到数据库中。但是，如果某个问题，如资金不足、帐号无效、或硬件故障，阻止了事务中某些语句的完成，则数据库必须回滚整个事务，以便所有帐户的余额是正确的。
-图 1 说明了银行事务。第一条语句从储蓄帐户3209中减去 500 美元。第二条语句向支票帐户3208增加500 美元。第三条语句在日志表中插入这笔转账记录。最后一个语句提交事务。
-    图 1 银行事务    语句级原子性     Redrock Postgres 支持语句级原子性，这意味着 SQL 语句是一个原子工作单元，要么完全成功，要么完全失败。
-成功的语句不同于已提交事务。如果一个SQL 语句能被数据库正确分析，并作为一个原子单位来运行且未产生错误，且所有行都被正确更改，则这个SQL 语句是成功执行的。
-如果 SQL 语句在执行过程中导致错误，则它是不成功的，该语句中的所有影响都将被回滚。此操作是一个语句级回滚。此操作具有以下特征：
-  未成功的 SQL 语句只会导致它本身执行的工作丢失。
-未成功的语句不会导致丢失当前事务中该语句之前的任何工作。例如，若图1中第二个UPDATE语句的执行导致错误并被回滚，但由第一个UPDATE语句执行的工作是不会被回滚的。第一个UPDATE语句可以由用户显式提交或回滚。
-  回滚的效果是，好像该语句从来未运行过。
-原子语句的副作用被视为原子语句的一部分，例如，由语句执行所引发的触发器调用。作为原子语句的一部分所产生的所有工作，要么都成功，要么都失败。
-  由错误导致语句级回滚的一个示例，是尝试插入重复的主键。死锁中的某个为争用相同数据的SQL 语句，也会导致语句级回滚。然而，在解析中发现的错误，比如语法错误，实际上尚未运行，因此不会导致语句级回滚。" />
+  <meta name="description" content="事务介绍  示例事务：帐户借贷 事务的结构  事务的开始 事务的结束   语句级原子性 逻辑时间戳        关系数据库必须能够对SQL 语句进行分组，以将它们一起提交，将其应用于数据库；或者将它们全部回滚，将其全部撤消。 事务是一个逻辑、 原子的工作单元，包含一条或多条SQL 语句。
+举一个需要使用事务的例子，将资金从一个储蓄帐户转账到一个支票帐户。 这笔转账由以下几个单独的操作组成：
+ 从储蓄帐户中扣除资金。 将资金增加到支票帐户。 在事务日志中记录该事务。  Postgres 数据库确保将所有三个操作作为一个单元来处理, 要么全部成功，要么全部失败。 例如, 如果硬件故障阻止了事务中的某个语句的执行，那么其他语句必须回滚。
+事务是 Postgres 数据库有别于文件系统的特征之一。 如果您执行一个原子操作，更新了几个文件，但是系统在处理过程中失败，那么文件将处于不一致状态。 相比之下，事务则会将 Postgres 数据库从一个一致状态转移到另一个一致状态。 事务的基本原则是，&ldquo;要么全做，要么全都不做&rdquo;： 一个原子操作作为一个整体，要么都成功，要么都失败。
+事务介绍     事务是包含一个或多个 SQL 语句的逻辑的、 原子的工作单元。事务将SQL 语句分组，以便它们可以一起被提交，即将其应用到数据库，或者一起被回滚，即将其从数据库中撤消。Postgres 数据库将为每个事务分配一个称为事务ID的唯一标识符。
+所有 Postgres 事务都符合称为 ACID 属性的数据库事务的基本属性。ACID是以下的缩写：
+  原子性
+事务中的所有任务，要么全部执行，要么都不执行。不存在部分完成的事务。例如，如果事务启动并欲更新 100 行，但在系统在完成20行更新后出现故障，则数据库会回滚这 20 行更新。" />
 
-    <title>语句级原子性 | Redrock Documentation</title>
+    <title>事务 | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -44,51 +38,39 @@
     
   <meta
     property="og:title"
-    content="语句级原子性"
+    content="事务"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="示例事务：帐户借贷     为了说明事务的概念，考虑一个银行数据库。当一个客户将钱从储蓄账户转移到支票帐户时，事务必须由三个单独的操作组成：
-  减少储蓄账户余额
-  增加支票账户余额
-  在事务日志中记录这笔交易
-  Redrock Postgres 必须考虑两种情况。如果所有三个 SQL 语句都对该账号维持了正确的余额，则事务的效果可以应用到数据库中。但是，如果某个问题，如资金不足、帐号无效、或硬件故障，阻止了事务中某些语句的完成，则数据库必须回滚整个事务，以便所有帐户的余额是正确的。
-图 1 说明了银行事务。第一条语句从储蓄帐户3209中减去 500 美元。第二条语句向支票帐户3208增加500 美元。第三条语句在日志表中插入这笔转账记录。最后一个语句提交事务。
-    图 1 银行事务    语句级原子性     Redrock Postgres 支持语句级原子性，这意味着 SQL 语句是一个原子工作单元，要么完全成功，要么完全失败。
-成功的语句不同于已提交事务。如果一个SQL 语句能被数据库正确分析，并作为一个原子单位来运行且未产生错误，且所有行都被正确更改，则这个SQL 语句是成功执行的。
-如果 SQL 语句在执行过程中导致错误，则它是不成功的，该语句中的所有影响都将被回滚。此操作是一个语句级回滚。此操作具有以下特征：
-  未成功的 SQL 语句只会导致它本身执行的工作丢失。
-未成功的语句不会导致丢失当前事务中该语句之前的任何工作。例如，若图1中第二个UPDATE语句的执行导致错误并被回滚，但由第一个UPDATE语句执行的工作是不会被回滚的。第一个UPDATE语句可以由用户显式提交或回滚。
-  回滚的效果是，好像该语句从来未运行过。
-原子语句的副作用被视为原子语句的一部分，例如，由语句执行所引发的触发器调用。作为原子语句的一部分所产生的所有工作，要么都成功，要么都失败。
-  由错误导致语句级回滚的一个示例，是尝试插入重复的主键。死锁中的某个为争用相同数据的SQL 语句，也会导致语句级回滚。然而，在解析中发现的错误，比如语法错误，实际上尚未运行，因此不会导致语句级回滚。" />
+  <meta property="og:description" content="事务介绍  示例事务：帐户借贷 事务的结构  事务的开始 事务的结束   语句级原子性 逻辑时间戳        关系数据库必须能够对SQL 语句进行分组，以将它们一起提交，将其应用于数据库；或者将它们全部回滚，将其全部撤消。 事务是一个逻辑、 原子的工作单元，包含一条或多条SQL 语句。
+举一个需要使用事务的例子，将资金从一个储蓄帐户转账到一个支票帐户。 这笔转账由以下几个单独的操作组成：
+ 从储蓄帐户中扣除资金。 将资金增加到支票帐户。 在事务日志中记录该事务。  Postgres 数据库确保将所有三个操作作为一个单元来处理, 要么全部成功，要么全部失败。 例如, 如果硬件故障阻止了事务中的某个语句的执行，那么其他语句必须回滚。
+事务是 Postgres 数据库有别于文件系统的特征之一。 如果您执行一个原子操作，更新了几个文件，但是系统在处理过程中失败，那么文件将处于不一致状态。 相比之下，事务则会将 Postgres 数据库从一个一致状态转移到另一个一致状态。 事务的基本原则是，“要么全做，要么全都不做”： 一个原子操作作为一个整体，要么都成功，要么都失败。
+事务介绍     事务是包含一个或多个 SQL 语句的逻辑的、 原子的工作单元。事务将SQL 语句分组，以便它们可以一起被提交，即将其应用到数据库，或者一起被回滚，即将其从数据库中撤消。Postgres 数据库将为每个事务分配一个称为事务ID的唯一标识符。
+所有 Postgres 事务都符合称为 ACID 属性的数据库事务的基本属性。ACID是以下的缩写：
+  原子性
+事务中的所有任务，要么全部执行，要么都不执行。不存在部分完成的事务。例如，如果事务启动并欲更新 100 行，但在系统在完成20行更新后出现故障，则数据库会回滚这 20 行更新。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://doc.rockdata.net/zh-cn/features/statement-atomicity/" />
+<meta property="og:url" content="https://doc.rockdata.net/zh-cn/features/transaction/" />
 
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-06-19T20:52:49+08:00"
+      content="2022-07-11T21:44:44+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="语句级原子性" />
+<meta name="twitter:title" content="事务" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="示例事务：帐户借贷     为了说明事务的概念，考虑一个银行数据库。当一个客户将钱从储蓄账户转移到支票帐户时，事务必须由三个单独的操作组成：
-  减少储蓄账户余额
-  增加支票账户余额
-  在事务日志中记录这笔交易
-  Redrock Postgres 必须考虑两种情况。如果所有三个 SQL 语句都对该账号维持了正确的余额，则事务的效果可以应用到数据库中。但是，如果某个问题，如资金不足、帐号无效、或硬件故障，阻止了事务中某些语句的完成，则数据库必须回滚整个事务，以便所有帐户的余额是正确的。
-图 1 说明了银行事务。第一条语句从储蓄帐户3209中减去 500 美元。第二条语句向支票帐户3208增加500 美元。第三条语句在日志表中插入这笔转账记录。最后一个语句提交事务。
-    图 1 银行事务    语句级原子性     Redrock Postgres 支持语句级原子性，这意味着 SQL 语句是一个原子工作单元，要么完全成功，要么完全失败。
-成功的语句不同于已提交事务。如果一个SQL 语句能被数据库正确分析，并作为一个原子单位来运行且未产生错误，且所有行都被正确更改，则这个SQL 语句是成功执行的。
-如果 SQL 语句在执行过程中导致错误，则它是不成功的，该语句中的所有影响都将被回滚。此操作是一个语句级回滚。此操作具有以下特征：
-  未成功的 SQL 语句只会导致它本身执行的工作丢失。
-未成功的语句不会导致丢失当前事务中该语句之前的任何工作。例如，若图1中第二个UPDATE语句的执行导致错误并被回滚，但由第一个UPDATE语句执行的工作是不会被回滚的。第一个UPDATE语句可以由用户显式提交或回滚。
-  回滚的效果是，好像该语句从来未运行过。
-原子语句的副作用被视为原子语句的一部分，例如，由语句执行所引发的触发器调用。作为原子语句的一部分所产生的所有工作，要么都成功，要么都失败。
-  由错误导致语句级回滚的一个示例，是尝试插入重复的主键。死锁中的某个为争用相同数据的SQL 语句，也会导致语句级回滚。然而，在解析中发现的错误，比如语法错误，实际上尚未运行，因此不会导致语句级回滚。" />
+  <meta name="twitter:description" content="事务介绍  示例事务：帐户借贷 事务的结构  事务的开始 事务的结束   语句级原子性 逻辑时间戳        关系数据库必须能够对SQL 语句进行分组，以将它们一起提交，将其应用于数据库；或者将它们全部回滚，将其全部撤消。 事务是一个逻辑、 原子的工作单元，包含一条或多条SQL 语句。
+举一个需要使用事务的例子，将资金从一个储蓄帐户转账到一个支票帐户。 这笔转账由以下几个单独的操作组成：
+ 从储蓄帐户中扣除资金。 将资金增加到支票帐户。 在事务日志中记录该事务。  Postgres 数据库确保将所有三个操作作为一个单元来处理, 要么全部成功，要么全部失败。 例如, 如果硬件故障阻止了事务中的某个语句的执行，那么其他语句必须回滚。
+事务是 Postgres 数据库有别于文件系统的特征之一。 如果您执行一个原子操作，更新了几个文件，但是系统在处理过程中失败，那么文件将处于不一致状态。 相比之下，事务则会将 Postgres 数据库从一个一致状态转移到另一个一致状态。 事务的基本原则是，“要么全做，要么全都不做”： 一个原子操作作为一个整体，要么都成功，要么都失败。
+事务介绍     事务是包含一个或多个 SQL 语句的逻辑的、 原子的工作单元。事务将SQL 语句分组，以便它们可以一起被提交，即将其应用到数据库，或者一起被回滚，即将其从数据库中撤消。Postgres 数据库将为每个事务分配一个称为事务ID的唯一标识符。
+所有 Postgres 事务都符合称为 ACID 属性的数据库事务的基本属性。ACID是以下的缩写：
+  原子性
+事务中的所有任务，要么全部执行，要么都不执行。不存在部分完成的事务。例如，如果事务启动并欲更新 100 行，但在系统在完成20行更新后出现故障，则数据库会回滚这 20 行更新。" />
 
 
   <script type="application/ld+json">
@@ -96,23 +78,23 @@
       "@context": "http://schema.org",
       "@type": "TechArticle",
       "articleSection": "Features",
-      "name": "语句级原子性",
-      "url" : "https://doc.rockdata.net/zh-cn/features/statement-atomicity/",
-      "headline": "语句级原子性",
-      "description": "示例事务：帐户借贷     为了说明事务的概念，考虑一个银行数据库。当一个客户将钱从储蓄账户转移到支票帐户时，事务必须由三个单独的操作组成：\n  减少储蓄账户余额\n  增加支票账户余额\n  在事务日志中记录这笔交易\n  Redrock Postgres 必须考虑两种情况。如果所有三个 SQL 语句都对该账号维持了正确的余额，则事务的效果可以应用到数据库中。但是，如果某个问题，如资金不足、帐号无效、或硬件故障，阻止了事务中某些语句的完成，则数据库必须回滚整个事务，以便所有帐户的余额是正确的。\n图 1 说明了银行事务。第一条语句从储蓄帐户3209中减去 500 美元。第二条语句向支票帐户3208增加500 美元。第三条语句在日志表中插入这笔转账记录。最后一个语句提交事务。\n    图 1 银行事务    语句级原子性     Redrock Postgres 支持语句级原子性，这意味着 SQL 语句是一个原子工作单元，要么完全成功，要么完全失败。\n成功的语句不同于已提交事务。如果一个SQL 语句能被数据库正确分析，并作为一个原子单位来运行且未产生错误，且所有行都被正确更改，则这个SQL 语句是成功执行的。\n如果 SQL 语句在执行过程中导致错误，则它是不成功的，该语句中的所有影响都将被回滚。此操作是一个语句级回滚。此操作具有以下特征：\n  未成功的 SQL 语句只会导致它本身执行的工作丢失。\n未成功的语句不会导致丢失当前事务中该语句之前的任何工作。例如，若图1中第二个UPDATE语句的执行导致错误并被回滚，但由第一个UPDATE语句执行的工作是不会被回滚的。第一个UPDATE语句可以由用户显式提交或回滚。\n  回滚的效果是，好像该语句从来未运行过。\n原子语句的副作用被视为原子语句的一部分，例如，由语句执行所引发的触发器调用。作为原子语句的一部分所产生的所有工作，要么都成功，要么都失败。\n  由错误导致语句级回滚的一个示例，是尝试插入重复的主键。死锁中的某个为争用相同数据的SQL 语句，也会导致语句级回滚。然而，在解析中发现的错误，比如语法错误，实际上尚未运行，因此不会导致语句级回滚。",
+      "name": "事务",
+      "url" : "https://doc.rockdata.net/zh-cn/features/transaction/",
+      "headline": "事务",
+      "description": "事务介绍  示例事务：帐户借贷 事务的结构  事务的开始 事务的结束   语句级原子性 逻辑时间戳        关系数据库必须能够对SQL 语句进行分组，以将它们一起提交，将其应用于数据库；或者将它们全部回滚，将其全部撤消。 事务是一个逻辑、 原子的工作单元，包含一条或多条SQL 语句。\n举一个需要使用事务的例子，将资金从一个储蓄帐户转账到一个支票帐户。 这笔转账由以下几个单独的操作组成：\n 从储蓄帐户中扣除资金。 将资金增加到支票帐户。 在事务日志中记录该事务。  Postgres 数据库确保将所有三个操作作为一个单元来处理, 要么全部成功，要么全部失败。 例如, 如果硬件故障阻止了事务中的某个语句的执行，那么其他语句必须回滚。\n事务是 Postgres 数据库有别于文件系统的特征之一。 如果您执行一个原子操作，更新了几个文件，但是系统在处理过程中失败，那么文件将处于不一致状态。 相比之下，事务则会将 Postgres 数据库从一个一致状态转移到另一个一致状态。 事务的基本原则是，“要么全做，要么全都不做”： 一个原子操作作为一个整体，要么都成功，要么都失败。\n事务介绍     事务是包含一个或多个 SQL 语句的逻辑的、 原子的工作单元。事务将SQL 语句分组，以便它们可以一起被提交，即将其应用到数据库，或者一起被回滚，即将其从数据库中撤消。Postgres 数据库将为每个事务分配一个称为事务ID的唯一标识符。\n所有 Postgres 事务都符合称为 ACID 属性的数据库事务的基本属性。ACID是以下的缩写：\n  原子性\n事务中的所有任务，要么全部执行，要么都不执行。不存在部分完成的事务。例如，如果事务启动并欲更新 100 行，但在系统在完成20行更新后出现故障，则数据库会回滚这 20 行更新。",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "39",
+      "wordCount" : "244",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://doc.rockdata.net/zh-cn/features/statement-atomicity/"
+          "@id": "https://doc.rockdata.net/zh-cn/features/transaction/"
       },
       "copyrightHolder" : "Redrock Documentation",
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-19T20:52:49.00Z",
+      "dateModified": "2022-07-11T21:44:44.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -188,7 +170,7 @@
   href="/custom.css"
   media="all"
 />
-  <link href="https://doc.rockdata.net/zh-cn/features/statement-atomicity/" rel="canonical" type="text/html" />
+  <link href="https://doc.rockdata.net/zh-cn/features/transaction/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -795,7 +777,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <a
                   class="flex gdoc-language__entry"
                   title="English"
-                  href="/features/statement-atomicity/"
+                  href="/features/transaction/"
                   hreflang="en"
                   lang="en"
                 >
@@ -1356,10 +1338,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/features/statement-atomicity/"
+                    href="/zh-cn/features/transaction/"
                     class="gdoc-nav__entry is-active"
                   >
-                    语句级原子性
+                    事务
                   </a>
                 </span>
               
@@ -1400,10 +1382,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/features/network-tablespace/"
+                    href="/zh-cn/features/tablespace/"
                     class="gdoc-nav__entry"
                   >
-                    网络表空间
+                    表空间
                   </a>
                 </span>
               
@@ -1779,6 +1761,50 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     class="gdoc-nav__entry"
                   >
                     参数配置
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/admin/network-tablespace/"
+                    class="gdoc-nav__entry"
+                  >
+                    网络表空间
                   </a>
                 </span>
               
@@ -2549,7 +2575,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/features/' href='/zh-cn/features/'><span itemprop='name'>基础特性</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>语句级原子性</span><meta itemprop='position' content='4' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/features/' href='/zh-cn/features/'><span itemprop='name'>基础特性</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>事务</span><meta itemprop='position' content='4' /></li>
   
 
   
@@ -2564,7 +2590,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <span class="editpage">
         <svg class="gdoc-icon gdoc_code"><use xlink:href="#gdoc_code"></use></svg>
         <a
-          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/zh-cn/features/statement-atomicity/_index.md"
+          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/zh-cn/features/transaction/_index.md"
         >
           编辑页面
         </a>
@@ -2578,14 +2604,70 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <article
     class="gdoc-markdown gdoc-markdown__align--left"
   >
-    <h1>语句级原子性</h1>
-    <div class="gdoc-page__anchorwrap">
-    <h2 id="示例事务帐户借贷">
-        示例事务：帐户借贷
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/statement-atomicity/#示例事务帐户借贷" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 示例事务：帐户借贷" aria-label="锚定到： 示例事务：帐户借贷" href="#%e7%a4%ba%e4%be%8b%e4%ba%8b%e5%8a%a1%e5%b8%90%e6%88%b7%e5%80%9f%e8%b4%b7">
+    <h1>事务</h1>
+    <div class="gdoc-toc gdoc-toc__level--3">
+      <nav id="TableOfContents"><ul>
+        <li><a href="#事务介绍">事务介绍</a>
+          <ul>
+            <li><a href="#示例事务帐户借贷">示例事务：帐户借贷</a></li>
+            <li><a href="#事务的结构">事务的结构</a>
+              <ul>
+                <li><a href="#事务的开始">事务的开始</a></li>
+                <li><a href="#事务的结束">事务的结束</a></li>
+              </ul>
+            </li>
+            <li><a href="#语句级原子性">语句级原子性</a></li>
+            <li><a href="#逻辑时间戳">逻辑时间戳</a></li>
+          </ul>
+        </li>
+      </ul></nav>
+      <hr />
+    </div>
+<p>关系数据库必须能够对SQL 语句进行分组，以将它们一起提交，将其应用于数据库；或者将它们全部回滚，将其全部撤消。 事务是一个逻辑、 原子的工作单元，包含一条或多条SQL 语句。</p>
+<p>举一个需要使用事务的例子，将资金从一个储蓄帐户转账到一个支票帐户。 这笔转账由以下几个单独的操作组成：</p>
+<ol>
+<li>从储蓄帐户中扣除资金。</li>
+<li>将资金增加到支票帐户。</li>
+<li>在事务日志中记录该事务。</li>
+</ol>
+<p>Postgres 数据库确保将所有三个操作作为一个单元来处理, 要么全部成功，要么全部失败。 例如, 如果硬件故障阻止了事务中的某个语句的执行，那么其他语句必须回滚。</p>
+<p>事务是 Postgres 数据库有别于文件系统的特征之一。 如果您执行一个原子操作，更新了几个文件，但是系统在处理过程中失败，那么文件将处于不一致状态。 相比之下，事务则会将 Postgres 数据库从一个一致状态转移到另一个一致状态。 事务的基本原则是，&ldquo;要么全做，要么全都不做&rdquo;： 一个原子操作作为一个整体，要么都成功，要么都失败。</p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="事务介绍">
+        事务介绍
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/transaction/#事务介绍" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 事务介绍" aria-label="锚定到： 事务介绍" href="#%e4%ba%8b%e5%8a%a1%e4%bb%8b%e7%bb%8d">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
+</div>
+<p>事务是包含一个或多个 SQL 语句的逻辑的、 原子的工作单元。事务将SQL 语句分组，以便它们可以一起被提交，即将其应用到数据库，或者一起被回滚，即将其从数据库中撤消。Postgres 数据库将为每个事务分配一个称为事务ID的唯一标识符。</p>
+<p>所有 Postgres 事务都符合称为 ACID 属性的数据库事务的基本属性。ACID是以下的缩写：</p>
+<ul>
+<li>
+<p>原子性</p>
+<p>事务中的所有任务，要么全部执行，要么都不执行。不存在部分完成的事务。例如，如果事务启动并欲更新 100 行，但在系统在完成20行更新后出现故障，则数据库会回滚这 20 行更新。</p>
+</li>
+<li>
+<p>一致性</p>
+<p>事务会将数据库从一个一致状态变为另一个一致状态。例如， 在从一个储蓄账户借记、并从一个支票账户贷记的银行事务中，故障一定不能导致数据库仅仅贷记一个账户，这会导致数据不一致。</p>
+</li>
+<li>
+<p>隔离性</p>
+<p>一个事务必须在被提交之后，其它事务才能看见其效果。例如，正在更新 hr.employees表的一个用户，不会看到由另一个用户在employees表上未提交的更改。因此，对这些用户来说，这些事务好像是串行执行的。</p>
+</li>
+<li>
+<p>持久性</p>
+<p>已提交的事务所做的更改是永久性的。事务完成后，数据库通过其恢复机制，确保在事务中所做的更改不会丢失。</p>
+</li>
+</ul>
+<p>使用事务是数据库管理系统有别于文件系统的最重要方式之一。</p>
+<div class="gdoc-page__anchorwrap">
+    <h3 id="示例事务帐户借贷">
+        示例事务：帐户借贷
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/transaction/#示例事务帐户借贷" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 示例事务：帐户借贷" aria-label="锚定到： 示例事务：帐户借贷" href="#%e7%a4%ba%e4%be%8b%e4%ba%8b%e5%8a%a1%e5%b8%90%e6%88%b7%e5%80%9f%e8%b4%b7">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
 </div>
 <p>为了说明事务的概念，考虑一个银行数据库。当一个客户将钱从储蓄账户转移到支票帐户时，事务必须由三个单独的操作组成：</p>
 <ul>
@@ -2619,16 +2701,16 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
   <div class="flex justify-center">
     <figure class="gdoc-markdown__figure">
-      <a class="gdoc-markdown__link--raw" href="https://doc.rockdata.net/zh-cn/features/statement-atomicity/banking-transaction.png">
+      <a class="gdoc-markdown__link--raw" href="https://doc.rockdata.net/zh-cn/features/transaction/banking-transaction.png">
         <picture>
           <source
             
-              srcset="https://doc.rockdata.net/zh-cn/features/statement-atomicity/banking-transaction_hu0fdada471061fc3029608b62d59c3b0a_22808_600x0_resize_box_3.png"
+              srcset="https://doc.rockdata.net/zh-cn/features/transaction/banking-transaction_hu0fdada471061fc3029608b62d59c3b0a_22808_600x0_resize_box_3.png"
             
           />
           <img
             
-            src="https://doc.rockdata.net/zh-cn/features/statement-atomicity/banking-transaction_hu0fdada471061fc3029608b62d59c3b0a_22808_1800x0_resize_box_3.png"
+            src="https://doc.rockdata.net/zh-cn/features/transaction/banking-transaction_hu0fdada471061fc3029608b62d59c3b0a_22808_1800x0_resize_box_3.png"
             alt="图 1 银行事务"
           />
         </picture>
@@ -2641,12 +2723,89 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
 
 <div class="gdoc-page__anchorwrap">
-    <h2 id="语句级原子性">
-        语句级原子性
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/statement-atomicity/#语句级原子性" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 语句级原子性" aria-label="锚定到： 语句级原子性" href="#%e8%af%ad%e5%8f%a5%e7%ba%a7%e5%8e%9f%e5%ad%90%e6%80%a7">
+    <h3 id="事务的结构">
+        事务的结构
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/transaction/#事务的结构" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 事务的结构" aria-label="锚定到： 事务的结构" href="#%e4%ba%8b%e5%8a%a1%e7%9a%84%e7%bb%93%e6%9e%84">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
-    </h2>
+    </h3>
+</div>
+<p>数据库事务由一个或多个语句组成，它们一起构成对数据库的一个原子更改。其中的语句可以是数据操作语言 (DML) 语句，也可以是数据定义语言 (DDL) 语句。</p>
+<p>事务有一个开始点和结束点。</p>
+<div class="gdoc-page__anchorwrap">
+    <h4 id="事务的开始">
+        事务的开始
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/transaction/#事务的开始" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 事务的开始" aria-label="锚定到： 事务的开始" href="#%e4%ba%8b%e5%8a%a1%e7%9a%84%e5%bc%80%e5%a7%8b">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h4>
+</div>
+<p>在 Redrock Postgres 中，开启一个事务需要将SQL命令用<code>BEGIN</code>和<code>COMMIT</code>命令包围起来。因此我们的银行事务看起来会是这样：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">BEGIN</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">UPDATE</span> <span class="n">accounts</span> <span class="k">SET</span> <span class="n">balance</span> <span class="o">=</span> <span class="n">balance</span> <span class="o">-</span> <span class="mf">100.00</span>
+</span></span><span class="line"><span class="cl">    <span class="k">WHERE</span> <span class="k">name</span> <span class="o">=</span> <span class="s1">&#39;Alice&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">-- etc etc
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">COMMIT</span><span class="p">;</span>
+</span></span></code></pre></div><p>如果，在事务执行中我们并不想提交（或许是我们注意到Alice的余额不足），我们可以发出<code>ROLLBACK</code>命令而不是<code>COMMIT</code>命令，这样所有目前的更新将会被取消。</p>
+<p>PostgreSQL实际上将每一个SQL语句都作为一个事务来执行。如果我们没有发出<code>BEGIN</code>命令，则每个独立的语句都会被加上一个隐式的<code>BEGIN</code>以及（如果成功）<code>COMMIT</code>来包围它。一组被<code>BEGIN</code>和<code>COMMIT</code>包围的语句也被称为一个<em>事务块</em>。</p>
+
+
+
+
+
+<blockquote class="gdoc-hint note">
+  <div class="gdoc-hint__title flex align-center"><i class="fa note" title="Note"></i></div>
+  <div class="gdoc-hint__text">某些客户端库会自动发出<code>BEGIN</code>和<code>COMMIT</code>命令，因此我们可能会在不被告知的情况下得到事务块的效果。具体请查看所使用的接口文档。</div>
+</blockquote>
+
+<p>当事务开始时，Postgres 数据库将为事务分配一个可用的回滚段，以记录新事务的撤消条目。数据库在第一个 DML 语句过程中，首先会分配回滚段和事务表槽，然后分配事务ID。事务ID对于事务来说是唯一的，并由回滚段号、槽号、和序列号来表示。</p>
+<p>下面的示例执行一个 UPDATE 语句以开始一个事务，并查询有关事务的详细信息：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">BEGIN</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">UPDATE</span> <span class="n">hr</span><span class="mf">.</span><span class="n">employees</span> <span class="k">SET</span> <span class="n">salary</span> <span class="o">=</span> <span class="n">salary</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">xid</span><span class="p">,</span> <span class="n">pg_xact_commit_status</span><span class="p">(</span><span class="n">xid</span><span class="p">)</span> <span class="k">AS</span> <span class="n">status</span>
+</span></span><span class="line"><span class="cl">  <span class="k">FROM</span> <span class="n">current_xid</span><span class="p">()</span> <span class="k">AS</span> <span class="n">xid</span><span class="p">;</span>
+</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
+    <h4 id="事务的结束">
+        事务的结束
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/transaction/#事务的结束" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 事务的结束" aria-label="锚定到： 事务的结束" href="#%e4%ba%8b%e5%8a%a1%e7%9a%84%e7%bb%93%e6%9d%9f">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h4>
+</div>
+<p>事务在出现以下操作时结束：</p>
+<ul>
+<li>
+<p>用户在没有SAVEPOINT子句的语句中发出COMMIT或ROLLBACK。</p>
+<p>提交意味着用户会显式或隐式地请求事务中所做的更改被持久化。只有在提交事务之后，事务所做的更改才是永久性的，并对其他用户可见。图 1 所示的事务以一个提交来结束。</p>
+</li>
+<li>
+<p>用户从大多数 Postgres 数据库实用程序和工具正常退出，导致当前事务被隐式提交。当用户断开连接时的提交行为依赖于应用程序，并且是可配置的。</p>
+<p><strong>注意</strong>：在程序终止之前，应用程序应始终显式地提交或回滚其事务。</p>
+</li>
+<li>
+<p>客户端进程异常终止，导致数据库使用存储在事务表和回滚段中的元数据来隐式回滚其事务。</p>
+</li>
+</ul>
+<p>一个事务结束后, 下一个可执行的 SQL 语句将自动启动后续事务。下面的示例执行一个更新，来启动一个事务，并以一个ROLLBACK 语句来结束事务，然后又执行一个更新启动一个新事务（请注意，事务 Id变了）：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">BEGIN</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">UPDATE</span> <span class="n">hr</span><span class="mf">.</span><span class="n">employees</span> <span class="k">SET</span> <span class="n">salary</span> <span class="o">=</span> <span class="n">salary</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">xid</span><span class="p">,</span> <span class="n">pg_xact_commit_status</span><span class="p">(</span><span class="n">xid</span><span class="p">)</span> <span class="k">AS</span> <span class="n">status</span>
+</span></span><span class="line"><span class="cl">  <span class="k">FROM</span> <span class="n">current_xid</span><span class="p">()</span> <span class="k">AS</span> <span class="n">xid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">ROLLBACK</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">current_xid</span><span class="p">()</span> <span class="k">AS</span> <span class="n">xid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">BEGIN</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">UPDATE</span> <span class="n">hr</span><span class="mf">.</span><span class="n">employees</span> <span class="k">SET</span> <span class="n">last_name</span><span class="o">=</span><span class="n">last_name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">xid</span><span class="p">,</span> <span class="n">pg_xact_commit_status</span><span class="p">(</span><span class="n">xid</span><span class="p">)</span> <span class="k">AS</span> <span class="n">status</span>
+</span></span><span class="line"><span class="cl">  <span class="k">FROM</span> <span class="n">current_xid</span><span class="p">()</span> <span class="k">AS</span> <span class="n">xid</span><span class="p">;</span>
+</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
+    <h3 id="语句级原子性">
+        语句级原子性
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/transaction/#语句级原子性" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 语句级原子性" aria-label="锚定到： 语句级原子性" href="#%e8%af%ad%e5%8f%a5%e7%ba%a7%e5%8e%9f%e5%ad%90%e6%80%a7">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
 </div>
 <p>Redrock Postgres 支持<strong>语句级原子性</strong>，这意味着 SQL 语句是一个原子工作单元，要么完全成功，要么完全失败。</p>
 <p>成功的语句不同于已提交事务。如果一个SQL 语句能被数据库正确分析，并作为一个原子单位来运行且未产生错误，且所有行都被正确更改，则这个SQL 语句是成功执行的。</p>
@@ -2662,6 +2821,18 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </li>
 </ul>
 <p>由错误导致语句级回滚的一个示例，是尝试插入重复的主键。死锁中的某个为争用相同数据的SQL 语句，也会导致语句级回滚。然而，在解析中发现的错误，比如语法错误，实际上尚未运行，因此不会导致语句级回滚。</p>
+<div class="gdoc-page__anchorwrap">
+    <h3 id="逻辑时间戳">
+        逻辑时间戳
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/transaction/#逻辑时间戳" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 逻辑时间戳" aria-label="锚定到： 逻辑时间戳" href="#%e9%80%bb%e8%be%91%e6%97%b6%e9%97%b4%e6%88%b3">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p>逻辑时间戳（logicaltime）是一个由 Redrock Postgres 数据库使用的逻辑、 内部的时间戳。logicaltime 按数据库中发生的事件排序，以满足在事务ACID 属性的需要。Redrock Postgres 数据库使用 logicaltime 来标记某个位置，在其之前的所有更改都被认为已写到磁盘上，以避免在恢复过程中应用不必要的重做。数据库还使用 logicaltime 来标记一个其数据不存在重做信息的点，以便恢复过程可以在该点停止。</p>
+<p>logicaltime 是按单调递增的顺序发生的。Redrock Postgres 数据库可以像使用时钟一样使用 logicaltime，因为一个 logicaltime 观察值指示一个逻辑时间点，而其重复观察值相比之前会相同或更大。若一个事件的 logicaltime 比另一个事件的 logicaltime 低，则它在数据库中发生在一个更早的时间。几个事件可以共享相同的 logicaltime， 这意味着他们在数据库中同时发生。</p>
+<p>每个事务都有一个 logicaltime。例如，如果事务更新了一行，则数据库记录此更新发生时的 logicaltime。此事务中其他修改具有相同的 logicaltime。当事务提交时，数据库将为此提交记录一个logicaltime。</p>
+<p>Redrock Postgres 数据库在系统全局区域中递增 logicaltime。事务中修改数据时，数据库会将一个新的logicaltime写入到分配给事务的回滚段。然后日志写入器进程立即将事务的提交记录写入在线重做日志。提交记录具有事务的唯一 logicaltime。Redrock Postgres 数据库还使用 logicaltime 作为其实例恢复和介质恢复机制的一部分。</p>
 
   </article>
 
