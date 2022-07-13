@@ -48,7 +48,7 @@ SELECT n.nspname AS schema, c.relname AS table FROM pg_class c JOIN pg_namespace
 <meta property="article:section" content="Admin" />
     <meta
       property="article:modified_time"
-      content="2022-07-10T16:37:39+08:00"
+      content="2022-07-13T20:34:31+08:00"
     />
 
 
@@ -71,7 +71,7 @@ SELECT n.nspname AS schema, c.relname AS table FROM pg_class c JOIN pg_namespace
       "headline": "在线迁移",
       "description": "初始检查 配置修改 迁移模式 迁移表数据 数据校验 清理      PostgreSQL 提供了逻辑复制的能力，通过逻辑复制可以实现零停机的在线迁移，在线迁移可以应用在如下这些场景：\n 升级数据库软件的版本； 升级操作系统软件的版本，或者变更操作系统类型，比如从Windows变更成Linux； 升级硬件的规格，或者变更硬件的架构，比如从X86变更成ARM； 调整数据库部署架构，比如将一个大的数据库拆分成多个小的数据库； 迁移数据库部署环境，比如从某一个公有云的服务器迁移到另一个公有云上面；  如果您的数据库很大，则可能需要一些时间来通过网络进行传输。 另外，基于逻辑复制的在线迁移只支持以数据库为单位或以表为单位的迁移。 我们将在下面的步骤中介绍以数据库为单位的迁移。在本节中，我们将对 lrtest 数据库进行在线迁移。\n初始检查     如果您还没有为您计划复制的每个表使用主键，请创建主键。下面的查询会显示出哪些表没有主键。在您开始迁移之前查询应该显示为 0 个表。\nSELECT n.nspname AS schema, c.relname AS table FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace WHERE c.relkind = \u0027r\u0027 AND NOT EXISTS ( SELECT 1 FROM pg_constraint con WHERE con.conrelid = c.oid AND con.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "242",
+      "wordCount" : "243",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -82,7 +82,7 @@ SELECT n.nspname AS schema, c.relname AS table FROM pg_class c JOIN pg_namespace
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-10T16:37:39.00Z",
+      "dateModified": "2022-07-13T20:34:31.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2689,7 +2689,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   class="gdoc-markdown__link"
   href="/zh-cn/admin/ddl-subscription/#%e8%ae%a2%e9%98%85%e5%92%8c%e5%90%8c%e6%ad%a5ddl%e6%93%8d%e4%bd%9c"
   
->订阅和同步DDL操作</a>。请注意，如果您需要在下面的步骤中迁移数据库中的所有表数据，那么您并不需要在原数据库上发布表 <code>audit.ddl_history</code>，同时也不需要在目标数据库上订阅表 <code>audit.ddl_history</code>。</p>
+>订阅和同步DDL操作</a>。请注意，如果您需要在下面<a
+  class="gdoc-markdown__link"
+  href="/zh-cn/admin/online-migration/#%e8%bf%81%e7%a7%bb%e8%a1%a8%e6%95%b0%e6%8d%ae"
+  
+>迁移表数据</a>的步骤中迁移数据库中的所有表数据，那么您并不需要在原数据库上发布表 <code>audit.ddl_history</code>，同时也不需要在目标数据库上订阅表 <code>audit.ddl_history</code>。</p>
 <p>这样，在逻辑复制的过程中更改原数据库上的模式信息，就可以实时同步到目标数据库了。</p>
 <div class="gdoc-page__anchorwrap">
     <h2 id="迁移表数据">
@@ -2705,7 +2709,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   
 >CREATE PUBLICATION</a> 命令时传递 FOR TABLE。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="n">PUBLICATION</span> <span class="n">lrtest_migrate</span> <span class="k">FOR</span> <span class="k">ALL</span> <span class="k">TABLES</span><span class="p">;</span>
-</span></span></code></pre></div><p>订阅所有表数据和更改：</p>
+</span></span></code></pre></div><p>在目标数据库上运行下面的命令，订阅原数据库上面所有的表数据和更改：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="n">SUBSCRIPTION</span> <span class="n">lrtest_migrate</span> <span class="k">CONNECTION</span>
 </span></span><span class="line"><span class="cl">  <span class="s1">&#39;host=192.168.1.50 dbname=lrtest user=logicalrep password=pgpass&#39;</span>
 </span></span><span class="line"><span class="cl">  <span class="n">PUBLICATION</span> <span class="n">lrtest_migrate</span><span class="p">;</span>
@@ -2717,7 +2721,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         </a>
     </h2>
 </div>
-<p>接下来，我们需要验证原数据库和目标数据库的数据是否一致。执行下面的查询，创建用于计算表数据校验和的聚集函数。</p>
+<p>接下来，我们需要验证原数据库和目标数据库的数据是否一致。在原数据库上运行下面的命令，创建用于计算表数据校验和的聚集函数。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">FUNCTION</span> <span class="n">md5_agg_sfunc</span><span class="p">(</span><span class="nb">text</span><span class="p">,</span> <span class="nb">text</span><span class="p">)</span> <span class="k">RETURNS</span> <span class="nb">text</span>
 </span></span><span class="line"><span class="cl">  <span class="k">AS</span> <span class="s1">&#39;SELECT md5($1 || $2)&#39;</span> <span class="k">LANGUAGE</span> <span class="n">sql</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
@@ -2727,7 +2731,21 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </span></span><span class="line"><span class="cl">  <span class="n">SFUNC</span> <span class="o">=</span> <span class="n">md5_agg_sfunc</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">  <span class="n">INITCOND</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
 </span></span><span class="line"><span class="cl"><span class="p">);</span>
-</span></span></code></pre></div><p>然后，对于数据库中的每个表，我们可以在原数据库和目标数据库上分别执行下面的查询，并确认两边查询的结果是一致的。</p>
+</span></span></code></pre></div>
+
+
+
+
+<blockquote class="gdoc-hint note">
+  <div class="gdoc-hint__title flex align-center"><i class="fa note" title="Note"></i></div>
+  <div class="gdoc-hint__text">由于在上面<a
+  class="gdoc-markdown__link"
+  href="/zh-cn/admin/online-migration/#%e8%bf%81%e7%a7%bb%e6%a8%a1%e5%bc%8f"
+  
+>迁移模式</a>的步骤中，我们已经设置好了DDL操作的同步，在原数据库上面创建的函数会自动同步到目标数据库，所以并不需要在目标数据库上运行上面的命令。</div>
+</blockquote>
+
+<p>然后，对于数据库中的每个表，我们可以在原数据库和目标数据库上分别执行下面的查询，并确认两边查询的结果是一致的。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">md5_agg</span><span class="p">(</span><span class="n">t</span><span class="o">::</span><span class="nb">text</span><span class="p">)</span> <span class="k">AS</span> <span class="n">checksum</span> <span class="k">FROM</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t_table</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">table_key</span><span class="p">)</span> <span class="k">AS</span> <span class="n">t</span><span class="p">;</span>
 </span></span></code></pre></div><p>如果发现原数据库和目标数据库存在有差异的数据表，可以在两个数据库上分别执行下面的查询，对表中的数据进行分批的校验。</p>

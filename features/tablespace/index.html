@@ -44,7 +44,7 @@ By using tablespaces, an administrator can control the storage layout of a Redro
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-07-12T22:45:34+08:00"
+      content="2022-07-13T20:34:31+08:00"
     />
 
 
@@ -65,7 +65,7 @@ By using tablespaces, an administrator can control the storage layout of a Redro
       "headline": "Tablespaces",
       "description": "Local Tablespace Network Attached Tablespace Using Tablespaces Managing Tablespaces      Tablespaces in Redrock Postgres allow database administrators to define locations where the files representing database objects can be stored. Once created, a tablespace can be referred to by name when creating database objects.\nBy using tablespaces, an administrator can control the storage layout of a Redrock Postgres installation. This is useful in at least two ways.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "999",
+      "wordCount" : "1201",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -76,7 +76,7 @@ By using tablespaces, an administrator can control the storage layout of a Redro
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-12T22:45:34.00Z",
+      "dateModified": "2022-07-13T20:34:31.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2643,18 +2643,19 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         </a>
     </h2>
 </div>
-<p>To define a network attached tablespace, use the <a
+<p>Redrock Postgres supports database servers running in storage server mode and can provide storage access services to other database servers connected to the network. We call these servers used to store and access data as database storage servers, and those servers that are mainly used for computing and processing data are called database computing servers. The computing server communicates with the storage server using the PostgreSQL frontend/backend protocol.</p>
+<p>We can create a network tablespace on the storage server and then refer to it by tablespace name when creating database objects. If you have finished <a
+  class="gdoc-markdown__link"
+  href="/admin/network-tablespace/#deploying-storage-server"
+  
+>deploying the storage server</a>, you can create a network tablespace on the storage server. To define a network attached tablespace, use the <a
   class="gdoc-markdown__link"
   href="https://www.postgresql.org/docs/12/sql-createtablespace.html"
   
 >CREATE TABLESPACE</a> command, for example:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">TABLESPACE</span> <span class="n">netspace</span> <span class="k">STORAGE</span> <span class="n">remote</span> <span class="k">LOCATION</span>
 </span></span><span class="line"><span class="cl">  <span class="s1">&#39;host=192.168.1.50 port=5432 user=postgres password=pgpass&#39;</span><span class="p">;</span>
-</span></span></code></pre></div><p>Before creating a network attached tablespace, you need to <a
-  class="gdoc-markdown__link"
-  href="/admin/network-tablespace/#deploying-storage-server"
-  
->deploy a storage server</a>. All objects created in this tablespace are stored in files in the data directory of the storage server. During database service running, you need to ensure that the storage server is always accessible, as the cluster might fail to function if the tablespace is missing or lost.</p>
+</span></span></code></pre></div><p>All objects created in this tablespace are stored in files in the data directory of the storage server. During database service running, you need to ensure that the storage server is always accessible, as the cluster might fail to function if the tablespace is missing or lost.</p>
 <div class="gdoc-page__anchorwrap">
     <h2 id="using-tablespaces">
         Using Tablespaces
@@ -2678,8 +2679,18 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   href="https://www.postgresql.org/docs/12/runtime-config-client.html#GUC-TEMP-TABLESPACES"
   
 >temp_tablespaces</a> parameter, which determines the placement of temporary tables and indexes, as well as temporary files that are used for purposes such as sorting large data sets. This can be a list of tablespace names, rather than only one, so that the load associated with temporary objects can be spread over multiple tablespaces. A random member of the list is picked each time a temporary object is to be created.</p>
-<p>The tablespace associated with a database is used to store the system catalogs of that database. Furthermore, it is the default tablespace used for tables, indexes, and temporary files created within the database, if no <code>TABLESPACE</code> clause is given and no other selection is specified by <code>default_tablespace</code> or <code>temp_tablespaces</code> (as appropriate). If a database is created without specifying a tablespace for it, it uses the same tablespace as the template database it is copied from.</p>
-<p>Two tablespaces are automatically created when the database cluster is initialized. The <code>pg_global</code> tablespace is used for shared system catalogs. The <code>pg_default</code> tablespace is the default tablespace of the <code>template1</code> and <code>template0</code> databases (and, therefore, will be the default tablespace for other databases as well, unless overridden by a <code>TABLESPACE</code> clause in <code>CREATE DATABASE</code>).</p>
+<p>In Redrock Postgres, when a database is created, a default tablespace is created in the database. The name of the tablespace is <code>pg_default</code>. This tablespace will be used to store the system catalogs of the database. Furthermore, it is the default tablespace used for tables, indexes, undos, and temporary files created within the database, if no <code>TABLESPACE</code> clause is given and no other selection is specified by <code>default_tablespace</code> or <code>temp_tablespaces</code> (as appropriate). If a database is created without specifying tablespace or location information, it will create a new tablespace with the same location information as its template database.</p>
+<p>When the database cluster is initialized, two tablespaces are automatically created for each database. The <code>pg_global</code> tablespace is used for cluster shared system catalogs, and the initial location of this tablespace is in the <code>$PGDATA/global</code> directory. The <code>pg_default</code> tablespace is used for database-level system catalogs and is initially located in the <code>$PGDATA/base</code> directory.</p>
+
+
+
+
+
+<blockquote class="gdoc-hint note">
+  <div class="gdoc-hint__title flex align-center"><i class="fa note" title="Note"></i></div>
+  <div class="gdoc-hint__text">In PostgreSQL, tablespaces are cluster-level objects, while in Redrock Postgres, tablespaces are database-level objects. This means that when you access different database objects in the same cluster, although you may see tablespaces with the same name or location information, in fact, they are different tablespace objects in their respective databases. When Redrock Postgres creates a tablespace, it will create a directory named after the database object identifier under the specified location, so that different databases can also have their own tablespaces under the same location.</div>
+</blockquote>
+
 <div class="gdoc-page__anchorwrap">
     <h2 id="managing-tablespaces">
         Managing Tablespaces
@@ -2705,7 +2716,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   href="https://www.postgresql.org/docs/12/app-psql.html"
   
 >psql</a> program&rsquo;s <code>\db</code> meta-command is also useful for listing the existing tablespaces.</p>
-<p>The <code>$PGDATA/pg_tblspc</code> directory stores the access location configuration files of tablespaces in each database. These files are named in the format of [db_oid]_tsm. Although not recommended, it is possible to adjust the tablespace layout by manually modifying these access location profiles. Under no circumstances perform this operation while the server is running.</p>
+<p>The <code>$PGDATA/pg_tblspc</code> directory stores the storage location configuration files of tablespaces in each database. These files are named in the format of [db_oid]_tsm. Although not recommended, it is possible to adjust the tablespace layout by manually modifying these storage location profiles. Under no circumstances perform this operation while the server is running.</p>
 
   </article>
 

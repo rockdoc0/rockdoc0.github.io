@@ -44,7 +44,7 @@
 <meta property="article:section" content="Admin" />
     <meta
       property="article:modified_time"
-      content="2022-07-10T16:37:39+08:00"
+      content="2022-07-13T20:34:31+08:00"
     />
 
 
@@ -65,7 +65,7 @@
       "headline": "Online Migration",
       "description": "Initial Checks Configuration Changes Schema Migration Migrate table data Verification Clean up      PostgreSQL provides the ability of logical replication. We can make an zero-downtime online migration through logical replication, and online migration can be applied in the following scenarios:\n Upgrade the version of the database software; Upgrade the version of the operating system software, or change the operating system type, such as from Windows to Linux; Upgrade the specifications of the hardware, or change the architecture of the hardware, such as changing from X86 to ARM; Adjust the database deployment schema, such as splitting a large database into multiple smaller databases; Migrate a database deployment environment, such as from a server in one public cloud to another;  If your database is large, it may take some time to transfer over the network.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "1080",
+      "wordCount" : "1148",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -76,7 +76,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-10T16:37:39.00Z",
+      "dateModified": "2022-07-13T20:34:31.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2683,7 +2683,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   class="gdoc-markdown__link"
   href="/admin/ddl-subscription/#%e8%ae%a2%e9%98%85%e5%92%8c%e5%90%8c%e6%ad%a5ddl%e6%93%8d%e4%bd%9c"
   
->Subscribe and Synchronize DDL Operations</a> in the target database. Note that if you need to migrate all table data in the database in the following steps, you do not need to publish the table <code>audit.ddl_history</code> on the original database, nor do you need to subscribe to the table <code>audit.ddl_history</code> on the target database.</p>
+>Subscribe and Synchronize DDL Operations</a> in the target database. Note that if you need to migrate all table data in the database in the steps of <a
+  class="gdoc-markdown__link"
+  href="/admin/online-migration/#migrate-table-data"
+  
+>migrating table data</a> below, you do not need to publish the table <code>audit.ddl_history</code> on the original database, nor do you need to subscribe to the table <code>audit.ddl_history</code> on the target database.</p>
 <div class="gdoc-page__anchorwrap">
     <h2 id="migrate-table-data">
         Migrate table data
@@ -2698,7 +2702,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   
 >CREATE PUBLICATION</a> command.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="n">PUBLICATION</span> <span class="n">lrtest_migrate</span> <span class="k">FOR</span> <span class="k">ALL</span> <span class="k">TABLES</span><span class="p">;</span>
-</span></span></code></pre></div><p>Subscribe all tables data and changes:</p>
+</span></span></code></pre></div><p>Run the following command on the target database to subscribe all tables data and changes on the original database:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="n">SUBSCRIPTION</span> <span class="n">lrtest_migrate</span> <span class="k">CONNECTION</span>
 </span></span><span class="line"><span class="cl">  <span class="s1">&#39;host=192.168.1.50 dbname=lrtest user=logicalrep password=pgpass&#39;</span>
 </span></span><span class="line"><span class="cl">  <span class="n">PUBLICATION</span> <span class="n">lrtest_migrate</span><span class="p">;</span>
@@ -2710,7 +2714,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         </a>
     </h2>
 </div>
-<p>Next, we need to verify that the data of the original database and the target database are consistent. Execute the following query to create an aggregate function that calculates the checksum of the table data.</p>
+<p>Next, we need to verify that the data of the original database and the target database are consistent. Run the following command on the original database to create the aggregate function used to calculate the checksum of the table data.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">FUNCTION</span> <span class="n">md5_agg_sfunc</span><span class="p">(</span><span class="nb">text</span><span class="p">,</span> <span class="nb">text</span><span class="p">)</span> <span class="k">RETURNS</span> <span class="nb">text</span>
 </span></span><span class="line"><span class="cl">  <span class="k">AS</span> <span class="s1">&#39;SELECT md5($1 || $2)&#39;</span> <span class="k">LANGUAGE</span> <span class="n">sql</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
@@ -2720,7 +2724,21 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </span></span><span class="line"><span class="cl">  <span class="n">SFUNC</span> <span class="o">=</span> <span class="n">md5_agg_sfunc</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">  <span class="n">INITCOND</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
 </span></span><span class="line"><span class="cl"><span class="p">);</span>
-</span></span></code></pre></div><p>Then, for each table in the database, we can execute the following query on the original and target databases separately and confirm that the results of the queries on both sides are consistent.</p>
+</span></span></code></pre></div>
+
+
+
+
+<blockquote class="gdoc-hint note">
+  <div class="gdoc-hint__title flex align-center"><i class="fa note" title="Note"></i></div>
+  <div class="gdoc-hint__text">Since we have already set the synchronization of DDL operations in the above steps of <a
+  class="gdoc-markdown__link"
+  href="/admin/online-migration/#schema-migration"
+  
+>migrating schema</a>, the functions created on the original database will be automatically synchronized to the target database, so there is no need to run the above commands on the target database.</div>
+</blockquote>
+
+<p>Then, for each table in the database, we can execute the following query on the original and target databases separately and confirm that the results of the queries on both sides are consistent.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">md5_agg</span><span class="p">(</span><span class="n">t</span><span class="o">::</span><span class="nb">text</span><span class="p">)</span> <span class="k">AS</span> <span class="n">checksum</span> <span class="k">FROM</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t_table</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">table_key</span><span class="p">)</span> <span class="k">AS</span> <span class="n">t</span><span class="p">;</span>
 </span></span></code></pre></div><p>If you find that there is a difference between the original database and the target database, you can execute the following query on each of the two databases to verify the data in the table in batches.</p>
