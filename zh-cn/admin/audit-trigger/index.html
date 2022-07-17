@@ -48,7 +48,7 @@ CREATE SCHEMA IF NOT EXISTS audit; REVOKE ALL ON SCHEMA audit FROM public; -- cr
 <meta property="article:section" content="Admin" />
     <meta
       property="article:modified_time"
-      content="2022-07-02T19:52:35+08:00"
+      content="2022-07-17T23:31:33+08:00"
     />
 
 
@@ -82,7 +82,7 @@ CREATE SCHEMA IF NOT EXISTS audit; REVOKE ALL ON SCHEMA audit FROM public; -- cr
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-02T19:52:35.00Z",
+      "dateModified": "2022-07-17T23:31:33.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2762,7 +2762,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         </a>
     </h3>
 </div>
-<p>您可以通过修改DDL事件触发器函数定义，对DDL操作的审计进行配置。比如，我们可以将上面的事件触发器函数 <code>audit.ddl_trigger_func</code> 的定义修改如下，限定审计的DDL操作涉及的对象类型：</p>
+<p>您可以通过修改DDL事件触发器函数定义，对DDL操作的审计进行配置。参照上面表<code>audit.logged_actions</code>的定义，您可以根据DDL操作的执行用户、影响的对象类型、对象所属模式、对象名称、命令标签，以及客户端应用名称、网络地址、网络端口等信息，在DDL事件触发器函数定义中添加筛选条件，对DDL操作的审计进行配置。比如，我们可以将上面的事件触发器函数 <code>audit.ddl_trigger_func</code> 的定义修改如下，限定审计的DDL操作涉及的对象类型：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">FUNCTION</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_trigger_func</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">  <span class="k">RETURNS</span> <span class="n">event_trigger</span> <span class="k">AS</span> <span class="sh">$$</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">BEGIN</span><span class="w">
@@ -2828,7 +2828,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
 <blockquote class="gdoc-hint note">
   <div class="gdoc-hint__title flex align-center"><i class="fa note" title="Note"></i></div>
-  <div class="gdoc-hint__text">您需要根据实际的部署环境，修改上面SQL命令中的表名和触发器名称。</div>
+  <div class="gdoc-hint__text">上面的SQL命令对表<code>testtbl</code>上的INSERT、UPDATE、DELETE和TRUNCATE操作进行了审计。您需要根据自己的实际情况，修改SQL命令中的表名和触发器名称。另外，您也可以选择只对表上的部分操作进行审计，比如，只审计表上的DELETE和TRUNCATE操作。</div>
 </blockquote>
 
 

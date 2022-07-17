@@ -42,7 +42,7 @@
 <meta property="article:section" content="Admin" />
     <meta
       property="article:modified_time"
-      content="2022-07-02T19:52:35+08:00"
+      content="2022-07-17T23:31:33+08:00"
     />
 
 
@@ -62,7 +62,7 @@
       "headline": "Subscribe DDL Commands",
       "description": "Record and Publish DDL Commands  Create DDL history table Publish DDL history table Create event trigger capturing DDL commands Configure the recording and publishing   Subscribe and Replicate DDL Commands  Create the same DDL history table Subscribe DDL history table Replicate DDL commands with table level triggers Configure the DDL replication        PostgreSQL provides event triggers. Event triggers are global to a particular database and are capable of capturing DDL events occured in the database.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "922",
+      "wordCount" : "1038",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -73,7 +73,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-02T19:52:35.00Z",
+      "dateModified": "2022-07-17T23:31:33.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2754,7 +2754,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         </a>
     </h3>
 </div>
-<p>You can configure the recording and publishing of DDL commands by modifying the DDL event trigger function definition. For example, we can modify the definition of the above event trigger function <code>audit.ddl_pub_trigger_func</code> to limit the schemas and object types involved in the recorded and published DDL commands as follows:</p>
+<p>You can configure the recording and publishing of DDL commands by modifying the DDL event trigger function definition. Referring to the definition of the table <code>audit.ddl_history</code> in above, you can configure the recording and publishing of DDL commands by adding filter conditions to the definition of DDL event trigger functions based on the user who executed the DDL command, the type of object affected, the schema the object belongs in, the object name, and the command tag. For example, we can modify the definition of the above event trigger function <code>audit.ddl_pub_trigger_func</code> to limit the schemas and object types involved in the recorded and published DDL commands as follows:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">FUNCTION</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_pub_trigger_func</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">  <span class="k">RETURNS</span> <span class="n">event_trigger</span> <span class="k">AS</span> <span class="sh">$$</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">BEGIN</span><span class="w">
@@ -2854,7 +2854,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         </a>
     </h3>
 </div>
-<p>You can configure the replication of DDL commands by modifying the table level trigger function definition. For example, we can modify the definition of the above table level trigger function <code>audit.ddl_sub_trigger_func</code> to limit the schemas and object types involved in the replicated DDL commands as follows:</p>
+<p>You can configure the replication of DDL commands by modifying the table level trigger function definition. Referring to the definition of the table <code>audit.ddl_history</code> in above, you can configure the replication of DDL commands by adding filter conditions to the definition of DDL event trigger functions based on the user who executed the DDL command, the type of object affected, the schema the object belongs in, the object name, and the command tag. For example, we can modify the definition of the above table level trigger function <code>audit.ddl_sub_trigger_func</code> to limit the schemas and object types involved in the replicated DDL commands as follows:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">FUNCTION</span> <span class="n">audit</span><span class="mf">.</span><span class="n">ddl_sub_trigger_func</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">  <span class="k">RETURNS</span> <span class="k">trigger</span> <span class="k">AS</span> <span class="sh">$$</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">BEGIN</span><span class="w">
