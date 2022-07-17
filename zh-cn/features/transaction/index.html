@@ -8,14 +8,12 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="事务介绍  示例事务：帐户借贷 事务的结构  事务的开始 事务的结束   语句级原子性 逻辑时间戳        关系数据库必须能够对SQL 语句进行分组，以将它们一起提交，将其应用于数据库；或者将它们全部回滚，将其全部撤消。 事务是一个逻辑、 原子的工作单元，包含一条或多条SQL 语句。
+  <meta name="description" content="事务介绍  示例事务：帐户借贷 事务的结构  事务的开始 事务的结束   语句级原子性 逻辑时间戳   事务控制概述  活动事务 保存点 回滚到保存点 事务回滚 事务提交        关系数据库必须能够对SQL 语句进行分组，以将它们一起提交，将其应用于数据库；或者将它们全部回滚，将其全部撤消。 事务是一个逻辑、 原子的工作单元，包含一条或多条SQL 语句。
 举一个需要使用事务的例子，将资金从一个储蓄帐户转账到一个支票帐户。 这笔转账由以下几个单独的操作组成：
- 从储蓄帐户中扣除资金。 将资金增加到支票帐户。 在事务日志中记录该事务。  Postgres 数据库确保将所有三个操作作为一个单元来处理, 要么全部成功，要么全部失败。 例如, 如果硬件故障阻止了事务中的某个语句的执行，那么其他语句必须回滚。
-事务是 Postgres 数据库有别于文件系统的特征之一。 如果您执行一个原子操作，更新了几个文件，但是系统在处理过程中失败，那么文件将处于不一致状态。 相比之下，事务则会将 Postgres 数据库从一个一致状态转移到另一个一致状态。 事务的基本原则是，&ldquo;要么全做，要么全都不做&rdquo;： 一个原子操作作为一个整体，要么都成功，要么都失败。
-事务介绍     事务是包含一个或多个 SQL 语句的逻辑的、 原子的工作单元。事务将SQL 语句分组，以便它们可以一起被提交，即将其应用到数据库，或者一起被回滚，即将其从数据库中撤消。Postgres 数据库将为每个事务分配一个称为事务ID的唯一标识符。
-所有 Postgres 事务都符合称为 ACID 属性的数据库事务的基本属性。ACID是以下的缩写：
-  原子性
-事务中的所有任务，要么全部执行，要么都不执行。不存在部分完成的事务。例如，如果事务启动并欲更新 100 行，但在系统在完成20行更新后出现故障，则数据库会回滚这 20 行更新。" />
+ 从储蓄帐户中扣除资金。 将资金增加到支票帐户。 在事务日志中记录该事务。  PostgreSQL 数据库确保将所有三个操作作为一个单元来处理, 要么全部成功，要么全部失败。 例如, 如果硬件故障阻止了事务中的某个语句的执行，那么其他语句必须回滚。
+事务是 PostgreSQL 数据库有别于文件系统的特征之一。 如果您执行一个原子操作，更新了几个文件，但是系统在处理过程中失败，那么文件将处于不一致状态。 相比之下，事务则会将 PostgreSQL 数据库从一个一致状态转移到另一个一致状态。 事务的基本原则是，&ldquo;要么全做，要么全都不做&rdquo;： 一个原子操作作为一个整体，要么都成功，要么都失败。
+事务介绍     事务是包含一个或多个 SQL 语句的逻辑的、 原子的工作单元。事务将SQL 语句分组，以便它们可以一起被提交，即将其应用到数据库，或者一起被回滚，即将其从数据库中撤消。PostgreSQL 数据库将为每个事务分配一个称为事务ID的唯一标识符。
+所有 PostgreSQL 事务都符合称为 ACID 属性的数据库事务的基本属性。ACID是以下的缩写：" />
 
     <title>事务 | Redrock Documentation</title>
 
@@ -42,35 +40,31 @@
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="事务介绍  示例事务：帐户借贷 事务的结构  事务的开始 事务的结束   语句级原子性 逻辑时间戳        关系数据库必须能够对SQL 语句进行分组，以将它们一起提交，将其应用于数据库；或者将它们全部回滚，将其全部撤消。 事务是一个逻辑、 原子的工作单元，包含一条或多条SQL 语句。
+  <meta property="og:description" content="事务介绍  示例事务：帐户借贷 事务的结构  事务的开始 事务的结束   语句级原子性 逻辑时间戳   事务控制概述  活动事务 保存点 回滚到保存点 事务回滚 事务提交        关系数据库必须能够对SQL 语句进行分组，以将它们一起提交，将其应用于数据库；或者将它们全部回滚，将其全部撤消。 事务是一个逻辑、 原子的工作单元，包含一条或多条SQL 语句。
 举一个需要使用事务的例子，将资金从一个储蓄帐户转账到一个支票帐户。 这笔转账由以下几个单独的操作组成：
- 从储蓄帐户中扣除资金。 将资金增加到支票帐户。 在事务日志中记录该事务。  Postgres 数据库确保将所有三个操作作为一个单元来处理, 要么全部成功，要么全部失败。 例如, 如果硬件故障阻止了事务中的某个语句的执行，那么其他语句必须回滚。
-事务是 Postgres 数据库有别于文件系统的特征之一。 如果您执行一个原子操作，更新了几个文件，但是系统在处理过程中失败，那么文件将处于不一致状态。 相比之下，事务则会将 Postgres 数据库从一个一致状态转移到另一个一致状态。 事务的基本原则是，“要么全做，要么全都不做”： 一个原子操作作为一个整体，要么都成功，要么都失败。
-事务介绍     事务是包含一个或多个 SQL 语句的逻辑的、 原子的工作单元。事务将SQL 语句分组，以便它们可以一起被提交，即将其应用到数据库，或者一起被回滚，即将其从数据库中撤消。Postgres 数据库将为每个事务分配一个称为事务ID的唯一标识符。
-所有 Postgres 事务都符合称为 ACID 属性的数据库事务的基本属性。ACID是以下的缩写：
-  原子性
-事务中的所有任务，要么全部执行，要么都不执行。不存在部分完成的事务。例如，如果事务启动并欲更新 100 行，但在系统在完成20行更新后出现故障，则数据库会回滚这 20 行更新。" />
+ 从储蓄帐户中扣除资金。 将资金增加到支票帐户。 在事务日志中记录该事务。  PostgreSQL 数据库确保将所有三个操作作为一个单元来处理, 要么全部成功，要么全部失败。 例如, 如果硬件故障阻止了事务中的某个语句的执行，那么其他语句必须回滚。
+事务是 PostgreSQL 数据库有别于文件系统的特征之一。 如果您执行一个原子操作，更新了几个文件，但是系统在处理过程中失败，那么文件将处于不一致状态。 相比之下，事务则会将 PostgreSQL 数据库从一个一致状态转移到另一个一致状态。 事务的基本原则是，“要么全做，要么全都不做”： 一个原子操作作为一个整体，要么都成功，要么都失败。
+事务介绍     事务是包含一个或多个 SQL 语句的逻辑的、 原子的工作单元。事务将SQL 语句分组，以便它们可以一起被提交，即将其应用到数据库，或者一起被回滚，即将其从数据库中撤消。PostgreSQL 数据库将为每个事务分配一个称为事务ID的唯一标识符。
+所有 PostgreSQL 事务都符合称为 ACID 属性的数据库事务的基本属性。ACID是以下的缩写：" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/zh-cn/features/transaction/" />
 
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-07-11T21:44:44+08:00"
+      content="2022-07-17T18:01:17+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="事务" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="事务介绍  示例事务：帐户借贷 事务的结构  事务的开始 事务的结束   语句级原子性 逻辑时间戳        关系数据库必须能够对SQL 语句进行分组，以将它们一起提交，将其应用于数据库；或者将它们全部回滚，将其全部撤消。 事务是一个逻辑、 原子的工作单元，包含一条或多条SQL 语句。
+  <meta name="twitter:description" content="事务介绍  示例事务：帐户借贷 事务的结构  事务的开始 事务的结束   语句级原子性 逻辑时间戳   事务控制概述  活动事务 保存点 回滚到保存点 事务回滚 事务提交        关系数据库必须能够对SQL 语句进行分组，以将它们一起提交，将其应用于数据库；或者将它们全部回滚，将其全部撤消。 事务是一个逻辑、 原子的工作单元，包含一条或多条SQL 语句。
 举一个需要使用事务的例子，将资金从一个储蓄帐户转账到一个支票帐户。 这笔转账由以下几个单独的操作组成：
- 从储蓄帐户中扣除资金。 将资金增加到支票帐户。 在事务日志中记录该事务。  Postgres 数据库确保将所有三个操作作为一个单元来处理, 要么全部成功，要么全部失败。 例如, 如果硬件故障阻止了事务中的某个语句的执行，那么其他语句必须回滚。
-事务是 Postgres 数据库有别于文件系统的特征之一。 如果您执行一个原子操作，更新了几个文件，但是系统在处理过程中失败，那么文件将处于不一致状态。 相比之下，事务则会将 Postgres 数据库从一个一致状态转移到另一个一致状态。 事务的基本原则是，“要么全做，要么全都不做”： 一个原子操作作为一个整体，要么都成功，要么都失败。
-事务介绍     事务是包含一个或多个 SQL 语句的逻辑的、 原子的工作单元。事务将SQL 语句分组，以便它们可以一起被提交，即将其应用到数据库，或者一起被回滚，即将其从数据库中撤消。Postgres 数据库将为每个事务分配一个称为事务ID的唯一标识符。
-所有 Postgres 事务都符合称为 ACID 属性的数据库事务的基本属性。ACID是以下的缩写：
-  原子性
-事务中的所有任务，要么全部执行，要么都不执行。不存在部分完成的事务。例如，如果事务启动并欲更新 100 行，但在系统在完成20行更新后出现故障，则数据库会回滚这 20 行更新。" />
+ 从储蓄帐户中扣除资金。 将资金增加到支票帐户。 在事务日志中记录该事务。  PostgreSQL 数据库确保将所有三个操作作为一个单元来处理, 要么全部成功，要么全部失败。 例如, 如果硬件故障阻止了事务中的某个语句的执行，那么其他语句必须回滚。
+事务是 PostgreSQL 数据库有别于文件系统的特征之一。 如果您执行一个原子操作，更新了几个文件，但是系统在处理过程中失败，那么文件将处于不一致状态。 相比之下，事务则会将 PostgreSQL 数据库从一个一致状态转移到另一个一致状态。 事务的基本原则是，“要么全做，要么全都不做”： 一个原子操作作为一个整体，要么都成功，要么都失败。
+事务介绍     事务是包含一个或多个 SQL 语句的逻辑的、 原子的工作单元。事务将SQL 语句分组，以便它们可以一起被提交，即将其应用到数据库，或者一起被回滚，即将其从数据库中撤消。PostgreSQL 数据库将为每个事务分配一个称为事务ID的唯一标识符。
+所有 PostgreSQL 事务都符合称为 ACID 属性的数据库事务的基本属性。ACID是以下的缩写：" />
 
 
   <script type="application/ld+json">
@@ -81,9 +75,9 @@
       "name": "事务",
       "url" : "https://doc.rockdata.net/zh-cn/features/transaction/",
       "headline": "事务",
-      "description": "事务介绍  示例事务：帐户借贷 事务的结构  事务的开始 事务的结束   语句级原子性 逻辑时间戳        关系数据库必须能够对SQL 语句进行分组，以将它们一起提交，将其应用于数据库；或者将它们全部回滚，将其全部撤消。 事务是一个逻辑、 原子的工作单元，包含一条或多条SQL 语句。\n举一个需要使用事务的例子，将资金从一个储蓄帐户转账到一个支票帐户。 这笔转账由以下几个单独的操作组成：\n 从储蓄帐户中扣除资金。 将资金增加到支票帐户。 在事务日志中记录该事务。  Postgres 数据库确保将所有三个操作作为一个单元来处理, 要么全部成功，要么全部失败。 例如, 如果硬件故障阻止了事务中的某个语句的执行，那么其他语句必须回滚。\n事务是 Postgres 数据库有别于文件系统的特征之一。 如果您执行一个原子操作，更新了几个文件，但是系统在处理过程中失败，那么文件将处于不一致状态。 相比之下，事务则会将 Postgres 数据库从一个一致状态转移到另一个一致状态。 事务的基本原则是，“要么全做，要么全都不做”： 一个原子操作作为一个整体，要么都成功，要么都失败。\n事务介绍     事务是包含一个或多个 SQL 语句的逻辑的、 原子的工作单元。事务将SQL 语句分组，以便它们可以一起被提交，即将其应用到数据库，或者一起被回滚，即将其从数据库中撤消。Postgres 数据库将为每个事务分配一个称为事务ID的唯一标识符。\n所有 Postgres 事务都符合称为 ACID 属性的数据库事务的基本属性。ACID是以下的缩写：\n  原子性\n事务中的所有任务，要么全部执行，要么都不执行。不存在部分完成的事务。例如，如果事务启动并欲更新 100 行，但在系统在完成20行更新后出现故障，则数据库会回滚这 20 行更新。",
+      "description": "事务介绍  示例事务：帐户借贷 事务的结构  事务的开始 事务的结束   语句级原子性 逻辑时间戳   事务控制概述  活动事务 保存点 回滚到保存点 事务回滚 事务提交        关系数据库必须能够对SQL 语句进行分组，以将它们一起提交，将其应用于数据库；或者将它们全部回滚，将其全部撤消。 事务是一个逻辑、 原子的工作单元，包含一条或多条SQL 语句。\n举一个需要使用事务的例子，将资金从一个储蓄帐户转账到一个支票帐户。 这笔转账由以下几个单独的操作组成：\n 从储蓄帐户中扣除资金。 将资金增加到支票帐户。 在事务日志中记录该事务。  PostgreSQL 数据库确保将所有三个操作作为一个单元来处理, 要么全部成功，要么全部失败。 例如, 如果硬件故障阻止了事务中的某个语句的执行，那么其他语句必须回滚。\n事务是 PostgreSQL 数据库有别于文件系统的特征之一。 如果您执行一个原子操作，更新了几个文件，但是系统在处理过程中失败，那么文件将处于不一致状态。 相比之下，事务则会将 PostgreSQL 数据库从一个一致状态转移到另一个一致状态。 事务的基本原则是，“要么全做，要么全都不做”： 一个原子操作作为一个整体，要么都成功，要么都失败。\n事务介绍     事务是包含一个或多个 SQL 语句的逻辑的、 原子的工作单元。事务将SQL 语句分组，以便它们可以一起被提交，即将其应用到数据库，或者一起被回滚，即将其从数据库中撤消。PostgreSQL 数据库将为每个事务分配一个称为事务ID的唯一标识符。\n所有 PostgreSQL 事务都符合称为 ACID 属性的数据库事务的基本属性。ACID是以下的缩写：",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "244",
+      "wordCount" : "449",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -94,7 +88,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-11T21:44:44.00Z",
+      "dateModified": "2022-07-17T18:01:17.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2620,6 +2614,15 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <li><a href="#逻辑时间戳">逻辑时间戳</a></li>
           </ul>
         </li>
+        <li><a href="#事务控制概述">事务控制概述</a>
+          <ul>
+            <li><a href="#活动事务">活动事务</a></li>
+            <li><a href="#保存点">保存点</a></li>
+            <li><a href="#回滚到保存点">回滚到保存点</a></li>
+            <li><a href="#事务回滚">事务回滚</a></li>
+            <li><a href="#事务提交">事务提交</a></li>
+          </ul>
+        </li>
       </ul></nav>
       <hr />
     </div>
@@ -2630,8 +2633,8 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <li>将资金增加到支票帐户。</li>
 <li>在事务日志中记录该事务。</li>
 </ol>
-<p>Postgres 数据库确保将所有三个操作作为一个单元来处理, 要么全部成功，要么全部失败。 例如, 如果硬件故障阻止了事务中的某个语句的执行，那么其他语句必须回滚。</p>
-<p>事务是 Postgres 数据库有别于文件系统的特征之一。 如果您执行一个原子操作，更新了几个文件，但是系统在处理过程中失败，那么文件将处于不一致状态。 相比之下，事务则会将 Postgres 数据库从一个一致状态转移到另一个一致状态。 事务的基本原则是，&ldquo;要么全做，要么全都不做&rdquo;： 一个原子操作作为一个整体，要么都成功，要么都失败。</p>
+<p>PostgreSQL 数据库确保将所有三个操作作为一个单元来处理, 要么全部成功，要么全部失败。 例如, 如果硬件故障阻止了事务中的某个语句的执行，那么其他语句必须回滚。</p>
+<p>事务是 PostgreSQL 数据库有别于文件系统的特征之一。 如果您执行一个原子操作，更新了几个文件，但是系统在处理过程中失败，那么文件将处于不一致状态。 相比之下，事务则会将 PostgreSQL 数据库从一个一致状态转移到另一个一致状态。 事务的基本原则是，&ldquo;要么全做，要么全都不做&rdquo;： 一个原子操作作为一个整体，要么都成功，要么都失败。</p>
 <div class="gdoc-page__anchorwrap">
     <h2 id="事务介绍">
         事务介绍
@@ -2640,8 +2643,8 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         </a>
     </h2>
 </div>
-<p>事务是包含一个或多个 SQL 语句的逻辑的、 原子的工作单元。事务将SQL 语句分组，以便它们可以一起被提交，即将其应用到数据库，或者一起被回滚，即将其从数据库中撤消。Postgres 数据库将为每个事务分配一个称为事务ID的唯一标识符。</p>
-<p>所有 Postgres 事务都符合称为 ACID 属性的数据库事务的基本属性。ACID是以下的缩写：</p>
+<p>事务是包含一个或多个 SQL 语句的逻辑的、 原子的工作单元。事务将SQL 语句分组，以便它们可以一起被提交，即将其应用到数据库，或者一起被回滚，即将其从数据库中撤消。PostgreSQL 数据库将为每个事务分配一个称为事务ID的唯一标识符。</p>
+<p>所有 PostgreSQL 事务都符合称为 ACID 属性的数据库事务的基本属性。ACID是以下的缩写：</p>
 <ul>
 <li>
 <p>原子性</p>
@@ -2681,7 +2684,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <p>在事务日志中记录这笔交易</p>
 </li>
 </ul>
-<p>Redrock Postgres 必须考虑两种情况。如果所有三个 SQL 语句都对该账号维持了正确的余额，则事务的效果可以应用到数据库中。但是，如果某个问题，如资金不足、帐号无效、或硬件故障，阻止了事务中某些语句的完成，则数据库必须回滚整个事务，以便所有帐户的余额是正确的。</p>
+<p>PostgreSQL 必须考虑两种情况。如果所有三个 SQL 语句都对该账号维持了正确的余额，则事务的效果可以应用到数据库中。但是，如果某个问题，如资金不足、帐号无效、或硬件故障，阻止了事务中某些语句的完成，则数据库必须回滚整个事务，以便所有帐户的余额是正确的。</p>
 <p>图 1 说明了银行事务。第一条语句从储蓄帐户3209中减去 500 美元。第二条语句向支票帐户3208增加500 美元。第三条语句在日志表中插入这笔转账记录。最后一个语句提交事务。</p>
 
 
@@ -2740,14 +2743,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         </a>
     </h4>
 </div>
-<p>在 Redrock Postgres 中，开启一个事务需要将SQL命令用<code>BEGIN</code>和<code>COMMIT</code>命令包围起来。因此我们的银行事务看起来会是这样：</p>
+<p>在 PostgreSQL 中，开启一个事务需要将SQL命令用<code>BEGIN</code>和<code>COMMIT</code>命令包围起来。因此我们的银行事务看起来会是这样：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">BEGIN</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="k">UPDATE</span> <span class="n">accounts</span> <span class="k">SET</span> <span class="n">balance</span> <span class="o">=</span> <span class="n">balance</span> <span class="o">-</span> <span class="mf">100.00</span>
 </span></span><span class="line"><span class="cl">    <span class="k">WHERE</span> <span class="k">name</span> <span class="o">=</span> <span class="s1">&#39;Alice&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="c1">-- etc etc
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">COMMIT</span><span class="p">;</span>
 </span></span></code></pre></div><p>如果，在事务执行中我们并不想提交（或许是我们注意到Alice的余额不足），我们可以发出<code>ROLLBACK</code>命令而不是<code>COMMIT</code>命令，这样所有目前的更新将会被取消。</p>
-<p>PostgreSQL实际上将每一个SQL语句都作为一个事务来执行。如果我们没有发出<code>BEGIN</code>命令，则每个独立的语句都会被加上一个隐式的<code>BEGIN</code>以及（如果成功）<code>COMMIT</code>来包围它。一组被<code>BEGIN</code>和<code>COMMIT</code>包围的语句也被称为一个<em>事务块</em>。</p>
+<p>PostgreSQL 实际上将每一个SQL语句都作为一个事务来执行。如果我们没有发出<code>BEGIN</code>命令，则每个独立的语句都会被加上一个隐式的<code>BEGIN</code>以及（如果成功）<code>COMMIT</code>来包围它。一组被<code>BEGIN</code>和<code>COMMIT</code>包围的语句也被称为一个<em>事务块</em>。</p>
 
 
 
@@ -2758,7 +2761,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <div class="gdoc-hint__text">某些客户端库会自动发出<code>BEGIN</code>和<code>COMMIT</code>命令，因此我们可能会在不被告知的情况下得到事务块的效果。具体请查看所使用的接口文档。</div>
 </blockquote>
 
-<p>当事务开始时，Postgres 数据库将为事务分配一个可用的回滚段，以记录新事务的撤消条目。数据库在第一个 DML 语句过程中，首先会分配回滚段和事务表槽，然后分配事务ID。事务ID对于事务来说是唯一的，并由回滚段号、槽号、和序列号来表示。</p>
+<p>当事务开始时，Redrock Postgres 数据库将为事务分配一个可用的回滚段，以记录新事务的撤消条目。数据库在第一个 DML 语句过程中，首先会分配回滚段和事务表槽，然后分配事务ID。事务ID对于事务来说是唯一的，并由回滚段号、槽号、和序列号来表示。</p>
 <p>下面的示例执行一个 UPDATE 语句以开始一个事务，并查询有关事务的详细信息：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">BEGIN</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="k">UPDATE</span> <span class="n">hr</span><span class="mf">.</span><span class="n">employees</span> <span class="k">SET</span> <span class="n">salary</span> <span class="o">=</span> <span class="n">salary</span><span class="p">;</span>
@@ -2779,7 +2782,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <p>提交意味着用户会显式或隐式地请求事务中所做的更改被持久化。只有在提交事务之后，事务所做的更改才是永久性的，并对其他用户可见。图 1 所示的事务以一个提交来结束。</p>
 </li>
 <li>
-<p>用户从大多数 Postgres 数据库实用程序和工具正常退出，导致当前事务被隐式提交。当用户断开连接时的提交行为依赖于应用程序，并且是可配置的。</p>
+<p>用户从大多数 PostgreSQL 数据库实用程序和工具正常退出，导致当前事务被隐式提交。当用户断开连接时的提交行为依赖于应用程序，并且是可配置的。</p>
 <p><strong>注意</strong>：在程序终止之前，应用程序应始终显式地提交或回滚其事务。</p>
 </li>
 <li>
@@ -2832,7 +2835,223 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <p>逻辑时间戳（logicaltime）是一个由 Redrock Postgres 数据库使用的逻辑、 内部的时间戳。logicaltime 按数据库中发生的事件排序，以满足在事务ACID 属性的需要。Redrock Postgres 数据库使用 logicaltime 来标记某个位置，在其之前的所有更改都被认为已写到磁盘上，以避免在恢复过程中应用不必要的重做。数据库还使用 logicaltime 来标记一个其数据不存在重做信息的点，以便恢复过程可以在该点停止。</p>
 <p>logicaltime 是按单调递增的顺序发生的。Redrock Postgres 数据库可以像使用时钟一样使用 logicaltime，因为一个 logicaltime 观察值指示一个逻辑时间点，而其重复观察值相比之前会相同或更大。若一个事件的 logicaltime 比另一个事件的 logicaltime 低，则它在数据库中发生在一个更早的时间。几个事件可以共享相同的 logicaltime， 这意味着他们在数据库中同时发生。</p>
 <p>每个事务都有一个 logicaltime。例如，如果事务更新了一行，则数据库记录此更新发生时的 logicaltime。此事务中其他修改具有相同的 logicaltime。当事务提交时，数据库将为此提交记录一个logicaltime。</p>
-<p>Redrock Postgres 数据库在系统全局区域中递增 logicaltime。事务中修改数据时，数据库会将一个新的logicaltime写入到分配给事务的回滚段。然后日志写入器进程立即将事务的提交记录写入在线重做日志。提交记录具有事务的唯一 logicaltime。Redrock Postgres 数据库还使用 logicaltime 作为其实例恢复和介质恢复机制的一部分。</p>
+<p>Redrock Postgres 数据库在共享内存区域中递增 logicaltime。事务中修改数据时，数据库会将一个新的logicaltime写入到分配给事务的回滚段。然后日志写入器进程立即将事务的提交记录写入在线重做日志。提交记录具有事务的唯一 logicaltime。Redrock Postgres 数据库还使用 logicaltime 作为其实例恢复和介质恢复机制的一部分。</p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="事务控制概述">
+        事务控制概述
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/transaction/#事务控制概述" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 事务控制概述" aria-label="锚定到： 事务控制概述" href="#%e4%ba%8b%e5%8a%a1%e6%8e%a7%e5%88%b6%e6%a6%82%e8%bf%b0">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>事务控制即管理SQL语句所做的更改，和将SQL语句分组为事务。一般情况下，应用程序设计人员都关注事务控制，以便工作能按逻辑单元来完成，且数据能保持一致。</p>
+<p>事务控制涉及使用下面的语句：</p>
+<ul>
+<li><code>BEGIN</code>语句开始一个事务块，也就是说所有<code>BEGIN</code>语句之后的所有语句将在一个事务中执行，直到给出一个显式的<code>COMMIT</code>或者<code>ROLLBACK</code>。</li>
+<li><code>COMMIT</code> 语句结束当前事务，并使在事务中执行的所有更改都具有持久性。提交还会清除在事务中的所有保存点，并释放事务锁。</li>
+<li><code>ROLLBACK</code> 语句将取消当前事务中所做的工作；它导致所有自上次提交或回滚以来的数据更改被丢弃。<code>ROLLBACK TO SAVEPOINT</code>语句将撤消自上次保存点以来所做的更改，但不会结束整个事务。</li>
+<li><code>SAVEPOINT</code>语句标识在事务中您可以稍后回滚到的点。</li>
+</ul>
+<p>会话表 1 说明了事务控制的基本概念。</p>
+<p><strong>表 1 事务控制</strong></p>
+<div class="table-wrap"> <table>
+<thead>
+<tr>
+<th>时间</th>
+<th>会话</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>t0    </td>
+<td>BEGIN;</td>
+<td>此语句开始一个事务块。</td>
+</tr>
+<tr>
+<td>t1</td>
+<td>UPDATE employees SET salary = 7000 WHERE last_name = &lsquo;Banda&rsquo;;</td>
+<td>此语句将Banda的薪金更新为 7000。</td>
+</tr>
+<tr>
+<td>t2</td>
+<td>SAVEPOINT after_banda_sal;</td>
+<td>此语句创建一个名为<code>after_banda_sal</code>的保存点，使该事务中的更改可以回滚到该点。</td>
+</tr>
+<tr>
+<td>t3</td>
+<td>UPDATE employees SET salary = 12000 WHERE last_name = &lsquo;Greene&rsquo;;</td>
+<td>此语句将Greene的薪金更新为12000。</td>
+</tr>
+<tr>
+<td>t4</td>
+<td>SAVEPOINT after_greene_sal;</td>
+<td>此语句创建一个名为<code>after_greene_sal</code>的保存点，使该事务中的更改可以回滚到该点。</td>
+</tr>
+<tr>
+<td>t5</td>
+<td>ROLLBACK TO SAVEPOINT after_banda_sal;</td>
+<td>此语句将事务回滚至 t2，撤消在 t3 时对Greene薪金的更新。此时事务并未结束。</td>
+</tr>
+<tr>
+<td>t6</td>
+<td>UPDATE employees SET salary = 11000 WHERE last_name = &lsquo;Greene&rsquo;;</td>
+<td>此语句在事务中将Greene的薪金更新为11000 。</td>
+</tr>
+<tr>
+<td>t7</td>
+<td>ROLLBACK;</td>
+<td>此语句回滚事务中的所有更改，以结束事务。</td>
+</tr>
+<tr>
+<td>t8</td>
+<td>BEGIN;</td>
+<td>此语句开始一个新的事务块。</td>
+</tr>
+<tr>
+<td>t9</td>
+<td>UPDATE employees SET salary = 7050 WHERE last_name = &lsquo;Banda&rsquo;;</td>
+<td>此语句将Banda的薪金更新为7050。</td>
+</tr>
+<tr>
+<td>t10</td>
+<td>UPDATE employees SET salary = 10950 WHERE last_name = &lsquo;Greene&rsquo;;</td>
+<td>此语句将Greene的薪金更新为10950。</td>
+</tr>
+<tr>
+<td>t11</td>
+<td>COMMIT;</td>
+<td>此语句提交事务中的所有更改，以结束事务。提交保证所做的更改被保存在预写式日志文件中。</td>
+</tr>
+</tbody>
+</table> </div>
+<div class="gdoc-page__anchorwrap">
+    <h3 id="活动事务">
+        活动事务
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/transaction/#活动事务" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 活动事务" aria-label="锚定到： 活动事务" href="#%e6%b4%bb%e5%8a%a8%e4%ba%8b%e5%8a%a1">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p>活动事务即是已开始但尚未提交或回滚的事务。在表1中，事务中第一个修改数据的语句是更新Banda的薪金。从该更新成功执行、到 <code>ROLLBACK</code>语句结束该事务，事务一直处于活动状态。</p>
+<p>在事务提交或回滚之前，事务对数据所做的更改是暂时的。在事务结束之前，数据的状态如下所示：</p>
+<ul>
+<li>
+<p>Redrock Postgres 数据库已在共享缓冲区中生成撤消数据信息。</p>
+<p>撤消数据包含由事务中的SQL语句所更改的数据旧值。</p>
+</li>
+<li>
+<p>Redrock Postgres 数据库已在预写式日志缓冲区中生成了重做信息。</p>
+<p>重做日志记录包含数据块和撤消块的更改。</p>
+</li>
+<li>
+<p>已经对共享缓冲区中的数据页面进行了更改。</p>
+<p>已提交事务所做的数据更改，存储在共享缓冲区中，但不一定会立即由数据库写入器写入数据文件。磁盘写入可能会在提交之前或之后发生。</p>
+</li>
+<li>
+<p>数据更改所影响的行已被锁定。</p>
+<p>其他用户不能更改受影响的行中的数据，也不能查看未提交的更改。</p>
+</li>
+</ul>
+<div class="gdoc-page__anchorwrap">
+    <h3 id="保存点">
+        保存点
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/transaction/#保存点" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 保存点" aria-label="锚定到： 保存点" href="#%e4%bf%9d%e5%ad%98%e7%82%b9">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p>保存点是事务上下文中的一个由用户声明的中间标记。在内部，此标记将被解析为一个回滚位置。保存点将长事务划分为多个更小的部分。</p>
+<p>如果你在一个长事务中使用保存点，则您就可以在之后将事务中执行的工作回滚到当前时间之前，却又在事务中声明的某个保存点之后。因此，如果您出了错，您不需要重新提交所有每个语句。表1创建保存点<code>after_banda_sal</code>，以便对Greene薪金的更新可以回滚到此保存点。</p>
+<div class="gdoc-page__anchorwrap">
+    <h3 id="回滚到保存点">
+        回滚到保存点
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/transaction/#回滚到保存点" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 回滚到保存点" aria-label="锚定到： 回滚到保存点" href="#%e5%9b%9e%e6%bb%9a%e5%88%b0%e4%bf%9d%e5%ad%98%e7%82%b9">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p>在未提交事务中回滚到某个保存点，意味着该指定的保存点之后所做的任何更改都将被撤消，但它并不意味着事务本身的回滚。当一个事务回滚到一个保存点时，比如像表1中运行的<code>ROLLBACK TO SAVEPOINT after_banda_sal</code>，将执行以下操作：</p>
+<ol>
+<li>
+<p>Redrock Postgres 数据库将只回滚在该保存点之后运行的语句。</p>
+<p>在表1中，<code>ROLLBACK TO SAVEPOINT</code>将导致对Greene的更新被回滚，但对Banda的更新不会被回滚。</p>
+</li>
+<li>
+<p>Redrock Postgres 数据库保留在<code>ROLLBACK TO SAVEPOINT</code>语句中指定的保存点，但随后的所有保存点都将丢失。</p>
+<p>在表1中，<code>ROLLBACK TO SAVEPOINT</code>子句将导致<code>after_greene_sal</code>保存点丢失。</p>
+</li>
+<li>
+<p>Redrock Postgres 数据库释放在指定保存点之后获取的所有表锁和行锁，但保留在该保存点之前获取的所有数据锁。</p>
+<p>事务仍处于活动状态，并可以继续。</p>
+</li>
+</ol>
+<div class="gdoc-page__anchorwrap">
+    <h3 id="事务回滚">
+        事务回滚
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/transaction/#事务回滚" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 事务回滚" aria-label="锚定到： 事务回滚" href="#%e4%ba%8b%e5%8a%a1%e5%9b%9e%e6%bb%9a">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p>未提交事务的回滚，将撤消已由事务中的SQL语句执行过的任何数据更改。事务回滚后，事务中所做工作的影响就不再存在。</p>
+<p>对未引用任何保存点的整个事务的回滚，Redrock Postgres 数据库执行下列操作：</p>
+<ul>
+<li>
+<p>通过使用相应的撤销段，撤消事务中所有SQL语句所做的所有更改</p>
+<p>每个活动事务的事务表条目包含一个指向该事务的所有撤消数据 （与应用顺序相反）的指针。数据库从撤销段中读取数据，反转其操作，然后将撤消条目标记为已应用。因此，如果一个事务插入行，则其回滚删除行。如果一个事务更新行，则其回滚反转这个更新。如果一个事务删除一个行，则其回滚重新插入该行。在表1中，<code>ROLLBACK</code>反转对Greene和Banda的薪金更新。</p>
+</li>
+<li>
+<p>释放由事务持有的所有数据锁</p>
+</li>
+<li>
+<p>清除在事务中的所有保存点</p>
+<p>在表1中，<code>ROLLBACK</code>删除保存点 <code>after_banda_sal</code>。<code>after_greene_sal</code> 保存点被<code>ROLLBACK TO SAVEPOINT</code>语句删除。</p>
+</li>
+<li>
+<p>结束事务</p>
+<p>在表1中，<code>ROLLBACK</code>使数据库处于与刚刚执行了<code>COMMIT</code>后相同的状态。</p>
+</li>
+</ul>
+<p>回滚的持续时间与被修改的数据量成正比。</p>
+<div class="gdoc-page__anchorwrap">
+    <h3 id="事务提交">
+        事务提交
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/features/transaction/#事务提交" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 事务提交" aria-label="锚定到： 事务提交" href="#%e4%ba%8b%e5%8a%a1%e6%8f%90%e4%ba%a4">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p>提交结束当前事务，并使事务中执行的所有更改持久化。在表1中，第二个事务以<code>BEGIN</code>语句开始，并以显式<code>COMMIT</code>语句结束。在两个 <code>UPDATE</code>语句中所做的更改现在被持久化了。</p>
+<p>当一个事务提交时，将发生以下操作：</p>
+<ul>
+<li>
+<p>为提交生成逻辑时间戳 (logicaltime)。</p>
+<p>在关联的回滚段的内部事务表中记录已提交的事务。分配相应的唯一事务logicaltime，并将其记录在事务表中。</p>
+</li>
+<li>
+<p>将预写式日志缓冲区中的剩余重做日志条目写入到在线WAL日志中，并将事务logicaltime写入到在线WAL日志中。这个原子事件是提交事务的本质所在。</p>
+</li>
+<li>
+<p>Redrock Postgres 数据库释放在行和表上持有的锁。</p>
+<p>还在排队等待由未提交事务持有的锁的用户，现在可以继续他们的工作了。</p>
+</li>
+<li>
+<p>Redrock Postgres 数据库删除保存点。</p>
+<p>在表1中，事务提交时不存在保存点，所以也没有保存点要清除。</p>
+</li>
+<li>
+<p>Redrock Postgres 数据库执行一个<strong>提交清理</strong>。</p>
+<p>如果包含已提交的事务的被修改数据块仍处于共享缓冲区中，也没有其他会话正在对他们进行修改，则数据库从该块中删除与锁相关的事务信息。理想情况下，<code>COMMIT</code>会清理该数据块，以便后续的<code>SELECT</code>操作不必再执行此任务。</p>
+<p><strong>注意</strong>：由于数据块清理会生成重做，所以查询可能生成重做，并因此导致在下一个检查点期间该数据块会被写入。</p>
+</li>
+<li>
+<p>Redrock Postgres 数据库将事务标记为完成。</p>
+</li>
+</ul>
+<p>事务提交后，用户可以查看所做的更改。</p>
+<p>通常，提交是一个快速的操作，而与事务大小无关。提交的速度不会随着在事务中修改的数据的大小的增大而增加。提交的最长部分是由 刷写预写式日志触发的物理磁盘I/O。然而，刷写预写式日志所用的时间量却减少了，因为<code>walwriter</code>进程一直在在后台以增量方式写出重做日志缓冲区中的内容。</p>
+<p>默认行为是，会话必须将重做数据同步地写入在线WAL日志，而事务必须在将被缓冲的重做数据写到磁盘上之后，提交操作才能返回到用户。但是，为取得更低的事务提交延迟，应用程序开发人员可以指定重做被异步写入，以便事务不需要等待重做被写入磁盘，就可以立即从<code>COMMIT</code>调用返回。</p>
 
   </article>
 
