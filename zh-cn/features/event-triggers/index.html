@@ -9,7 +9,7 @@
 
 
   <meta name="description" content="事件触发器行为总览 事件触发器触发矩阵 事件触发器函数  在命令结束处捕捉更改 处理被 DDL 命令删除的对象 处理表重写事件 反解析 DDL 命令        Redrock Postgres 提供了事件触发器。和常规触发器（附着在一个表上并且只捕捉 DML 事件）不同，事件触发器对一个特定数据库来说是全局的，并且可以捕捉 DDL 事件。
-和常规触发器相似，可以用任何包括了事件触发器支持的过程语言或者 C 编写事件触发器，但是不能用纯 SQL 编写。
+和常规触发器相似，可以用任何包括了事件触发器支持的过程语言编写事件触发器，但是不能用纯 SQL 编写。
 事件触发器行为总览     只要与一个事件触发器相关的事件在事件触发器所在的数据库中发生，该事件触发器就会被引发。当前支持的事件是 ddl_command_start、ddl_command_end、 table_rewrite和sql_drop。未来的发行版中可能会增加对更多事件的支持。
 ddl_command_start事件就在CREATE、 ALTER、DROP、SECURITY LABEL、 COMMENT、GRANT或者REVOKE 命令的执行之前发生。在事件触发器引发前不会做受影响对象是否存在的检查。不过，一个例外是，这个事件不会为目标是共享对象 — 数据库 — 的 DDL 命令发生，也不会为目标是事件触发器的 DDL 命令发生。事件触发器机制不支持这些对象类型。 ddl_command_start也会在SELECT INTO 命令的执行之前发生，因为这等价于 CREATE TABLE AS。
 ddl_command_end事件就在同一组命令的执行之后发生。为了得到发生的DDL操作的更多细节，可以从 ddl_command_end事件触发器代码中使用集合返回函数 pg_event_trigger_ddl_commands()（见 事件触发器函数）。注意该触发器是在那些动作已经发生之后（但是在事务提交前）引发，并且因此系统目录会被读作已更改。
@@ -42,7 +42,7 @@ table_rewrite事件在表被命令ALTER TABLE和 ALTER TYPE的某些动作重写
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
   <meta property="og:description" content="事件触发器行为总览 事件触发器触发矩阵 事件触发器函数  在命令结束处捕捉更改 处理被 DDL 命令删除的对象 处理表重写事件 反解析 DDL 命令        Redrock Postgres 提供了事件触发器。和常规触发器（附着在一个表上并且只捕捉 DML 事件）不同，事件触发器对一个特定数据库来说是全局的，并且可以捕捉 DDL 事件。
-和常规触发器相似，可以用任何包括了事件触发器支持的过程语言或者 C 编写事件触发器，但是不能用纯 SQL 编写。
+和常规触发器相似，可以用任何包括了事件触发器支持的过程语言编写事件触发器，但是不能用纯 SQL 编写。
 事件触发器行为总览     只要与一个事件触发器相关的事件在事件触发器所在的数据库中发生，该事件触发器就会被引发。当前支持的事件是 ddl_command_start、ddl_command_end、 table_rewrite和sql_drop。未来的发行版中可能会增加对更多事件的支持。
 ddl_command_start事件就在CREATE、 ALTER、DROP、SECURITY LABEL、 COMMENT、GRANT或者REVOKE 命令的执行之前发生。在事件触发器引发前不会做受影响对象是否存在的检查。不过，一个例外是，这个事件不会为目标是共享对象 — 数据库 — 的 DDL 命令发生，也不会为目标是事件触发器的 DDL 命令发生。事件触发器机制不支持这些对象类型。 ddl_command_start也会在SELECT INTO 命令的执行之前发生，因为这等价于 CREATE TABLE AS。
 ddl_command_end事件就在同一组命令的执行之后发生。为了得到发生的DDL操作的更多细节，可以从 ddl_command_end事件触发器代码中使用集合返回函数 pg_event_trigger_ddl_commands()（见 事件触发器函数）。注意该触发器是在那些动作已经发生之后（但是在事务提交前）引发，并且因此系统目录会被读作已更改。
@@ -54,7 +54,7 @@ table_rewrite事件在表被命令ALTER TABLE和 ALTER TYPE的某些动作重写
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-06-26T09:31:53+08:00"
+      content="2022-07-18T23:26:17+08:00"
     />
 
 
@@ -62,7 +62,7 @@ table_rewrite事件在表被命令ALTER TABLE和 ALTER TYPE的某些动作重写
 <meta name="twitter:title" content="事件触发器" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
   <meta name="twitter:description" content="事件触发器行为总览 事件触发器触发矩阵 事件触发器函数  在命令结束处捕捉更改 处理被 DDL 命令删除的对象 处理表重写事件 反解析 DDL 命令        Redrock Postgres 提供了事件触发器。和常规触发器（附着在一个表上并且只捕捉 DML 事件）不同，事件触发器对一个特定数据库来说是全局的，并且可以捕捉 DDL 事件。
-和常规触发器相似，可以用任何包括了事件触发器支持的过程语言或者 C 编写事件触发器，但是不能用纯 SQL 编写。
+和常规触发器相似，可以用任何包括了事件触发器支持的过程语言编写事件触发器，但是不能用纯 SQL 编写。
 事件触发器行为总览     只要与一个事件触发器相关的事件在事件触发器所在的数据库中发生，该事件触发器就会被引发。当前支持的事件是 ddl_command_start、ddl_command_end、 table_rewrite和sql_drop。未来的发行版中可能会增加对更多事件的支持。
 ddl_command_start事件就在CREATE、 ALTER、DROP、SECURITY LABEL、 COMMENT、GRANT或者REVOKE 命令的执行之前发生。在事件触发器引发前不会做受影响对象是否存在的检查。不过，一个例外是，这个事件不会为目标是共享对象 — 数据库 — 的 DDL 命令发生，也不会为目标是事件触发器的 DDL 命令发生。事件触发器机制不支持这些对象类型。 ddl_command_start也会在SELECT INTO 命令的执行之前发生，因为这等价于 CREATE TABLE AS。
 ddl_command_end事件就在同一组命令的执行之后发生。为了得到发生的DDL操作的更多细节，可以从 ddl_command_end事件触发器代码中使用集合返回函数 pg_event_trigger_ddl_commands()（见 事件触发器函数）。注意该触发器是在那些动作已经发生之后（但是在事务提交前）引发，并且因此系统目录会被读作已更改。
@@ -78,9 +78,9 @@ table_rewrite事件在表被命令ALTER TABLE和 ALTER TYPE的某些动作重写
       "name": "事件触发器",
       "url" : "https://doc.rockdata.net/zh-cn/features/event-triggers/",
       "headline": "事件触发器",
-      "description": "事件触发器行为总览 事件触发器触发矩阵 事件触发器函数  在命令结束处捕捉更改 处理被 DDL 命令删除的对象 处理表重写事件 反解析 DDL 命令        Redrock Postgres 提供了事件触发器。和常规触发器（附着在一个表上并且只捕捉 DML 事件）不同，事件触发器对一个特定数据库来说是全局的，并且可以捕捉 DDL 事件。\n和常规触发器相似，可以用任何包括了事件触发器支持的过程语言或者 C 编写事件触发器，但是不能用纯 SQL 编写。\n事件触发器行为总览     只要与一个事件触发器相关的事件在事件触发器所在的数据库中发生，该事件触发器就会被引发。当前支持的事件是 ddl_command_start、ddl_command_end、 table_rewrite和sql_drop。未来的发行版中可能会增加对更多事件的支持。\nddl_command_start事件就在CREATE、 ALTER、DROP、SECURITY LABEL、 COMMENT、GRANT或者REVOKE 命令的执行之前发生。在事件触发器引发前不会做受影响对象是否存在的检查。不过，一个例外是，这个事件不会为目标是共享对象 — 数据库 — 的 DDL 命令发生，也不会为目标是事件触发器的 DDL 命令发生。事件触发器机制不支持这些对象类型。 ddl_command_start也会在SELECT INTO 命令的执行之前发生，因为这等价于 CREATE TABLE AS。\nddl_command_end事件就在同一组命令的执行之后发生。为了得到发生的DDL操作的更多细节，可以从 ddl_command_end事件触发器代码中使用集合返回函数 pg_event_trigger_ddl_commands()（见 事件触发器函数）。注意该触发器是在那些动作已经发生之后（但是在事务提交前）引发，并且因此系统目录会被读作已更改。\nsql_drop事件为任何删除数据库对象的操作在 ddl_command_end事件触发器之前发生。要列出已经被删除的对象，可以从sql_drop事件触发器代码中使用集合返回函数 pg_event_trigger_dropped_objects()见 事件触发器函数）。注意该触发器是在对象已经从系统目录删除以后执行，因此不能再查看它们。\ntable_rewrite事件在表被命令ALTER TABLE和 ALTER TYPE的某些动作重写之前发生。虽然其他控制语句（例如 CLUSTER和VACUUM）也可以用来重写表，但是它们不会触发table_rewrite事件。",
+      "description": "事件触发器行为总览 事件触发器触发矩阵 事件触发器函数  在命令结束处捕捉更改 处理被 DDL 命令删除的对象 处理表重写事件 反解析 DDL 命令        Redrock Postgres 提供了事件触发器。和常规触发器（附着在一个表上并且只捕捉 DML 事件）不同，事件触发器对一个特定数据库来说是全局的，并且可以捕捉 DDL 事件。\n和常规触发器相似，可以用任何包括了事件触发器支持的过程语言编写事件触发器，但是不能用纯 SQL 编写。\n事件触发器行为总览     只要与一个事件触发器相关的事件在事件触发器所在的数据库中发生，该事件触发器就会被引发。当前支持的事件是 ddl_command_start、ddl_command_end、 table_rewrite和sql_drop。未来的发行版中可能会增加对更多事件的支持。\nddl_command_start事件就在CREATE、 ALTER、DROP、SECURITY LABEL、 COMMENT、GRANT或者REVOKE 命令的执行之前发生。在事件触发器引发前不会做受影响对象是否存在的检查。不过，一个例外是，这个事件不会为目标是共享对象 — 数据库 — 的 DDL 命令发生，也不会为目标是事件触发器的 DDL 命令发生。事件触发器机制不支持这些对象类型。 ddl_command_start也会在SELECT INTO 命令的执行之前发生，因为这等价于 CREATE TABLE AS。\nddl_command_end事件就在同一组命令的执行之后发生。为了得到发生的DDL操作的更多细节，可以从 ddl_command_end事件触发器代码中使用集合返回函数 pg_event_trigger_ddl_commands()（见 事件触发器函数）。注意该触发器是在那些动作已经发生之后（但是在事务提交前）引发，并且因此系统目录会被读作已更改。\nsql_drop事件为任何删除数据库对象的操作在 ddl_command_end事件触发器之前发生。要列出已经被删除的对象，可以从sql_drop事件触发器代码中使用集合返回函数 pg_event_trigger_dropped_objects()见 事件触发器函数）。注意该触发器是在对象已经从系统目录删除以后执行，因此不能再查看它们。\ntable_rewrite事件在表被命令ALTER TABLE和 ALTER TYPE的某些动作重写之前发生。虽然其他控制语句（例如 CLUSTER和VACUUM）也可以用来重写表，但是它们不会触发table_rewrite事件。",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "1072",
+      "wordCount" : "1070",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -91,7 +91,7 @@ table_rewrite事件在表被命令ALTER TABLE和 ALTER TYPE的某些动作重写
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-26T09:31:53.00Z",
+      "dateModified": "2022-07-18T23:26:17.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2618,7 +2618,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <hr />
     </div>
 <p>Redrock Postgres 提供了事件触发器。和常规触发器（附着在一个表上并且只捕捉 DML 事件）不同，事件触发器对一个特定数据库来说是全局的，并且可以捕捉 DDL 事件。</p>
-<p>和常规触发器相似，可以用任何包括了事件触发器支持的过程语言或者 C 编写事件触发器，但是不能用纯 SQL 编写。</p>
+<p>和常规触发器相似，可以用任何包括了事件触发器支持的过程语言编写事件触发器，但是不能用纯 SQL 编写。</p>
 <div class="gdoc-page__anchorwrap">
     <h2 id="事件触发器行为总览">
         事件触发器行为总览
