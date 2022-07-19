@@ -8,14 +8,13 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="安装 Redrock Postgres 使用 psql 访问数据库 下一步是什么？      安装 Redrock Postgres     自然，在你能开始使用Redrock Postgres之前， 你必须安装它。有可能你的机器已经安装了PostgreSQL，因为它可能包含在你的操作系统的发布里， 或者是系统管理员已经安装了它。如果是这样的话， 那么你应该先将已经安装的PostgreSQL卸载掉，因为它可能会和Redrock Postgres发生冲突。
+  <meta name="description" content="安装 Redrock Postgres 使用 psql 访问数据库 使用 Python 访问数据库 下一步是什么？      安装 Redrock Postgres     自然，在你能开始使用Redrock Postgres之前， 你必须安装它。有可能你的机器已经安装了PostgreSQL，因为它可能包含在你的操作系统的发布里， 或者是系统管理员已经安装了它。如果是这样的话， 那么你应该先将已经安装的PostgreSQL卸载掉，因为它可能会和Redrock Postgres发生冲突。
 如果你已经准备自己安装Redrock Postgres， 那么请参考安装指导以获取安装的有关信息， 安装之后再回到这个指导手册来。一旦你安装好了数据库，你就可以通过以下方式访问它：
  运行PostgreSQL的交互式终端程序，它被称为psql， 它允许你交互地输入、编辑和执行SQL命令。 使用一种图形化前端工具，比如DBeaver、pgAdmin 4、Navicat for PostgreSQL来访问和管理数据库。 选择一种你擅长的编程语言，基于该语言对应的PostgreSQL驱动，编写一个自定义的应用。  使用 psql 访问数据库     你可以使用命令行工具 psql 来访问数据库，比如执行下面的命令访问postgres数据库：
 $ psql postgres 如果你不提供数据库名字，那么它的缺省值就是你的用户账号名字。
 在psql中，你将看到下面的欢迎信息：
 psql (12.1) Type &#34;help&#34; for help. postgres=&gt; 最后一行也可能是：
-postgres=# 这个提示符意味着你是数据库超级用户，最可能出现在你自己安装了 Redrock Postgres 的情况下。作为超级用户意味着你不受访问控制的限制。
-psql打印出的最后一行是提示符，它表示psql正听着你说话，这个时候你就可以敲入SQL查询到一个psql维护的工作区中。可以测试一下下面的命令：" />
+postgres=# 这个提示符意味着你是数据库超级用户，最可能出现在你自己安装了 Redrock Postgres 的情况下。作为超级用户意味着你不受访问控制的限制。" />
 
     <title>开始上手 | Redrock Documentation</title>
 
@@ -42,35 +41,33 @@ psql打印出的最后一行是提示符，它表示psql正听着你说话，这
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="安装 Redrock Postgres 使用 psql 访问数据库 下一步是什么？      安装 Redrock Postgres     自然，在你能开始使用Redrock Postgres之前， 你必须安装它。有可能你的机器已经安装了PostgreSQL，因为它可能包含在你的操作系统的发布里， 或者是系统管理员已经安装了它。如果是这样的话， 那么你应该先将已经安装的PostgreSQL卸载掉，因为它可能会和Redrock Postgres发生冲突。
+  <meta property="og:description" content="安装 Redrock Postgres 使用 psql 访问数据库 使用 Python 访问数据库 下一步是什么？      安装 Redrock Postgres     自然，在你能开始使用Redrock Postgres之前， 你必须安装它。有可能你的机器已经安装了PostgreSQL，因为它可能包含在你的操作系统的发布里， 或者是系统管理员已经安装了它。如果是这样的话， 那么你应该先将已经安装的PostgreSQL卸载掉，因为它可能会和Redrock Postgres发生冲突。
 如果你已经准备自己安装Redrock Postgres， 那么请参考安装指导以获取安装的有关信息， 安装之后再回到这个指导手册来。一旦你安装好了数据库，你就可以通过以下方式访问它：
  运行PostgreSQL的交互式终端程序，它被称为psql， 它允许你交互地输入、编辑和执行SQL命令。 使用一种图形化前端工具，比如DBeaver、pgAdmin 4、Navicat for PostgreSQL来访问和管理数据库。 选择一种你擅长的编程语言，基于该语言对应的PostgreSQL驱动，编写一个自定义的应用。  使用 psql 访问数据库     你可以使用命令行工具 psql 来访问数据库，比如执行下面的命令访问postgres数据库：
 $ psql postgres 如果你不提供数据库名字，那么它的缺省值就是你的用户账号名字。
 在psql中，你将看到下面的欢迎信息：
 psql (12.1) Type &#34;help&#34; for help. postgres=&gt; 最后一行也可能是：
-postgres=# 这个提示符意味着你是数据库超级用户，最可能出现在你自己安装了 Redrock Postgres 的情况下。作为超级用户意味着你不受访问控制的限制。
-psql打印出的最后一行是提示符，它表示psql正听着你说话，这个时候你就可以敲入SQL查询到一个psql维护的工作区中。可以测试一下下面的命令：" />
+postgres=# 这个提示符意味着你是数据库超级用户，最可能出现在你自己安装了 Redrock Postgres 的情况下。作为超级用户意味着你不受访问控制的限制。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/zh-cn/usage/getting-started/" />
 
 <meta property="article:section" content="Usage" />
     <meta
       property="article:modified_time"
-      content="2022-07-18T19:23:05+08:00"
+      content="2022-07-19T21:09:01+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="开始上手" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="安装 Redrock Postgres 使用 psql 访问数据库 下一步是什么？      安装 Redrock Postgres     自然，在你能开始使用Redrock Postgres之前， 你必须安装它。有可能你的机器已经安装了PostgreSQL，因为它可能包含在你的操作系统的发布里， 或者是系统管理员已经安装了它。如果是这样的话， 那么你应该先将已经安装的PostgreSQL卸载掉，因为它可能会和Redrock Postgres发生冲突。
+  <meta name="twitter:description" content="安装 Redrock Postgres 使用 psql 访问数据库 使用 Python 访问数据库 下一步是什么？      安装 Redrock Postgres     自然，在你能开始使用Redrock Postgres之前， 你必须安装它。有可能你的机器已经安装了PostgreSQL，因为它可能包含在你的操作系统的发布里， 或者是系统管理员已经安装了它。如果是这样的话， 那么你应该先将已经安装的PostgreSQL卸载掉，因为它可能会和Redrock Postgres发生冲突。
 如果你已经准备自己安装Redrock Postgres， 那么请参考安装指导以获取安装的有关信息， 安装之后再回到这个指导手册来。一旦你安装好了数据库，你就可以通过以下方式访问它：
  运行PostgreSQL的交互式终端程序，它被称为psql， 它允许你交互地输入、编辑和执行SQL命令。 使用一种图形化前端工具，比如DBeaver、pgAdmin 4、Navicat for PostgreSQL来访问和管理数据库。 选择一种你擅长的编程语言，基于该语言对应的PostgreSQL驱动，编写一个自定义的应用。  使用 psql 访问数据库     你可以使用命令行工具 psql 来访问数据库，比如执行下面的命令访问postgres数据库：
 $ psql postgres 如果你不提供数据库名字，那么它的缺省值就是你的用户账号名字。
 在psql中，你将看到下面的欢迎信息：
 psql (12.1) Type &#34;help&#34; for help. postgres=&gt; 最后一行也可能是：
-postgres=# 这个提示符意味着你是数据库超级用户，最可能出现在你自己安装了 Redrock Postgres 的情况下。作为超级用户意味着你不受访问控制的限制。
-psql打印出的最后一行是提示符，它表示psql正听着你说话，这个时候你就可以敲入SQL查询到一个psql维护的工作区中。可以测试一下下面的命令：" />
+postgres=# 这个提示符意味着你是数据库超级用户，最可能出现在你自己安装了 Redrock Postgres 的情况下。作为超级用户意味着你不受访问控制的限制。" />
 
 
   <script type="application/ld+json">
@@ -81,9 +78,9 @@ psql打印出的最后一行是提示符，它表示psql正听着你说话，这
       "name": "开始上手",
       "url" : "https://doc.rockdata.net/zh-cn/usage/getting-started/",
       "headline": "开始上手",
-      "description": "安装 Redrock Postgres 使用 psql 访问数据库 下一步是什么？      安装 Redrock Postgres     自然，在你能开始使用Redrock Postgres之前， 你必须安装它。有可能你的机器已经安装了PostgreSQL，因为它可能包含在你的操作系统的发布里， 或者是系统管理员已经安装了它。如果是这样的话， 那么你应该先将已经安装的PostgreSQL卸载掉，因为它可能会和Redrock Postgres发生冲突。\n如果你已经准备自己安装Redrock Postgres， 那么请参考安装指导以获取安装的有关信息， 安装之后再回到这个指导手册来。一旦你安装好了数据库，你就可以通过以下方式访问它：\n 运行PostgreSQL的交互式终端程序，它被称为psql， 它允许你交互地输入、编辑和执行SQL命令。 使用一种图形化前端工具，比如DBeaver、pgAdmin 4、Navicat for PostgreSQL来访问和管理数据库。 选择一种你擅长的编程语言，基于该语言对应的PostgreSQL驱动，编写一个自定义的应用。  使用 psql 访问数据库     你可以使用命令行工具 psql 来访问数据库，比如执行下面的命令访问postgres数据库：\n$ psql postgres 如果你不提供数据库名字，那么它的缺省值就是你的用户账号名字。\n在psql中，你将看到下面的欢迎信息：\npsql (12.1) Type \u0022help\u0022 for help. postgres=\u003e 最后一行也可能是：\npostgres=# 这个提示符意味着你是数据库超级用户，最可能出现在你自己安装了 Redrock Postgres 的情况下。作为超级用户意味着你不受访问控制的限制。\npsql打印出的最后一行是提示符，它表示psql正听着你说话，这个时候你就可以敲入SQL查询到一个psql维护的工作区中。可以测试一下下面的命令：",
+      "description": "安装 Redrock Postgres 使用 psql 访问数据库 使用 Python 访问数据库 下一步是什么？      安装 Redrock Postgres     自然，在你能开始使用Redrock Postgres之前， 你必须安装它。有可能你的机器已经安装了PostgreSQL，因为它可能包含在你的操作系统的发布里， 或者是系统管理员已经安装了它。如果是这样的话， 那么你应该先将已经安装的PostgreSQL卸载掉，因为它可能会和Redrock Postgres发生冲突。\n如果你已经准备自己安装Redrock Postgres， 那么请参考安装指导以获取安装的有关信息， 安装之后再回到这个指导手册来。一旦你安装好了数据库，你就可以通过以下方式访问它：\n 运行PostgreSQL的交互式终端程序，它被称为psql， 它允许你交互地输入、编辑和执行SQL命令。 使用一种图形化前端工具，比如DBeaver、pgAdmin 4、Navicat for PostgreSQL来访问和管理数据库。 选择一种你擅长的编程语言，基于该语言对应的PostgreSQL驱动，编写一个自定义的应用。  使用 psql 访问数据库     你可以使用命令行工具 psql 来访问数据库，比如执行下面的命令访问postgres数据库：\n$ psql postgres 如果你不提供数据库名字，那么它的缺省值就是你的用户账号名字。\n在psql中，你将看到下面的欢迎信息：\npsql (12.1) Type \u0022help\u0022 for help. postgres=\u003e 最后一行也可能是：\npostgres=# 这个提示符意味着你是数据库超级用户，最可能出现在你自己安装了 Redrock Postgres 的情况下。作为超级用户意味着你不受访问控制的限制。",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "80",
+      "wordCount" : "159",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -94,7 +91,7 @@ psql打印出的最后一行是提示符，它表示psql正听着你说话，这
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-18T19:23:05.00Z",
+      "dateModified": "2022-07-19T21:09:01.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2609,6 +2606,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <nav id="TableOfContents"><ul>
         <li><a href="#安装-redrock-postgres">安装 Redrock Postgres</a></li>
         <li><a href="#使用-psql-访问数据库">使用 psql 访问数据库</a></li>
+        <li><a href="#使用-python-访问数据库">使用 Python 访问数据库</a></li>
         <li><a href="#下一步是什么">下一步是什么？</a></li>
       </ul></nav>
       <hr />
@@ -2674,6 +2672,46 @@ postgres=&gt; SELECT 2 + 2;
   href="http://www.postgres.cn/docs/12/app-psql.html"
   
 >文档说明</a>。</p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="使用-python-访问数据库">
+        使用 Python 访问数据库
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/usage/getting-started/#使用-python-访问数据库" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 使用 Python 访问数据库" aria-label="锚定到： 使用 Python 访问数据库" href="#%e4%bd%bf%e7%94%a8-python-%e8%ae%bf%e9%97%ae%e6%95%b0%e6%8d%ae%e5%ba%93">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>Python是一种非常流行的脚本语言。本节我们以Python编程语言为例，简单介绍下如何访问数据库。在您想使用Python访问数据库之前，您需要在计算机上安装Python。</p>
+<p>假设您已经安装了最新版本的Python，那么接下来您需要安装psycopg。 Psycopg 是基于Python编程语言的PostgreSQL驱动。 它是在PostgreSQL 客户端库 <a
+  class="gdoc-markdown__link"
+  href="http://www.postgres.cn/docs/12/libpq.html"
+  
+>libpq</a> 之上的一个Python包装。</p>
+<p>对于大多数操作系统，安装 psycopg 的最快方法是使用 <a
+  class="gdoc-markdown__link"
+  href="https://pypi.org/project/psycopg2-binary/"
+  
+>PyPI</a> 上提供的 wheel 包：</p>
+<pre tabindex="0"><code>$ pip install psycopg2-binary
+</code></pre><p>这将安装psycopg模块的预编译二进制版本，它不需要安装相关的构建或运行时依赖组件。安装时请确保使用最新版本的 <code>pip</code>（您可以使用类似 <code>pip install -U pip</code> 的方式对其进行升级）。</p>
+<p>然后你可以像往常一样导入 <code>psycopg2</code> 这个组件库，开始访问数据库：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">psycopg2</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Connect to your postgres DB</span>
+</span></span><span class="line"><span class="cl"><span class="n">conn</span> <span class="o">=</span> <span class="n">psycopg2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&#34;dbname=postgres user=postgres password=pgpass&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Open a cursor to perform database operations</span>
+</span></span><span class="line"><span class="cl"><span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Execute a query</span>
+</span></span><span class="line"><span class="cl"><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&#34;SELECT * FROM pg_namespace&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Retrieve query results</span>
+</span></span><span class="line"><span class="cl"><span class="n">records</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+</span></span></code></pre></div><p>有关 psycopg 的更多详细信息，请参阅 <a
+  class="gdoc-markdown__link"
+  href="https://www.psycopg.org/docs/"
+  
+>Psycopg 文档</a>。</p>
 <div class="gdoc-page__anchorwrap">
     <h2 id="下一步是什么">
         下一步是什么？

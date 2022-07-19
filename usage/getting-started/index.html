@@ -8,7 +8,7 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Install Redrock Postgres Access database using psql What&rsquo;s next?      Install Redrock Postgres     Before you can use Redrock Postgres you need to install it, of course. It is possible that PostgreSQL is already installed at your site, either because it was included in your operating system distribution or because the system administrator already installed it. If that is the case, you should uninstall the installed PostgreSQL first, as it may conflict with Redrock Postgres." />
+  <meta name="description" content="Install Redrock Postgres Access database using psql Access database using Python What&rsquo;s next?      Install Redrock Postgres     Before you can use Redrock Postgres you need to install it, of course. It is possible that PostgreSQL is already installed at your site, either because it was included in your operating system distribution or because the system administrator already installed it. If that is the case, you should uninstall the installed PostgreSQL first, as it may conflict with Redrock Postgres." />
 
     <title>Getting Started | Redrock Documentation</title>
 
@@ -35,21 +35,21 @@
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Install Redrock Postgres Access database using psql What’s next?      Install Redrock Postgres     Before you can use Redrock Postgres you need to install it, of course. It is possible that PostgreSQL is already installed at your site, either because it was included in your operating system distribution or because the system administrator already installed it. If that is the case, you should uninstall the installed PostgreSQL first, as it may conflict with Redrock Postgres." />
+  <meta property="og:description" content="Install Redrock Postgres Access database using psql Access database using Python What’s next?      Install Redrock Postgres     Before you can use Redrock Postgres you need to install it, of course. It is possible that PostgreSQL is already installed at your site, either because it was included in your operating system distribution or because the system administrator already installed it. If that is the case, you should uninstall the installed PostgreSQL first, as it may conflict with Redrock Postgres." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/usage/getting-started/" />
 
 <meta property="article:section" content="Usage" />
     <meta
       property="article:modified_time"
-      content="2022-07-18T19:23:05+08:00"
+      content="2022-07-19T21:09:01+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Getting Started" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Install Redrock Postgres Access database using psql What’s next?      Install Redrock Postgres     Before you can use Redrock Postgres you need to install it, of course. It is possible that PostgreSQL is already installed at your site, either because it was included in your operating system distribution or because the system administrator already installed it. If that is the case, you should uninstall the installed PostgreSQL first, as it may conflict with Redrock Postgres." />
+  <meta name="twitter:description" content="Install Redrock Postgres Access database using psql Access database using Python What’s next?      Install Redrock Postgres     Before you can use Redrock Postgres you need to install it, of course. It is possible that PostgreSQL is already installed at your site, either because it was included in your operating system distribution or because the system administrator already installed it. If that is the case, you should uninstall the installed PostgreSQL first, as it may conflict with Redrock Postgres." />
 
 
   <script type="application/ld+json">
@@ -60,9 +60,9 @@
       "name": "Getting Started",
       "url" : "https://doc.rockdata.net/usage/getting-started/",
       "headline": "Getting Started",
-      "description": "Install Redrock Postgres Access database using psql What’s next?      Install Redrock Postgres     Before you can use Redrock Postgres you need to install it, of course. It is possible that PostgreSQL is already installed at your site, either because it was included in your operating system distribution or because the system administrator already installed it. If that is the case, you should uninstall the installed PostgreSQL first, as it may conflict with Redrock Postgres.",
+      "description": "Install Redrock Postgres Access database using psql Access database using Python What’s next?      Install Redrock Postgres     Before you can use Redrock Postgres you need to install it, of course. It is possible that PostgreSQL is already installed at your site, either because it was included in your operating system distribution or because the system administrator already installed it. If that is the case, you should uninstall the installed PostgreSQL first, as it may conflict with Redrock Postgres.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "409",
+      "wordCount" : "617",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -73,7 +73,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-18T19:23:05.00Z",
+      "dateModified": "2022-07-19T21:09:01.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2588,6 +2588,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <nav id="TableOfContents"><ul>
         <li><a href="#install-redrock-postgres">Install Redrock Postgres</a></li>
         <li><a href="#access-database-using-psql">Access database using psql</a></li>
+        <li><a href="#access-database-using-python">Access database using Python</a></li>
         <li><a href="#whats-next">What&rsquo;s next?</a></li>
       </ul></nav>
       <hr />
@@ -2653,6 +2654,46 @@ postgres=&gt; SELECT 2 + 2;
   href="https://www.postgresql.org/docs/12/app-psql.html"
   
 >psql</a>.</p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="access-database-using-python">
+        Access database using Python
+        <a data-clipboard-text="https://doc.rockdata.net/usage/getting-started/#access-database-using-python" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Access database using Python" aria-label="Anchor to: Access database using Python" href="#access-database-using-python">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>Python is a very popular scripting language. In this section, we take the Python programming language as an example to briefly introduce how to access the database. Before you start, you will need Python on your computer.</p>
+<p>Assume that you already have an up to date version of Python installed, then you should install psycopg. Psycopg is a PostgreSQL adapter for the Python programming language. It is a wrapper for the <a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/libpq.html"
+  
+>libpq</a>, the official PostgreSQL client library.</p>
+<p>For most operating systems, the quickest way to install psycopg is using the wheel package available on <a
+  class="gdoc-markdown__link"
+  href="https://pypi.org/project/psycopg2-binary/"
+  
+>PyPI</a>:</p>
+<pre tabindex="0"><code>$ pip install psycopg2-binary
+</code></pre><p>This will install a pre-compiled binary version of the module which does not require the build or runtime prerequisites. Make sure to use an up-to-date version of <code>pip</code> (you can upgrade it using something like <code>pip install -U pip</code>).</p>
+<p>You may then import the <code>psycopg2</code> package as usual, start to access database:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">psycopg2</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Connect to your postgres DB</span>
+</span></span><span class="line"><span class="cl"><span class="n">conn</span> <span class="o">=</span> <span class="n">psycopg2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&#34;dbname=postgres user=postgres password=pgpass&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Open a cursor to perform database operations</span>
+</span></span><span class="line"><span class="cl"><span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Execute a query</span>
+</span></span><span class="line"><span class="cl"><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&#34;SELECT * FROM pg_namespace&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Retrieve query results</span>
+</span></span><span class="line"><span class="cl"><span class="n">records</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+</span></span></code></pre></div><p>More detailed information about psycopg, please refer to <a
+  class="gdoc-markdown__link"
+  href="https://www.psycopg.org/docs/"
+  
+>Psycopg Documentation</a>.</p>
 <div class="gdoc-page__anchorwrap">
     <h2 id="whats-next">
         What&rsquo;s next?
