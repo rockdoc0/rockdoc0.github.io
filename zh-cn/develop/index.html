@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="color-toggle-hidden">
+<html lang="zh-cn" class="color-toggle-hidden">
   <head>
     <meta charset="UTF-8" />
 <meta name="referrer" content="no-referrer" />
@@ -8,9 +8,8 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Full Text Searching (or just text search) provides the capability to identify natural-language documents that satisfy a query, and optionally to sort them by relevance to the query. The most common type of search is to find all documents containing given query terms and return them in order of their similarity to the query. Notions of query and similarity are very flexible and depend on the specific application. The simplest search considers query as a set of words and similarity as the frequency of query words in the document." />
 
-    <title>Chinese Text Search | Redrock Documentation</title>
+    <title>应用开发 | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -31,49 +30,46 @@
     
   <meta
     property="og:title"
-    content="Chinese Text Search"
+    content="应用开发"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Full Text Searching (or just text search) provides the capability to identify natural-language documents that satisfy a query, and optionally to sort them by relevance to the query. The most common type of search is to find all documents containing given query terms and return them in order of their similarity to the query. Notions of query and similarity are very flexible and depend on the specific application. The simplest search considers query as a set of words and similarity as the frequency of query words in the document." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://doc.rockdata.net/advanced/textsearch/" />
+<meta property="og:url" content="https://doc.rockdata.net/zh-cn/develop/" />
 
-<meta property="article:section" content="Advanced" />
+<meta property="article:section" content="Develop" />
     <meta
       property="article:modified_time"
-      content="2022-06-06T15:26:28+08:00"
+      content="2022-07-20T16:41:00+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Chinese Text Search" />
+<meta name="twitter:title" content="应用开发" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Full Text Searching (or just text search) provides the capability to identify natural-language documents that satisfy a query, and optionally to sort them by relevance to the query. The most common type of search is to find all documents containing given query terms and return them in order of their similarity to the query. Notions of query and similarity are very flexible and depend on the specific application. The simplest search considers query as a set of words and similarity as the frequency of query words in the document." />
 
 
   <script type="application/ld+json">
   {
       "@context": "http://schema.org",
       "@type": "TechArticle",
-      "articleSection": "Advanced",
-      "name": "Chinese Text Search",
-      "url" : "https://doc.rockdata.net/advanced/textsearch/",
-      "headline": "Chinese Text Search",
-      "description": "Full Text Searching (or just text search) provides the capability to identify natural-language documents that satisfy a query, and optionally to sort them by relevance to the query. The most common type of search is to find all documents containing given query terms and return them in order of their similarity to the query. Notions of query and similarity are very flexible and depend on the specific application. The simplest search considers query as a set of words and similarity as the frequency of query words in the document.",
+      "articleSection": "Develop",
+      "name": "应用开发",
+      "url" : "https://doc.rockdata.net/zh-cn/develop/",
+      "headline": "应用开发",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "623",
-      "inLanguage": "en",
+      "wordCount" : "0",
+      "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://doc.rockdata.net/advanced/textsearch/"
+          "@id": "https://doc.rockdata.net/zh-cn/develop/"
       },
       "copyrightHolder" : "Redrock Documentation",
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-06T15:26:28.00Z",
+      "dateModified": "2022-07-20T16:41:00.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -149,7 +145,7 @@
   href="/custom.css"
   media="all"
 />
-  <link href="https://doc.rockdata.net/advanced/textsearch/" rel="canonical" type="text/html" />
+  <link href="https://doc.rockdata.net/zh-cn/develop/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -641,11 +637,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
       <label for="menu-control" class="gdoc-nav__control" tabindex="0">
         <svg class="gdoc-icon gdoc_menu">
-          <title>Open Navigation</title>
+          <title>打开导航</title>
           <use xlink:href="#gdoc_menu"></use>
         </svg>
         <svg class="gdoc-icon gdoc_arrow_back">
-          <title>Close Navigation</title>
+          <title>关闭导航</title>
           <use xlink:href="#gdoc_arrow_back"></use>
         </svg>
       </label>
@@ -711,15 +707,15 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
         <span id="gdoc-dark-mode">
           <svg class="gdoc-icon gdoc_brightness_dark">
-            <title>Toggle Dark/Light/Auto mode</title>
+            <title>切换暗/亮/自动模式</title>
             <use xlink:href="#gdoc_brightness_dark"></use>
           </svg>
           <svg class="gdoc-icon gdoc_brightness_light">
-            <title>Toggle Dark/Light/Auto mode</title>
+            <title>切换暗/亮/自动模式</title>
             <use xlink:href="#gdoc_brightness_light"></use>
           </svg>
           <svg class="gdoc-icon gdoc_brightness_auto">
-            <title>Toggle Dark/Light/Auto mode</title>
+            <title>切换暗/亮/自动模式</title>
             <use xlink:href="#gdoc_brightness_auto"></use>
           </svg>
         </span>
@@ -727,7 +723,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         <span class="gdoc-menu-header__home">
           <a href="https://doc.rockdata.net/" class="gdoc-header__link">
             <svg class="gdoc-icon gdoc_home">
-              <title>Back to homepage</title>
+              <title>返回首页</title>
               <use xlink:href="#gdoc_home"></use>
             </svg>
           </a>
@@ -739,12 +735,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <li>
         
           
+        
+          
             <span class="flex align-center">
               <svg class="gdoc-icon gdoc_language"><use xlink:href="#gdoc_language"></use></svg>
-              <span>EN</span>
+              <span>ZH-CN</span>
             </span>
-          
-        
           
         
 
@@ -755,12 +751,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               <li>
                 <a
                   class="flex gdoc-language__entry"
-                  title="简体中文"
-                  href="/zh-cn/advanced/textsearch/"
-                  hreflang="zh-cn"
-                  lang="zh-cn"
+                  title="English"
+                  href="/develop/"
+                  hreflang="en"
+                  lang="en"
                 >
-                  简体中文
+                  English
                 </a>
               </li>
             
@@ -777,7 +773,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
           <label for="menu-header-control">
             <svg class="gdoc-icon gdoc_keyboard_arrow_right">
               <use xlink:href="#gdoc_keyboard_arrow_right"></use>
-              <title>Close Menu Bar</title>
+              <title>关闭菜单栏</title>
             </svg>
           </label>
         </span>
@@ -785,7 +781,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <label for="menu-header-control" class="gdoc-menu-header__control">
         <svg class="gdoc-icon gdoc_keyboard_arrow_left">
           <use xlink:href="#gdoc_keyboard_arrow_left"></use>
-          <title>Open Menu Bar</title>
+          <title>打开菜单栏</title>
         </svg>
       </label>
     </div>
@@ -805,11 +801,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       type="text"
       id="gdoc-search-input"
       class="gdoc-search__input"
-      placeholder="Search"
-      aria-label="Search"
+      placeholder="搜索"
+      aria-label="搜索"
       maxlength="64"
       data-site-base-url="https://doc.rockdata.net/"
-      data-site-lang="en"
+      data-site-lang="zh-cn"
     />
     <div class="gdoc-search__spinner spinner hidden"></div>
     <ul id="gdoc-search-results" class="gdoc-search__list"></ul>
@@ -819,7 +815,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
 
   <section class="gdoc-nav--main">
-    <h2>Navigation</h2>
+    <h2>导航</h2>
     
       
 
@@ -856,7 +852,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">Usage</span>
+                <span class="flex">使用介绍</span>
               
               
             </label>
@@ -898,10 +894,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/usage/why-redrock/"
+                    href="/zh-cn/usage/why-redrock/"
                     class="gdoc-nav__entry"
                   >
-                    Why Redrock Postgres?
+                    为什么选择Redrock Postgres？
                   </a>
                 </span>
               
@@ -942,10 +938,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/usage/getting-started/"
+                    href="/zh-cn/usage/getting-started/"
                     class="gdoc-nav__entry"
                   >
-                    Getting Started
+                    开始上手
                   </a>
                 </span>
               
@@ -984,22 +980,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-46385245"
+                class="gdoc-nav__toggle" id="navtree-09089698"
                 
               
             />
             <label
               
-                for="navtree-46385245" class="flex justify-between align-center"
+                for="navtree-09089698" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/installation/"
+                    href="/zh-cn/installation/"
                     class="gdoc-nav__entry"
                   >
-                    Installation
+                    安装指导
                   </a>
                 </span>
               
@@ -1050,10 +1046,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/installation/windows/"
+                    href="/zh-cn/installation/windows/"
                     class="gdoc-nav__entry"
                   >
-                    Installing on Windows
+                    Windows 安装指导
                   </a>
                 </span>
               
@@ -1094,10 +1090,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/installation/redhat/"
+                    href="/zh-cn/installation/redhat/"
                     class="gdoc-nav__entry"
                   >
-                    Installing on Red Hat
+                    Red Hat/CentOS 安装指导
                   </a>
                 </span>
               
@@ -1138,10 +1134,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/installation/debian/"
+                    href="/zh-cn/installation/debian/"
                     class="gdoc-nav__entry"
                   >
-                    Installing on Debian
+                    Debian 安装指导
                   </a>
                 </span>
               
@@ -1187,7 +1183,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">Features</span>
+                <span class="flex">基础特性</span>
               
               
             </label>
@@ -1229,10 +1225,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/features/undo/"
+                    href="/zh-cn/features/undo/"
                     class="gdoc-nav__entry"
                   >
-                    Undo
+                    回滚段
                   </a>
                 </span>
               
@@ -1273,10 +1269,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/features/recyclebin/"
+                    href="/zh-cn/features/recyclebin/"
                     class="gdoc-nav__entry"
                   >
-                    Recycle Bin
+                    回收站
                   </a>
                 </span>
               
@@ -1317,10 +1313,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/features/transaction/"
+                    href="/zh-cn/features/transaction/"
                     class="gdoc-nav__entry"
                   >
-                    Transactions
+                    事务
                   </a>
                 </span>
               
@@ -1361,10 +1357,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/features/tablespace/"
+                    href="/zh-cn/features/tablespace/"
                     class="gdoc-nav__entry"
                   >
-                    Tablespaces
+                    表空间
                   </a>
                 </span>
               
@@ -1405,10 +1401,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/features/event-triggers/"
+                    href="/zh-cn/features/event-triggers/"
                     class="gdoc-nav__entry"
                   >
-                    Event Triggers
+                    事件触发器
                   </a>
                 </span>
               
@@ -1449,10 +1445,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/features/postgres-compatibility/"
+                    href="/zh-cn/features/postgres-compatibility/"
                     class="gdoc-nav__entry"
                   >
-                    Compatibility with PostgreSQL
+                    同 PostgreSQL 的兼容性
                   </a>
                 </span>
               
@@ -1491,15 +1487,25 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="hidden"
+                class="gdoc-nav__toggle" id="navtree-38863d5b"
+                checked
               
             />
             <label
               
+                for="navtree-38863d5b" class="flex justify-between align-center"
+              
             >
               
-                <span class="flex">Advanced</span>
+                <span class="flex">应用开发</span>
               
+              
+                <svg class="gdoc-icon toggle gdoc_keyboard_arrow_left">
+                  <use xlink:href="#gdoc_keyboard_arrow_left"></use>
+                </svg>
+                <svg class="gdoc-icon toggle gdoc_keyboard_arrow_down">
+                  <use xlink:href="#gdoc_keyboard_arrow_down"></use>
+                </svg>
               
             </label>
 
@@ -1540,10 +1546,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/advanced/textsearch/"
-                    class="gdoc-nav__entry is-active"
+                    href="/zh-cn/develop/textsearch/"
+                    class="gdoc-nav__entry"
                   >
-                    Chinese Text Search
+                    中文搜索
                   </a>
                 </span>
               
@@ -1584,7 +1590,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/advanced/plscheme/"
+                    href="/zh-cn/develop/plscheme/"
                     class="gdoc-nav__entry"
                   >
                     PL/Scheme
@@ -1599,50 +1605,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         
       
     
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/advanced/monitor-stats/"
-                    class="gdoc-nav__entry"
-                  >
-                    Statistics Views
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
   </ul>
 
             
@@ -1670,22 +1632,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-d9ef83eb"
+                class="gdoc-nav__toggle" id="navtree-2c8f00d6"
                 
               
             />
             <label
               
-                for="navtree-d9ef83eb" class="flex justify-between align-center"
+                for="navtree-2c8f00d6" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/admin/"
+                    href="/zh-cn/admin/"
                     class="gdoc-nav__entry"
                   >
-                    Server Administration
+                    数据库管理
                   </a>
                 </span>
               
@@ -1736,10 +1698,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/admin/configuration/"
+                    href="/zh-cn/admin/configuration/"
                     class="gdoc-nav__entry"
                   >
-                    Configuration
+                    参数配置
                   </a>
                 </span>
               
@@ -1780,10 +1742,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/admin/network-tablespace/"
+                    href="/zh-cn/admin/monitor-stats/"
                     class="gdoc-nav__entry"
                   >
-                    Network Attached Tablespace
+                    运行统计视图
                   </a>
                 </span>
               
@@ -1824,10 +1786,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/admin/ddl-subscription/"
+                    href="/zh-cn/admin/network-tablespace/"
                     class="gdoc-nav__entry"
                   >
-                    Subscribe DDL Commands
+                    网络表空间
                   </a>
                 </span>
               
@@ -1868,10 +1830,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/admin/audit-trigger/"
+                    href="/zh-cn/admin/ddl-subscription/"
                     class="gdoc-nav__entry"
                   >
-                    Audit Logging
+                    订阅DDL操作
                   </a>
                 </span>
               
@@ -1912,10 +1874,54 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/admin/online-migration/"
+                    href="/zh-cn/admin/audit-trigger/"
                     class="gdoc-nav__entry"
                   >
-                    Online Migration
+                    审计日志
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/admin/online-migration/"
+                    class="gdoc-nav__entry"
+                  >
+                    在线迁移
                   </a>
                 </span>
               
@@ -1954,22 +1960,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-4ac8285e"
+                class="gdoc-nav__toggle" id="navtree-a5b7adb4"
                 
               
             />
             <label
               
-                for="navtree-4ac8285e" class="flex justify-between align-center"
+                for="navtree-a5b7adb4" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/commands/"
+                    href="/zh-cn/commands/"
                     class="gdoc-nav__entry"
                   >
-                    SQL Commands
+                    SQL 命令
                   </a>
                 </span>
               
@@ -2020,7 +2026,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/commands/alterundo/"
+                    href="/zh-cn/commands/alterundo/"
                     class="gdoc-nav__entry"
                   >
                     ALTER UNDO
@@ -2056,7 +2062,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/commands/createundo/"
+                    href="/zh-cn/commands/createundo/"
                     class="gdoc-nav__entry"
                   >
                     CREATE UNDO
@@ -2092,7 +2098,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/commands/dropundo/"
+                    href="/zh-cn/commands/dropundo/"
                     class="gdoc-nav__entry"
                   >
                     DROP UNDO
@@ -2128,7 +2134,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/commands/vacuum/"
+                    href="/zh-cn/commands/vacuum/"
                     class="gdoc-nav__entry"
                   >
                     VACUUM
@@ -2158,8 +2164,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
       
         
-      
-        
           
           
           
@@ -2172,22 +2176,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-0ef779f7"
+                class="gdoc-nav__toggle" id="navtree-7171e5f3"
                 
               
             />
             <label
               
-                for="navtree-0ef779f7" class="flex justify-between align-center"
+                for="navtree-7171e5f3" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/catalogs/"
+                    href="/zh-cn/catalogs/"
                     class="gdoc-nav__entry"
                   >
-                    System Catalogs
+                    系统表
                   </a>
                 </span>
               
@@ -2238,7 +2242,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/catalogs/recyclebin/"
+                    href="/zh-cn/catalogs/recyclebin/"
                     class="gdoc-nav__entry"
                   >
                     pg_recyclebin
@@ -2274,7 +2278,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/catalogs/ts-lexicon/"
+                    href="/zh-cn/catalogs/ts-lexicon/"
                     class="gdoc-nav__entry"
                   >
                     pg_ts_lexicon
@@ -2310,7 +2314,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/catalogs/undo/"
+                    href="/zh-cn/catalogs/undo/"
                     class="gdoc-nav__entry"
                   >
                     pg_undo
@@ -2331,6 +2335,8 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
           </li>
         
       
+        
+      
     
   </ul>
 
@@ -2347,7 +2353,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
   <section class="gdoc-nav--more">
     
-      <h2>More</h2>
+      <h2>更多</h2>
       
 
   
@@ -2388,10 +2394,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                   <svg class="gdoc-icon gdoc_notification"><use xlink:href="#gdoc_notification"></use></svg>
                 
                 <a
-                  href="/posts/"
+                  href="/zh-cn/posts/"
                   class="gdoc-nav__entry"
                 >
-                  News
+                  新闻
                 </a>
               </span>
               
@@ -2438,7 +2444,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     https://gitee.com/rockdata/redrock/releases"
                   class="gdoc-nav__entry"
                 >
-                  Releases
+                  下载
                 </a>
               </span>
               
@@ -2485,7 +2491,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     https://gitee.com/rockdata/redrock"
                   class="gdoc-nav__entry"
                 >
-                  View Source
+                  项目仓库
                 </a>
               </span>
               
@@ -2548,15 +2554,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    
-    
-    
-    
-  
-  
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/advanced/' href='/advanced/'><span itemprop='name'>Advanced</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Chinese Text Search</span><meta itemprop='position' content='3' /></li>
-  
-
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>应用开发</span><meta itemprop='position' content='3' /></li>
   
 
   
@@ -2569,9 +2567,9 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <span class="editpage">
         <svg class="gdoc-icon gdoc_code"><use xlink:href="#gdoc_code"></use></svg>
         <a
-          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/en/advanced/textsearch.md"
+          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/zh-cn/develop/_index.md"
         >
-          Edit page
+          编辑页面
         </a>
       </span>
     </div>
@@ -2583,98 +2581,8 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <article
     class="gdoc-markdown gdoc-markdown__align--left"
   >
-    <h1>Chinese Text Search</h1>
-    <p>Full Text Searching (or just <em>text search</em>) provides the capability to identify natural-language <em>documents</em> that satisfy a <em>query</em>, and optionally to sort them by relevance to the query. The most common type of search is to find all documents containing given <em>query terms</em> and return them in order of their <em>similarity</em> to the query. Notions of <code>query</code> and <code>similarity</code> are very flexible and depend on the specific application. The simplest search considers <code>query</code> as a set of words and <code>similarity</code> as the frequency of query words in the document.</p>
-<div class="gdoc-page__anchorwrap">
-    <h2 id="parsers">
-        Parsers
-        <a data-clipboard-text="https://doc.rockdata.net/advanced/textsearch/#parsers" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Parsers" aria-label="Anchor to: Parsers" href="#parsers">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<p>Text search parsers are responsible for splitting raw document text into <em>tokens</em> and identifying each token&rsquo;s type, where the set of possible types is defined by the parser itself. Note that a parser does not modify the text at all — it simply identifies plausible word boundaries. Because of this limited scope, there is less need for application-specific custom parsers than there is for custom dictionaries. At present Redrock Postgres provides just two built-in parser, which has been found to be useful for a wide range of applications.</p>
-<p>The built-in chinese text parser is named <code>pg_catalog.cjkparser</code>.</p>
-<div class="gdoc-page__anchorwrap">
-    <h2 id="configurations">
-        Configurations
-        <a data-clipboard-text="https://doc.rockdata.net/advanced/textsearch/#configurations" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Configurations" aria-label="Anchor to: Configurations" href="#configurations">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<p>Full text search functionality includes the ability to do many more things: skip indexing certain words (stop words), process synonyms, and use sophisticated parsing, e.g., parse based on more than just white space. This functionality is controlled by <em>text search configurations</em>. PostgreSQL comes with predefined configurations for many languages, and you can easily create your own configurations. (psql&rsquo;s <code>\dF</code> command shows all available configurations.)</p>
-<p>The built-in chinese text search configuration is named <code>pg_catalog.chinese</code>.</p>
-<div class="gdoc-page__anchorwrap">
-    <h2 id="testing-and-debugging-text-search">
-        Testing and Debugging Text Search
-        <a data-clipboard-text="https://doc.rockdata.net/advanced/textsearch/#testing-and-debugging-text-search" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Testing and Debugging Text Search" aria-label="Anchor to: Testing and Debugging Text Search" href="#testing-and-debugging-text-search">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<p>The behavior of a custom text search configuration can easily become confusing. The functions described in this section are useful for testing text search objects. You can test a complete configuration, or test parsers and dictionaries separately.</p>
-<div class="gdoc-page__anchorwrap">
-    <h3 id="configuration-testing">
-        Configuration Testing
-        <a data-clipboard-text="https://doc.rockdata.net/advanced/textsearch/#configuration-testing" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Configuration Testing" aria-label="Anchor to: Configuration Testing" href="#configuration-testing">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
-<p>The function <code>ts_debug</code> allows easy testing of a text search configuration.</p>
-<pre tabindex="0"><code>SELECT * FROM ts_debug(&#39;chinese&#39;, &#39;关系数据库是一种用于存储相互关联的数据记录并提供数据访问的数据库。&#39;);
-   alias    | description  | token  | dictionaries | dictionary | lexemes
-------------+--------------+--------+--------------+------------+----------
- cjk_words  | CJK words    | 关系   | {chinese}    | chinese    | {关系}
- cjk_words  | CJK words    | 数据库 | {chinese}    | chinese    | {数据库}
- cjk_words  | CJK words    | 是     | {chinese}    | chinese    | {是}
- cjk_words  | CJK words    | 一种   | {chinese}    | chinese    | {一种}
- cjk_words  | CJK words    | 用于   | {chinese}    | chinese    | {用于}
- cjk_words  | CJK words    | 存储   | {chinese}    | chinese    | {存储}
- cjk_words  | CJK words    | 相互   | {chinese}    | chinese    | {相互}
- cjk_words  | CJK words    | 关联   | {chinese}    | chinese    | {关联}
- cjk_words  | CJK words    | 的     | {chinese}    | chinese    | {的}
- cjk_words  | CJK words    | 数据   | {chinese}    | chinese    | {数据}
- cjk_words  | CJK words    | 记录   | {chinese}    | chinese    | {记录}
- cjk_words  | CJK words    | 并     | {chinese}    | chinese    | {并}
- cjk_words  | CJK words    | 提供   | {chinese}    | chinese    | {提供}
- cjk_words  | CJK words    | 数据   | {chinese}    | chinese    | {数据}
- cjk_words  | CJK words    | 访问   | {chinese}    | chinese    | {访问}
- cjk_words  | CJK words    | 的     | {chinese}    | chinese    | {的}
- cjk_words  | CJK words    | 数据库 | {chinese}    | chinese    | {数据库}
- punc_words | punctuations | 。     | {chinese}    | chinese    | {。}
-</code></pre><div class="gdoc-page__anchorwrap">
-    <h3 id="parser-testing">
-        Parser Testing
-        <a data-clipboard-text="https://doc.rockdata.net/advanced/textsearch/#parser-testing" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Parser Testing" aria-label="Anchor to: Parser Testing" href="#parser-testing">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
-<p>The function <code>ts_parse</code> allows direct testing of a text search parser.</p>
-<pre tabindex="0"><code>SELECT * FROM ts_parse(&#39;cjkparser&#39;, &#39;关系数据库是一种用于存储相互关联的数据记录并提供数据访问的数据库。&#39;);
- tokid | token
--------+--------
-     1 | 关系
-     1 | 数据库
-     1 | 是
-     1 | 一种
-     1 | 用于
-     1 | 存储
-     1 | 相互
-     1 | 关联
-     1 | 的
-     1 | 数据
-     1 | 记录
-     1 | 并
-     1 | 提供
-     1 | 数据
-     1 | 访问
-     1 | 的
-     1 | 数据库
-    18 | 。
-</code></pre>
+    <h1>应用开发</h1>
+    
   </article>
 
 
@@ -2910,14 +2818,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         
           <span class="gdoc-footer__item gdoc-footer__item--row">
             <a href="https://www.rockdata.net/legal-notice/#contact-information" class="gdoc-footer__link">
-              Legal Notice
+              法律声明
             </a>
           </span>
         
         
           <span class="gdoc-footer__item gdoc-footer__item--row">
             <a href="https://www.rockdata.net/legal-notice/#privacy-policy" class="gdoc-footer__link">
-              Privacy Policy
+              隐私政策
             </a>
           </span>
         
@@ -2927,11 +2835,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
       <div class="flex flex-25 justify-end">
         <span class="gdoc-footer__item text-right">
-          <a class="gdoc-footer__link fake-link" href="#" aria-label="Back to top">
+          <a class="gdoc-footer__link fake-link" href="#" aria-label="回到顶部">
             <svg class="gdoc-icon gdoc_keyboard_arrow_up">
               <use xlink:href="#gdoc_keyboard_arrow_up"></use>
             </svg>
-            <span class="hidden-mobile">Back to top</span>
+            <span class="hidden-mobile">回到顶部</span>
           </a>
         </span>
       </div>

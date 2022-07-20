@@ -8,16 +8,14 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="全文搜索（或者文本搜索）提供了确定满足一个查询的自然语言文档的能力，并可以选择将它们按照与查询的相关度排序。最常用的搜索类型是找到所有包含给定查询词的文档并按照它们与查询的相似性顺序返回它们。查询和相似性的概念非常灵活并且依赖于特定的应用。最简单的搜索认为查询是一组词而相似性是查询词在文档中的频度。
-解析器     文本搜索解析器负责把未处理的文档文本划分成记号并且标识每一个记号的类型，而可能的类型集合由解析器本身定义。注意一个解析器完全不会修改文本 — 它简单地标识看似有理的词边界。因为这种有限的视野，对于应用相关的自定义解析器的需求就没有自定义字典那么强烈。目前Redrock Postgres只提供了两种内置解析器，它们已经被证实对很多种应用都适用。
-内置的中文解析器被称为pg_catalog.cjkparser。
-配置     全文搜索功能包括做更多事情的能力：跳过索引特定词（停用词）、处理同义词并使用更高级的解析，例如基于空白之外的解析。这个功能由文本搜索配置控制。PostgreSQL中有多种语言的预定义配置，并且你可以很容易地创建你自己的配置（psql的\dF命令显示所有可用的配置）。
-内置的中文搜索配置被称为 pg_catalog.chinese。
-测试和调试文本搜索     一个自定义文本搜索配置的行为很容易变得混乱。本节中描述的函数对于测试文本搜索对象有用。你可以测试一个完整的配置，或者独立测试解析器和词典。
-配置测试     函数ts_debug允许简单地测试一个文本搜索配置。
-SELECT * FROM ts_debug(&#39;chinese&#39;, &#39;关系数据库是一种用于存储相互关联的数据记录并提供数据访问的数据库。&#39;);alias | description | token | dictionaries | dictionary | lexemes------------&#43;--------------&#43;--------&#43;--------------&#43;------------&#43;----------cjk_words | CJK words | 关系 | {chinese} | chinese | {关系}cjk_words | CJK words | 数据库 | {chinese} | chinese | {数据库}cjk_words | CJK words | 是 | {chinese} | chinese | {是}cjk_words | CJK words | 一种 | {chinese} | chinese | {一种}cjk_words | CJK words | 用于 | {chinese} | chinese | {用于}cjk_words | CJK words | 存储 | {chinese} | chinese | {存储}cjk_words | CJK words | 相互 | {chinese} | chinese | {相互}cjk_words | CJK words | 关联 | {chinese} | chinese | {关联}cjk_words | CJK words | 的 | {chinese} | chinese | {的}cjk_words | CJK words | 数据 | {chinese} | chinese | {数据}cjk_words | CJK words | 记录 | {chinese} | chinese | {记录}cjk_words | CJK words | 并 | {chinese} | chinese | {并}cjk_words | CJK words | 提供 | {chinese} | chinese | {提供}cjk_words | CJK words | 数据 | {chinese} | chinese | {数据}cjk_words | CJK words | 访问 | {chinese} | chinese | {访问}cjk_words | CJK words | 的 | {chinese} | chinese | {的}cjk_words | CJK words | 数据库 | {chinese} | chinese | {数据库}punc_words | punctuations | 。 | {chinese} | chinese | {。} 解析器测试     函数ts_parse 允许直接测试一个文本搜索解析器。" />
+  <meta name="description" content="PL/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/scheme 可以以 Lisp 风格启动 PostgreSQL 过程。
+PL/Scheme 函数和参数     要用 PL/Scheme 语言创建一个函数，可使用标准的 CREATE FUNCTION语法：
+CREATE FUNCTION funcname (argument-types) RETURNS return-type AS $$ # PL/Scheme 函数体 $$ LANGUAGE plscheme; 函数的主体就是普通的 Scheme 代码。事实上，PL/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。
+在一个 PL/Scheme 过程中，任何从Scheme代码返回的值都会被忽略。
+PL/Scheme 也支持用DO语句调用的匿名代码块：
+DO $$ # PL/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数，并且它返回的任何值都会被抛弃。否则其行为就像一个函数。" />
 
-    <title>中文搜索 | Redrock Documentation</title>
+    <title>PL/Scheme | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -38,63 +36,59 @@ SELECT * FROM ts_debug(&#39;chinese&#39;, &#39;关系数据库是一种用于存
     
   <meta
     property="og:title"
-    content="中文搜索"
+    content="PL/Scheme"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="全文搜索（或者文本搜索）提供了确定满足一个查询的自然语言文档的能力，并可以选择将它们按照与查询的相关度排序。最常用的搜索类型是找到所有包含给定查询词的文档并按照它们与查询的相似性顺序返回它们。查询和相似性的概念非常灵活并且依赖于特定的应用。最简单的搜索认为查询是一组词而相似性是查询词在文档中的频度。
-解析器     文本搜索解析器负责把未处理的文档文本划分成记号并且标识每一个记号的类型，而可能的类型集合由解析器本身定义。注意一个解析器完全不会修改文本 — 它简单地标识看似有理的词边界。因为这种有限的视野，对于应用相关的自定义解析器的需求就没有自定义字典那么强烈。目前Redrock Postgres只提供了两种内置解析器，它们已经被证实对很多种应用都适用。
-内置的中文解析器被称为pg_catalog.cjkparser。
-配置     全文搜索功能包括做更多事情的能力：跳过索引特定词（停用词）、处理同义词并使用更高级的解析，例如基于空白之外的解析。这个功能由文本搜索配置控制。PostgreSQL中有多种语言的预定义配置，并且你可以很容易地创建你自己的配置（psql的\dF命令显示所有可用的配置）。
-内置的中文搜索配置被称为 pg_catalog.chinese。
-测试和调试文本搜索     一个自定义文本搜索配置的行为很容易变得混乱。本节中描述的函数对于测试文本搜索对象有用。你可以测试一个完整的配置，或者独立测试解析器和词典。
-配置测试     函数ts_debug允许简单地测试一个文本搜索配置。
-SELECT * FROM ts_debug(&#39;chinese&#39;, &#39;关系数据库是一种用于存储相互关联的数据记录并提供数据访问的数据库。&#39;);alias | description | token | dictionaries | dictionary | lexemes------------&#43;--------------&#43;--------&#43;--------------&#43;------------&#43;----------cjk_words | CJK words | 关系 | {chinese} | chinese | {关系}cjk_words | CJK words | 数据库 | {chinese} | chinese | {数据库}cjk_words | CJK words | 是 | {chinese} | chinese | {是}cjk_words | CJK words | 一种 | {chinese} | chinese | {一种}cjk_words | CJK words | 用于 | {chinese} | chinese | {用于}cjk_words | CJK words | 存储 | {chinese} | chinese | {存储}cjk_words | CJK words | 相互 | {chinese} | chinese | {相互}cjk_words | CJK words | 关联 | {chinese} | chinese | {关联}cjk_words | CJK words | 的 | {chinese} | chinese | {的}cjk_words | CJK words | 数据 | {chinese} | chinese | {数据}cjk_words | CJK words | 记录 | {chinese} | chinese | {记录}cjk_words | CJK words | 并 | {chinese} | chinese | {并}cjk_words | CJK words | 提供 | {chinese} | chinese | {提供}cjk_words | CJK words | 数据 | {chinese} | chinese | {数据}cjk_words | CJK words | 访问 | {chinese} | chinese | {访问}cjk_words | CJK words | 的 | {chinese} | chinese | {的}cjk_words | CJK words | 数据库 | {chinese} | chinese | {数据库}punc_words | punctuations | 。 | {chinese} | chinese | {。} 解析器测试     函数ts_parse 允许直接测试一个文本搜索解析器。" />
+  <meta property="og:description" content="PL/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/scheme 可以以 Lisp 风格启动 PostgreSQL 过程。
+PL/Scheme 函数和参数     要用 PL/Scheme 语言创建一个函数，可使用标准的 CREATE FUNCTION语法：
+CREATE FUNCTION funcname (argument-types) RETURNS return-type AS $$ # PL/Scheme 函数体 $$ LANGUAGE plscheme; 函数的主体就是普通的 Scheme 代码。事实上，PL/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。
+在一个 PL/Scheme 过程中，任何从Scheme代码返回的值都会被忽略。
+PL/Scheme 也支持用DO语句调用的匿名代码块：
+DO $$ # PL/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数，并且它返回的任何值都会被抛弃。否则其行为就像一个函数。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://doc.rockdata.net/zh-cn/advanced/textsearch/" />
+<meta property="og:url" content="https://doc.rockdata.net/zh-cn/develop/plscheme/" />
 
-<meta property="article:section" content="Advanced" />
+<meta property="article:section" content="Develop" />
     <meta
       property="article:modified_time"
-      content="2022-06-06T15:26:28+08:00"
+      content="2022-07-20T16:33:49+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="中文搜索" />
+<meta name="twitter:title" content="PL/Scheme" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="全文搜索（或者文本搜索）提供了确定满足一个查询的自然语言文档的能力，并可以选择将它们按照与查询的相关度排序。最常用的搜索类型是找到所有包含给定查询词的文档并按照它们与查询的相似性顺序返回它们。查询和相似性的概念非常灵活并且依赖于特定的应用。最简单的搜索认为查询是一组词而相似性是查询词在文档中的频度。
-解析器     文本搜索解析器负责把未处理的文档文本划分成记号并且标识每一个记号的类型，而可能的类型集合由解析器本身定义。注意一个解析器完全不会修改文本 — 它简单地标识看似有理的词边界。因为这种有限的视野，对于应用相关的自定义解析器的需求就没有自定义字典那么强烈。目前Redrock Postgres只提供了两种内置解析器，它们已经被证实对很多种应用都适用。
-内置的中文解析器被称为pg_catalog.cjkparser。
-配置     全文搜索功能包括做更多事情的能力：跳过索引特定词（停用词）、处理同义词并使用更高级的解析，例如基于空白之外的解析。这个功能由文本搜索配置控制。PostgreSQL中有多种语言的预定义配置，并且你可以很容易地创建你自己的配置（psql的\dF命令显示所有可用的配置）。
-内置的中文搜索配置被称为 pg_catalog.chinese。
-测试和调试文本搜索     一个自定义文本搜索配置的行为很容易变得混乱。本节中描述的函数对于测试文本搜索对象有用。你可以测试一个完整的配置，或者独立测试解析器和词典。
-配置测试     函数ts_debug允许简单地测试一个文本搜索配置。
-SELECT * FROM ts_debug(&#39;chinese&#39;, &#39;关系数据库是一种用于存储相互关联的数据记录并提供数据访问的数据库。&#39;);alias | description | token | dictionaries | dictionary | lexemes------------&#43;--------------&#43;--------&#43;--------------&#43;------------&#43;----------cjk_words | CJK words | 关系 | {chinese} | chinese | {关系}cjk_words | CJK words | 数据库 | {chinese} | chinese | {数据库}cjk_words | CJK words | 是 | {chinese} | chinese | {是}cjk_words | CJK words | 一种 | {chinese} | chinese | {一种}cjk_words | CJK words | 用于 | {chinese} | chinese | {用于}cjk_words | CJK words | 存储 | {chinese} | chinese | {存储}cjk_words | CJK words | 相互 | {chinese} | chinese | {相互}cjk_words | CJK words | 关联 | {chinese} | chinese | {关联}cjk_words | CJK words | 的 | {chinese} | chinese | {的}cjk_words | CJK words | 数据 | {chinese} | chinese | {数据}cjk_words | CJK words | 记录 | {chinese} | chinese | {记录}cjk_words | CJK words | 并 | {chinese} | chinese | {并}cjk_words | CJK words | 提供 | {chinese} | chinese | {提供}cjk_words | CJK words | 数据 | {chinese} | chinese | {数据}cjk_words | CJK words | 访问 | {chinese} | chinese | {访问}cjk_words | CJK words | 的 | {chinese} | chinese | {的}cjk_words | CJK words | 数据库 | {chinese} | chinese | {数据库}punc_words | punctuations | 。 | {chinese} | chinese | {。} 解析器测试     函数ts_parse 允许直接测试一个文本搜索解析器。" />
+  <meta name="twitter:description" content="PL/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/scheme 可以以 Lisp 风格启动 PostgreSQL 过程。
+PL/Scheme 函数和参数     要用 PL/Scheme 语言创建一个函数，可使用标准的 CREATE FUNCTION语法：
+CREATE FUNCTION funcname (argument-types) RETURNS return-type AS $$ # PL/Scheme 函数体 $$ LANGUAGE plscheme; 函数的主体就是普通的 Scheme 代码。事实上，PL/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。
+在一个 PL/Scheme 过程中，任何从Scheme代码返回的值都会被忽略。
+PL/Scheme 也支持用DO语句调用的匿名代码块：
+DO $$ # PL/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数，并且它返回的任何值都会被抛弃。否则其行为就像一个函数。" />
 
 
   <script type="application/ld+json">
   {
       "@context": "http://schema.org",
       "@type": "TechArticle",
-      "articleSection": "Advanced",
-      "name": "中文搜索",
-      "url" : "https://doc.rockdata.net/zh-cn/advanced/textsearch/",
-      "headline": "中文搜索",
-      "description": "全文搜索（或者文本搜索）提供了确定满足一个查询的自然语言文档的能力，并可以选择将它们按照与查询的相关度排序。最常用的搜索类型是找到所有包含给定查询词的文档并按照它们与查询的相似性顺序返回它们。查询和相似性的概念非常灵活并且依赖于特定的应用。最简单的搜索认为查询是一组词而相似性是查询词在文档中的频度。\n解析器     文本搜索解析器负责把未处理的文档文本划分成记号并且标识每一个记号的类型，而可能的类型集合由解析器本身定义。注意一个解析器完全不会修改文本 — 它简单地标识看似有理的词边界。因为这种有限的视野，对于应用相关的自定义解析器的需求就没有自定义字典那么强烈。目前Redrock Postgres只提供了两种内置解析器，它们已经被证实对很多种应用都适用。\n内置的中文解析器被称为pg_catalog.cjkparser。\n配置     全文搜索功能包括做更多事情的能力：跳过索引特定词（停用词）、处理同义词并使用更高级的解析，例如基于空白之外的解析。这个功能由文本搜索配置控制。PostgreSQL中有多种语言的预定义配置，并且你可以很容易地创建你自己的配置（psql的\\dF命令显示所有可用的配置）。\n内置的中文搜索配置被称为 pg_catalog.chinese。\n测试和调试文本搜索     一个自定义文本搜索配置的行为很容易变得混乱。本节中描述的函数对于测试文本搜索对象有用。你可以测试一个完整的配置，或者独立测试解析器和词典。\n配置测试     函数ts_debug允许简单地测试一个文本搜索配置。\nSELECT * FROM ts_debug(\u0027chinese\u0027, \u0027关系数据库是一种用于存储相互关联的数据记录并提供数据访问的数据库。\u0027);\ralias | description | token | dictionaries | dictionary | lexemes\r------------\u002b--------------\u002b--------\u002b--------------\u002b------------\u002b----------\rcjk_words | CJK words | 关系 | {chinese} | chinese | {关系}\rcjk_words | CJK words | 数据库 | {chinese} | chinese | {数据库}\rcjk_words | CJK words | 是 | {chinese} | chinese | {是}\rcjk_words | CJK words | 一种 | {chinese} | chinese | {一种}\rcjk_words | CJK words | 用于 | {chinese} | chinese | {用于}\rcjk_words | CJK words | 存储 | {chinese} | chinese | {存储}\rcjk_words | CJK words | 相互 | {chinese} | chinese | {相互}\rcjk_words | CJK words | 关联 | {chinese} | chinese | {关联}\rcjk_words | CJK words | 的 | {chinese} | chinese | {的}\rcjk_words | CJK words | 数据 | {chinese} | chinese | {数据}\rcjk_words | CJK words | 记录 | {chinese} | chinese | {记录}\rcjk_words | CJK words | 并 | {chinese} | chinese | {并}\rcjk_words | CJK words | 提供 | {chinese} | chinese | {提供}\rcjk_words | CJK words | 数据 | {chinese} | chinese | {数据}\rcjk_words | CJK words | 访问 | {chinese} | chinese | {访问}\rcjk_words | CJK words | 的 | {chinese} | chinese | {的}\rcjk_words | CJK words | 数据库 | {chinese} | chinese | {数据库}\rpunc_words | punctuations | 。 | {chinese} | chinese | {。} 解析器测试     函数ts_parse 允许直接测试一个文本搜索解析器。",
+      "articleSection": "Develop",
+      "name": "PL/Scheme",
+      "url" : "https://doc.rockdata.net/zh-cn/develop/plscheme/",
+      "headline": "PL/Scheme",
+      "description": "PL\/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL\/scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL\/scheme 可以以 Lisp 风格启动 PostgreSQL 过程。\nPL\/Scheme 函数和参数     要用 PL\/Scheme 语言创建一个函数，可使用标准的 CREATE FUNCTION语法：\nCREATE FUNCTION funcname (argument-types) RETURNS return-type AS $$ # PL\/Scheme 函数体 $$ LANGUAGE plscheme; 函数的主体就是普通的 Scheme 代码。事实上，PL\/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL\/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。\n在一个 PL\/Scheme 过程中，任何从Scheme代码返回的值都会被忽略。\nPL\/Scheme 也支持用DO语句调用的匿名代码块：\nDO $$ # PL\/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数，并且它返回的任何值都会被抛弃。否则其行为就像一个函数。",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "313",
+      "wordCount" : "109",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://doc.rockdata.net/zh-cn/advanced/textsearch/"
+          "@id": "https://doc.rockdata.net/zh-cn/develop/plscheme/"
       },
       "copyrightHolder" : "Redrock Documentation",
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-06T15:26:28.00Z",
+      "dateModified": "2022-07-20T16:33:49.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -170,7 +164,7 @@ SELECT * FROM ts_debug(&#39;chinese&#39;, &#39;关系数据库是一种用于存
   href="/custom.css"
   media="all"
 />
-  <link href="https://doc.rockdata.net/zh-cn/advanced/textsearch/" rel="canonical" type="text/html" />
+  <link href="https://doc.rockdata.net/zh-cn/develop/plscheme/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -777,7 +771,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <a
                   class="flex gdoc-language__entry"
                   title="English"
-                  href="/advanced/textsearch/"
+                  href="/develop/plscheme/"
                   hreflang="en"
                   lang="en"
                 >
@@ -1512,15 +1506,25 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="hidden"
+                class="gdoc-nav__toggle" id="navtree-38863d5b"
+                checked
               
             />
             <label
               
+                for="navtree-38863d5b" class="flex justify-between align-center"
+              
             >
               
-                <span class="flex">高级特性</span>
+                <span class="flex">应用开发</span>
               
+              
+                <svg class="gdoc-icon toggle gdoc_keyboard_arrow_left">
+                  <use xlink:href="#gdoc_keyboard_arrow_left"></use>
+                </svg>
+                <svg class="gdoc-icon toggle gdoc_keyboard_arrow_down">
+                  <use xlink:href="#gdoc_keyboard_arrow_down"></use>
+                </svg>
               
             </label>
 
@@ -1561,8 +1565,8 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/advanced/textsearch/"
-                    class="gdoc-nav__entry is-active"
+                    href="/zh-cn/develop/textsearch/"
+                    class="gdoc-nav__entry"
                   >
                     中文搜索
                   </a>
@@ -1605,54 +1609,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/advanced/plscheme/"
-                    class="gdoc-nav__entry"
+                    href="/zh-cn/develop/plscheme/"
+                    class="gdoc-nav__entry is-active"
                   >
                     PL/Scheme
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/zh-cn/advanced/monitor-stats/"
-                    class="gdoc-nav__entry"
-                  >
-                    运行统计视图
                   </a>
                 </span>
               
@@ -1761,6 +1721,50 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     class="gdoc-nav__entry"
                   >
                     参数配置
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/admin/monitor-stats/"
+                    class="gdoc-nav__entry"
+                  >
+                    运行统计视图
                   </a>
                 </span>
               
@@ -2575,7 +2579,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/advanced/' href='/zh-cn/advanced/'><span itemprop='name'>高级特性</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>中文搜索</span><meta itemprop='position' content='4' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/develop/' href='/zh-cn/develop/'><span itemprop='name'>应用开发</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>PL/Scheme</span><meta itemprop='position' content='4' /></li>
   
 
   
@@ -2590,7 +2594,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <span class="editpage">
         <svg class="gdoc-icon gdoc_code"><use xlink:href="#gdoc_code"></use></svg>
         <a
-          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/zh-cn/advanced/textsearch.md"
+          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/zh-cn/develop/plscheme.md"
         >
           编辑页面
         </a>
@@ -2604,97 +2608,49 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <article
     class="gdoc-markdown gdoc-markdown__align--left"
   >
-    <h1>中文搜索</h1>
-    <p>全文搜索（或者<em>文本搜索</em>）提供了确定满足一个<em>查询</em>的自然语言<em>文档</em>的能力，并可以选择将它们按照与查询的相关度排序。最常用的搜索类型是找到所有包含给定<em>查询词</em>的文档并按照它们与查询的<em>相似性</em>顺序返回它们。<code>查询</code>和<code>相似性</code>的概念非常灵活并且依赖于特定的应用。最简单的搜索认为<code>查询</code>是一组词而<code>相似性</code>是查询词在文档中的频度。</p>
+    <h1>PL/Scheme</h1>
+    <p>PL/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/scheme 可以以 Lisp 风格启动 PostgreSQL 过程。</p>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="解析器">
-        解析器
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/advanced/textsearch/#解析器" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 解析器" aria-label="锚定到： 解析器" href="#%e8%a7%a3%e6%9e%90%e5%99%a8">
+    <h2 id="plscheme-函数和参数">
+        PL/Scheme 函数和参数
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/develop/plscheme/#plscheme-函数和参数" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： PL/Scheme 函数和参数" aria-label="锚定到： PL/Scheme 函数和参数" href="#plscheme-%e5%87%bd%e6%95%b0%e5%92%8c%e5%8f%82%e6%95%b0">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>文本搜索解析器负责把未处理的文档文本划分成<em>记号</em>并且标识每一个记号的类型，而可能的类型集合由解析器本身定义。注意一个解析器完全不会修改文本 — 它简单地标识看似有理的词边界。因为这种有限的视野，对于应用相关的自定义解析器的需求就没有自定义字典那么强烈。目前Redrock Postgres只提供了两种内置解析器，它们已经被证实对很多种应用都适用。</p>
-<p>内置的中文解析器被称为<code>pg_catalog.cjkparser</code>。</p>
-<div class="gdoc-page__anchorwrap">
-    <h2 id="配置">
-        配置
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/advanced/textsearch/#配置" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 配置" aria-label="锚定到： 配置" href="#%e9%85%8d%e7%bd%ae">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<p>全文搜索功能包括做更多事情的能力：跳过索引特定词（停用词）、处理同义词并使用更高级的解析，例如基于空白之外的解析。这个功能由<em>文本搜索配置</em>控制。PostgreSQL中有多种语言的预定义配置，并且你可以很容易地创建你自己的配置（psql的<code>\dF</code>命令显示所有可用的配置）。</p>
-<p>内置的中文搜索配置被称为 <code>pg_catalog.chinese</code>。</p>
-<div class="gdoc-page__anchorwrap">
-    <h2 id="测试和调试文本搜索">
-        测试和调试文本搜索
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/advanced/textsearch/#测试和调试文本搜索" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 测试和调试文本搜索" aria-label="锚定到： 测试和调试文本搜索" href="#%e6%b5%8b%e8%af%95%e5%92%8c%e8%b0%83%e8%af%95%e6%96%87%e6%9c%ac%e6%90%9c%e7%b4%a2">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<p>一个自定义文本搜索配置的行为很容易变得混乱。本节中描述的函数对于测试文本搜索对象有用。你可以测试一个完整的配置，或者独立测试解析器和词典。</p>
-<div class="gdoc-page__anchorwrap">
-    <h3 id="配置测试">
-        配置测试
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/advanced/textsearch/#配置测试" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 配置测试" aria-label="锚定到： 配置测试" href="#%e9%85%8d%e7%bd%ae%e6%b5%8b%e8%af%95">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
-<p>函数<code>ts_debug</code>允许简单地测试一个文本搜索配置。</p>
-<pre tabindex="0"><code>SELECT * FROM ts_debug(&#39;chinese&#39;, &#39;关系数据库是一种用于存储相互关联的数据记录并提供数据访问的数据库。&#39;);
-   alias    | description  | token  | dictionaries | dictionary | lexemes
-------------+--------------+--------+--------------+------------+----------
- cjk_words  | CJK words    | 关系   | {chinese}    | chinese    | {关系}
- cjk_words  | CJK words    | 数据库 | {chinese}    | chinese    | {数据库}
- cjk_words  | CJK words    | 是     | {chinese}    | chinese    | {是}
- cjk_words  | CJK words    | 一种   | {chinese}    | chinese    | {一种}
- cjk_words  | CJK words    | 用于   | {chinese}    | chinese    | {用于}
- cjk_words  | CJK words    | 存储   | {chinese}    | chinese    | {存储}
- cjk_words  | CJK words    | 相互   | {chinese}    | chinese    | {相互}
- cjk_words  | CJK words    | 关联   | {chinese}    | chinese    | {关联}
- cjk_words  | CJK words    | 的     | {chinese}    | chinese    | {的}
- cjk_words  | CJK words    | 数据   | {chinese}    | chinese    | {数据}
- cjk_words  | CJK words    | 记录   | {chinese}    | chinese    | {记录}
- cjk_words  | CJK words    | 并     | {chinese}    | chinese    | {并}
- cjk_words  | CJK words    | 提供   | {chinese}    | chinese    | {提供}
- cjk_words  | CJK words    | 数据   | {chinese}    | chinese    | {数据}
- cjk_words  | CJK words    | 访问   | {chinese}    | chinese    | {访问}
- cjk_words  | CJK words    | 的     | {chinese}    | chinese    | {的}
- cjk_words  | CJK words    | 数据库 | {chinese}    | chinese    | {数据库}
- punc_words | punctuations | 。     | {chinese}    | chinese    | {。}
-</code></pre><div class="gdoc-page__anchorwrap">
-    <h3 id="解析器测试">
-        解析器测试
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/advanced/textsearch/#解析器测试" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 解析器测试" aria-label="锚定到： 解析器测试" href="#%e8%a7%a3%e6%9e%90%e5%99%a8%e6%b5%8b%e8%af%95">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h3>
-</div>
-<p>函数<code>ts_parse</code> 允许直接测试一个文本搜索解析器。</p>
-<pre tabindex="0"><code>SELECT * FROM ts_parse(&#39;cjkparser&#39;, &#39;关系数据库是一种用于存储相互关联的数据记录并提供数据访问的数据库。&#39;);
- tokid | token
--------+--------
-     1 | 关系
-     1 | 数据库
-     1 | 是
-     1 | 一种
-     1 | 用于
-     1 | 存储
-     1 | 相互
-     1 | 关联
-     1 | 的
-     1 | 数据
-     1 | 记录
-     1 | 并
-     1 | 提供
-     1 | 数据
-     1 | 访问
-     1 | 的
-     1 | 数据库
-    18 | 。
+<p>要用 PL/Scheme 语言创建一个函数，可使用标准的 <a
+  class="gdoc-markdown__link"
+  href="http://www.postgres.cn/docs/12/sql-createfunction.html"
+  
+>CREATE FUNCTION</a>语法：</p>
+<pre tabindex="0"><code>CREATE FUNCTION funcname (argument-types) RETURNS return-type AS $$
+    # PL/Scheme 函数体
+$$ LANGUAGE plscheme;
+</code></pre><p>函数的主体就是普通的 Scheme 代码。事实上，PL/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。</p>
+<p>在一个 PL/Scheme 过程中，任何从Scheme代码返回的值都会被忽略。</p>
+<p>PL/Scheme 也支持用<a
+  class="gdoc-markdown__link"
+  href="http://www.postgres.cn/docs/12/sql-do.html"
+  
+>DO</a>语句调用的匿名代码块：</p>
+<pre tabindex="0"><code>DO $$
+    # PL/Scheme 代码
+$$ LANGUAGE plscheme;
+</code></pre><p>一个匿名代码块没有参数，并且它返回的任何值都会被抛弃。否则其行为就像一个函数。</p>
+<p><code>CREATE FUNCTION</code>命令的语法要求函数 体被写作一个字符串常量。通常对字符串常量使用美元引用（见 <a
+  class="gdoc-markdown__link"
+  href="http://www.postgres.cn/docs/12/sql-syntax-lexical.html#SQL-SYNTAX-DOLLAR-QUOTING"
+  
+>第 4.1.2.4 节</a>）最方便。如果选择使用 转义字符串语法<code>E''</code>，必须双写任何在函数体中使用的单引号 （<code>'</code>）和反斜线（<code>\</code>）（见 <a
+  class="gdoc-markdown__link"
+  href="http://www.postgres.cn/docs/12/sql-syntax-lexical.html#SQL-SYNTAX-STRINGS"
+  
+>第 4.1.2.1 节</a>）。</p>
+<p>参数和结果的处理和在任何其他 Scheme 子程序中一样：参数会以 Scheme 变量的形式传递到函数体中，并且函数中计算的最后一个表达式会作为结果值返回。</p>
+<p>例如，一个返回两个整数值中较大值的函数可以定义为：</p>
+<pre tabindex="0"><code>CREATE FUNCTION scheme_max (a integer, b integer) RETURNS integer AS $$
+    (if (&gt; a b) a b)
+$$ LANGUAGE plscheme;
 </code></pre>
   </article>
 

@@ -8,11 +8,8 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="PL/Scheme is a PostgreSQL procedural language handler for Scheme programming language. PL/scheme uses Chibi Scheme in the background as its Scheme interpreter. With lots of builtin SRFIs and complete R7RS compliancy of Chibi Scheme, PL/scheme can power up PostgreSQL procedures in a Lisp style.
-PL/Scheme Functions and Arguments     To create a function in the PL/Scheme language, use the standard CREATE FUNCTION syntax:
-CREATE FUNCTION funcname (argument-types) RETURNS return-type -- function attributes can go here AS $$ # PL/Scheme function body goes here $$ LANGUAGE plscheme; The body of the function is ordinary Scheme code." />
 
-    <title>PL/Scheme | Redrock Documentation</title>
+    <title>Developer Guide | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -33,53 +30,46 @@ CREATE FUNCTION funcname (argument-types) RETURNS return-type -- function attrib
     
   <meta
     property="og:title"
-    content="PL/Scheme"
+    content="Developer Guide"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="PL/Scheme is a PostgreSQL procedural language handler for Scheme programming language. PL/scheme uses Chibi Scheme in the background as its Scheme interpreter. With lots of builtin SRFIs and complete R7RS compliancy of Chibi Scheme, PL/scheme can power up PostgreSQL procedures in a Lisp style.
-PL/Scheme Functions and Arguments     To create a function in the PL/Scheme language, use the standard CREATE FUNCTION syntax:
-CREATE FUNCTION funcname (argument-types) RETURNS return-type -- function attributes can go here AS $$ # PL/Scheme function body goes here $$ LANGUAGE plscheme; The body of the function is ordinary Scheme code." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://doc.rockdata.net/advanced/plscheme/" />
+<meta property="og:url" content="https://doc.rockdata.net/develop/" />
 
-<meta property="article:section" content="Advanced" />
+<meta property="article:section" content="Develop" />
     <meta
       property="article:modified_time"
-      content="2022-06-12T12:11:00+08:00"
+      content="2022-07-20T16:41:00+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="PL/Scheme" />
+<meta name="twitter:title" content="Developer Guide" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="PL/Scheme is a PostgreSQL procedural language handler for Scheme programming language. PL/scheme uses Chibi Scheme in the background as its Scheme interpreter. With lots of builtin SRFIs and complete R7RS compliancy of Chibi Scheme, PL/scheme can power up PostgreSQL procedures in a Lisp style.
-PL/Scheme Functions and Arguments     To create a function in the PL/Scheme language, use the standard CREATE FUNCTION syntax:
-CREATE FUNCTION funcname (argument-types) RETURNS return-type -- function attributes can go here AS $$ # PL/Scheme function body goes here $$ LANGUAGE plscheme; The body of the function is ordinary Scheme code." />
 
 
   <script type="application/ld+json">
   {
       "@context": "http://schema.org",
       "@type": "TechArticle",
-      "articleSection": "Advanced",
-      "name": "PL/Scheme",
-      "url" : "https://doc.rockdata.net/advanced/plscheme/",
-      "headline": "PL/Scheme",
-      "description": "PL\/Scheme is a PostgreSQL procedural language handler for Scheme programming language. PL\/scheme uses Chibi Scheme in the background as its Scheme interpreter. With lots of builtin SRFIs and complete R7RS compliancy of Chibi Scheme, PL\/scheme can power up PostgreSQL procedures in a Lisp style.\nPL\/Scheme Functions and Arguments     To create a function in the PL\/Scheme language, use the standard CREATE FUNCTION syntax:\nCREATE FUNCTION funcname (argument-types) RETURNS return-type -- function attributes can go here AS $$ # PL\/Scheme function body goes here $$ LANGUAGE plscheme; The body of the function is ordinary Scheme code.",
+      "articleSection": "Develop",
+      "name": "Developer Guide",
+      "url" : "https://doc.rockdata.net/develop/",
+      "headline": "Developer Guide",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "321",
+      "wordCount" : "0",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://doc.rockdata.net/advanced/plscheme/"
+          "@id": "https://doc.rockdata.net/develop/"
       },
       "copyrightHolder" : "Redrock Documentation",
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-12T12:11:00.00Z",
+      "dateModified": "2022-07-20T16:41:00.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -155,7 +145,7 @@ CREATE FUNCTION funcname (argument-types) RETURNS return-type -- function attrib
   href="/custom.css"
   media="all"
 />
-  <link href="https://doc.rockdata.net/advanced/plscheme/" rel="canonical" type="text/html" />
+  <link href="https://doc.rockdata.net/develop/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -762,7 +752,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <a
                   class="flex gdoc-language__entry"
                   title="简体中文"
-                  href="/zh-cn/advanced/plscheme/"
+                  href="/zh-cn/develop/"
                   hreflang="zh-cn"
                   lang="zh-cn"
                 >
@@ -1497,15 +1487,25 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="hidden"
+                class="gdoc-nav__toggle" id="navtree-6f622330"
+                checked
               
             />
             <label
               
+                for="navtree-6f622330" class="flex justify-between align-center"
+              
             >
               
-                <span class="flex">Advanced</span>
+                <span class="flex">Developer Guide</span>
               
+              
+                <svg class="gdoc-icon toggle gdoc_keyboard_arrow_left">
+                  <use xlink:href="#gdoc_keyboard_arrow_left"></use>
+                </svg>
+                <svg class="gdoc-icon toggle gdoc_keyboard_arrow_down">
+                  <use xlink:href="#gdoc_keyboard_arrow_down"></use>
+                </svg>
               
             </label>
 
@@ -1546,7 +1546,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/advanced/textsearch/"
+                    href="/develop/textsearch/"
                     class="gdoc-nav__entry"
                   >
                     Chinese Text Search
@@ -1590,54 +1590,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/advanced/plscheme/"
-                    class="gdoc-nav__entry is-active"
-                  >
-                    PL/Scheme
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/advanced/monitor-stats/"
+                    href="/develop/plscheme/"
                     class="gdoc-nav__entry"
                   >
-                    Statistics Views
+                    PL/Scheme
                   </a>
                 </span>
               
@@ -1746,6 +1702,50 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     class="gdoc-nav__entry"
                   >
                     Configuration
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/admin/monitor-stats/"
+                    class="gdoc-nav__entry"
+                  >
+                    Statistics Views
                   </a>
                 </span>
               
@@ -2554,15 +2554,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    
-    
-    
-    
-  
-  
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/advanced/' href='/advanced/'><span itemprop='name'>Advanced</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>PL/Scheme</span><meta itemprop='position' content='3' /></li>
-  
-
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Developer Guide</span><meta itemprop='position' content='2' /></li>
   
 
   
@@ -2575,7 +2567,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <span class="editpage">
         <svg class="gdoc-icon gdoc_code"><use xlink:href="#gdoc_code"></use></svg>
         <a
-          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/en/advanced/plscheme.md"
+          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/en/develop/_index.md"
         >
           Edit page
         </a>
@@ -2589,53 +2581,8 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <article
     class="gdoc-markdown gdoc-markdown__align--left"
   >
-    <h1>PL/Scheme</h1>
-    <p>PL/Scheme is a PostgreSQL procedural language handler for Scheme programming language. PL/scheme uses Chibi Scheme in the background as its Scheme interpreter. With lots of builtin SRFIs and complete R7RS compliancy of Chibi Scheme, PL/scheme can power up PostgreSQL procedures in a Lisp style.</p>
-<div class="gdoc-page__anchorwrap">
-    <h2 id="plscheme-functions-and-arguments">
-        PL/Scheme Functions and Arguments
-        <a data-clipboard-text="https://doc.rockdata.net/advanced/plscheme/#plscheme-functions-and-arguments" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: PL/Scheme Functions and Arguments" aria-label="Anchor to: PL/Scheme Functions and Arguments" href="#plscheme-functions-and-arguments">
-            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
-        </a>
-    </h2>
-</div>
-<p>To create a function in the PL/Scheme language, use the standard <a
-  class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/sql-createfunction.html"
-  
->CREATE FUNCTION</a> syntax:</p>
-<pre tabindex="0"><code>CREATE FUNCTION funcname (argument-types)
-RETURNS return-type
--- function attributes can go here
-AS $$
-    # PL/Scheme function body goes here
-$$ LANGUAGE plscheme;
-</code></pre><p>The body of the function is ordinary Scheme code. In fact, the PL/Scheme glue code wraps it inside a Scheme subroutine. A PL/Scheme function is called in a scalar context, so it can&rsquo;t return a list. You can return non-scalar values (arrays, records, and sets) by returning a reference, as discussed below.</p>
-<p>In a PL/Scheme procedure, any return value from the Scheme code is ignored.</p>
-<p>PL/Scheme also supports anonymous code blocks called with the <a
-  class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/sql-do.html"
-  
->DO</a> statement:</p>
-<pre tabindex="0"><code>DO $$
-    # PL/Scheme code
-$$ LANGUAGE plscheme;
-</code></pre><p>An anonymous code block receives no arguments, and whatever value it might return is discarded. Otherwise it behaves just like a function.</p>
-<p>The syntax of the <code>CREATE FUNCTION</code> command requires the function body to be written as a string constant. It is usually most convenient to use dollar quoting (see <a
-  class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/sql-syntax-lexical.html#SQL-SYNTAX-DOLLAR-QUOTING"
-  
->Section 4.1.2.4</a>) for the string constant. If you choose to use escape string syntax <code>E''</code>, you must double any single quote marks (<code>'</code>) and backslashes (<code>\</code>) used in the body of the function (see <a
-  class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/sql-syntax-lexical.html#SQL-SYNTAX-STRINGS"
-  
->Section 4.1.2.1</a>).</p>
-<p>Arguments and results are handled as in any other Scheme subroutine: arguments are passed as Scheme variables, and a result value is returned as the last expression evaluated in the function.</p>
-<p>For example, a function returning the greater of two integer values could be defined as:</p>
-<pre tabindex="0"><code>CREATE FUNCTION scheme_max (a integer, b integer) RETURNS integer AS $$
-    (if (&gt; a b) a b)
-$$ LANGUAGE plscheme;
-</code></pre>
+    <h1>Developer Guide</h1>
+    
   </article>
 
 

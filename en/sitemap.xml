@@ -93,19 +93,6 @@
                 href="https://doc.rockdata.net/installation/redhat/"
                 />
   </url><url>
-    <loc>https://doc.rockdata.net/advanced/</loc>
-    <lastmod>2022-05-27T09:18:30+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://doc.rockdata.net/zh-cn/advanced/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://doc.rockdata.net/advanced/"
-                />
-  </url><url>
     <loc>https://doc.rockdata.net/admin/configuration/</loc>
     <lastmod>2022-06-27T23:08:30+08:00</lastmod>
     <xhtml:link
@@ -117,6 +104,19 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://doc.rockdata.net/admin/configuration/"
+                />
+  </url><url>
+    <loc>https://doc.rockdata.net/develop/</loc>
+    <lastmod>2022-07-20T16:41:00+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://doc.rockdata.net/zh-cn/develop/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://doc.rockdata.net/develop/"
                 />
   </url><url>
     <loc>https://doc.rockdata.net/installation/debian/</loc>
@@ -132,6 +132,19 @@
                 href="https://doc.rockdata.net/installation/debian/"
                 />
   </url><url>
+    <loc>https://doc.rockdata.net/admin/monitor-stats/</loc>
+    <lastmod>2022-07-20T16:33:49+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://doc.rockdata.net/zh-cn/admin/monitor-stats/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://doc.rockdata.net/admin/monitor-stats/"
+                />
+  </url><url>
     <loc>https://doc.rockdata.net/admin/</loc>
     <lastmod>2022-06-25T12:17:19+08:00</lastmod>
     <xhtml:link
@@ -145,30 +158,30 @@
                 href="https://doc.rockdata.net/admin/"
                 />
   </url><url>
-    <loc>https://doc.rockdata.net/advanced/textsearch/</loc>
-    <lastmod>2022-06-06T15:26:28+08:00</lastmod>
+    <loc>https://doc.rockdata.net/develop/textsearch/</loc>
+    <lastmod>2022-07-20T16:33:49+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://doc.rockdata.net/zh-cn/advanced/textsearch/"
+                href="https://doc.rockdata.net/zh-cn/develop/textsearch/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://doc.rockdata.net/advanced/textsearch/"
+                href="https://doc.rockdata.net/develop/textsearch/"
                 />
   </url><url>
-    <loc>https://doc.rockdata.net/advanced/plscheme/</loc>
-    <lastmod>2022-06-12T12:11:00+08:00</lastmod>
+    <loc>https://doc.rockdata.net/develop/plscheme/</loc>
+    <lastmod>2022-07-20T16:33:49+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://doc.rockdata.net/zh-cn/advanced/plscheme/"
+                href="https://doc.rockdata.net/zh-cn/develop/plscheme/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://doc.rockdata.net/advanced/plscheme/"
+                href="https://doc.rockdata.net/develop/plscheme/"
                 />
   </url><url>
     <loc>https://doc.rockdata.net/features/undo/</loc>
@@ -234,19 +247,6 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://doc.rockdata.net/commands/"
-                />
-  </url><url>
-    <loc>https://doc.rockdata.net/advanced/monitor-stats/</loc>
-    <lastmod>2022-06-22T15:24:12+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://doc.rockdata.net/zh-cn/advanced/monitor-stats/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://doc.rockdata.net/advanced/monitor-stats/"
                 />
   </url><url>
     <loc>https://doc.rockdata.net/features/tablespace/</loc>

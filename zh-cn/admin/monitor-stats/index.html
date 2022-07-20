@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="color-toggle-hidden">
+<html lang="zh-cn" class="color-toggle-hidden">
   <head>
     <meta charset="UTF-8" />
 <meta name="referrer" content="no-referrer" />
@@ -8,9 +8,23 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Statistics Collection Configuration Viewing Statistics pg_stat_activity pg_stat_wait_event pg_stat_replication pg_stat_database pg_stat_all_tables pg_stat_all_undos pg_stat_all_indexes pg_statio_all_tables pg_statio_all_undos pg_statio_all_indexes pg_statio_all_sequences      Redrock Postgres&rsquo;s statistics collector is a subsystem that supports collection and reporting of information about server activity. Presently, the collector can count accesses to tables and indexes in both disk-block and individual-row terms. It also tracks the total number of rows in each table, and information about analyze actions for each table." />
+  <meta name="description" content="统计收集配置 查看统计信息 pg_stat_activity pg_stat_wait_event pg_stat_replication pg_stat_database pg_stat_all_tables pg_stat_all_undos pg_stat_all_indexes pg_statio_all_tables pg_statio_all_undos pg_statio_all_indexes pg_statio_all_sequences      Redrock Postgres的统计收集器是一个支持收集和报告服务器活动信息的子系统。 目前，这个收集器可以对表和索引的访问计数，计数可以按磁盘块和个体行来进行。它还跟踪每个表中的总行数、每个表的分析动作的信息。它也统计调用用户定义函数的次数以及在每次调用中花费的总时间。
+Redrock Postgres也支持报告有关系统正在干什么的动态信息，例如当前正在被其他服务器进程执行的命令以及系统中存在哪些其他连接。这个功能是独立于收集器进程存在的。
+统计收集配置     因为统计收集给查询执行增加了一些负荷，系统可以被配置为收集或不收集信息。这由配置参数控制，它们通常在postgresql.conf中设置（关于设置配置参数的细节请见第 19 章）。
+参数track_activities允许监控当前被任意服务器进程执行的命令。
+参数track_counts控制是否收集关于表和索引访问的统计信息。
+参数track_functions启用对用户定义函数使用的跟踪。
+参数track_io_timing启用对块读写次数的监控。
+参数track_wait_events控制是否收集关于等待事件的统计信息。
+通常这些参数被设置在postgresql.conf中，这样它们会应用于所有服务器进程，但是可以在单个会话中使用SET命令打开或关闭它们（为了阻止普通用户对管理员隐藏他们的活动，只有超级用户被允许使用SET来改变这些参数）。
+统计收集器通过临时文件将收集到的信息传送给其他PostgreSQL进程。这些文件被存储在名字由stats_temp_directory参数指定的目录中，默认是pg_tmp/stats。为了得到更好的性能，stats_temp_directory可以被指向一个基于 RAM 的文件系统来降低物理 I/O 需求。当服务器被干净地关闭时，一份统计数据的永久拷贝被存储在pg_stat子目录中，这样在服务器重启后统计信息能被保持。当在服务器启动时执行恢复时（例如立即关闭、服务器崩溃以及时间点恢复之后），所有统计计数器会被重置。
+查看统计信息     表 1中列出了一些预定义视图 可以用来显示系统的当前状态。 表 2中列出了另一些视图可以 显示统计收集的结果。你也可以使用底层统计函数（在 第 27.2.3 节中讨论）来建立自定义的视图。
+在使用统计信息监控收集到的数据时，你必须了解这些信息并非是实时更新的。每个独立的服务器进程只在进入闲置状态之前才向收集器传送新的统计计数；因此正在进行的查询或事务并不影响显示出来的总数。同样，收集器本身也最多每PGSTAT_STAT_INTERVAL毫秒（缺省为 500ms，除非在编译服务器的时候修改过）发送一 次新的报告。因此显示的信息总是落后于实际活动。但是由track_activities收集的当前查询信息总是最新的。
+另一个重点是当一个服务器进程被要求显示任何这些统计信息时，它首先取得收集器进程最近发出的报告并且接着为所有统计视图和函数使用这个快照，直到它的当前事务的结尾。因此只要你继续当前事务，统计数据将会一直显示静态信息。相似地，当任何关于所有会话的当前查询的信息在一个事务中第一次被请求时，这样的信息将被收集。并且在整个事务期间将显示相同的信息。这是一种特性而非缺陷，因为它允许你在该统计信息上执行多个查询并且关联结果而不用担心那些数字会在你不知情的情况下改变。但是如果你希望用每个查询都看到新结果，要确保在任何事务块之外做那些查询。或者，你可以调用pg_stat_clear_snapshot()，那将丢弃当前事务的统计快照（如果有）。下一次对统计性信息的使用将导致获取一个新的快照。
+一个事务也可以在视图pg_stat_xact_all_tables、pg_stat_xact_all_undos, pg_stat_xact_sys_tables、pg_stat_xact_user_tables和pg_stat_xact_user_functions中看到它自己的统计信息（还没有被传送给收集器）。这些数字并不像上面所述的那样行动，相反它们在事务期间持续被更新。
+表 1中显示的动态统计视图中的一些信息是有安全限制的。 普通用户只能看到关于他们自己的会话的所有信息（属于他们是成员的角色的会话）。 在关于其他会话的行中，许多列将为空。 但是，请注意，一个会话的存在和它的一般属性，例如会话用户和数据库，对所有用户都是可见的。超级用户和内置角色pg_read_all_stats的成员（参见第 21." />
 
-    <title>Statistics Views | Redrock Documentation</title>
+    <title>运行统计视图 | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -31,49 +45,77 @@
     
   <meta
     property="og:title"
-    content="Statistics Views"
+    content="运行统计视图"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Statistics Collection Configuration Viewing Statistics pg_stat_activity pg_stat_wait_event pg_stat_replication pg_stat_database pg_stat_all_tables pg_stat_all_undos pg_stat_all_indexes pg_statio_all_tables pg_statio_all_undos pg_statio_all_indexes pg_statio_all_sequences      Redrock Postgres’s statistics collector is a subsystem that supports collection and reporting of information about server activity. Presently, the collector can count accesses to tables and indexes in both disk-block and individual-row terms. It also tracks the total number of rows in each table, and information about analyze actions for each table." />
+  <meta property="og:description" content="统计收集配置 查看统计信息 pg_stat_activity pg_stat_wait_event pg_stat_replication pg_stat_database pg_stat_all_tables pg_stat_all_undos pg_stat_all_indexes pg_statio_all_tables pg_statio_all_undos pg_statio_all_indexes pg_statio_all_sequences      Redrock Postgres的统计收集器是一个支持收集和报告服务器活动信息的子系统。 目前，这个收集器可以对表和索引的访问计数，计数可以按磁盘块和个体行来进行。它还跟踪每个表中的总行数、每个表的分析动作的信息。它也统计调用用户定义函数的次数以及在每次调用中花费的总时间。
+Redrock Postgres也支持报告有关系统正在干什么的动态信息，例如当前正在被其他服务器进程执行的命令以及系统中存在哪些其他连接。这个功能是独立于收集器进程存在的。
+统计收集配置     因为统计收集给查询执行增加了一些负荷，系统可以被配置为收集或不收集信息。这由配置参数控制，它们通常在postgresql.conf中设置（关于设置配置参数的细节请见第 19 章）。
+参数track_activities允许监控当前被任意服务器进程执行的命令。
+参数track_counts控制是否收集关于表和索引访问的统计信息。
+参数track_functions启用对用户定义函数使用的跟踪。
+参数track_io_timing启用对块读写次数的监控。
+参数track_wait_events控制是否收集关于等待事件的统计信息。
+通常这些参数被设置在postgresql.conf中，这样它们会应用于所有服务器进程，但是可以在单个会话中使用SET命令打开或关闭它们（为了阻止普通用户对管理员隐藏他们的活动，只有超级用户被允许使用SET来改变这些参数）。
+统计收集器通过临时文件将收集到的信息传送给其他PostgreSQL进程。这些文件被存储在名字由stats_temp_directory参数指定的目录中，默认是pg_tmp/stats。为了得到更好的性能，stats_temp_directory可以被指向一个基于 RAM 的文件系统来降低物理 I/O 需求。当服务器被干净地关闭时，一份统计数据的永久拷贝被存储在pg_stat子目录中，这样在服务器重启后统计信息能被保持。当在服务器启动时执行恢复时（例如立即关闭、服务器崩溃以及时间点恢复之后），所有统计计数器会被重置。
+查看统计信息     表 1中列出了一些预定义视图 可以用来显示系统的当前状态。 表 2中列出了另一些视图可以 显示统计收集的结果。你也可以使用底层统计函数（在 第 27.2.3 节中讨论）来建立自定义的视图。
+在使用统计信息监控收集到的数据时，你必须了解这些信息并非是实时更新的。每个独立的服务器进程只在进入闲置状态之前才向收集器传送新的统计计数；因此正在进行的查询或事务并不影响显示出来的总数。同样，收集器本身也最多每PGSTAT_STAT_INTERVAL毫秒（缺省为 500ms，除非在编译服务器的时候修改过）发送一 次新的报告。因此显示的信息总是落后于实际活动。但是由track_activities收集的当前查询信息总是最新的。
+另一个重点是当一个服务器进程被要求显示任何这些统计信息时，它首先取得收集器进程最近发出的报告并且接着为所有统计视图和函数使用这个快照，直到它的当前事务的结尾。因此只要你继续当前事务，统计数据将会一直显示静态信息。相似地，当任何关于所有会话的当前查询的信息在一个事务中第一次被请求时，这样的信息将被收集。并且在整个事务期间将显示相同的信息。这是一种特性而非缺陷，因为它允许你在该统计信息上执行多个查询并且关联结果而不用担心那些数字会在你不知情的情况下改变。但是如果你希望用每个查询都看到新结果，要确保在任何事务块之外做那些查询。或者，你可以调用pg_stat_clear_snapshot()，那将丢弃当前事务的统计快照（如果有）。下一次对统计性信息的使用将导致获取一个新的快照。
+一个事务也可以在视图pg_stat_xact_all_tables、pg_stat_xact_all_undos, pg_stat_xact_sys_tables、pg_stat_xact_user_tables和pg_stat_xact_user_functions中看到它自己的统计信息（还没有被传送给收集器）。这些数字并不像上面所述的那样行动，相反它们在事务期间持续被更新。
+表 1中显示的动态统计视图中的一些信息是有安全限制的。 普通用户只能看到关于他们自己的会话的所有信息（属于他们是成员的角色的会话）。 在关于其他会话的行中，许多列将为空。 但是，请注意，一个会话的存在和它的一般属性，例如会话用户和数据库，对所有用户都是可见的。超级用户和内置角色pg_read_all_stats的成员（参见第 21." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://doc.rockdata.net/advanced/monitor-stats/" />
+<meta property="og:url" content="https://doc.rockdata.net/zh-cn/admin/monitor-stats/" />
 
-<meta property="article:section" content="Advanced" />
+<meta property="article:section" content="Admin" />
     <meta
       property="article:modified_time"
-      content="2022-06-22T15:24:12+08:00"
+      content="2022-07-20T16:33:49+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Statistics Views" />
+<meta name="twitter:title" content="运行统计视图" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Statistics Collection Configuration Viewing Statistics pg_stat_activity pg_stat_wait_event pg_stat_replication pg_stat_database pg_stat_all_tables pg_stat_all_undos pg_stat_all_indexes pg_statio_all_tables pg_statio_all_undos pg_statio_all_indexes pg_statio_all_sequences      Redrock Postgres’s statistics collector is a subsystem that supports collection and reporting of information about server activity. Presently, the collector can count accesses to tables and indexes in both disk-block and individual-row terms. It also tracks the total number of rows in each table, and information about analyze actions for each table." />
+  <meta name="twitter:description" content="统计收集配置 查看统计信息 pg_stat_activity pg_stat_wait_event pg_stat_replication pg_stat_database pg_stat_all_tables pg_stat_all_undos pg_stat_all_indexes pg_statio_all_tables pg_statio_all_undos pg_statio_all_indexes pg_statio_all_sequences      Redrock Postgres的统计收集器是一个支持收集和报告服务器活动信息的子系统。 目前，这个收集器可以对表和索引的访问计数，计数可以按磁盘块和个体行来进行。它还跟踪每个表中的总行数、每个表的分析动作的信息。它也统计调用用户定义函数的次数以及在每次调用中花费的总时间。
+Redrock Postgres也支持报告有关系统正在干什么的动态信息，例如当前正在被其他服务器进程执行的命令以及系统中存在哪些其他连接。这个功能是独立于收集器进程存在的。
+统计收集配置     因为统计收集给查询执行增加了一些负荷，系统可以被配置为收集或不收集信息。这由配置参数控制，它们通常在postgresql.conf中设置（关于设置配置参数的细节请见第 19 章）。
+参数track_activities允许监控当前被任意服务器进程执行的命令。
+参数track_counts控制是否收集关于表和索引访问的统计信息。
+参数track_functions启用对用户定义函数使用的跟踪。
+参数track_io_timing启用对块读写次数的监控。
+参数track_wait_events控制是否收集关于等待事件的统计信息。
+通常这些参数被设置在postgresql.conf中，这样它们会应用于所有服务器进程，但是可以在单个会话中使用SET命令打开或关闭它们（为了阻止普通用户对管理员隐藏他们的活动，只有超级用户被允许使用SET来改变这些参数）。
+统计收集器通过临时文件将收集到的信息传送给其他PostgreSQL进程。这些文件被存储在名字由stats_temp_directory参数指定的目录中，默认是pg_tmp/stats。为了得到更好的性能，stats_temp_directory可以被指向一个基于 RAM 的文件系统来降低物理 I/O 需求。当服务器被干净地关闭时，一份统计数据的永久拷贝被存储在pg_stat子目录中，这样在服务器重启后统计信息能被保持。当在服务器启动时执行恢复时（例如立即关闭、服务器崩溃以及时间点恢复之后），所有统计计数器会被重置。
+查看统计信息     表 1中列出了一些预定义视图 可以用来显示系统的当前状态。 表 2中列出了另一些视图可以 显示统计收集的结果。你也可以使用底层统计函数（在 第 27.2.3 节中讨论）来建立自定义的视图。
+在使用统计信息监控收集到的数据时，你必须了解这些信息并非是实时更新的。每个独立的服务器进程只在进入闲置状态之前才向收集器传送新的统计计数；因此正在进行的查询或事务并不影响显示出来的总数。同样，收集器本身也最多每PGSTAT_STAT_INTERVAL毫秒（缺省为 500ms，除非在编译服务器的时候修改过）发送一 次新的报告。因此显示的信息总是落后于实际活动。但是由track_activities收集的当前查询信息总是最新的。
+另一个重点是当一个服务器进程被要求显示任何这些统计信息时，它首先取得收集器进程最近发出的报告并且接着为所有统计视图和函数使用这个快照，直到它的当前事务的结尾。因此只要你继续当前事务，统计数据将会一直显示静态信息。相似地，当任何关于所有会话的当前查询的信息在一个事务中第一次被请求时，这样的信息将被收集。并且在整个事务期间将显示相同的信息。这是一种特性而非缺陷，因为它允许你在该统计信息上执行多个查询并且关联结果而不用担心那些数字会在你不知情的情况下改变。但是如果你希望用每个查询都看到新结果，要确保在任何事务块之外做那些查询。或者，你可以调用pg_stat_clear_snapshot()，那将丢弃当前事务的统计快照（如果有）。下一次对统计性信息的使用将导致获取一个新的快照。
+一个事务也可以在视图pg_stat_xact_all_tables、pg_stat_xact_all_undos, pg_stat_xact_sys_tables、pg_stat_xact_user_tables和pg_stat_xact_user_functions中看到它自己的统计信息（还没有被传送给收集器）。这些数字并不像上面所述的那样行动，相反它们在事务期间持续被更新。
+表 1中显示的动态统计视图中的一些信息是有安全限制的。 普通用户只能看到关于他们自己的会话的所有信息（属于他们是成员的角色的会话）。 在关于其他会话的行中，许多列将为空。 但是，请注意，一个会话的存在和它的一般属性，例如会话用户和数据库，对所有用户都是可见的。超级用户和内置角色pg_read_all_stats的成员（参见第 21." />
 
 
   <script type="application/ld+json">
   {
       "@context": "http://schema.org",
       "@type": "TechArticle",
-      "articleSection": "Advanced",
-      "name": "Statistics Views",
-      "url" : "https://doc.rockdata.net/advanced/monitor-stats/",
-      "headline": "Statistics Views",
-      "description": "Statistics Collection Configuration Viewing Statistics pg_stat_activity pg_stat_wait_event pg_stat_replication pg_stat_database pg_stat_all_tables pg_stat_all_undos pg_stat_all_indexes pg_statio_all_tables pg_statio_all_undos pg_statio_all_indexes pg_statio_all_sequences      Redrock Postgres’s statistics collector is a subsystem that supports collection and reporting of information about server activity. Presently, the collector can count accesses to tables and indexes in both disk-block and individual-row terms. It also tracks the total number of rows in each table, and information about analyze actions for each table.",
+      "articleSection": "Admin",
+      "name": "运行统计视图",
+      "url" : "https://doc.rockdata.net/zh-cn/admin/monitor-stats/",
+      "headline": "运行统计视图",
+      "description": "统计收集配置 查看统计信息 pg_stat_activity pg_stat_wait_event pg_stat_replication pg_stat_database pg_stat_all_tables pg_stat_all_undos pg_stat_all_indexes pg_statio_all_tables pg_statio_all_undos pg_statio_all_indexes pg_statio_all_sequences      Redrock Postgres的统计收集器是一个支持收集和报告服务器活动信息的子系统。 目前，这个收集器可以对表和索引的访问计数，计数可以按磁盘块和个体行来进行。它还跟踪每个表中的总行数、每个表的分析动作的信息。它也统计调用用户定义函数的次数以及在每次调用中花费的总时间。\nRedrock Postgres也支持报告有关系统正在干什么的动态信息，例如当前正在被其他服务器进程执行的命令以及系统中存在哪些其他连接。这个功能是独立于收集器进程存在的。\n统计收集配置     因为统计收集给查询执行增加了一些负荷，系统可以被配置为收集或不收集信息。这由配置参数控制，它们通常在postgresql.conf中设置（关于设置配置参数的细节请见第 19 章）。\n参数track_activities允许监控当前被任意服务器进程执行的命令。\n参数track_counts控制是否收集关于表和索引访问的统计信息。\n参数track_functions启用对用户定义函数使用的跟踪。\n参数track_io_timing启用对块读写次数的监控。\n参数track_wait_events控制是否收集关于等待事件的统计信息。\n通常这些参数被设置在postgresql.conf中，这样它们会应用于所有服务器进程，但是可以在单个会话中使用SET命令打开或关闭它们（为了阻止普通用户对管理员隐藏他们的活动，只有超级用户被允许使用SET来改变这些参数）。\n统计收集器通过临时文件将收集到的信息传送给其他PostgreSQL进程。这些文件被存储在名字由stats_temp_directory参数指定的目录中，默认是pg_tmp\/stats。为了得到更好的性能，stats_temp_directory可以被指向一个基于 RAM 的文件系统来降低物理 I\/O 需求。当服务器被干净地关闭时，一份统计数据的永久拷贝被存储在pg_stat子目录中，这样在服务器重启后统计信息能被保持。当在服务器启动时执行恢复时（例如立即关闭、服务器崩溃以及时间点恢复之后），所有统计计数器会被重置。\n查看统计信息     表 1中列出了一些预定义视图 可以用来显示系统的当前状态。 表 2中列出了另一些视图可以 显示统计收集的结果。你也可以使用底层统计函数（在 第 27.2.3 节中讨论）来建立自定义的视图。\n在使用统计信息监控收集到的数据时，你必须了解这些信息并非是实时更新的。每个独立的服务器进程只在进入闲置状态之前才向收集器传送新的统计计数；因此正在进行的查询或事务并不影响显示出来的总数。同样，收集器本身也最多每PGSTAT_STAT_INTERVAL毫秒（缺省为 500ms，除非在编译服务器的时候修改过）发送一 次新的报告。因此显示的信息总是落后于实际活动。但是由track_activities收集的当前查询信息总是最新的。\n另一个重点是当一个服务器进程被要求显示任何这些统计信息时，它首先取得收集器进程最近发出的报告并且接着为所有统计视图和函数使用这个快照，直到它的当前事务的结尾。因此只要你继续当前事务，统计数据将会一直显示静态信息。相似地，当任何关于所有会话的当前查询的信息在一个事务中第一次被请求时，这样的信息将被收集。并且在整个事务期间将显示相同的信息。这是一种特性而非缺陷，因为它允许你在该统计信息上执行多个查询并且关联结果而不用担心那些数字会在你不知情的情况下改变。但是如果你希望用每个查询都看到新结果，要确保在任何事务块之外做那些查询。或者，你可以调用pg_stat_clear_snapshot()，那将丢弃当前事务的统计快照（如果有）。下一次对统计性信息的使用将导致获取一个新的快照。\n一个事务也可以在视图pg_stat_xact_all_tables、pg_stat_xact_all_undos, pg_stat_xact_sys_tables、pg_stat_xact_user_tables和pg_stat_xact_user_functions中看到它自己的统计信息（还没有被传送给收集器）。这些数字并不像上面所述的那样行动，相反它们在事务期间持续被更新。\n表 1中显示的动态统计视图中的一些信息是有安全限制的。 普通用户只能看到关于他们自己的会话的所有信息（属于他们是成员的角色的会话）。 在关于其他会话的行中，许多列将为空。 但是，请注意，一个会话的存在和它的一般属性，例如会话用户和数据库，对所有用户都是可见的。超级用户和内置角色pg_read_all_stats的成员（参见第 21.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "7383",
-      "inLanguage": "en",
+      "wordCount" : "1360",
+      "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://doc.rockdata.net/advanced/monitor-stats/"
+          "@id": "https://doc.rockdata.net/zh-cn/admin/monitor-stats/"
       },
       "copyrightHolder" : "Redrock Documentation",
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-22T15:24:12.00Z",
+      "dateModified": "2022-07-20T16:33:49.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -149,7 +191,7 @@
   href="/custom.css"
   media="all"
 />
-  <link href="https://doc.rockdata.net/advanced/monitor-stats/" rel="canonical" type="text/html" />
+  <link href="https://doc.rockdata.net/zh-cn/admin/monitor-stats/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -641,11 +683,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
       <label for="menu-control" class="gdoc-nav__control" tabindex="0">
         <svg class="gdoc-icon gdoc_menu">
-          <title>Open Navigation</title>
+          <title>打开导航</title>
           <use xlink:href="#gdoc_menu"></use>
         </svg>
         <svg class="gdoc-icon gdoc_arrow_back">
-          <title>Close Navigation</title>
+          <title>关闭导航</title>
           <use xlink:href="#gdoc_arrow_back"></use>
         </svg>
       </label>
@@ -711,15 +753,15 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
         <span id="gdoc-dark-mode">
           <svg class="gdoc-icon gdoc_brightness_dark">
-            <title>Toggle Dark/Light/Auto mode</title>
+            <title>切换暗/亮/自动模式</title>
             <use xlink:href="#gdoc_brightness_dark"></use>
           </svg>
           <svg class="gdoc-icon gdoc_brightness_light">
-            <title>Toggle Dark/Light/Auto mode</title>
+            <title>切换暗/亮/自动模式</title>
             <use xlink:href="#gdoc_brightness_light"></use>
           </svg>
           <svg class="gdoc-icon gdoc_brightness_auto">
-            <title>Toggle Dark/Light/Auto mode</title>
+            <title>切换暗/亮/自动模式</title>
             <use xlink:href="#gdoc_brightness_auto"></use>
           </svg>
         </span>
@@ -727,7 +769,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         <span class="gdoc-menu-header__home">
           <a href="https://doc.rockdata.net/" class="gdoc-header__link">
             <svg class="gdoc-icon gdoc_home">
-              <title>Back to homepage</title>
+              <title>返回首页</title>
               <use xlink:href="#gdoc_home"></use>
             </svg>
           </a>
@@ -739,12 +781,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <li>
         
           
+        
+          
             <span class="flex align-center">
               <svg class="gdoc-icon gdoc_language"><use xlink:href="#gdoc_language"></use></svg>
-              <span>EN</span>
+              <span>ZH-CN</span>
             </span>
-          
-        
           
         
 
@@ -755,12 +797,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               <li>
                 <a
                   class="flex gdoc-language__entry"
-                  title="简体中文"
-                  href="/zh-cn/advanced/monitor-stats/"
-                  hreflang="zh-cn"
-                  lang="zh-cn"
+                  title="English"
+                  href="/admin/monitor-stats/"
+                  hreflang="en"
+                  lang="en"
                 >
-                  简体中文
+                  English
                 </a>
               </li>
             
@@ -777,7 +819,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
           <label for="menu-header-control">
             <svg class="gdoc-icon gdoc_keyboard_arrow_right">
               <use xlink:href="#gdoc_keyboard_arrow_right"></use>
-              <title>Close Menu Bar</title>
+              <title>关闭菜单栏</title>
             </svg>
           </label>
         </span>
@@ -785,7 +827,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <label for="menu-header-control" class="gdoc-menu-header__control">
         <svg class="gdoc-icon gdoc_keyboard_arrow_left">
           <use xlink:href="#gdoc_keyboard_arrow_left"></use>
-          <title>Open Menu Bar</title>
+          <title>打开菜单栏</title>
         </svg>
       </label>
     </div>
@@ -805,11 +847,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       type="text"
       id="gdoc-search-input"
       class="gdoc-search__input"
-      placeholder="Search"
-      aria-label="Search"
+      placeholder="搜索"
+      aria-label="搜索"
       maxlength="64"
       data-site-base-url="https://doc.rockdata.net/"
-      data-site-lang="en"
+      data-site-lang="zh-cn"
     />
     <div class="gdoc-search__spinner spinner hidden"></div>
     <ul id="gdoc-search-results" class="gdoc-search__list"></ul>
@@ -819,7 +861,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
 
   <section class="gdoc-nav--main">
-    <h2>Navigation</h2>
+    <h2>导航</h2>
     
       
 
@@ -856,7 +898,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">Usage</span>
+                <span class="flex">使用介绍</span>
               
               
             </label>
@@ -898,10 +940,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/usage/why-redrock/"
+                    href="/zh-cn/usage/why-redrock/"
                     class="gdoc-nav__entry"
                   >
-                    Why Redrock Postgres?
+                    为什么选择Redrock Postgres？
                   </a>
                 </span>
               
@@ -942,10 +984,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/usage/getting-started/"
+                    href="/zh-cn/usage/getting-started/"
                     class="gdoc-nav__entry"
                   >
-                    Getting Started
+                    开始上手
                   </a>
                 </span>
               
@@ -984,22 +1026,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-46385245"
+                class="gdoc-nav__toggle" id="navtree-09089698"
                 
               
             />
             <label
               
-                for="navtree-46385245" class="flex justify-between align-center"
+                for="navtree-09089698" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/installation/"
+                    href="/zh-cn/installation/"
                     class="gdoc-nav__entry"
                   >
-                    Installation
+                    安装指导
                   </a>
                 </span>
               
@@ -1050,10 +1092,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/installation/windows/"
+                    href="/zh-cn/installation/windows/"
                     class="gdoc-nav__entry"
                   >
-                    Installing on Windows
+                    Windows 安装指导
                   </a>
                 </span>
               
@@ -1094,10 +1136,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/installation/redhat/"
+                    href="/zh-cn/installation/redhat/"
                     class="gdoc-nav__entry"
                   >
-                    Installing on Red Hat
+                    Red Hat/CentOS 安装指导
                   </a>
                 </span>
               
@@ -1138,321 +1180,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/installation/debian/"
+                    href="/zh-cn/installation/debian/"
                     class="gdoc-nav__entry"
                   >
-                    Installing on Debian
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-  </ul>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">Features</span>
-              
-              
-            </label>
-
-            
-              
-  
-
-
-  <ul class="gdoc-nav__list">
-    
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/features/undo/"
-                    class="gdoc-nav__entry"
-                  >
-                    Undo
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/features/recyclebin/"
-                    class="gdoc-nav__entry"
-                  >
-                    Recycle Bin
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/features/transaction/"
-                    class="gdoc-nav__entry"
-                  >
-                    Transactions
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/features/tablespace/"
-                    class="gdoc-nav__entry"
-                  >
-                    Tablespaces
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/features/event-triggers/"
-                    class="gdoc-nav__entry"
-                  >
-                    Event Triggers
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/features/postgres-compatibility/"
-                    class="gdoc-nav__entry"
-                  >
-                    Compatibility with PostgreSQL
+                    Debian 安装指导
                   </a>
                 </span>
               
@@ -1498,7 +1229,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">Advanced</span>
+                <span class="flex">基础特性</span>
               
               
             </label>
@@ -1540,10 +1271,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/advanced/textsearch/"
+                    href="/zh-cn/features/undo/"
                     class="gdoc-nav__entry"
                   >
-                    Chinese Text Search
+                    回滚段
                   </a>
                 </span>
               
@@ -1584,7 +1315,328 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/advanced/plscheme/"
+                    href="/zh-cn/features/recyclebin/"
+                    class="gdoc-nav__entry"
+                  >
+                    回收站
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/features/transaction/"
+                    class="gdoc-nav__entry"
+                  >
+                    事务
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/features/tablespace/"
+                    class="gdoc-nav__entry"
+                  >
+                    表空间
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/features/event-triggers/"
+                    class="gdoc-nav__entry"
+                  >
+                    事件触发器
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/features/postgres-compatibility/"
+                    class="gdoc-nav__entry"
+                  >
+                    同 PostgreSQL 的兼容性
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+  </ul>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="gdoc-nav__toggle" id="navtree-38863d5b"
+                
+              
+            />
+            <label
+              
+                for="navtree-38863d5b" class="flex justify-between align-center"
+              
+            >
+              
+                <span class="flex">应用开发</span>
+              
+              
+                <svg class="gdoc-icon toggle gdoc_keyboard_arrow_left">
+                  <use xlink:href="#gdoc_keyboard_arrow_left"></use>
+                </svg>
+                <svg class="gdoc-icon toggle gdoc_keyboard_arrow_down">
+                  <use xlink:href="#gdoc_keyboard_arrow_down"></use>
+                </svg>
+              
+            </label>
+
+            
+              
+  
+
+
+  <ul class="gdoc-nav__list">
+    
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/develop/textsearch/"
+                    class="gdoc-nav__entry"
+                  >
+                    中文搜索
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/develop/plscheme/"
                     class="gdoc-nav__entry"
                   >
                     PL/Scheme
@@ -1599,6 +1651,70 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         
       
     
+  </ul>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="gdoc-nav__toggle" id="navtree-2c8f00d6"
+                checked
+              
+            />
+            <label
+              
+                for="navtree-2c8f00d6" class="flex justify-between align-center"
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/admin/"
+                    class="gdoc-nav__entry"
+                  >
+                    数据库管理
+                  </a>
+                </span>
+              
+              
+                <svg class="gdoc-icon toggle gdoc_keyboard_arrow_left">
+                  <use xlink:href="#gdoc_keyboard_arrow_left"></use>
+                </svg>
+                <svg class="gdoc-icon toggle gdoc_keyboard_arrow_down">
+                  <use xlink:href="#gdoc_keyboard_arrow_down"></use>
+                </svg>
+              
+            </label>
+
+            
+              
+  
+
+
+  <ul class="gdoc-nav__list">
+    
+    
       
 
       
@@ -1628,10 +1744,230 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/advanced/monitor-stats/"
+                    href="/zh-cn/admin/configuration/"
+                    class="gdoc-nav__entry"
+                  >
+                    参数配置
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/admin/monitor-stats/"
                     class="gdoc-nav__entry is-active"
                   >
-                    Statistics Views
+                    运行统计视图
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/admin/network-tablespace/"
+                    class="gdoc-nav__entry"
+                  >
+                    网络表空间
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/admin/ddl-subscription/"
+                    class="gdoc-nav__entry"
+                  >
+                    订阅DDL操作
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/admin/audit-trigger/"
+                    class="gdoc-nav__entry"
+                  >
+                    审计日志
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/admin/online-migration/"
+                    class="gdoc-nav__entry"
+                  >
+                    在线迁移
                   </a>
                 </span>
               
@@ -1670,22 +2006,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-d9ef83eb"
+                class="gdoc-nav__toggle" id="navtree-a5b7adb4"
                 
               
             />
             <label
               
-                for="navtree-d9ef83eb" class="flex justify-between align-center"
+                for="navtree-a5b7adb4" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/admin/"
+                    href="/zh-cn/commands/"
                     class="gdoc-nav__entry"
                   >
-                    Server Administration
+                    SQL 命令
                   </a>
                 </span>
               
@@ -1736,291 +2072,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/admin/configuration/"
-                    class="gdoc-nav__entry"
-                  >
-                    Configuration
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/admin/network-tablespace/"
-                    class="gdoc-nav__entry"
-                  >
-                    Network Attached Tablespace
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/admin/ddl-subscription/"
-                    class="gdoc-nav__entry"
-                  >
-                    Subscribe DDL Commands
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/admin/audit-trigger/"
-                    class="gdoc-nav__entry"
-                  >
-                    Audit Logging
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/admin/online-migration/"
-                    class="gdoc-nav__entry"
-                  >
-                    Online Migration
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-  </ul>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="gdoc-nav__toggle" id="navtree-4ac8285e"
-                
-              
-            />
-            <label
-              
-                for="navtree-4ac8285e" class="flex justify-between align-center"
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/commands/"
-                    class="gdoc-nav__entry"
-                  >
-                    SQL Commands
-                  </a>
-                </span>
-              
-              
-                <svg class="gdoc-icon toggle gdoc_keyboard_arrow_left">
-                  <use xlink:href="#gdoc_keyboard_arrow_left"></use>
-                </svg>
-                <svg class="gdoc-icon toggle gdoc_keyboard_arrow_down">
-                  <use xlink:href="#gdoc_keyboard_arrow_down"></use>
-                </svg>
-              
-            </label>
-
-            
-              
-  
-
-
-  <ul class="gdoc-nav__list">
-    
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/commands/alterundo/"
+                    href="/zh-cn/commands/alterundo/"
                     class="gdoc-nav__entry"
                   >
                     ALTER UNDO
@@ -2056,7 +2108,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/commands/createundo/"
+                    href="/zh-cn/commands/createundo/"
                     class="gdoc-nav__entry"
                   >
                     CREATE UNDO
@@ -2092,7 +2144,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/commands/dropundo/"
+                    href="/zh-cn/commands/dropundo/"
                     class="gdoc-nav__entry"
                   >
                     DROP UNDO
@@ -2128,7 +2180,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/commands/vacuum/"
+                    href="/zh-cn/commands/vacuum/"
                     class="gdoc-nav__entry"
                   >
                     VACUUM
@@ -2158,8 +2210,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
       
         
-      
-        
           
           
           
@@ -2172,22 +2222,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-0ef779f7"
+                class="gdoc-nav__toggle" id="navtree-7171e5f3"
                 
               
             />
             <label
               
-                for="navtree-0ef779f7" class="flex justify-between align-center"
+                for="navtree-7171e5f3" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/catalogs/"
+                    href="/zh-cn/catalogs/"
                     class="gdoc-nav__entry"
                   >
-                    System Catalogs
+                    系统表
                   </a>
                 </span>
               
@@ -2238,7 +2288,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/catalogs/recyclebin/"
+                    href="/zh-cn/catalogs/recyclebin/"
                     class="gdoc-nav__entry"
                   >
                     pg_recyclebin
@@ -2274,7 +2324,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/catalogs/ts-lexicon/"
+                    href="/zh-cn/catalogs/ts-lexicon/"
                     class="gdoc-nav__entry"
                   >
                     pg_ts_lexicon
@@ -2310,7 +2360,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/catalogs/undo/"
+                    href="/zh-cn/catalogs/undo/"
                     class="gdoc-nav__entry"
                   >
                     pg_undo
@@ -2331,6 +2381,8 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
           </li>
         
       
+        
+      
     
   </ul>
 
@@ -2347,7 +2399,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
   <section class="gdoc-nav--more">
     
-      <h2>More</h2>
+      <h2>更多</h2>
       
 
   
@@ -2388,10 +2440,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                   <svg class="gdoc-icon gdoc_notification"><use xlink:href="#gdoc_notification"></use></svg>
                 
                 <a
-                  href="/posts/"
+                  href="/zh-cn/posts/"
                   class="gdoc-nav__entry"
                 >
-                  News
+                  新闻
                 </a>
               </span>
               
@@ -2438,7 +2490,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     https://gitee.com/rockdata/redrock/releases"
                   class="gdoc-nav__entry"
                 >
-                  Releases
+                  下载
                 </a>
               </span>
               
@@ -2485,7 +2537,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     https://gitee.com/rockdata/redrock"
                   class="gdoc-nav__entry"
                 >
-                  View Source
+                  项目仓库
                 </a>
               </span>
               
@@ -2554,7 +2606,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/advanced/' href='/advanced/'><span itemprop='name'>Advanced</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Statistics Views</span><meta itemprop='position' content='3' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/admin/' href='/zh-cn/admin/'><span itemprop='name'>数据库管理</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>运行统计视图</span><meta itemprop='position' content='4' /></li>
   
 
   
@@ -2569,9 +2621,9 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <span class="editpage">
         <svg class="gdoc-icon gdoc_code"><use xlink:href="#gdoc_code"></use></svg>
         <a
-          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/en/advanced/monitor-stats.md"
+          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/zh-cn/admin/monitor-stats.md"
         >
-          Edit page
+          编辑页面
         </a>
       </span>
     </div>
@@ -2583,11 +2635,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <article
     class="gdoc-markdown gdoc-markdown__align--left"
   >
-    <h1>Statistics Views</h1>
+    <h1>运行统计视图</h1>
     <div class="gdoc-toc gdoc-toc__level--3">
       <nav id="TableOfContents"><ul>
-        <li><a href="#statistics-collection-configuration">Statistics Collection Configuration</a></li>
-        <li><a href="#viewing-statistics">Viewing Statistics</a></li>
+        <li><a href="#统计收集配置">统计收集配置</a></li>
+        <li><a href="#查看统计信息">查看统计信息</a></li>
         <li><a href="#pg_stat_activity">pg_stat_activity</a></li>
         <li><a href="#pg_stat_wait_event">pg_stat_wait_event</a></li>
         <li><a href="#pg_stat_replication">pg_stat_replication</a></li>
@@ -2602,406 +2654,406 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       </ul></nav>
       <hr />
     </div>
-<p>Redrock Postgres&rsquo;s <em>statistics collector</em> is a subsystem that supports collection and reporting of information about server activity. Presently, the collector can count accesses to tables and indexes in both disk-block and individual-row terms. It also tracks the total number of rows in each table, and information about analyze actions for each table. It can also count calls to user-defined functions and the total time spent in each one.</p>
-<p>Redrock Postgres also supports reporting dynamic information about exactly what is going on in the system right now, such as the exact command currently being executed by other server processes, and which other connections exist in the system. This facility is independent of the collector process.</p>
+<p>Redrock Postgres的<em>统计收集器</em>是一个支持收集和报告服务器活动信息的子系统。 目前，这个收集器可以对表和索引的访问计数，计数可以按磁盘块和个体行来进行。它还跟踪每个表中的总行数、每个表的分析动作的信息。它也统计调用用户定义函数的次数以及在每次调用中花费的总时间。</p>
+<p>Redrock Postgres也支持报告有关系统正在干什么的动态信息，例如当前正在被其他服务器进程执行的命令以及系统中存在哪些其他连接。这个功能是独立于收集器进程存在的。</p>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="statistics-collection-configuration">
-        Statistics Collection Configuration
-        <a data-clipboard-text="https://doc.rockdata.net/advanced/monitor-stats/#statistics-collection-configuration" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Statistics Collection Configuration" aria-label="Anchor to: Statistics Collection Configuration" href="#statistics-collection-configuration">
+    <h2 id="统计收集配置">
+        统计收集配置
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/admin/monitor-stats/#统计收集配置" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 统计收集配置" aria-label="锚定到： 统计收集配置" href="#%e7%bb%9f%e8%ae%a1%e6%94%b6%e9%9b%86%e9%85%8d%e7%bd%ae">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>Since collection of statistics adds some overhead to query execution, the system can be configured to collect or not collect information. This is controlled by configuration parameters that are normally set in <code>postgresql.conf</code>. (See <a
+<p>因为统计收集给查询执行增加了一些负荷，系统可以被配置为收集或不收集信息。这由配置参数控制，它们通常在<code>postgresql.conf</code>中设置（关于设置配置参数的细节请见<a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/runtime-config.html"
+  href="http://www.postgres.cn/docs/12/runtime-config.html"
   
->Chapter 19</a> for details about setting configuration parameters.)</p>
-<p>The parameter <a
+>第 19 章</a>）。</p>
+<p>参数<a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/runtime-config-statistics.html#GUC-TRACK-ACTIVITIES"
+  href="http://www.postgres.cn/docs/12/runtime-config-statistics.html#GUC-TRACK-ACTIVITIES"
   
->track_activities</a> enables monitoring of the current command being executed by any server process.</p>
-<p>The parameter <a
+>track_activities</a>允许监控当前被任意服务器进程执行的命令。</p>
+<p>参数<a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/runtime-config-statistics.html#GUC-TRACK-COUNTS"
+  href="http://www.postgres.cn/docs/12/runtime-config-statistics.html#GUC-TRACK-COUNTS"
   
->track_counts</a> controls whether statistics are collected about table and index accesses.</p>
-<p>The parameter <a
+>track_counts</a>控制是否收集关于表和索引访问的统计信息。</p>
+<p>参数<a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/runtime-config-statistics.html#GUC-TRACK-FUNCTIONS"
+  href="http://www.postgres.cn/docs/12/runtime-config-statistics.html#GUC-TRACK-FUNCTIONS"
   
->track_functions</a> enables tracking of usage of user-defined functions.</p>
-<p>The parameter <a
+>track_functions</a>启用对用户定义函数使用的跟踪。</p>
+<p>参数<a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/runtime-config-statistics.html#GUC-TRACK-IO-TIMING"
+  href="http://www.postgres.cn/docs/12/runtime-config-statistics.html#GUC-TRACK-IO-TIMING"
   
->track_io_timing</a> enables monitoring of block read and write times.</p>
-<p>The parameter <a
+>track_io_timing</a>启用对块读写次数的监控。</p>
+<p>参数<a
   class="gdoc-markdown__link"
-  href="/usage/configuration/#run-time-statistics"
+  href="/zh-cn/usage/configuration/#%e8%bf%90%e8%a1%8c%e6%97%b6%e7%bb%9f%e8%ae%a1%e4%bf%a1%e6%81%af"
   
->track_wait_events</a> controls whether statistics are collected about wait events.</p>
-<p>Normally these parameters are set in <code>postgresql.conf</code> so that they apply to all server processes, but it is possible to turn them on or off in individual sessions using the <a
+>track_wait_events</a>控制是否收集关于等待事件的统计信息。</p>
+<p>通常这些参数被设置在<code>postgresql.conf</code>中，这样它们会应用于所有服务器进程，但是可以在单个会话中使用<a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/sql-set.html"
+  href="http://www.postgres.cn/docs/12/sql-set.html"
   
->SET</a> command. (To prevent ordinary users from hiding their activity from the administrator, only superusers are allowed to change these parameters with <code>SET</code>.)</p>
-<p>The statistics collector transmits the collected information to other PostgreSQL processes through temporary files. These files are stored in the directory named by the <a
+>SET</a>命令打开或关闭它们（为了阻止普通用户对管理员隐藏他们的活动，只有超级用户被允许使用<code>SET</code>来改变这些参数）。</p>
+<p>统计收集器通过临时文件将收集到的信息传送给其他PostgreSQL进程。这些文件被存储在名字由<a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/runtime-config-statistics.html#GUC-STATS-TEMP-DIRECTORY"
+  href="http://www.postgres.cn/docs/12/runtime-config-statistics.html#GUC-STATS-TEMP-DIRECTORY"
   
->stats_temp_directory</a> parameter, <code>pg_tmp/stats</code> by default. For better performance, <code>stats_temp_directory</code> can be pointed at a RAM-based file system, decreasing physical I/O requirements. When the server shuts down cleanly, a permanent copy of the statistics data is stored in the <code>pg_stat</code> subdirectory, so that statistics can be retained across server restarts. When recovery is performed at server start (e.g., after immediate shutdown, server crash, and point-in-time recovery), all statistics counters are reset.</p>
+>stats_temp_directory</a>参数指定的目录中，默认是<code>pg_tmp/stats</code>。为了得到更好的性能，<code>stats_temp_directory</code>可以被指向一个基于 RAM 的文件系统来降低物理 I/O 需求。当服务器被干净地关闭时，一份统计数据的永久拷贝被存储在<code>pg_stat</code>子目录中，这样在服务器重启后统计信息能被保持。当在服务器启动时执行恢复时（例如立即关闭、服务器崩溃以及时间点恢复之后），所有统计计数器会被重置。</p>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="viewing-statistics">
-        Viewing Statistics
-        <a data-clipboard-text="https://doc.rockdata.net/advanced/monitor-stats/#viewing-statistics" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Viewing Statistics" aria-label="Anchor to: Viewing Statistics" href="#viewing-statistics">
+    <h2 id="查看统计信息">
+        查看统计信息
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/admin/monitor-stats/#查看统计信息" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 查看统计信息" aria-label="锚定到： 查看统计信息" href="#%e6%9f%a5%e7%9c%8b%e7%bb%9f%e8%ae%a1%e4%bf%a1%e6%81%af">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>Several predefined views, listed in <a
+<p><a
   class="gdoc-markdown__link"
-  href="/advanced/monitor-stats/#viewing-statistics"
+  href="/zh-cn/advanced/monitor-stats/#%e6%9f%a5%e7%9c%8b%e7%bb%9f%e8%ae%a1%e4%bf%a1%e6%81%af"
   
->Table 1</a>, are available to show the current state of the system. There are also several other views, listed in <a
+>表 1</a>中列出了一些预定义视图 可以用来显示系统的当前状态。 <a
   class="gdoc-markdown__link"
-  href="/advanced/monitor-stats/#viewing-statistics"
+  href="/zh-cn/advanced/monitor-stats/#%e6%9f%a5%e7%9c%8b%e7%bb%9f%e8%ae%a1%e4%bf%a1%e6%81%af"
   
->Table 2</a>, available to show the results of statistics collection. Alternatively, one can build custom views using the underlying statistics functions, as discussed in <a
+>表 2</a>中列出了另一些视图可以 显示统计收集的结果。你也可以使用底层统计函数（在 <a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/monitoring-stats.html#MONITORING-STATS-FUNCTIONS"
+  href="http://www.postgres.cn/docs/12/monitoring-stats.html#MONITORING-STATS-FUNCTIONS"
   
->Section 27.2.3</a>.</p>
-<p>When using the statistics to monitor collected data, it is important to realize that the information does not update instantaneously. Each individual server process transmits new statistical counts to the collector just before going idle; so a query or transaction still in progress does not affect the displayed totals. Also, the collector itself emits a new report at most once per <code>PGSTAT_STAT_INTERVAL</code> milliseconds (500 ms unless altered while building the server). So the displayed information lags behind actual activity. However, current-query information collected by <code>track_activities</code> is always up-to-date.</p>
-<p>Another important point is that when a server process is asked to display any of these statistics, it first fetches the most recent report emitted by the collector process and then continues to use this snapshot for all statistical views and functions until the end of its current transaction. So the statistics will show static information as long as you continue the current transaction. Similarly, information about the current queries of all sessions is collected when any such information is first requested within a transaction, and the same information will be displayed throughout the transaction. This is a feature, not a bug, because it allows you to perform several queries on the statistics and correlate the results without worrying that the numbers are changing underneath you. But if you want to see new results with each query, be sure to do the queries outside any transaction block. Alternatively, you can invoke <code>pg_stat_clear_snapshot</code>(), which will discard the current transaction&rsquo;s statistics snapshot (if any). The next use of statistical information will cause a new snapshot to be fetched.</p>
-<p>A transaction can also see its own statistics (as yet untransmitted to the collector) in the views <code>pg_stat_xact_all_tables</code>, <code>pg_stat_xact_all_undos</code>, <code>pg_stat_xact_sys_tables</code>, <code>pg_stat_xact_user_tables</code>, and <code>pg_stat_xact_user_functions</code>. These numbers do not act as stated above; instead they update continuously throughout the transaction.</p>
-<p>Some of the information in the dynamic statistics views shown in <a
+>第 27.2.3 节</a>中讨论）来建立自定义的视图。</p>
+<p>在使用统计信息监控收集到的数据时，你必须了解这些信息并非是实时更新的。每个独立的服务器进程只在进入闲置状态之前才向收集器传送新的统计计数；因此正在进行的查询或事务并不影响显示出来的总数。同样，收集器本身也最多每<code>PGSTAT_STAT_INTERVAL</code>毫秒（缺省为 500ms，除非在编译服务器的时候修改过）发送一 次新的报告。因此显示的信息总是落后于实际活动。但是由<code>track_activities</code>收集的当前查询信息总是最新的。</p>
+<p>另一个重点是当一个服务器进程被要求显示任何这些统计信息时，它首先取得收集器进程最近发出的报告并且接着为所有统计视图和函数使用这个快照，直到它的当前事务的结尾。因此只要你继续当前事务，统计数据将会一直显示静态信息。相似地，当任何关于所有会话的当前查询的信息在一个事务中第一次被请求时，这样的信息将被收集。并且在整个事务期间将显示相同的信息。这是一种特性而非缺陷，因为它允许你在该统计信息上执行多个查询并且关联结果而不用担心那些数字会在你不知情的情况下改变。但是如果你希望用每个查询都看到新结果，要确保在任何事务块之外做那些查询。或者，你可以调用<code>pg_stat_clear_snapshot</code>()，那将丢弃当前事务的统计快照（如果有）。下一次对统计性信息的使用将导致获取一个新的快照。</p>
+<p>一个事务也可以在视图<code>pg_stat_xact_all_tables</code>、<code>pg_stat_xact_all_undos</code>, <code>pg_stat_xact_sys_tables</code>、<code>pg_stat_xact_user_tables</code>和<code>pg_stat_xact_user_functions</code>中看到它自己的统计信息（还没有被传送给收集器）。这些数字并不像上面所述的那样行动，相反它们在事务期间持续被更新。</p>
+<p><a
   class="gdoc-markdown__link"
-  href="/advanced/monitor-stats/#viewing-statistics"
+  href="/zh-cn/advanced/monitor-stats/#%E6%9F%A5%E7%9C%8B%E7%BB%9F%E8%AE%A1%E4%BF%A1%E6%81%AF"
   
->Table 1</a> is security restricted. Ordinary users can only see all the information about their own sessions (sessions belonging to a role that they are a member of). In rows about other sessions, many columns will be null. Note, however, that the existence of a session and its general properties such as its sessions user and database are visible to all users. Superusers and members of the built-in role <code>pg_read_all_stats</code> (see also <a
+>表 1</a>中显示的动态统计视图中的一些信息是有安全限制的。 普通用户只能看到关于他们自己的会话的所有信息（属于他们是成员的角色的会话）。 在关于其他会话的行中，许多列将为空。 但是，请注意，一个会话的存在和它的一般属性，例如会话用户和数据库，对所有用户都是可见的。超级用户和内置角色<code>pg_read_all_stats</code>的成员（参见<a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/default-roles.html"
+  href="http://www.postgres.cn/docs/12/default-roles.html"
   
->Section 21.5</a>) can see all the information about all sessions.</p>
-<p><strong>Table 1. Dynamic Statistics Views</strong></p>
+>第 21.5 节</a>）可以看到所有会话的所有信息。</p>
+<p><strong>表 1. 动态统计视图</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
-<th>View Name</th>
-<th>Description</th>
+<th>视图名称</th>
+<th>描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>pg_stat_activity</code></td>
-<td>One row per server process, showing information related to the current activity of that process, such as state and current query. See <a
-  class="gdoc-markdown__link"
-  href="/advanced/monitor-stats/#pg_stat_activity"
+<td>每个服务器进程一行，显示与那个进程的当前活动相关的信息，例如状态和当前查询。详见<a
+  class="gdoc-markdown__link--code"
+  href="/zh-cn/advanced/monitor-stats/#pg_stat_activity"
   
->pg_stat_activity</a> for details.</td>
+><code>pg_stat_activity</code></a> 。</td>
 </tr>
 <tr>
 <td><code>pg_stat_wait_event</code></td>
-<td>One row per wait event, showing statistics about wait information of every occured wait events. See <a
+<td>每个等待事件一行，显示有关每个发生的等待事件的等待信息的统计信息。有关详细信息，请参阅 <a
   class="gdoc-markdown__link"
-  href="/advanced/monitor-stats/#pg_stat_wait_event"
+  href="/zh-cn/advanced/monitor-stats/#pg_stat_wait_event"
   
->pg_stat_wait_event</a> for details.</td>
+>pg_stat_wait_event</a>。</td>
 </tr>
 <tr>
 <td><code>pg_stat_replication</code></td>
-<td>One row per WAL sender process, showing statistics about replication to that sender&rsquo;s connected standby server. See <a
-  class="gdoc-markdown__link"
-  href="/advanced/monitor-stats/#pg_stat_replication"
+<td>每一个 WAL 发送进程一行，显示有关到该发送进程连接的后备服务器的复制的统计信息。 详见<a
+  class="gdoc-markdown__link--code"
+  href="/zh-cn/advanced/monitor-stats/#pg_stat_replication"
   
->pg_stat_replication</a> for details.</td>
+><code>pg_stat_replication</code></a>.</td>
 </tr>
 </tbody>
 </table> </div>
-<p><strong>Table 2. Collected Statistics Views</strong></p>
+<p><strong>表 2. 已收集统计信息的视图</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
-<th>View Name</th>
-<th>Description</th>
+<th>视图名称</th>
+<th>描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>pg_stat_database</code></td>
-<td>One row per database, showing database-wide statistics. See <a
+<td>每个数据库一行，显示数据库范围的统计信息。详见<a
   class="gdoc-markdown__link"
-  href="/advanced/monitor-stats/#pg_stat_database"
+  href="/zh-cn/advanced/monitor-stats/#pg_stat_database"
   
->pg_stat_database</a> for details.</td>
+> <code>pg_stat_database</code></a>。</td>
 </tr>
 <tr>
 <td><code>pg_stat_all_tables</code></td>
-<td>One row for each table in the current database, showing statistics about accesses to that specific table. See <a
+<td>当前数据库中每个表一行，显示有关访问指定表的统计信息。详见<a
   class="gdoc-markdown__link"
-  href="/advanced/monitor-stats/#pg_stat_all_tables"
+  href="/zh-cn/advanced/monitor-stats/#pg_stat_all_tables"
   
->pg_stat_all_tables</a> for details.</td>
+> <code>pg_stat_all_tables</code></a>。</td>
 </tr>
 <tr>
 <td><code>pg_stat_sys_tables</code></td>
-<td>Same as <code>pg_stat_all_tables</code>, except that only system tables are shown.</td>
+<td>和<code>pg_stat_all_tables</code>一样，但只显示系统表。</td>
 </tr>
 <tr>
 <td><code>pg_stat_user_tables</code></td>
-<td>Same as <code>pg_stat_all_tables</code>, except that only user tables are shown.</td>
+<td>和<code>pg_stat_all_tables</code>一样，但只显示用户表。</td>
 </tr>
 <tr>
 <td><code>pg_stat_xact_all_tables</code></td>
-<td>Similar to <code>pg_stat_all_tables</code>, but counts actions taken so far within the current transaction (which are <em>not</em> yet included in <code>pg_stat_all_tables</code> and related views). The columns for numbers of live and dead rows and analyze actions are not present in this view.</td>
+<td>和<code>pg_stat_all_tables</code>相似，但计数动作只在当前事务内发生（还<strong>没有</strong>被包括在<code>pg_stat_all_tables</code>和相关视图中）。用于生存和死亡行数量的列以及分析动作在此视图中不出现。</td>
 </tr>
 <tr>
 <td><code>pg_stat_xact_sys_tables</code></td>
-<td>Same as <code>pg_stat_xact_all_tables</code>, except that only system tables are shown.</td>
+<td>和<code>pg_stat_xact_all_tables</code>一样，但只显示系统表。</td>
 </tr>
 <tr>
 <td><code>pg_stat_xact_user_tables</code></td>
-<td>Same as <code>pg_stat_xact_all_tables</code>, except that only user tables are shown.</td>
+<td>和<code>pg_stat_xact_all_tables</code>一样，但只显示用户表。</td>
 </tr>
 <tr>
 <td><code>pg_stat_all_undos</code></td>
-<td>One row for each undo in the current database, showing statistics about accesses to that specific undo. See <a
+<td>当前数据库中每个回滚段一行，显示有关访问指定回滚段的统计信息。详见<a
   class="gdoc-markdown__link"
-  href="/advanced/monitor-stats/#pg_stat_all_undos"
+  href="/zh-cn/advanced/monitor-stats/#pg_stat_all_undos"
   
->pg_stat_all_undos</a> for details.</td>
+> <code>pg_stat_all_undos</code></a>。</td>
 </tr>
 <tr>
 <td><code>pg_stat_xact_all_undos</code></td>
-<td>Similar to <code>pg_stat_all_undos</code>, but counts actions taken so far within the current transaction (which are <em>not</em> yet included in <code>pg_stat_all_undos</code> and related views). The columns for numbers of live and dead records are not present in this view.</td>
+<td>和<code>pg_stat_all_undos</code>相似，但计数动作只在当前事务内发生（还<strong>没有</strong>被包括在<code>pg_stat_all_undos</code>和相关视图中）。用于生存和死亡行数量的列在此视图中不出现。</td>
 </tr>
 <tr>
 <td><code>pg_stat_all_indexes</code></td>
-<td>One row for each index in the current database, showing statistics about accesses to that specific index. See <a
+<td>当前数据库中的每个索引一行，显示：表OID、索引OID、模式名、表名、索引名、 使用了该索引的索引扫描总数、索引扫描返回的索引记录数、使用该索引的简 单索引扫描抓取的活表(livetable)中数据行数。 当前数据库中的每个索引一行，显示与访问指定索引有关的统计信息。详见<a
   class="gdoc-markdown__link"
-  href="/advanced/monitor-stats/#pg_stat_all_indexes"
+  href="/zh-cn/advanced/monitor-stats/#pg_stat_all_indexes"
   
->pg_stat_all_indexes</a> for details.</td>
+> <code>pg_stat_all_indexes</code></a>。</td>
 </tr>
 <tr>
 <td><code>pg_stat_sys_indexes</code></td>
-<td>Same as <code>pg_stat_all_indexes</code>, except that only indexes on system tables are shown.</td>
+<td>和<code>pg_stat_all_indexes</code>一样，但只显示系统表上的索引。</td>
 </tr>
 <tr>
 <td><code>pg_stat_user_indexes</code></td>
-<td>Same as <code>pg_stat_all_indexes</code>, except that only indexes on user tables are shown.</td>
+<td>和<code>pg_stat_all_indexes</code>一样，但只显示用户表上的索引。</td>
 </tr>
 <tr>
 <td><code>pg_statio_all_tables</code></td>
-<td>One row for each table in the current database, showing statistics about I/O on that specific table. See <a
+<td>当前数据库中每个表一行(包括TOAST表)，显示：表OID、模式名、表名、 从该表中读取的磁盘块总数、缓冲区命中次数、该表上所有索引的磁盘块读取总数、 该表上所有索引的缓冲区命中总数、在该表的辅助TOAST表(如果存在)上的磁盘块读取总数、 在该表的辅助TOAST表(如果存在)上的缓冲区命中总数、TOAST表的索引的磁盘块读 取总数、TOAST表的索引的缓冲区命中总数。 当前数据库中的每个表一行，显示有关在指定表上 I/O 的统计信息。详见<a
   class="gdoc-markdown__link"
-  href="/advanced/monitor-stats/#pg_statio_all_tables"
+  href="/zh-cn/advanced/monitor-stats/#pg_statio_all_tables"
   
->pg_statio_all_tables</a> for details.</td>
+> <code>pg_statio_all_tables</code></a>。</td>
 </tr>
 <tr>
 <td><code>pg_statio_sys_tables</code></td>
-<td>Same as <code>pg_statio_all_tables</code>, except that only system tables are shown.</td>
+<td>和<code>pg_statio_all_tables</code>一样，但只显示系统表。</td>
 </tr>
 <tr>
 <td><code>pg_statio_user_tables</code></td>
-<td>Same as <code>pg_statio_all_tables</code>, except that only user tables are shown.</td>
+<td>和<code>pg_statio_all_tables</code>一样，但只显示用户表。</td>
 </tr>
 <tr>
 <td><code>pg_statio_all_undos</code></td>
-<td>One row for each undo in the current database, showing statistics about I/O on that specific undo. See <a
+<td>当前数据库中每个回滚段一行，显示：回滚段OID、模式名、 回滚段名、该回滚段的磁盘块读取总数、该回滚段的缓冲区命中总数。 当前数据库中的每个回滚段包含一行，该行显示指定回滚段上有关 I/O 的统计信息。详见<a
   class="gdoc-markdown__link"
-  href="/advanced/monitor-stats/#pg_statio_all_undos"
+  href="/zh-cn/advanced/monitor-stats/#pg_statio_all_undos"
   
->pg_statio_all_undos</a> for details.</td>
+> <code>pg_statio_all_undos</code></a>。</td>
 </tr>
 <tr>
 <td><code>pg_statio_all_indexes</code></td>
-<td>One row for each index in the current database, showing statistics about I/O on that specific index. See <a
+<td>当前数据库中每个索引一行，显示：表OID、索引OID、模式名、 表名、索引名、该索引的磁盘块读取总数、该索引的缓冲区命中总数。 当前数据库中的每个索引一行，显示与指定索引上的 I/O 有关的统计信息。详见<a
   class="gdoc-markdown__link"
-  href="/advanced/monitor-stats/#pg_statio_all_indexes"
+  href="/zh-cn/advanced/monitor-stats/#pg_statio_all_indexes"
   
->pg_statio_all_indexes</a> for details.</td>
+> <code>pg_statio_all_indexes</code></a>。</td>
 </tr>
 <tr>
 <td><code>pg_statio_sys_indexes</code></td>
-<td>Same as <code>pg_statio_all_indexes</code>, except that only indexes on system tables are shown.</td>
+<td>和<code>pg_statio_all_indexes</code>一样，但只显示系统表上的索引。</td>
 </tr>
 <tr>
 <td><code>pg_statio_user_indexes</code></td>
-<td>Same as <code>pg_statio_all_indexes</code>, except that only indexes on user tables are shown.</td>
+<td>和<code>pg_statio_all_indexes</code>一样，但只显示用户表上的索引。</td>
 </tr>
 <tr>
 <td><code>pg_statio_all_sequences</code></td>
-<td>One row for each sequence in the current database, showing statistics about I/O on that specific sequence. See <a
+<td>当前数据库中每个序列对象一行，显示：序列OID、模式名、序列名、序列的磁盘读取总数、序列的缓冲区命中总数。 当前数据库中的每个序列一行，显示与指定序列上的 I/O 有关的统计信息。详见<a
   class="gdoc-markdown__link"
-  href="/advanced/monitor-stats/#pg_statio_all_sequences"
+  href="/zh-cn/advanced/monitor-stats/#pg_statio_all_sequences"
   
->pg_statio_all_sequences</a> for details.</td>
+> <code>pg_statio_all_sequences</code></a>。</td>
 </tr>
 <tr>
 <td><code>pg_statio_sys_sequences</code></td>
-<td>Same as <code>pg_statio_all_sequences</code>, except that only system sequences are shown. (Presently, no system sequences are defined, so this view is always empty.)</td>
+<td>和<code>pg_statio_all_sequences</code>一样，但只显示系统序列（目前没有定义系统序列，因此这个视图总是为空）。</td>
 </tr>
 <tr>
 <td><code>pg_statio_user_sequences</code></td>
-<td>Same as <code>pg_statio_all_sequences</code>, except that only user sequences are shown.</td>
+<td>和<code>pg_statio_all_sequences</code>一样，但只显示用户序列。</td>
 </tr>
 </tbody>
 </table> </div>
-<p>The per-index statistics are particularly useful to determine which indexes are being used and how effective they are.</p>
-<p>The <code>pg_statio_</code> views are primarily useful to determine the effectiveness of the buffer cache. When the number of actual disk reads is much smaller than the number of buffer hits, then the cache is satisfying most read requests without invoking a kernel call. However, these statistics do not give the entire story: due to the way in which PostgreSQL handles disk I/O, data that is not in the PostgreSQL buffer cache might still reside in the kernel&rsquo;s I/O cache, and might therefore still be fetched without requiring a physical read. Users interested in obtaining more detailed information on PostgreSQL I/O behavior are advised to use the PostgreSQL statistics collector in combination with operating system utilities that allow insight into the kernel&rsquo;s handling of I/O.</p>
+<p>针对每个索引的统计信息对于判断哪个索引正被使用以及它们的效果特别有用。</p>
+<p><code>pg_statio_</code>系列视图主要用于判断缓冲区的效果。当实际磁盘读取数远小于缓冲区命中时，这个缓冲能满足大部分读请求而无需进行内核调用。但是，这些统计信息并没有给出所有的事情：由于PostgreSQL处理磁盘 I/O 的方式，不在PostgreSQL缓冲区中的数据库仍然驻留在内核的 I/O 缓存中，并且因此可以被再次读取而不需要物理磁盘读取。我们建议希望了解PostgreSQL I/O 行为更多细节的用户将PostgreSQL统计收集器和操作系统中允许观察内核处理 I/O 的工具一起使用。</p>
 <div class="gdoc-page__anchorwrap">
     <h2 id="pg_stat_activity">
         pg_stat_activity
-        <a data-clipboard-text="https://doc.rockdata.net/advanced/monitor-stats/#pg_stat_activity" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: pg_stat_activity" aria-label="Anchor to: pg_stat_activity" href="#pg_stat_activity">
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/admin/monitor-stats/#pg_stat_activity" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： pg_stat_activity" aria-label="锚定到： pg_stat_activity" href="#pg_stat_activity">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>The <code>pg_stat_activity</code> view will have one row per server process, showing information related to the current activity of that process.</p>
-<p><strong>Table 3. <code>pg_stat_activity</code> View</strong></p>
+<p><code>pg_stat_activity</code>视图将为每一个服务器进程有一行，显示与该进程的当前活动相关的信息。</p>
+<p><strong>表 3. <code>pg_stat_activity</code> 视图</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
-<th>Column</th>
-<th>Type</th>
-<th>Description</th>
+<th>列</th>
+<th>类型</th>
+<th>描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>datid</code></td>
 <td><code>oid</code></td>
-<td>OID of the database this backend is connected to</td>
+<td>这个后端连接到的数据库的OID</td>
 </tr>
 <tr>
 <td><code>datname</code></td>
 <td><code>name</code></td>
-<td>Name of the database this backend is connected to</td>
+<td>这个后端连接到的数据库的名称</td>
 </tr>
 <tr>
 <td><code>pid</code></td>
 <td><code>integer</code></td>
-<td>Database Process ID of this backend</td>
+<td>这个后端的数据库进程 ID</td>
 </tr>
 <tr>
 <td><code>spid</code></td>
 <td><code>integer</code></td>
-<td>System Process ID of this backend</td>
+<td>这个后端的系统进程 ID</td>
 </tr>
 <tr>
 <td><code>tid</code></td>
 <td><code>integer</code></td>
-<td>Thread ID of this backend</td>
+<td>这个后端的线程 ID</td>
 </tr>
 <tr>
 <td><code>usesysid</code></td>
 <td><code>oid</code></td>
-<td>OID of the user logged into this backend</td>
+<td>登录到这个后端的用户的 OID</td>
 </tr>
 <tr>
 <td><code>usename</code></td>
 <td><code>name</code></td>
-<td>Name of the user logged into this backend</td>
+<td>登录到这个后端的用户的名称</td>
 </tr>
 <tr>
 <td><code>application_name</code></td>
 <td><code>text</code></td>
-<td>Name of the application that is connected to this backend</td>
+<td>连接到这个后端的应用的名称</td>
 </tr>
 <tr>
 <td><code>client_addr</code></td>
 <td><code>inet</code></td>
-<td>IP address of the client connected to this backend. If this field is null, it indicates either that the client is connected via a Unix socket on the server machine or that this is an internal process such as autoanalyze.</td>
+<td>连接到这个后端的客户端的 IP 地址。如果这个域为空，它表示客户端通过服务器机器上的一个 Unix 套接字连接或者这是一个内部进程（如自动分析）。</td>
 </tr>
 <tr>
 <td><code>client_hostname</code></td>
 <td><code>text</code></td>
-<td>Host name of the connected client, as reported by a reverse DNS lookup of <code>client_addr</code>. This field will only be non-null for IP connections, and only when <a
+<td>已连接的客户端的主机名，由<code>client_addr</code>的反向 DNS 查找报告。这个域将只对 IP 连接非空，并且只有<a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/runtime-config-logging.html#GUC-LOG-HOSTNAME"
+  href="http://www.postgres.cn/docs/12/runtime-config-logging.html#GUC-LOG-HOSTNAME"
   
->log_hostname</a> is enabled.</td>
+>log_hostname</a>被启用时才会非空。</td>
 </tr>
 <tr>
 <td><code>client_port</code></td>
 <td><code>integer</code></td>
-<td>TCP port number that the client is using for communication with this backend, or <code>-1</code> if a Unix socket is used</td>
+<td>客户端用以和这个后端通信的 TCP 端口号，如果使用 Unix 套接字则为<code>-1</code></td>
 </tr>
 <tr>
 <td><code>backend_start</code></td>
 <td><code>timestamp with time zone</code></td>
-<td>Time when this process was started. For client backends, this is the time the client connected to the server.</td>
+<td>这个进程被启动的时间。对客户端后端来说就是客户端连接到服务器的时间。</td>
 </tr>
 <tr>
 <td><code>xact_start</code></td>
 <td><code>timestamp with time zone</code></td>
-<td>Time when this process&rsquo; current transaction was started, or null if no transaction is active. If the current query is the first of its transaction, this column is equal to the <code>query_start</code> column.</td>
+<td>这个进程的当前事务被启动的时间，如果没有活动事务则为空。如果当前查询是它的第一个事务，这一列等于<code>query_start</code>。</td>
 </tr>
 <tr>
 <td><code>query_start</code></td>
 <td><code>timestamp with time zone</code></td>
-<td>Time when the currently active query was started, or if <code>state</code> is not <code>active</code>, when the last query was started</td>
+<td>当前活动查询被开始的时间，如果<code>state</code>不是<code>active</code>，这个域为上一个查询被开始的时间</td>
 </tr>
 <tr>
 <td><code>state_change</code></td>
 <td><code>timestamp with time zone</code></td>
-<td>Time when the <code>state</code> was last changed</td>
+<td><code>state</code>上一次被改变的时间</td>
 </tr>
 <tr>
 <td><code>wait_event_type</code></td>
 <td><code>text</code></td>
-<td>The type of event for which the backend is waiting, if any; otherwise NULL. Possible values are:<br/><code>LWLock</code>: The backend is waiting for a lightweight lock. Each such lock protects a particular data structure in shared memory. <code>wait_event</code> will contain a name identifying the purpose of the lightweight lock. (Some locks have specific names; others are part of a group of locks each with a similar purpose.)<br/><code>Lock</code>: The backend is waiting for a heavyweight lock. Heavyweight locks, also known as lock manager locks or simply locks, primarily protect SQL-visible objects such as tables. However, they are also used to ensure mutual exclusion for certain internal operations such as relation extension. <code>wait_event</code> will identify the type of lock awaited.<br/><code>BufferPin</code>: The server process is waiting to access to a data buffer during a period when no other process can be examining that buffer. Buffer pin waits can be protracted if another process holds an open cursor which last read data from the buffer in question.<br/><code>Activity</code>: The server process is idle. This is used by system processes waiting for activity in their main processing loop. <code>wait_event</code> will identify the specific wait point.<br/><code>Extension</code>: The server process is waiting for activity in an extension module. This category is useful for modules to track custom waiting points.<br/><code>Client</code>: The server process is waiting for some activity on a socket from user applications, and that the server expects something to happen that is independent from its internal processes. <code>wait_event</code> will identify the specific wait point.<br/><code>IPC</code>: The server process is waiting for some activity from another process in the server. <code>wait_event</code> will identify the specific wait point.<br/><code>Timeout</code>: The server process is waiting for a timeout to expire. <code>wait_event</code> will identify the specific wait point.<br/><code>IO</code>: The server process is waiting for a IO to complete. <code>wait_event</code> will identify the specific wait point.</td>
+<td>后端正在等待的事件类型，如果不存在则为 NULL。可能的值有：<br/><code>LWLock</code>：后端正在等待一个轻量级锁。每一个这样的锁保护着共享内存中的一个特殊数据结构。<code>wait_event</code>将含有一个标识该轻量级锁目的的名称（一些锁具有特定的名称，其他是一组具有类似目的的锁中的一部分）。<br/><code>Lock</code>：后端正在等待一个重量级锁。重量级锁，也称为锁管理器锁或者简单锁，主要保护 SQL 可见的对象，例如表。不过，它们也被用于确保特定内部操作的互斥，例如关系扩展。<code>wait_event</code>将标识等待的锁的类型。<br/><code>BufferPin</code>：服务器进程正在等待访问一个数据缓冲区，而此时没有其他进程正在检查该缓冲区。如果另一个进程持有一个最终从要访问的缓冲区中读取数据的打开的游标，缓冲区 pin 等待可能会被拖延。<br/><code>Activity</code>：服务器进程处于闲置状态。这被用于在其主处理循环中等待活动的系统进程。<code>wait_event</code>将标识特定的等待点。<br/><code>Extension</code>：服务器进程正在一个扩展模块中等待活动。这一个分类被用于要跟踪自定义等待点的模块。<br/><code>Client</code>：服务器进程正在一个套接字上等待来自用户应用的某种活动，并且该服务器预期某种与其内部处理无关的事情发生。<code>wait_event</code>将标识特定的等待点。<br/><code>IPC</code>：服务器进程正在等待来自服务器中另一个进程的某种活动。<code>wait_event</code>将标识特定的等待点。<br/><code>Timeout</code>：服务器进程正在等待一次超时发生。<code>wait_event</code>将标识特定的等待点。<br/><code>IO</code>：服务器进程正在等待一次IO完成。<code>wait_event</code>将标识特定的等待点。</td>
 </tr>
 <tr>
 <td><code>wait_event</code></td>
 <td><code>text</code></td>
-<td>Wait event name if backend is currently waiting, otherwise NULL. See <a
+<td>如果后端当前正在等待，则是等待事件的名称，否则为 NULL。详见<a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/monitoring-stats.html#WAIT-EVENT-TABLE"
+  href="http://www.postgres.cn/docs/12/monitoring-stats.html#WAIT-EVENT-TABLE"
   
->Table 27.4</a> for details.</td>
+>表 27.4</a>。</td>
 </tr>
 <tr>
 <td><code>memory_used</code></td>
 <td><code>bigint</code></td>
-<td>Memory used by this backend.</td>
+<td>这个后端占用的内存大小，单位字节</td>
 </tr>
 <tr>
 <td><code>state</code></td>
 <td><code>text</code></td>
-<td>Current overall state of this backend. Possible values are:<br/><code>active</code>: The backend is executing a query.<br/><code>idle</code>: The backend is waiting for a new client command.<br/><code>idle in transaction</code>: The backend is in a transaction, but is not currently executing a query.<br/><code>idle in transaction (aborted)</code>: This state is similar to <code>idle in transaction</code>, except one of the statements in the transaction caused an error.<br/><code>fastpath function call</code>: The backend is executing a fast-path function.<br/><code>disabled</code>: This state is reported if <a
+<td>这个后端的当前总体状态。可能的值是：<br/><code>active</code>：后端正在执行一个查询。<br/><code>idle</code>：后端正在等待一个新的客户端命令。<br/><code>idle in transaction</code>：后端在一个事务中，但是当前没有正在执行一个查询。<br/><code>idle in transaction (aborted)</code>：这个状态与<code>idle in transaction</code>相似，不过在该事务中的一个语句导致了一个错误。<br/><code>fastpath function call</code>：后端正在执行一个 fast-path 函数。<br/><code>disabled</code>：如果在这个后端中<a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/runtime-config-statistics.html#GUC-TRACK-ACTIVITIES"
+  href="http://www.postgres.cn/docs/12/runtime-config-statistics.html#GUC-TRACK-ACTIVITIES"
   
->track_activities</a> is disabled in this backend.</td>
+>track_activities</a>被禁用，则报告这个状态。</td>
 </tr>
 <tr>
 <td><code>backend_xid</code></td>
 <td><code>xid</code></td>
-<td>Top-level transaction identifier of this backend, if any.</td>
+<td>这个后端的顶层事务标识符（如果存在）。</td>
 </tr>
 <tr>
 <td><code>backend_mintime</code></td>
 <td><code>logicaltime</code></td>
-<td>The current backend&rsquo;s <code>mintime</code> horizon.</td>
+<td>当前后端的<code>mintime</code>范围。</td>
 </tr>
 <tr>
 <td><code>query</code></td>
 <td><code>text</code></td>
-<td>Text of this backend&rsquo;s most recent query. If <code>state</code> is <code>active</code> this field shows the currently executing query. In all other states, it shows the last query that was executed. By default the query text is truncated at 1024 bytes; this value can be changed via the parameter <a
+<td>这个后端最近查询的文本。如果<code>state</code>为<code>active</code>，这个域显示当前正在执行的查询。在所有其他状态下，它显示上一个被执行的查询。默认情况下，查询文本会被截断至1024个字符，这个值可以通过参数<a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/runtime-config-statistics.html#GUC-TRACK-ACTIVITY-QUERY-SIZE"
+  href="http://www.postgres.cn/docs/12/runtime-config-statistics.html#GUC-TRACK-ACTIVITY-QUERY-SIZE"
   
->track_activity_query_size</a>.</td>
+>track_activity_query_size</a>更改。</td>
 </tr>
 <tr>
 <td><code>backend_type</code></td>
 <td><code>text</code></td>
-<td>Type of current backend. Possible types are <code>autoanalyze launcher</code>, <code>autoanalyze worker</code>, <code>logical replication launcher</code>, <code>logical replication worker</code>, <code>parallel worker</code>, <code>background writer</code>, <code>client backend</code>, <code>checkpointer</code>, <code>startup</code>, <code>walreceiver</code>, <code>walsender</code> and <code>walwriter</code>. In addition, background workers registered by extensions may have additional types.</td>
+<td>当前后端的类型。可能的类型是 <code>autoanalyze launcher</code>, <code>autoanalyze worker</code>, <code>logical replication launcher</code>, <code>logical replication worker</code>, <code>parallel worker</code>, <code>background writer</code>, <code>client backend</code>, <code>checkpointer</code>, <code>startup</code>, <code>walreceiver</code>, <code>walsender</code> 以及 <code>walwriter</code>。 除此以外，由扩展注册的后台Worker可能有额外的类型。</td>
 </tr>
 </tbody>
 </table> </div>
@@ -3012,857 +3064,829 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
 <blockquote class="gdoc-hint note">
   <div class="gdoc-hint__title flex align-center"><i class="fa note" title="Note"></i></div>
-  <div class="gdoc-hint__text">The <code>wait_event</code> and <code>state</code> columns are independent. If a backend is in the <code>active</code> state, it may or may not be <code>waiting</code> on some event. If the state is <code>active</code> and <code>wait_event</code> is non-null, it means that a query is being executed, but is being blocked somewhere in the system.</div>
+  <div class="gdoc-hint__text"><code>wait_event</code>和<code>state</code>列是独立的。如果一个后端处于<code>active</code>状态，它可能是也可能不是某个事件上的<code>waiting</code>。如果状态是<code>active</code>并且<code>wait_event</code>为非空，它意味着一个查询正在被执行，但是它被阻塞在系统中某处。</div>
 </blockquote>
 
-<p><strong>Table 4. Wait Event Types</strong></p>
+<p><strong>表 4. 等待事件类型</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
-<th>Wait Event Type</th>
-<th>Description</th>
+<th>等待事件类型</th>
+<th>描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>Activity</code></td>
-<td>The server process is idle. This event type indicates a process waiting for activity in its main processing loop. <code>wait_event</code> will identify the specific wait point; see <em>Table 5</em>.</td>
+<td>服务器进程空闲。此事件类型表示在其主处理循环中等待活动的进程。 <code>wait_event</code>将识别特定的等待点;参见<em>表 5</em>。</td>
 </tr>
 <tr>
 <td><code>BufferPin</code></td>
-<td>The server process is waiting for exclusive access to a data buffer. Buffer pin waits can be protracted if another process holds an open cursor that last read data from the buffer in question. See <em>Table 6</em>.</td>
+<td>服务器进程正在等待对数据缓冲的独占访问。 如果另一个进程持有一个打开的游标，该游标最后一次从相关缓冲区读取数据，则缓冲区销等待可能是漫长的。参见<em>表 6</em>。</td>
 </tr>
 <tr>
 <td><code>Client</code></td>
-<td>The server process is waiting for activity on a socket connected to a user application. Thus, the server expects something to happen that is independent of its internal processes. <code>wait_event</code> will identify the specific wait point; see <em>Table 7</em>.</td>
+<td>服务器进程正在等待连接到用户应用程序的套接字上的活动。 因此，服务器预计发生一些独立于其内部进程的事情。<code>wait_event</code>将识别特定的等待点；参见<em>表 7</em>。</td>
 </tr>
 <tr>
 <td><code>Extension</code></td>
-<td>The server process is waiting for some condition defined by an extension module. See <em>Table 8</em>.</td>
+<td>服务器进程正在等待扩展模块定义的某个条件。参见<em>表 8</em>。</td>
 </tr>
 <tr>
 <td><code>IO</code></td>
-<td>The server process is waiting for an I/O operation to complete. <code>wait_event</code> will identify the specific wait point; see <em>Table 9</em>.</td>
+<td>服务器进程正在等待一个I/O操作完成。<code>wait_event</code>将识别特定的等待点；参见<em>表 9</em>。</td>
 </tr>
 <tr>
 <td><code>IPC</code></td>
-<td>The server process is waiting for some interaction with another server process. <code>wait_event</code> will identify the specific wait point; see <em>Table 10</em>.</td>
+<td>服务器进程正在等待与另一个服务器进程进行交互。<code>wait_event</code>将识别特定的等待点;参见<em>表 10</em>。</td>
 </tr>
 <tr>
 <td><code>Lock</code></td>
-<td>The server process is waiting for a heavyweight lock. Heavyweight locks, also known as lock manager locks or simply locks, primarily protect SQL-visible objects such as tables. However, they are also used to ensure mutual exclusion for certain internal operations such as relation extension. <code>wait_event</code> will identify the type of lock awaited; see <em>Table 11</em>.</td>
+<td>服务器进程正在等待一个重量级锁。重量级锁，也称为锁管理器锁或简单锁，主要保护表等SQL可见对象。 然而，它们也用于确保某些内部操作的互斥，例如关系扩展。<code>wait_event</code>将识别等待的锁的类型；参见<em>表 11</em>。</td>
 </tr>
 <tr>
 <td><code>LWLock</code></td>
-<td>The server process is waiting for a lightweight lock. Most such locks protect a particular data structure in shared memory. <code>wait_event</code> will contain a name identifying the purpose of the lightweight lock. (Some locks have specific names; others are part of a group of locks each with a similar purpose.) See <em>Table 12</em>.</td>
+<td>服务器进程正在等待一个轻量级锁。大多数这样的锁保护共享内存中的特定数据结构。 <code>wait_event</code>将包含标识轻量级锁用途的名称。 (有些锁有特定的名称；其他锁是一组锁的一部分，每个锁具有类似的目的。)参见<em>表 12</em>。</td>
 </tr>
 <tr>
 <td><code>Timeout</code></td>
-<td>The server process is waiting for a timeout to expire. <code>wait_event</code> will identify the specific wait point; see <em>Table 13</em>.</td>
+<td>服务器进程正在等待超时过期。<code>wait_event</code>将识别特定的等待点；参见<em>表 13</em>。</td>
 </tr>
 </tbody>
 </table> </div>
-<p><strong>Table 5. Wait Events of Type <code>Activity</code></strong></p>
+<p><strong>表 5. <code>Activity</code>类型的等待事件</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
-<th><code>Activity</code> Wait Event</th>
-<th>Description</th>
+<th><code>Activity</code> 等待事件</th>
+<th>描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>ArchiverMain</code></td>
-<td>Waiting in main loop of archiver process.</td>
+<td>在归档进程的主循环中等待。</td>
 </tr>
 <tr>
 <td><code>AnalyzeLauncherMain</code></td>
-<td>Waiting in main loop of autoanalyze launcher process.</td>
+<td>在自动清理启动过程的主循环中等待。</td>
 </tr>
 <tr>
 <td><code>BgWriterHibernate</code></td>
-<td>Waiting in background writer process, hibernating.</td>
+<td>在后台写进程中等待，休眠状态。</td>
 </tr>
 <tr>
 <td><code>BgWriterMain</code></td>
-<td>Waiting in main loop of background writer process.</td>
+<td>在后台写进程主循环中等待。</td>
 </tr>
 <tr>
 <td><code>CheckpointerMain</code></td>
-<td>Waiting in main loop of checkpointer process.</td>
+<td>在校验指针进程的主循环中等待。</td>
 </tr>
 <tr>
 <td><code>LogicalApplyMain</code></td>
-<td>Waiting in main loop of logical replication apply process.</td>
+<td>在逻辑复制应用进程的主循环中等待。</td>
 </tr>
 <tr>
 <td><code>LogicalLauncherMain</code></td>
-<td>Waiting in main loop of logical replication launcher process.</td>
+<td>在逻辑复制启动器进程的主循环中等待。</td>
 </tr>
 <tr>
 <td><code>PgStatMain</code></td>
-<td>Waiting in main loop of statistics collector process.</td>
+<td>在统计收集器进程的主循环中等待。</td>
 </tr>
 <tr>
 <td><code>RecoveryWalStream</code></td>
-<td>Waiting in main loop of startup process for WAL to arrive, during streaming recovery.</td>
+<td>流恢复期间，在启动进程主循环等待WAL到达。</td>
 </tr>
 <tr>
 <td><code>SysLoggerMain</code></td>
-<td>Waiting in main loop of syslogger process.</td>
+<td>在syslogger进程的主循环中等待。</td>
 </tr>
 <tr>
 <td><code>WalReceiverMain</code></td>
-<td>Waiting in main loop of WAL receiver process.</td>
+<td>在WAL接收器进程的主循环中等待。</td>
 </tr>
 <tr>
 <td><code>WalSenderMain</code></td>
-<td>Waiting in main loop of WAL sender process.</td>
+<td>在WAL发送者进程的主循环中等待。</td>
 </tr>
 <tr>
 <td><code>WalWriterMain</code></td>
-<td>Waiting in main loop of WAL writer process.</td>
+<td>在WAL写入进程的主循环中等待。</td>
 </tr>
 </tbody>
 </table> </div>
-<p><strong>Table 6. Wait Events of Type <code>BufferPin</code></strong></p>
+<p><strong>表 6. <code>BufferPin</code>类型的等待事件</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
-<th><code>BufferPin</code> Wait Event</th>
-<th>Description</th>
+<th><code>BufferPin</code> 等待事件</th>
+<th>描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>BufferPin</code></td>
-<td>Waiting to acquire an exclusive pin on a buffer.</td>
+<td>等待获得缓冲区上的独占销。</td>
 </tr>
 </tbody>
 </table> </div>
-<p><strong>Table 7. Wait Events of Type <code>Client</code></strong></p>
+<p><strong>表 7. <code>Client</code>类型的等待事件</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
-<th><code>Client</code> Wait Event</th>
-<th>Description</th>
+<th><code>Client</code> 等待事件</th>
+<th>描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>ClientRead</code></td>
-<td>Waiting to read data from the client.</td>
+<td>等待从客户端读取数据。</td>
 </tr>
 <tr>
 <td><code>ClientWrite</code></td>
-<td>Waiting to write data to the client.</td>
+<td>等待写入数据到客户端。</td>
 </tr>
 <tr>
 <td><code>GSSOpenServer</code></td>
-<td>Waiting to read data from the client while establishing a GSSAPI session.</td>
+<td>在建立GSSAPI会话时等待从客户端读取数据。</td>
 </tr>
 <tr>
 <td><code>LibPQWalReceiverConnect</code></td>
-<td>Waiting in WAL receiver to establish connection to remote server.</td>
+<td>在WAL接收器等待与远程服务器建立连接。</td>
 </tr>
 <tr>
 <td><code>LibPQWalReceiverReceive</code></td>
-<td>Waiting in WAL receiver to receive data from remote server.</td>
+<td>在WAL接收器中等待从远程服务器接收数据。</td>
 </tr>
 <tr>
 <td><code>LibPQStorageConnect</code></td>
-<td>Waiting in compute server to establish connection to remote storage server.</td>
+<td>在计算服务器等待与远程存储服务器建立连接。</td>
 </tr>
 <tr>
 <td><code>LibPQStorageReceive</code></td>
-<td>Waiting in compute server to receive data from remote storage server.</td>
+<td>在计算服务器等待从远程存储服务器接收数据。</td>
 </tr>
 <tr>
 <td><code>SSLOpenServer</code></td>
-<td>Waiting for SSL while attempting connection.</td>
+<td>在尝试连接时等待SSL。</td>
+</tr>
+<tr>
+<td><code>WalReceiverWaitStart</code></td>
+<td>等待启动进程发送用于流复制的初始数据。</td>
 </tr>
 <tr>
 <td><code>WalSenderWaitForWAL</code></td>
-<td>Waiting for WAL to be flushed in WAL sender process.</td>
+<td>在WAL发送器进程中等待WAL被刷新。</td>
 </tr>
 <tr>
 <td><code>WalSenderWriteData</code></td>
-<td>Waiting for any activity when processing replies from WAL receiver in WAL sender process.</td>
+<td>在WAL发送器进程中处理WAL接收器的回复时，等待任何活动。</td>
 </tr>
 </tbody>
 </table> </div>
-<p><strong>Table 8. Wait Events of Type <code>Extension</code></strong></p>
+<p><strong>表 8. <code>Extension</code>类型的等待事件</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
-<th><code>Extension</code> Wait Event</th>
-<th>Description</th>
+<th><code>Extension</code> 等待事件</th>
+<th>描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>Extension</code></td>
-<td>Waiting in an extension.</td>
+<td>在扩展中等待。</td>
 </tr>
 </tbody>
 </table> </div>
-<p><strong>Table 9. Wait Events of Type <code>IO</code></strong></p>
+<p><strong>表 9. <code>IO</code>类型的等待事件</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
-<th><code>IO</code> Wait Event</th>
-<th>Description</th>
+<th><code>IO</code> 等待事件</th>
+<th>描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>BaseBackupRead</code></td>
-<td>Waiting for base backup to read from a file.</td>
-</tr>
-<tr>
 <td><code>BufFileRead</code></td>
-<td>Waiting for a read from a buffered file.</td>
+<td>等待从缓冲文件中读取。</td>
 </tr>
 <tr>
 <td><code>BufFileWrite</code></td>
-<td>Waiting for a write to a buffered file.</td>
-</tr>
-<tr>
-<td><code>BufFileTruncate</code></td>
-<td>Waiting for a buffered file to be truncated.</td>
+<td>等待对缓冲文件的写入。</td>
 </tr>
 <tr>
 <td><code>ControlFileRead</code></td>
-<td>Waiting for a read from the <code>pg_control</code> file.</td>
+<td>等待读取<code>pg_control</code>文件。</td>
 </tr>
 <tr>
 <td><code>ControlFileSync</code></td>
-<td>Waiting for the <code>pg_control</code> file to reach durable storage.</td>
+<td>等待<code>pg_control</code>文件到达持久存储。</td>
 </tr>
 <tr>
 <td><code>ControlFileSyncUpdate</code></td>
-<td>Waiting for an update to the <code>pg_control</code> file to reach durable storage.</td>
+<td>等待更新<code>pg_control</code>文件以达到持久存储。</td>
 </tr>
 <tr>
 <td><code>ControlFileWrite</code></td>
-<td>Waiting for a write to the <code>pg_control</code> file.</td>
+<td>等待写入<code>pg_control</code>文件。</td>
 </tr>
 <tr>
 <td><code>ControlFileWriteUpdate</code></td>
-<td>Waiting for a write to update the <code>pg_control</code> file.</td>
+<td>等待写入更新<code>pg_control</code>文件。</td>
 </tr>
 <tr>
 <td><code>CopyFileRead</code></td>
-<td>Waiting for a read during a file copy operation.</td>
+<td>在文件复制操作期间等待读取。</td>
 </tr>
 <tr>
 <td><code>CopyFileWrite</code></td>
-<td>Waiting for a write during a file copy operation.</td>
+<td>在文件拷贝操作期间等待写入。</td>
 </tr>
 <tr>
 <td><code>DSMFillZeroWrite</code></td>
-<td>Waiting to fill a dynamic shared memory backing file with zeroes.</td>
+<td>等待用零填充动态共享内存备份(backing)文件。</td>
 </tr>
 <tr>
 <td><code>DataFileExtend</code></td>
-<td>Waiting for a relation data file to be extended.</td>
+<td>等待关系数据文件被扩展。</td>
 </tr>
 <tr>
 <td><code>DataFileFlush</code></td>
-<td>Waiting for a relation data file to reach durable storage.</td>
+<td>等待关系数据文件达到持久存储。</td>
 </tr>
 <tr>
 <td><code>DataFileImmediateSync</code></td>
-<td>Waiting for an immediate synchronization of a relation data file to durable storage.</td>
+<td>等待关系数据文件到持久存储的立即同步。</td>
 </tr>
 <tr>
 <td><code>DataFilePrefetch</code></td>
-<td>Waiting for an asynchronous prefetch from a relation data file.</td>
+<td>等待关系数据文件的异步预取。</td>
 </tr>
 <tr>
 <td><code>DataFileRead</code></td>
-<td>Waiting for a read from a relation data file.</td>
+<td>等待对关系数据文件的读取。</td>
 </tr>
 <tr>
 <td><code>DataFileSync</code></td>
-<td>Waiting for changes to a relation data file to reach durable storage.</td>
+<td>等待对关系数据文件的更改达到持久存储。</td>
 </tr>
 <tr>
 <td><code>DataFileTruncate</code></td>
-<td>Waiting for a relation data file to be truncated.</td>
+<td>等待关系数据文件被截断。</td>
 </tr>
 <tr>
 <td><code>DataFileWrite</code></td>
-<td>Waiting for a write to a relation data file.</td>
+<td>等待对关系数据文件的写入。</td>
 </tr>
 <tr>
 <td><code>LockFileAddToDataDirRead</code></td>
-<td>Waiting for a read while adding a line to the data directory lock file.</td>
+<td>在向数据目录锁文件中添加一行时等待读取。</td>
 </tr>
 <tr>
 <td><code>LockFileAddToDataDirSync</code></td>
-<td>Waiting for data to reach durable storage while adding a line to the data directory lock file.</td>
+<td>等待数据到达持久存储，同时向数据目录锁文件添加一行。</td>
 </tr>
 <tr>
 <td><code>LockFileAddToDataDirWrite</code></td>
-<td>Waiting for a write while adding a line to the data directory lock file.</td>
+<td>在向数据目录锁文件中添加一行时等待写操作。</td>
 </tr>
 <tr>
 <td><code>LockFileCreateRead</code></td>
-<td>Waiting to read while creating the data directory lock file.</td>
+<td>创建数据目录锁文件时等待读取。</td>
 </tr>
 <tr>
 <td><code>LockFileCreateSync</code></td>
-<td>Waiting for data to reach durable storage while creating the data directory lock file.</td>
+<td>在创建数据目录锁文件时等待数据到达持久存储。</td>
 </tr>
 <tr>
 <td><code>LockFileCreateWrite</code></td>
-<td>Waiting for a write while creating the data directory lock file.</td>
+<td>在创建数据目录锁文件时等待写操作。</td>
 </tr>
 <tr>
 <td><code>LockFileReCheckDataDirRead</code></td>
-<td>Waiting for a read during recheck of the data directory lock file.</td>
+<td>在重新检查数据目录锁文件期间等待读取。</td>
 </tr>
 <tr>
 <td><code>LogicalRewriteCheckpointSync</code></td>
-<td>Waiting for logical rewrite mappings to reach durable storage during a checkpoint.</td>
+<td>等待逻辑重写映射到在检查点到达持久存储。</td>
 </tr>
 <tr>
 <td><code>LogicalRewriteMappingSync</code></td>
-<td>Waiting for mapping data to reach durable storage during a logical rewrite.</td>
+<td>在逻辑重写期间等待映射数据到达持久存储</td>
 </tr>
 <tr>
 <td><code>LogicalRewriteMappingWrite</code></td>
-<td>Waiting for a write of mapping data during a logical rewrite.</td>
+<td>在逻辑重写期间等待映射数据的写入。</td>
 </tr>
 <tr>
 <td><code>LogicalRewriteSync</code></td>
-<td>Waiting for logical rewrite mappings to reach durable storage.</td>
+<td>等待逻辑重写映射到达持久存储。</td>
 </tr>
 <tr>
 <td><code>LogicalRewriteTruncate</code></td>
-<td>Waiting for truncate of mapping data during a logical rewrite.</td>
+<td>等待在逻辑重写期间截断映射数据。</td>
 </tr>
 <tr>
 <td><code>LogicalRewriteWrite</code></td>
-<td>Waiting for a write of logical rewrite mappings.</td>
+<td>等待逻辑重写映射的写入。</td>
 </tr>
 <tr>
 <td><code>RelationMapRead</code></td>
-<td>Waiting for a read of the relation map file.</td>
+<td>等待关系映射文件的读取。</td>
 </tr>
 <tr>
 <td><code>RelationMapSync</code></td>
-<td>Waiting for the relation map file to reach durable storage.</td>
+<td>等待关系映射文件到达持久存储。</td>
 </tr>
 <tr>
 <td><code>RelationMapWrite</code></td>
-<td>Waiting for a write to the relation map file.</td>
+<td>等待对关系映射文件的写入。</td>
 </tr>
 <tr>
 <td><code>ReorderBufferRead</code></td>
-<td>Waiting for a read during reorder buffer management.</td>
+<td>在重新排序缓冲区管理期间等待读取。</td>
 </tr>
 <tr>
 <td><code>ReorderBufferWrite</code></td>
-<td>Waiting for a write during reorder buffer management.</td>
+<td>在重新排序缓冲区管理期间等待写操作。</td>
 </tr>
 <tr>
 <td><code>ReorderLogicalMappingRead</code></td>
-<td>Waiting for a read of a logical mapping during reorder buffer management.</td>
+<td>在重新排序缓冲区管理期间等待读取逻辑映射。</td>
 </tr>
 <tr>
 <td><code>ReplicationSlotRead</code></td>
-<td>Waiting for a read from a replication slot control file.</td>
+<td>等待从复制槽位控制文件读取。</td>
 </tr>
 <tr>
 <td><code>ReplicationSlotRestoreSync</code></td>
-<td>Waiting for a replication slot control file to reach durable storage while restoring it to memory.</td>
+<td>等待复制槽控制文件到达持久存储，同时将其恢复到内存中。</td>
 </tr>
 <tr>
 <td><code>ReplicationSlotSync</code></td>
-<td>Waiting for a replication slot control file to reach durable storage.</td>
+<td>等待复制槽控制文件到达持久存储。</td>
 </tr>
 <tr>
 <td><code>ReplicationSlotWrite</code></td>
-<td>Waiting for a write to a replication slot control file.</td>
+<td>等待对复制槽控制文件的写入。</td>
 </tr>
 <tr>
 <td><code>SLRUFlushSync</code></td>
-<td>Waiting for SLRU data to reach durable storage during a checkpoint or database shutdown.</td>
+<td>在检查点或数据库关闭期间等待SLRU数据到达持久存储。</td>
 </tr>
 <tr>
 <td><code>SLRURead</code></td>
-<td>Waiting for a read of an SLRU page.</td>
+<td>等待读取SLRU页面。</td>
 </tr>
 <tr>
 <td><code>SLRUSync</code></td>
-<td>Waiting for SLRU data to reach durable storage following a page write.</td>
+<td>在写页面后等待SLRU数据到达持久存储。</td>
 </tr>
 <tr>
 <td><code>SLRUWrite</code></td>
-<td>Waiting for a write of an SLRU page.</td>
+<td>等待SLRU页面的写入。</td>
 </tr>
 <tr>
 <td><code>SnapbuildRead</code></td>
-<td>Waiting for a read of a serialized historical catalog snapshot.</td>
+<td>等待读取序列化的历史目录快照。</td>
 </tr>
 <tr>
 <td><code>SnapbuildSync</code></td>
-<td>Waiting for a serialized historical catalog snapshot to reach durable storage.</td>
+<td>等待序列化历史目录快照到达持久存储。</td>
 </tr>
 <tr>
 <td><code>SnapbuildWrite</code></td>
-<td>Waiting for a write of a serialized historical catalog snapshot.</td>
+<td>等待串行历史目录快照的写入。</td>
 </tr>
 <tr>
 <td><code>TimelineHistoryFileSync</code></td>
-<td>Waiting for a timeline history file received via streaming replication to reach durable storage.</td>
+<td>等待通过流复制接收的时间线历史文件到达持久存储。</td>
 </tr>
 <tr>
 <td><code>TimelineHistoryFileWrite</code></td>
-<td>Waiting for a write of a timeline history file received via streaming replication.</td>
+<td>等待通过流复制接收的时间线历史文件的写入。</td>
 </tr>
 <tr>
 <td><code>TimelineHistoryRead</code></td>
-<td>Waiting for a read of a timeline history file.</td>
+<td>等待读取时间线历史文件。</td>
 </tr>
 <tr>
 <td><code>TimelineHistorySync</code></td>
-<td>Waiting for a newly created timeline history file to reach durable storage.</td>
+<td>等待新创建的时间线历史文件到达持久存储。</td>
 </tr>
 <tr>
 <td><code>TimelineHistoryWrite</code></td>
-<td>Waiting for a write of a newly created timeline history file.</td>
+<td>等待写入新创建的时间线历史文件。</td>
 </tr>
 <tr>
 <td><code>WALBootstrapSync</code></td>
-<td>Waiting for WAL to reach durable storage during bootstrapping.</td>
+<td>在引导过程中等待WAL达到持久存储。</td>
 </tr>
 <tr>
 <td><code>WALBootstrapWrite</code></td>
-<td>Waiting for a write of a WAL page during bootstrapping.</td>
+<td>在引导过程中等待WAL页面的写入。</td>
 </tr>
 <tr>
 <td><code>WALCopyRead</code></td>
-<td>Waiting for a read when creating a new WAL segment by copying an existing one.</td>
+<td>通过复制一个已有WAL段来创建一个新的WAL段时等待读取。</td>
 </tr>
 <tr>
 <td><code>WALCopySync</code></td>
-<td>Waiting for a new WAL segment created by copying an existing one to reach durable storage.</td>
+<td>等待通过复制一个已有WAL段到持久存储来创建一个新的WAL段。</td>
 </tr>
 <tr>
 <td><code>WALCopyWrite</code></td>
-<td>Waiting for a write when creating a new WAL segment by copying an existing one.</td>
+<td>通过复制一个已有WAL段来创建一个新的WAL段时等待写入。</td>
 </tr>
 <tr>
 <td><code>WALInitSync</code></td>
-<td>Waiting for a newly initialized WAL file to reach durable storage.</td>
+<td>等待一个新初始化的WAL文件到持久存储。</td>
 </tr>
 <tr>
 <td><code>WALInitWrite</code></td>
-<td>Waiting for a write while initializing a new WAL file.</td>
+<td>在初始化一个新的WAL文件时等待写入。</td>
 </tr>
 <tr>
 <td><code>WALRead</code></td>
-<td>Waiting for a read from a WAL file.</td>
+<td>等待WAL文件的读取。</td>
 </tr>
 <tr>
 <td><code>WALSenderTimelineHistoryRead</code></td>
-<td>Waiting for a read from a timeline history file during a walsender timeline command.</td>
+<td>在walsender时间线命令期间等待从时间线历史文件读取。</td>
 </tr>
 <tr>
 <td><code>WALSync</code></td>
-<td>Waiting for a WAL file to reach durable storage.</td>
+<td>等待WAL文件到达持久存储。</td>
 </tr>
 <tr>
 <td><code>WALSyncMethodAssign</code></td>
-<td>Waiting for data to reach durable storage while assigning a new WAL sync method.</td>
+<td>等待数据到达持久存储，同时分配一个新的WAL同步方法。</td>
 </tr>
 <tr>
 <td><code>WALWrite</code></td>
-<td>Waiting for a write to a WAL file.</td>
-</tr>
-<tr>
-<td><code>LogicalChangesRead</code></td>
-<td>Waiting for a read from a logical changes file.</td>
-</tr>
-<tr>
-<td><code>LogicalChangesWrite</code></td>
-<td>Waiting for a write to a logical changes file.</td>
-</tr>
-<tr>
-<td><code>LogicalSubxactRead</code></td>
-<td>Waiting for a read from a logical subxact file.</td>
-</tr>
-<tr>
-<td><code>LogicalSubxactWrite</code></td>
-<td>Waiting for a write to a logical subxact file.</td>
+<td>等待写入WAL文件。</td>
 </tr>
 </tbody>
 </table> </div>
-<p><strong>Table 10. Wait Events of Type <code>IPC</code></strong></p>
+<p><strong>表 10. <code>IPC</code>类型的等待事件</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
-<th><code>IPC</code> Wait Event</th>
-<th>Description</th>
+<th><code>IPC</code> 等待事件</th>
+<th>描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>AppendReady</code></td>
-<td>Waiting for subplan nodes of an <code>Append</code> plan node to be ready.</td>
-</tr>
-<tr>
-<td><code>BackendTermination</code></td>
-<td>Waiting for the termination of another backend.</td>
-</tr>
-<tr>
 <td><code>BackupWaitWalArchive</code></td>
-<td>Waiting for WAL files required for a backup to be successfully archived.</td>
+<td>等待备份所需的WAL文件成功存档。</td>
 </tr>
 <tr>
 <td><code>BgWorkerShutdown</code></td>
-<td>Waiting for background worker to shut down.</td>
+<td>等待后台工作者关闭。</td>
 </tr>
 <tr>
 <td><code>BgWorkerStartup</code></td>
-<td>Waiting for background worker to start up.</td>
+<td>等待后台工作者启动。</td>
 </tr>
 <tr>
 <td><code>BtreePage</code></td>
-<td>Waiting for the page number needed to continue a parallel B-tree scan to become available.</td>
-</tr>
-<tr>
-<td><code>BufferIO</code></td>
-<td>Waiting for buffer I/O to complete.</td>
+<td>正等待继续并行B-树扫描所需的页号变得可用。</td>
 </tr>
 <tr>
 <td><code>CheckpointDone</code></td>
-<td>Waiting for a checkpoint to complete.</td>
+<td>等待检查点完成。</td>
 </tr>
 <tr>
 <td><code>CheckpointStart</code></td>
-<td>Waiting for a checkpoint to start.</td>
+<td>等待检查点开始。</td>
 </tr>
 <tr>
 <td><code>ExecuteGather</code></td>
-<td>Waiting for activity from a child process while executing a <code>Gather</code> plan node.</td>
+<td>在执行<code>Gather</code> 计划节点时，等待子进程的活动。</td>
 </tr>
 <tr>
 <td><code>LogicalSyncData</code></td>
-<td>Waiting for a logical replication remote server to send data for initial table synchronization.</td>
+<td>等待逻辑复制远程服务器发送用于初始表同步的数据。</td>
 </tr>
 <tr>
 <td><code>LogicalSyncStateChange</code></td>
-<td>Waiting for a logical replication remote server to change state.</td>
+<td>等待逻辑复制远程服务器更改状态。</td>
 </tr>
 <tr>
 <td><code>MessageQueueInternal</code></td>
-<td>Waiting for another process to be attached to a shared message queue.</td>
+<td>等待另一个进程附加到共享消息队列。</td>
 </tr>
 <tr>
 <td><code>MessageQueuePutMessage</code></td>
-<td>Waiting to write a protocol message to a shared message queue.</td>
+<td>等待将协议消息写入共享消息队列。</td>
 </tr>
 <tr>
 <td><code>MessageQueueReceive</code></td>
-<td>Waiting to receive bytes from a shared message queue.</td>
+<td>等待从共享消息队列接收字节。</td>
 </tr>
 <tr>
 <td><code>MessageQueueSend</code></td>
-<td>Waiting to send bytes to a shared message queue.</td>
+<td>等待将字节发送到共享消息队列。</td>
 </tr>
 <tr>
 <td><code>ParallelBitmapScan</code></td>
-<td>Waiting for parallel bitmap scan to become initialized.</td>
+<td>等待并行位图扫描被初始化。</td>
 </tr>
 <tr>
 <td><code>ParallelCreateIndexScan</code></td>
-<td>Waiting for parallel <code>CREATE INDEX</code> workers to finish heap scan.</td>
+<td>等待并行<code>CREATE INDEX</code> 工作者完成堆扫描。</td>
 </tr>
 <tr>
 <td><code>ParallelFinish</code></td>
-<td>Waiting for parallel workers to finish computing.</td>
+<td>等待并行工作人员完成计算。</td>
 </tr>
 <tr>
 <td><code>ProcArrayGroupUpdate</code></td>
-<td>Waiting for the group leader to clear the transaction ID at end of a parallel operation.</td>
+<td>等待组领导在并行操作结束时清除事务ID。</td>
 </tr>
 <tr>
 <td><code>ProcSignalBarrier</code></td>
-<td>Waiting for a barrier event to be processed by all backends.</td>
+<td>等待屏障事件被所有后端处理。</td>
 </tr>
 <tr>
 <td><code>Promote</code></td>
-<td>Waiting for standby promotion.</td>
+<td>等待备用系统提升。</td>
 </tr>
 <tr>
 <td><code>RecoveryPause</code></td>
-<td>Waiting for recovery to be resumed.</td>
+<td>等待恢复继续进行。</td>
 </tr>
 <tr>
 <td><code>ReplicationOriginDrop</code></td>
-<td>Waiting for a replication origin to become inactive so it can be dropped.</td>
+<td>等待复制源变为非活动状态，以便可以删除它。</td>
 </tr>
 <tr>
 <td><code>ReplicationSlotDrop</code></td>
-<td>Waiting for a replication slot to become inactive so it can be dropped.</td>
+<td>等待复制槽变为非活动状态，以便可以删除它。</td>
 </tr>
 <tr>
 <td><code>SafeSnapshot</code></td>
-<td>Waiting to obtain a valid snapshot for a <code>READ ONLY DEFERRABLE</code> transaction.</td>
+<td>等待获取<code>READ ONLY DEFERRABLE</code>事务的有效快照。</td>
 </tr>
 <tr>
 <td><code>SyncRep</code></td>
-<td>Waiting for confirmation from a remote server during synchronous replication.</td>
+<td>在同步复制期间等待远程服务器的确认。</td>
 </tr>
 <tr>
 <td><code>WalReceiverExit</code></td>
-<td>Waiting for the WAL receiver to exit.</td>
+<td>等待 WAL 接收器退出。</td>
 </tr>
 <tr>
 <td><code>WalReceiverWaitStart</code></td>
-<td>Waiting for startup process to send initial data for streaming replication.</td>
+<td>等待启动过程发送用于流式复制的初始数据。</td>
 </tr>
 <tr>
 <td><code>XactGroupUpdate</code></td>
-<td>Waiting for the group leader to update transaction status at end of a parallel operation.</td>
+<td>等待分组组长在并行操作结束时更新事务状态。</td>
 </tr>
 </tbody>
 </table> </div>
-<p><strong>Table 11. Wait Events of Type <code>Lock</code></strong></p>
+<p><strong>表 11. <code>Lock</code>类型的等待事件</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
-<th><code>Lock</code> Wait Event</th>
-<th>Description</th>
+<th><code>Lock</code> 等待事件</th>
+<th>描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>advisory</code></td>
-<td>Waiting to acquire an advisory user lock.</td>
+<td>等待获得一个建议用户锁。</td>
 </tr>
 <tr>
 <td><code>extend</code></td>
-<td>Waiting to extend a relation.</td>
+<td>等待扩展一个关系。</td>
 </tr>
 <tr>
 <td><code>object</code></td>
-<td>Waiting to acquire a lock on a non-relation database object.</td>
+<td>等待获取非关系数据库对象上的锁。</td>
 </tr>
 <tr>
 <td><code>page</code></td>
-<td>Waiting to acquire a lock on a page of a relation.</td>
+<td>等待获取一个关系页面上的锁。</td>
 </tr>
 <tr>
 <td><code>relation</code></td>
-<td>Waiting to acquire a lock on a relation.</td>
+<td>等待获得一个关系的锁。</td>
 </tr>
 <tr>
 <td><code>transactionid</code></td>
-<td>Waiting for a transaction to finish.</td>
+<td>等待事务完成。</td>
 </tr>
 <tr>
 <td><code>tuple</code></td>
-<td>Waiting to acquire a lock on a tuple.</td>
+<td>等待获取元组上的锁。</td>
 </tr>
 <tr>
 <td><code>userlock</code></td>
-<td>Waiting to acquire a user lock.</td>
+<td>等待获取用户锁。</td>
 </tr>
 <tr>
 <td><code>virtualxid</code></td>
-<td>Waiting to acquire a virtual transaction ID lock.</td>
+<td>等待获取虚拟事务ID锁。</td>
 </tr>
 </tbody>
 </table> </div>
-<p><strong>Table 12. Wait Events of Type <code>LWLock</code></strong></p>
+<p><strong>表 12. <code>LWLock</code>类型的等待事件</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
-<th><code>LWLock</code> Wait Event</th>
-<th>Description</th>
+<th><code>LWLock</code> 等待事件</th>
+<th>描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>AddinShmemInit</code></td>
-<td>Waiting to manage an extension&rsquo;s space allocation in shared memory.</td>
+<td>等待管理共享内存中的扩展空间分配。</td>
 </tr>
 <tr>
 <td><code>AutoFile</code></td>
-<td>Waiting to update the <code>pgsql.auto.conf</code> file.</td>
+<td>等待更新<code>pgsql.auto.conf</code>文件。</td>
 </tr>
 <tr>
 <td><code>Autoanalyze</code></td>
-<td>Waiting to read or update the current state of autoanalyze workers.</td>
+<td>等待读取或更新自动分析工作者的当前状态。</td>
 </tr>
 <tr>
 <td><code>AutoanalyzeSchedule</code></td>
-<td>Waiting to ensure that a table selected for autoanalyze still needs analyzing.</td>
+<td>等待确保选择为自动分析的表仍然需要清理。</td>
 </tr>
 <tr>
 <td><code>BackgroundWorker</code></td>
-<td>Waiting to read or update background worker state.</td>
+<td>等待读取或更新后台工作者状态。</td>
 </tr>
 <tr>
 <td><code>BufferContent</code></td>
-<td>Waiting to access a data page in memory.</td>
+<td>等待访问内存中的数据页。</td>
 </tr>
 <tr>
 <td><code>BufferIO</code></td>
-<td>Waiting to read or write a data page in disk.</td>
+<td>等待数据页上的I/O。</td>
 </tr>
 <tr>
 <td><code>BufferMapping</code></td>
-<td>Waiting to associate a data block with a buffer in the buffer pool.</td>
+<td>等待将数据块与缓冲池中的缓冲区关联。</td>
+</tr>
+<tr>
+<td><code>Checkpoint</code></td>
+<td>等待开始一个检查点。</td>
 </tr>
 <tr>
 <td><code>CheckpointerComm</code></td>
-<td>Waiting to manage fsync requests.</td>
+<td>等待管理fsync请求。</td>
 </tr>
 <tr>
 <td><code>ControlFile</code></td>
-<td>Waiting to read or update the <code>pg_control</code> file or create a new WAL file.</td>
+<td>等待读取或更新<code>pg_control</code>文件或创建一个新的WAL文件。</td>
 </tr>
 <tr>
 <td><code>DatabaseState</code></td>
-<td>Waiting to update state of databases.</td>
+<td>等待更新数据库的状态。</td>
 </tr>
 <tr>
 <td><code>DynamicSharedMemoryControl</code></td>
-<td>Waiting to read or update dynamic shared memory allocation information.</td>
+<td>等待读取或更新动态共享内存分配信息。</td>
 </tr>
 <tr>
 <td><code>LockFastPath</code></td>
-<td>Waiting to read or update a process&rsquo; fast-path lock information.</td>
+<td>等待读取或更新进程的快速路径锁信息。</td>
 </tr>
 <tr>
 <td><code>LockManager</code></td>
-<td>Waiting to read or update information about “heavyweight” locks.</td>
+<td>等待读取或更新关于“heavyweight”锁。</td>
 </tr>
 <tr>
 <td><code>LogicalRepWorker</code></td>
-<td>Waiting to read or update the state of logical replication workers.</td>
+<td>等待读取或更新逻辑复制工作器的状态。</td>
 </tr>
 <tr>
 <td><code>NotifyBuffer</code></td>
-<td>Waiting for I/O on a <code>NOTIFY</code> message SLRU buffer.</td>
+<td>在<code>NOTIFY</code> 消息 SLRU缓冲区上等待I/O。</td>
 </tr>
 <tr>
 <td><code>NotifyQueue</code></td>
-<td>Waiting to read or update <code>NOTIFY</code> messages.</td>
+<td>等待读取或更新<code>NOTIFY</code> 消息。</td>
 </tr>
 <tr>
 <td><code>NotifyQueueTail</code></td>
-<td>Waiting to update limit on <code>NOTIFY</code> message storage.</td>
+<td>等待<code>NOTIFY</code>消息存储上的更新限制。</td>
 </tr>
 <tr>
 <td><code>NotifySLRU</code></td>
-<td>Waiting to access the <code>NOTIFY</code> message SLRU cache.</td>
+<td>等待访问<code>NOTIFY</code>消息SLRU缓存。</td>
 </tr>
 <tr>
 <td><code>OidGen</code></td>
-<td>Waiting to allocate a new OID.</td>
+<td>等待分配一个新的OID。</td>
 </tr>
 <tr>
 <td><code>OldSnapshotTimeMap</code></td>
-<td>Waiting to read or update old snapshot control information.</td>
+<td>等待读取或更新旧的快照控制信息。</td>
 </tr>
 <tr>
 <td><code>PLogSpace</code></td>
-<td>Waiting to update state of network tablespaces.</td>
+<td>等待更新网络表空间的状态。</td>
 </tr>
 <tr>
 <td><code>PLogWrite</code></td>
-<td>Waiting for PLOG buffers to be written to disk.</td>
+<td>等待 PLOG 缓冲区写入磁盘。</td>
 </tr>
 <tr>
 <td><code>PredicateLockManager</code></td>
-<td>Waiting to access predicate lock information used by serializable transactions.</td>
+<td>等待访问可序列化事务使用的谓词锁信息。</td>
 </tr>
 <tr>
 <td><code>ProcArray</code></td>
-<td>Waiting to access the shared per-process data structures (typically, to get a snapshot or report a session&rsquo;s transaction ID).</td>
+<td>等待访问每个进程共享的数据结构(通常情况，是获取快照或报告会话的事务ID)。</td>
 </tr>
 <tr>
 <td><code>RelCacheInit</code></td>
-<td>Waiting to read or update a <code>pg_internal.init</code> relation cache initialization file.</td>
+<td>等待读取或更新<code>pg_internal.init</code>关系缓存初始化文件。</td>
 </tr>
 <tr>
 <td><code>ReplicationOrigin</code></td>
-<td>Waiting to create, drop or use a replication origin.</td>
+<td>等待创建、删除或使用复制源。</td>
 </tr>
 <tr>
 <td><code>ReplicationOriginState</code></td>
-<td>Waiting to read or update the progress of one replication origin.</td>
+<td>等待读取或更新一个复制源的进度。</td>
 </tr>
 <tr>
 <td><code>ReplicationSlotAllocation</code></td>
-<td>Waiting to allocate or free a replication slot.</td>
+<td>等待分配或释放复制槽。</td>
 </tr>
 <tr>
 <td><code>ReplicationSlotControl</code></td>
-<td>Waiting to read or update replication slot state.</td>
+<td>等待读取或更新复制槽状态。</td>
 </tr>
 <tr>
 <td><code>ReplicationSlotIO</code></td>
-<td>Waiting for I/O on a replication slot.</td>
+<td>在复制槽位上等待I/O。</td>
 </tr>
 <tr>
 <td><code>SerializableFinishedList</code></td>
-<td>Waiting to access the list of finished serializable transactions.</td>
+<td>等待访问已完成的可序列化事务列表。</td>
 </tr>
 <tr>
 <td><code>SerializablePredicateList</code></td>
-<td>Waiting to access the list of predicate locks held by serializable transactions.</td>
+<td>等待访问可序列化事务持有的谓词锁列表。</td>
 </tr>
 <tr>
 <td><code>SerializableXactHash</code></td>
-<td>Waiting to read or update information about serializable transactions.</td>
+<td>等待读取或更新关于可序列化事务的信息。</td>
 </tr>
 <tr>
 <td><code>ShmemIndex</code></td>
-<td>Waiting to find or allocate space in shared memory.</td>
+<td>等待在共享内存中找到或分配空间。</td>
 </tr>
 <tr>
 <td><code>SInvalRead</code></td>
-<td>Waiting to retrieve messages from the shared catalog invalidation queue.</td>
+<td>等待从共享目录失效队列中检索消息。</td>
 </tr>
 <tr>
 <td><code>SInvalWrite</code></td>
-<td>Waiting to add a message to the shared catalog invalidation queue.</td>
+<td>等待向共享编目失效队列添加消息。</td>
 </tr>
 <tr>
 <td><code>SyncRep</code></td>
-<td>Waiting to read or update information about the state of synchronous replication.</td>
+<td>等待读取或更新有关同步复制状态的信息。</td>
 </tr>
 <tr>
 <td><code>SyncScan</code></td>
-<td>Waiting to select the starting location of a synchronized table scan.</td>
+<td>等待选择同步表扫描的起始位置。</td>
 </tr>
 <tr>
 <td><code>TablespaceMap</code></td>
-<td>Waiting to create or drop a tablespace.</td>
+<td>等待创建或删除表空间。</td>
 </tr>
 <tr>
 <td><code>TwoPhaseState</code></td>
-<td>Waiting to read or update the state of prepared transactions.</td>
+<td>等待读取或更新已准备事务的状态。</td>
 </tr>
 <tr>
 <td><code>WALBufMapping</code></td>
-<td>Waiting to replace a page in WAL buffers.</td>
+<td>等待在WAL缓冲区中替换一个页面。</td>
 </tr>
 <tr>
 <td><code>WALInsert</code></td>
-<td>Waiting to insert WAL data into a memory buffer.</td>
+<td>等待将WAL数据插入内存缓冲区。</td>
 </tr>
 <tr>
 <td><code>WALWrite</code></td>
-<td>Waiting for WAL buffers to be written to disk.</td>
+<td>等待WAL缓冲区写入磁盘。</td>
 </tr>
 </tbody>
 </table> </div>
@@ -3873,45 +3897,37 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
 <blockquote class="gdoc-hint note">
   <div class="gdoc-hint__title flex align-center"><i class="fa note" title="Note"></i></div>
-  <div class="gdoc-hint__text">Extensions can add <code>LWLock</code> types to the list shown in <em>Table 12</em>. In some cases, the name assigned by an extension will not be available in all server processes; so an <code>LWLock</code> wait event might be reported as just “<code>extension</code>” rather than the extension-assigned name.</div>
+  <div class="gdoc-hint__text">扩展可以将<code>LWLock</code>类型添加到<em>表 12</em>所示的列表中。 在某些情况下，扩展名分配的名称不能在所有服务器进程中使用;因此<code>LWLock</code>等待事件可能只被报告为“<code>extension</code>”，而不是扩展名分配的名称。</div>
 </blockquote>
 
-<p><strong>Table 13. Wait Events of Type <code>Timeout</code></strong></p>
+<p><strong>表 13. <code>Timeout</code>类型的等待事件</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
-<th><code>Timeout</code> Wait Event</th>
-<th>Description</th>
+<th><code>Timeout</code> 等待事件</th>
+<th>描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>BaseBackupThrottle</code></td>
-<td>Waiting during base backup when throttling activity.</td>
-</tr>
-<tr>
-<td><code>CheckpointWriteDelay</code></td>
-<td>Waiting between writes while performing a checkpoint.</td>
+<td>当有限流活动时在基础备份期间等待。</td>
 </tr>
 <tr>
 <td><code>PgSleep</code></td>
-<td>Waiting due to a call to <code>pg_sleep</code> or a sibling function.</td>
+<td>由于调用<code>pg_sleep</code>或同类函数而等待。</td>
 </tr>
 <tr>
 <td><code>RecoveryApplyDelay</code></td>
-<td>Waiting to apply WAL during recovery because of a delay setting.</td>
+<td>由于延迟设置，在恢复期间等待应用WAL。</td>
 </tr>
 <tr>
 <td><code>RecoveryRetrieveRetryInterval</code></td>
-<td>Waiting during recovery when WAL data is not available from any source (<code>pg_wal</code>, archive or stream).</td>
-</tr>
-<tr>
-<td><code>RegisterSyncRequest</code></td>
-<td>Waiting while sending synchronization requests to the checkpointer, because the request queue is full.</td>
+<td>当WAL数据无法从任何来源(<code>pg_wal</code>，存档或流)获得时，在恢复期间等待。</td>
 </tr>
 </tbody>
 </table> </div>
-<p>Here is an example of how wait events can be viewed:</p>
+<p>下面的例子展示了如何查看等待事件：</p>
 <pre tabindex="0"><code>SELECT pid, wait_event_type, wait_event FROM pg_stat_activity WHERE wait_event is NOT NULL;
  pid  | wait_event_type | wait_event 
 ------+-----------------+------------
@@ -3921,190 +3937,190 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </code></pre><div class="gdoc-page__anchorwrap">
     <h2 id="pg_stat_wait_event">
         pg_stat_wait_event
-        <a data-clipboard-text="https://doc.rockdata.net/advanced/monitor-stats/#pg_stat_wait_event" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: pg_stat_wait_event" aria-label="Anchor to: pg_stat_wait_event" href="#pg_stat_wait_event">
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/admin/monitor-stats/#pg_stat_wait_event" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： pg_stat_wait_event" aria-label="锚定到： pg_stat_wait_event" href="#pg_stat_wait_event">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>The <code>pg_stat_wait_event</code> view will contain one row for each wait event in the current database, showing statistics about wait information of every occured wait events.</p>
-<p><strong>Table 14. <code>pg_stat_wait_event</code> View</strong></p>
+<p><code>pg_stat_wait_event</code>视图将包含当前数据库中的每个等待事件的一行，显示有关每个已发生等待事件的等待信息的统计信息。</p>
+<p><strong>表 14. <code>pg_stat_wait_event</code> 视图</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
-<th>Column</th>
-<th>Type</th>
-<th>Description</th>
+<th>列</th>
+<th>类型</th>
+<th>描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>wait_event_type</code></td>
 <td><code>text</code></td>
-<td>The type of event for which the backend is waiting, if any; otherwise NULL. See <em>Table 4</em> for details.</td>
+<td>后端正在等待的事件类型（如果有）; 否则为空。有关详细信息，请参阅 <em>表 4</em>。</td>
 </tr>
 <tr>
 <td><code>wait_event</code></td>
 <td><code>text</code></td>
-<td>Wait event name if backend is currently waiting, otherwise NULL. See <em>Table 4 ~ 13</em> for details.</td>
+<td>如果后端当前正在等待，则等待事件名称，否则为 NULL。有关详细信息，请参阅 <em>表 4 ~ 13</em>。</td>
 </tr>
 <tr>
 <td><code>waits</code></td>
 <td><code>bigint</code></td>
-<td>Number of times this event has occured</td>
+<td>此事件发生的次数</td>
 </tr>
 <tr>
 <td><code>total_time</code></td>
 <td><code>double precision</code></td>
-<td>Total time spent in the event, in milliseconds</td>
+<td>在事件中花费的总时间（以毫秒为单位）</td>
 </tr>
 <tr>
 <td><code>min_time</code></td>
 <td><code>double precision</code></td>
-<td>Minimum time spent in the event, in milliseconds</td>
+<td>在事件中花费的最短时间（以毫秒为单位）</td>
 </tr>
 <tr>
 <td><code>max_time</code></td>
 <td><code>double precision</code></td>
-<td>Maximum time spent in the event, in milliseconds</td>
+<td>在事件中花费的最长时间（以毫秒为单位）</td>
 </tr>
 <tr>
 <td><code>mean_time</code></td>
 <td><code>double precision</code></td>
-<td>Mean time spent in the event, in milliseconds</td>
+<td>在事件中花费的平均时间（以毫秒为单位）</td>
 </tr>
 </tbody>
 </table> </div>
 <div class="gdoc-page__anchorwrap">
     <h2 id="pg_stat_replication">
         pg_stat_replication
-        <a data-clipboard-text="https://doc.rockdata.net/advanced/monitor-stats/#pg_stat_replication" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: pg_stat_replication" aria-label="Anchor to: pg_stat_replication" href="#pg_stat_replication">
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/admin/monitor-stats/#pg_stat_replication" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： pg_stat_replication" aria-label="锚定到： pg_stat_replication" href="#pg_stat_replication">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>The <code>pg_stat_replication</code> view will contain one row per WAL sender process, showing statistics about replication to that sender&rsquo;s connected standby server. Only directly connected standbys are listed; no information is available about downstream standby servers.</p>
-<p><strong>Table 15. <code>pg_stat_replication</code> View</strong></p>
+<p><code>pg_stat_replication</code>视图中将为每一个 WAL 发送进程包含一行，用来显示与该发送进程连接的后备服务器的复制统计信息。这个视图中只会列出直接连接的后备机，下游后备服务器的信息不包含在此。</p>
+<p><strong>表 15. <code>pg_stat_replication</code> 视图</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
-<th>Column</th>
-<th>Type</th>
-<th>Description</th>
+<th>列</th>
+<th>类型</th>
+<th>描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>pid</code></td>
 <td><code>integer</code></td>
-<td>Process ID of a WAL sender process</td>
+<td>一个 WAL 发送进程的进程 ID</td>
 </tr>
 <tr>
 <td><code>usesysid</code></td>
 <td><code>oid</code></td>
-<td>OID of the user logged into this WAL sender process</td>
+<td>登录到这个 WAL 发送进程的用户的 OID</td>
 </tr>
 <tr>
 <td><code>usename</code></td>
 <td><code>name</code></td>
-<td>Name of the user logged into this WAL sender process</td>
+<td>登录到这个 WAL 发送进程的用户的名称</td>
 </tr>
 <tr>
 <td><code>application_name</code></td>
 <td><code>text</code></td>
-<td>Name of the application that is connected to this WAL sender</td>
+<td>连接到这个 WAL 发送进程的应用的名称</td>
 </tr>
 <tr>
 <td><code>client_addr</code></td>
 <td><code>inet</code></td>
-<td>IP address of the client connected to this WAL sender. If this field is null, it indicates that the client is connected via a Unix socket on the server machine.</td>
+<td>连接到这个 WAL 发送进程的客户端的 IP 地址。 如果这个域为空，它表示该客户端通过服务器机器上的一个 Unix 套接字连接。</td>
 </tr>
 <tr>
 <td><code>client_hostname</code></td>
 <td><code>text</code></td>
-<td>Host name of the connected client, as reported by a reverse DNS lookup of <code>client_addr</code>. This field will only be non-null for IP connections, and only when <a
+<td>连接上的客户端的主机名，由一次对<code>client_addr</code> 的逆向 DNS 查找报告。这个域将只对 IP 连接非空，并且只有在 <a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/runtime-config-logging.html#GUC-LOG-HOSTNAME"
+  href="http://www.postgres.cn/docs/12/runtime-config-logging.html#GUC-LOG-HOSTNAME"
   
->log_hostname</a> is enabled.</td>
+>log_hostname</a>被启用时非空</td>
 </tr>
 <tr>
 <td><code>client_port</code></td>
 <td><code>integer</code></td>
-<td>TCP port number that the client is using for communication with this WAL sender, or <code>-1</code> if a Unix socket is used</td>
+<td>客户端用来与这个 WAL 发送进程通讯的 TCP 端口号， 如果使用 Unix 套接字则为<code>-1</code></td>
 </tr>
 <tr>
 <td><code>backend_start</code></td>
 <td><code>timestamp with time zone</code></td>
-<td>Time when this process was started, i.e., when the client connected to this WAL sender</td>
+<td>这个进程开始的时间，即客户端是何时连接到这个 WAL 发送进程的</td>
 </tr>
 <tr>
 <td><code>backend_mintime</code></td>
 <td><code>logicaltime</code></td>
-<td>This standby&rsquo;s <code>mintime</code> horizon reported by <a
+<td>由<a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/runtime-config-replication.html#GUC-HOT-STANDBY-FEEDBACK"
+  href="http://www.postgres.cn/docs/12/runtime-config-replication.html#GUC-HOT-STANDBY-FEEDBACK"
   
->hot_standby_feedback</a>.</td>
+>hot_standby_feedback</a>报告 的这个后备机的<code>mintime</code>水平线。</td>
 </tr>
 <tr>
 <td><code>state</code></td>
 <td><code>text</code></td>
-<td>Current WAL sender state. Possible values are:<code>startup</code>: This WAL sender is starting up.<code>catchup</code>: This WAL sender&rsquo;s connected standby is catching up with the primary.<code>streaming</code>: This WAL sender is streaming changes after its connected standby server has caught up with the primary.<code>backup</code>: This WAL sender is sending a backup.<code>stopping</code>: This WAL sender is stopping.</td>
+<td>当前的 WAL 发送进程状态。 可能的值是：<code>startup</code>：这个WAL发送器正在启动。<code>catchup</code>：这个WAL发送器连接的后备机正在追赶主服务器。<code>streaming</code>：这个WAL发送器在它连接的后备服务器追上主服务器之后用流传送更改。<code>backup</code>：这个WAL发送器正在发送一个备份。<code>stopping</code>：这个WAL发送器正在停止。</td>
 </tr>
 <tr>
 <td><code>sent_lsn</code></td>
 <td><code>pg_lsn</code></td>
-<td>Last write-ahead log location sent on this connection</td>
+<td>在这个连接上发送的最后一个预写式日志的位置</td>
 </tr>
 <tr>
 <td><code>write_lsn</code></td>
 <td><code>pg_lsn</code></td>
-<td>Last write-ahead log location written to disk by this standby server</td>
+<td>被这个后备服务器写入到磁盘的最后一个预写式日志的位置</td>
 </tr>
 <tr>
 <td><code>flush_lsn</code></td>
 <td><code>pg_lsn</code></td>
-<td>Last write-ahead log location flushed to disk by this standby server</td>
+<td>被这个后备服务器刷入到磁盘的最后一个预写式日志的位置</td>
 </tr>
 <tr>
 <td><code>replay_lsn</code></td>
 <td><code>pg_lsn</code></td>
-<td>Last write-ahead log location replayed into the database on this standby server</td>
+<td>被重放到这个后备服务器上的数据库中的最后一个预写式日志的位置</td>
 </tr>
 <tr>
 <td><code>write_lag</code></td>
 <td><code>interval</code></td>
-<td>Time elapsed between flushing recent WAL locally and receiving notification that this standby server has written it (but not yet flushed it or applied it). This can be used to gauge the delay that <code>synchronous_commit</code> level <code>remote_write</code> incurred while committing if this server was configured as a synchronous standby.</td>
+<td>在本地刷写近期的WAL与接收到后备服务器已经写入它（但还没有刷写或者应用）的通知之间流逝的时间。如果这台服务器被配置为一个同步后备，这可以用来计量在提交时<code>synchronous_commit</code>的级别<code>remote_write</code>所导致的延迟。</td>
 </tr>
 <tr>
 <td><code>flush_lag</code></td>
 <td><code>interval</code></td>
-<td>Time elapsed between flushing recent WAL locally and receiving notification that this standby server has written and flushed it (but not yet applied it). This can be used to gauge the delay that <code>synchronous_commit</code> level <code>on</code> incurred while committing if this server was configured as a synchronous standby.</td>
+<td>在本地刷写近期的WAL与接收到后备服务器已经写入并且刷写它（但还没有应用）的通知之间流逝的时间。如果这台服务器被配置为一个同步后备，这可以用来计量在提交时<code>synchronous_commit</code>的级别<code>on</code>所导致的延迟。</td>
 </tr>
 <tr>
 <td><code>replay_lag</code></td>
 <td><code>interval</code></td>
-<td>Time elapsed between flushing recent WAL locally and receiving notification that this standby server has written, flushed and applied it. This can be used to gauge the delay that <code>synchronous_commit</code> level <code>remote_apply</code> incurred while committing if this server was configured as a synchronous standby.</td>
+<td>在本地刷写近期的WAL与接收到后备服务器已经写入它、刷写它并且应用它的通知之间流逝的时间。如果这台服务器被配置为一个同步后备，这可以用来计量在提交时<code>synchronous_commit</code>的级别<code>remote_apply</code>所导致的延迟。</td>
 </tr>
 <tr>
 <td><code>sync_priority</code></td>
 <td><code>integer</code></td>
-<td>Priority of this standby server for being chosen as the synchronous standby in a priority-based synchronous replication. This has no effect in a quorum-based synchronous replication.</td>
+<td>在基于优先的同步复制中，这台后备服务器被选为同步后备的优先级。在基于规定数量的同步复制中，这个值没有效果。</td>
 </tr>
 <tr>
 <td><code>sync_state</code></td>
 <td><code>text</code></td>
-<td>Synchronous state of this standby server. Possible values are:<code>async</code>: This standby server is asynchronous.<code>potential</code>: This standby server is now asynchronous, but can potentially become synchronous if one of current synchronous ones fails.<code>sync</code>: This standby server is synchronous.<code>quorum</code>: This standby server is considered as a candidate for quorum standbys.</td>
+<td>这一台后备服务器的同步状态。 可能的值是：<code>async</code>：这台后备服务器是异步的。<code>potential</code>：这台后备服务器现在是异步的，但可能在当前的同步后备失效时变成同步的。<code>sync</code>：这台后备服务器是同步的。<code>quorum</code>：这台后备服务器被当做规定数量后备服务器的候选。</td>
 </tr>
 <tr>
 <td><code>reply_time</code></td>
 <td><code>timestamp with time zone</code></td>
-<td>Send time of last reply message received from standby server</td>
+<td>从备用服务器收到的最后一条回复信息的发送时间</td>
 </tr>
 </tbody>
 </table> </div>
-<p>The lag times reported in the <code>pg_stat_replication</code> view are measurements of the time taken for recent WAL to be written, flushed and replayed and for the sender to know about it. These times represent the commit delay that was (or would have been) introduced by each synchronous commit level, if the remote server was configured as a synchronous standby. For an asynchronous standby, the <code>replay_lag</code> column approximates the delay before recent transactions became visible to queries. If the standby server has entirely caught up with the sending server and there is no more WAL activity, the most recently measured lag times will continue to be displayed for a short time and then show NULL.</p>
-<p>Lag times work automatically for physical replication. Logical decoding plugins may optionally emit tracking messages; if they do not, the tracking mechanism will simply display NULL lag.</p>
+<p><code>pg_stat_replication</code>视图中报告的滞后时间近期的WAL被写入、刷写并且重放以及发送器知道这一切所花的时间的度量。如果远程服务器被配置为一台同步后备，这些时间表示由每一种同步提交级别所带来（或者是可能带来）的提交延迟。对于一台异步后备，<code>replay_lag</code>列是最近的事务变得对查询可见的延迟时间的近似值。如果后备服务器已经完全追上了发送服务器并且没有WAL活动，在短时间内将继续显示最近测到的滞后时间，再然后就会显示为NULL。</p>
+<p>对于物理复制会自动测量滞后时间。逻辑解码插件可能会选择性地发出跟踪消息，如果它们没有这样做，跟踪机制将把滞后显示为NULL。</p>
 
 
 
@@ -4112,401 +4128,401 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
 <blockquote class="gdoc-hint note">
   <div class="gdoc-hint__title flex align-center"><i class="fa note" title="Note"></i></div>
-  <div class="gdoc-hint__text">The reported lag times are not predictions of how long it will take for the standby to catch up with the sending server assuming the current rate of replay. Such a system would show similar times while new WAL is being generated, but would differ when the sender becomes idle. In particular, when the standby has caught up completely, <code>pg_stat_replication</code> shows the time taken to write, flush and replay the most recent reported WAL location rather than zero as some users might expect. This is consistent with the goal of measuring synchronous commit and transaction visibility delays for recent write transactions. To reduce confusion for users expecting a different model of lag, the lag columns revert to NULL after a short time on a fully replayed idle system. Monitoring systems should choose whether to represent this as missing data, zero or continue to display the last known value.</div>
+  <div class="gdoc-hint__text">报告的滞后时间并非按照当前的重放速率该后备还有多久才能追上发送服务器的预测。在新的WAL被生成期间，这样一种系统将显示类似的时间，但是当发送器变为闲置时会显示不同的值。特别是当后备服务器完全追上时，<code>pg_stat_replication</code>显示的是写入、刷写及重放最近报告的WAL位置所花的时间而不是一些用户可能预期的零。这种做法与为近期的写事务测量同步提交和事务可见性延迟的目的一致。为了降低用户预期一种不同的滞后模型带来的混淆，在一个完全重放完的闲置系统上，lag列会在一段比较短的时间后回复成NULL。监控系统应该选择将这种情况表示为缺失数据、零或者继续显示最近的已知值。</div>
 </blockquote>
 
 <div class="gdoc-page__anchorwrap">
     <h2 id="pg_stat_database">
         pg_stat_database
-        <a data-clipboard-text="https://doc.rockdata.net/advanced/monitor-stats/#pg_stat_database" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: pg_stat_database" aria-label="Anchor to: pg_stat_database" href="#pg_stat_database">
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/admin/monitor-stats/#pg_stat_database" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： pg_stat_database" aria-label="锚定到： pg_stat_database" href="#pg_stat_database">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>The <code>pg_stat_database</code> view will contain one row for each database in the cluster, plus one for the shared objects, showing database-wide statistics.</p>
-<p><strong>Table 16. <code>pg_stat_database</code> View</strong></p>
+<p><code>pg_stat_database</code>视图将为集簇中的每一个数据库包含有一行，再加上一个共享对象，显示出全数据库的统计信息。</p>
+<p><strong>表 16. <code>pg_stat_database</code>视图</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
-<th>Column</th>
-<th>Type</th>
-<th>Description</th>
+<th>列</th>
+<th>类型</th>
+<th>描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>datid</code></td>
 <td><code>oid</code></td>
-<td>OID of this database, or 0 for objects belonging to a shared relation</td>
+<td>一个数据库的OID，或属于共享关系的对象为0。</td>
 </tr>
 <tr>
 <td><code>datname</code></td>
 <td><code>name</code></td>
-<td>Name of this database, or <code>NULL</code> for the shared objects.</td>
+<td>此数据库的名称，或共享对象的<code>NULL</code>。</td>
 </tr>
 <tr>
 <td><code>numbackends</code></td>
 <td><code>integer</code></td>
-<td>Number of backends currently connected to this database, or <code>NULL</code> for the shared objects. This is the only column in this view that returns a value reflecting current state; all other columns return the accumulated values since the last reset.</td>
+<td>当前连接到这个数据库的后端数量，或者<code>NULL</code>为共享对象。 这是此视图中唯一返回反映当前状态的值的列；所有其他列都返回上次重置后的累积值。</td>
 </tr>
 <tr>
 <td><code>xact_commit</code></td>
 <td><code>bigint</code></td>
-<td>Number of transactions in this database that have been committed</td>
+<td>在这个数据库中已经被提交的事务的数量</td>
 </tr>
 <tr>
 <td><code>xact_rollback</code></td>
 <td><code>bigint</code></td>
-<td>Number of transactions in this database that have been rolled back</td>
+<td>在这个数据库中已经被回滚的事务的数量</td>
 </tr>
 <tr>
 <td><code>blks_read</code></td>
 <td><code>bigint</code></td>
-<td>Number of disk blocks read in this database</td>
+<td>在这个数据库中被读取的磁盘块的数量</td>
 </tr>
 <tr>
 <td><code>blks_cloned</code></td>
 <td><code>bigint</code></td>
-<td>Number of data buffers cloned in this database</td>
+<td>在这个数据库中构造用于一致性读的缓冲页的数量</td>
 </tr>
 <tr>
 <td><code>blks_hit</code></td>
 <td><code>bigint</code></td>
-<td>Number of times disk blocks were found already in the buffer cache, so that a read was not necessary (this only includes hits in the PostgreSQL buffer cache, not the operating system&rsquo;s file system cache)</td>
+<td>磁盘块被发现已经在缓冲区中的次数，这样不需要一次读取（这只包括 PostgreSQL 缓冲区中的命中，而不包括在操作系统文件系统缓冲区中的命中）</td>
 </tr>
 <tr>
 <td><code>tup_returned</code></td>
 <td><code>bigint</code></td>
-<td>Number of rows returned by queries in this database</td>
+<td>在这个数据库中被查询返回的行数</td>
 </tr>
 <tr>
 <td><code>tup_fetched</code></td>
 <td><code>bigint</code></td>
-<td>Number of rows fetched by queries in this database</td>
+<td>在这个数据库中被查询取出的行数</td>
 </tr>
 <tr>
 <td><code>tup_inserted</code></td>
 <td><code>bigint</code></td>
-<td>Number of rows inserted by queries in this database</td>
+<td>在这个数据库中被查询插入的行数</td>
 </tr>
 <tr>
 <td><code>tup_updated</code></td>
 <td><code>bigint</code></td>
-<td>Number of rows updated by queries in this database</td>
+<td>在这个数据库中被查询更新的行数</td>
 </tr>
 <tr>
 <td><code>tup_deleted</code></td>
 <td><code>bigint</code></td>
-<td>Number of rows deleted by queries in this database</td>
+<td>在这个数据库中被查询删除的行数</td>
 </tr>
 <tr>
 <td><code>conflicts</code></td>
 <td><code>bigint</code></td>
-<td>Number of queries canceled due to conflicts with recovery in this database. (Conflicts occur only on standby servers; see <a
+<td>由于与恢复冲突而在这个数据库中被取消的查询的数目（冲突只发生在后备服务器上，详见<a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/monitoring-stats.html#PG-STAT-DATABASE-CONFLICTS-VIEW"
+  href="http://www.postgres.cn/docs/12/monitoring-stats.html#PG-STAT-DATABASE-CONFLICTS-VIEW"
   
->pg_stat_database_conflicts</a> for details.)</td>
+>pg_stat_database_conflicts</a>）。</td>
 </tr>
 <tr>
 <td><code>temp_files</code></td>
 <td><code>bigint</code></td>
-<td>Number of temporary files created by queries in this database. All temporary files are counted, regardless of why the temporary file was created (e.g., sorting or hashing), and regardless of the <a
+<td>在这个数据库中被查询创建的临时文件的数量。所有临时文件都被统计，不管为什么创建这些临时文件（如排序或哈希），并且不管<a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/runtime-config-logging.html#GUC-LOG-TEMP-FILES"
+  href="http://www.postgres.cn/docs/12/runtime-config-logging.html#GUC-LOG-TEMP-FILES"
   
->log_temp_files</a> setting.</td>
+>log_temp_files</a>设置。</td>
 </tr>
 <tr>
 <td><code>temp_bytes</code></td>
 <td><code>bigint</code></td>
-<td>Total amount of data written to temporary files by queries in this database. All temporary files are counted, regardless of why the temporary file was created, and regardless of the <a
+<td>在这个数据库中被查询写到临时文件中的数据总量。所有临时文件都被统计，不管为什么创建这些临时文件（如排序或哈希），并且不管<a
   class="gdoc-markdown__link"
-  href="https://www.postgresql.org/docs/12/runtime-config-logging.html#GUC-LOG-TEMP-FILES"
+  href="http://www.postgres.cn/docs/12/runtime-config-logging.html#GUC-LOG-TEMP-FILES"
   
->log_temp_files</a> setting.</td>
+>log_temp_files</a>设置。</td>
 </tr>
 <tr>
 <td><code>deadlocks</code></td>
 <td><code>bigint</code></td>
-<td>Number of deadlocks detected in this database</td>
+<td>在这个数据库中被检测到的死锁数</td>
 </tr>
 <tr>
 <td><code>checksum_failures</code></td>
 <td><code>bigint</code></td>
-<td>Number of data page checksum failures detected in this database (or on a shared object), or NULL if data checksums are not enabled.</td>
+<td>在此数据库（或共享对象上）检测到的数据页校验和失败的次数，如果没有启用数据校验和，则为NULL。</td>
 </tr>
 <tr>
 <td><code>checksum_last_failure</code></td>
 <td><code>timestamp with time zone</code></td>
-<td>Time at which the last data page checksum failure was detected in this database (or on a shared object), or NULL if data checksums are not enabled.</td>
+<td>在此数据库（或共享对象上）检测到最后一个数据页校验和失败的时间，如果没有启用数据校验和，则为NULL。</td>
 </tr>
 <tr>
 <td><code>blk_read_time</code></td>
 <td><code>double precision</code></td>
-<td>Time spent reading data file blocks by backends in this database, in milliseconds</td>
+<td>在这个数据库中后端花费在读取数据文件块的时间，以毫秒计</td>
 </tr>
 <tr>
 <td><code>blk_clone_time</code></td>
 <td><code>double precision</code></td>
-<td>Time spent cloning data buffers by backends in this database, in milliseconds</td>
+<td>在这个数据库中后端花费在构造用于一致性读的缓冲页的时间，以毫秒计</td>
 </tr>
 <tr>
 <td><code>blk_write_time</code></td>
 <td><code>double precision</code></td>
-<td>Time spent writing data file blocks by backends in this database, in milliseconds</td>
+<td>在这个数据库中后端花费在写数据文件块的时间，以毫秒计</td>
 </tr>
 <tr>
 <td><code>stats_reset</code></td>
 <td><code>timestamp with time zone</code></td>
-<td>Time at which these statistics were last reset</td>
+<td>这些统计信息上次被重置的时间</td>
 </tr>
 </tbody>
 </table> </div>
 <div class="gdoc-page__anchorwrap">
     <h2 id="pg_stat_all_tables">
         pg_stat_all_tables
-        <a data-clipboard-text="https://doc.rockdata.net/advanced/monitor-stats/#pg_stat_all_tables" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: pg_stat_all_tables" aria-label="Anchor to: pg_stat_all_tables" href="#pg_stat_all_tables">
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/admin/monitor-stats/#pg_stat_all_tables" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： pg_stat_all_tables" aria-label="锚定到： pg_stat_all_tables" href="#pg_stat_all_tables">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>The <code>pg_stat_all_tables</code> view will contain one row for each table in the current database (including TOAST tables), showing statistics about accesses to that specific table. The <code>pg_stat_user_tables</code> and <code>pg_stat_sys_tables</code> views contain the same information, but filtered to only show user and system tables respectively.</p>
-<p><strong>Table 17. <code>pg_stat_all_tables</code> View</strong></p>
+<p><code>pg_stat_all_tables</code>视图将为当前数据库中的每一个表（包括 TOAST 表）包含一行，该行显示与对该表的访问相关的统计信息。<code>pg_stat_user_tables</code>和<code>pg_stat_sys_tables</code>视图包含相同的信息，但是被过滤得分别只显示用户和系统表。</p>
+<p><strong>表 17. <code>pg_stat_all_tables</code>视图</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
-<th>Column</th>
-<th>Type</th>
-<th>Description</th>
+<th>列</th>
+<th>类型</th>
+<th>描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>relid</code></td>
 <td><code>oid</code></td>
-<td>OID of a table</td>
+<td>一个表的 OID</td>
 </tr>
 <tr>
 <td><code>schemaname</code></td>
 <td><code>name</code></td>
-<td>Name of the schema that this table is in</td>
+<td>这个表所在的模式的名称</td>
 </tr>
 <tr>
 <td><code>relname</code></td>
 <td><code>name</code></td>
-<td>Name of this table</td>
+<td>这个表的名称</td>
 </tr>
 <tr>
 <td><code>seq_scan</code></td>
 <td><code>bigint</code></td>
-<td>Number of sequential scans initiated on this table</td>
+<td>在这个表上发起的顺序扫描的次数</td>
 </tr>
 <tr>
 <td><code>seq_tup_read</code></td>
 <td><code>bigint</code></td>
-<td>Number of live rows fetched by sequential scans</td>
+<td>被顺序扫描取得的活着的行的数量</td>
 </tr>
 <tr>
 <td><code>idx_scan</code></td>
 <td><code>bigint</code></td>
-<td>Number of index scans initiated on this table</td>
+<td>在这个表上发起的索引扫描的次数</td>
 </tr>
 <tr>
 <td><code>idx_tup_fetch</code></td>
 <td><code>bigint</code></td>
-<td>Number of live rows fetched by index scans</td>
+<td>被索引扫描取得的活着的行的数量</td>
 </tr>
 <tr>
 <td><code>n_tup_ins</code></td>
 <td><code>bigint</code></td>
-<td>Number of rows inserted</td>
+<td>被插入的行数</td>
 </tr>
 <tr>
 <td><code>n_tup_upd</code></td>
 <td><code>bigint</code></td>
-<td>Number of rows updated (includes HOT updated rows)</td>
+<td>被更新的行数（包括 HOT 更新的行）</td>
 </tr>
 <tr>
 <td><code>n_tup_del</code></td>
 <td><code>bigint</code></td>
-<td>Number of rows deleted</td>
+<td>被删除的行数</td>
 </tr>
 <tr>
 <td><code>n_tup_hot_upd</code></td>
 <td><code>bigint</code></td>
-<td>Number of rows HOT updated (i.e., with no separate index update required)</td>
+<td>被更新的 HOT 行数（即不要求独立索引更新的行更新）</td>
 </tr>
 <tr>
 <td><code>n_live_tup</code></td>
 <td><code>bigint</code></td>
-<td>Estimated number of live rows</td>
+<td>活着的行的估计数量</td>
 </tr>
 <tr>
 <td><code>n_dead_tup</code></td>
 <td><code>bigint</code></td>
-<td>Estimated number of dead rows</td>
+<td>死亡行的估计数量</td>
 </tr>
 <tr>
 <td><code>n_mod_since_analyze</code></td>
 <td><code>bigint</code></td>
-<td>Estimated number of rows modified since this table was last analyzed</td>
+<td>从这个表最后一次被分析后备修改的行的估计数量</td>
 </tr>
 <tr>
 <td><code>last_analyze</code></td>
 <td><code>timestamp with time zone</code></td>
-<td>Last time at which this table was manually analyzed</td>
+<td>上次这个表被手动分析的时间</td>
 </tr>
 <tr>
 <td><code>last_autoanalyze</code></td>
 <td><code>timestamp with time zone</code></td>
-<td>Last time at which this table was analyzed by the autoanalyze daemon</td>
+<td>上次这个表被自动分析守护进程分析的时间</td>
 </tr>
 <tr>
 <td><code>analyze_count</code></td>
 <td><code>bigint</code></td>
-<td>Number of times this table has been manually analyzed</td>
+<td>这个表已被手工分析的次数</td>
 </tr>
 <tr>
 <td><code>autoanalyze_count</code></td>
 <td><code>bigint</code></td>
-<td>Number of times this table has been analyzed by the autoanalyze daemon</td>
+<td>这个表已被自动分析守护进程分析的次数</td>
 </tr>
 </tbody>
 </table> </div>
 <div class="gdoc-page__anchorwrap">
     <h2 id="pg_stat_all_undos">
         pg_stat_all_undos
-        <a data-clipboard-text="https://doc.rockdata.net/advanced/monitor-stats/#pg_stat_all_undos" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: pg_stat_all_undos" aria-label="Anchor to: pg_stat_all_undos" href="#pg_stat_all_undos">
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/admin/monitor-stats/#pg_stat_all_undos" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： pg_stat_all_undos" aria-label="锚定到： pg_stat_all_undos" href="#pg_stat_all_undos">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>The <code>pg_stat_all_undos</code> view will contain one row for each undo in the current database, showing statistics about accesses to that specific undo.</p>
-<p><strong>Table 18. <code>pg_stat_all_undos</code> View</strong></p>
+<p><code>pg_stat_all_undos</code> 视图将为当前数据库中的每一个回滚段包含一行，该行显示与对该回滚段的访问相关的统计信息。</p>
+<p><strong>表 18. <code>pg_stat_all_undos</code> 视图</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
-<th>Column</th>
-<th>Type</th>
-<th>Description</th>
+<th>列</th>
+<th>类型</th>
+<th>描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>relid</code></td>
 <td><code>oid</code></td>
-<td>OID of this undo</td>
+<td>一个回滚段的 OID</td>
 </tr>
 <tr>
 <td><code>schemaname</code></td>
 <td><code>name</code></td>
-<td>Name of the schema that this undo is in</td>
+<td>这个回滚段所在的模式的名称</td>
 </tr>
 <tr>
 <td><code>relname</code></td>
 <td><code>name</code></td>
-<td>Name of this undo</td>
+<td>这个回滚段的名称</td>
 </tr>
 <tr>
 <td><code>n_tup_fetch</code></td>
 <td><code>bigint</code></td>
-<td>Number of records fetched</td>
+<td>被获取的活着的记录的数量</td>
 </tr>
 <tr>
 <td><code>n_tup_ins</code></td>
 <td><code>bigint</code></td>
-<td>Number of records inserted</td>
+<td>被插入的记录数</td>
 </tr>
 <tr>
 <td><code>n_tup_upd</code></td>
 <td><code>bigint</code></td>
-<td>Number of records updated</td>
+<td>被更新的记录数</td>
 </tr>
 <tr>
 <td><code>n_tup_del</code></td>
 <td><code>bigint</code></td>
-<td>Number of records deleted</td>
+<td>被删除的记录数</td>
 </tr>
 <tr>
 <td><code>n_tup_hot_upd</code></td>
 <td><code>bigint</code></td>
-<td>Number of records HOT updated</td>
+<td>被更新的 HOT 记录数</td>
 </tr>
 <tr>
 <td><code>n_live_tup</code></td>
 <td><code>bigint</code></td>
-<td>Estimated number of live records</td>
+<td>活着的记录的估计数量</td>
 </tr>
 <tr>
 <td><code>n_dead_tup</code></td>
 <td><code>bigint</code></td>
-<td>Estimated number of dead records</td>
+<td>死亡记录的估计数量</td>
 </tr>
 </tbody>
 </table> </div>
 <div class="gdoc-page__anchorwrap">
     <h2 id="pg_stat_all_indexes">
         pg_stat_all_indexes
-        <a data-clipboard-text="https://doc.rockdata.net/advanced/monitor-stats/#pg_stat_all_indexes" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: pg_stat_all_indexes" aria-label="Anchor to: pg_stat_all_indexes" href="#pg_stat_all_indexes">
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/admin/monitor-stats/#pg_stat_all_indexes" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： pg_stat_all_indexes" aria-label="锚定到： pg_stat_all_indexes" href="#pg_stat_all_indexes">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>The <code>pg_stat_all_indexes</code> view will contain one row for each index in the current database, showing statistics about accesses to that specific index. The <code>pg_stat_user_indexes</code> and <code>pg_stat_sys_indexes</code> views contain the same information, but filtered to only show user and system indexes respectively.</p>
-<p><strong>Table 19. <code>pg_stat_all_indexes</code> View</strong></p>
+<p><code>pg_stat_all_indexes</code>视图将为当前数据库中的每个索引包含一行，该行显示关于对该索引访问的统计信息。<code>pg_stat_user_indexes</code>和<code>pg_stat_sys_indexes</code>视图包含相同的信息，但是被过滤得只分别显示用户和系统索引。</p>
+<p><strong>表 19. <code>pg_stat_all_indexes</code>视图</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
-<th>Column</th>
-<th>Type</th>
-<th>Description</th>
+<th>列</th>
+<th>类型</th>
+<th>描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>relid</code></td>
 <td><code>oid</code></td>
-<td>OID of the table for this index</td>
+<td>这个索引的基表的 OID</td>
 </tr>
 <tr>
 <td><code>indexrelid</code></td>
 <td><code>oid</code></td>
-<td>OID of this index</td>
+<td>这个索引的 OID</td>
 </tr>
 <tr>
 <td><code>schemaname</code></td>
 <td><code>name</code></td>
-<td>Name of the schema this index is in</td>
+<td>这个索引所在的模式的名称</td>
 </tr>
 <tr>
 <td><code>relname</code></td>
 <td><code>name</code></td>
-<td>Name of the table for this index</td>
+<td>这个索引的基表的名称</td>
 </tr>
 <tr>
 <td><code>indexrelname</code></td>
 <td><code>name</code></td>
-<td>Name of this index</td>
+<td>这个索引的名称</td>
 </tr>
 <tr>
 <td><code>idx_scan</code></td>
 <td><code>bigint</code></td>
-<td>Number of index scans initiated on this index</td>
+<td>在这个索引上发起的索引扫描次数</td>
 </tr>
 <tr>
 <td><code>idx_tup_read</code></td>
 <td><code>bigint</code></td>
-<td>Number of index entries returned by scans on this index</td>
+<td>在这个索引上由扫描返回的索引项数量</td>
 </tr>
 <tr>
 <td><code>idx_tup_fetch</code></td>
 <td><code>bigint</code></td>
-<td>Number of live table rows fetched by simple index scans using this index</td>
+<td>被使用这个索引的简单索引扫描取得的活着的表行数量</td>
 </tr>
 </tbody>
 </table> </div>
-<p>Indexes can be used by simple index scans, “bitmap” index scans, and the optimizer. In a bitmap scan the output of several indexes can be combined via AND or OR rules, so it is difficult to associate individual heap row fetches with specific indexes when a bitmap scan is used. Therefore, a bitmap scan increments the <code>pg_stat_all_indexes</code>.<code>idx_tup_read</code> count(s) for the index(es) it uses, and it increments the <code>pg_stat_all_tables</code>.<code>idx_tup_fetch</code> count for the table, but it does not affect <code>pg_stat_all_indexes</code>.<code>idx_tup_fetch</code>. The optimizer also accesses indexes to check for supplied constants whose values are outside the recorded range of the optimizer statistics because the optimizer statistics might be stale.</p>
+<p>索引可以被简单索引扫描、“位图”索引扫描以及优化器使用。在一次位图扫描中，多个索引的输出可以被通过 AND 或 OR 规则组合，因此当使用一次位图扫描时难以将取得的个体堆行与特定的索引关联起来。因此，一次位图扫描会增加它使用的索引的<code>pg_stat_all_indexes</code>.<code>idx_tup_read</code>计数，并且为每个表增加<code>pg_stat_all_tables</code>.<code>idx_tup_fetch</code>计数，但是它不影响<code>pg_stat_all_indexes</code>.<code>idx_tup_fetch</code>。如果所提供的常量值不在优化器统计信息记录的范围之内，优化器也会访问索引来检查，因为优化器统计信息可能已经“不新鲜”了。</p>
 
 
 
@@ -4514,115 +4530,115 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
 <blockquote class="gdoc-hint note">
   <div class="gdoc-hint__title flex align-center"><i class="fa note" title="Note"></i></div>
-  <div class="gdoc-hint__text">The <code>idx_tup_read</code> and <code>idx_tup_fetch</code> counts can be different even without any use of bitmap scans, because <code>idx_tup_read</code> counts index entries retrieved from the index while <code>idx_tup_fetch</code> counts live rows fetched from the table. The latter will be less if any dead or not-yet-committed rows are fetched using the index, or if any heap fetches are avoided by means of an index-only scan.</div>
+  <div class="gdoc-hint__text">即使不用位图扫描，<code>idx_tup_read</code>和<code>idx_tup_fetch</code>计数也可能不同，因为<code>idx_tup_read</code>统计从该索引取得的索引项而<code>idx_tup_fetch</code>统计从表取得的活着的行。如果使用该索引取得了任何死亡行或还未提交的行，或者如果通过一次只用索引扫描的方式避免了任何堆获取，后者将较小。</div>
 </blockquote>
 
 <div class="gdoc-page__anchorwrap">
     <h2 id="pg_statio_all_tables">
         pg_statio_all_tables
-        <a data-clipboard-text="https://doc.rockdata.net/advanced/monitor-stats/#pg_statio_all_tables" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: pg_statio_all_tables" aria-label="Anchor to: pg_statio_all_tables" href="#pg_statio_all_tables">
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/admin/monitor-stats/#pg_statio_all_tables" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： pg_statio_all_tables" aria-label="锚定到： pg_statio_all_tables" href="#pg_statio_all_tables">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>The <code>pg_statio_all_tables</code> view will contain one row for each table in the current database (including TOAST tables), showing statistics about I/O on that specific table. The <code>pg_statio_user_tables</code> and <code>pg_statio_sys_tables</code> views contain the same information, but filtered to only show user and system tables respectively.</p>
-<p><strong>Table 20. <code>pg_statio_all_tables</code> View</strong></p>
+<p><code>pg_statio_all_tables</code>视图将为当前数据库中的每个表（包括 TOAST 表）包含一行，该行显示指定表上有关 I/O 的统计信息。<code>pg_statio_user_tables</code>和<code>pg_statio_sys_tables</code>视图包含相同的信息，但是被过滤得分别只显示用户表和系统表。</p>
+<p><strong>表 20. <code>pg_statio_all_tables</code>视图</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
-<th>Column</th>
-<th>Type</th>
-<th>Description</th>
+<th>列</th>
+<th>类型</th>
+<th>描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>relid</code></td>
 <td><code>oid</code></td>
-<td>OID of a table</td>
+<td>一个表的 OID</td>
 </tr>
 <tr>
 <td><code>schemaname</code></td>
 <td><code>name</code></td>
-<td>Name of the schema that this table is in</td>
+<td>这个表所在的模式的名称</td>
 </tr>
 <tr>
 <td><code>relname</code></td>
 <td><code>name</code></td>
-<td>Name of this table</td>
+<td>这个表的名称</td>
 </tr>
 <tr>
 <td><code>heap_blks_read</code></td>
 <td><code>bigint</code></td>
-<td>Number of disk blocks read from this table</td>
+<td>从这个表读取的磁盘块数量</td>
 </tr>
 <tr>
-<td><code>heap_blks_cloned</code></td>
+<td><code>heap_blks_clone</code></td>
 <td><code>bigint</code></td>
-<td>Number of data buffers cloned from this table</td>
+<td>从这个表构造用于一致性读的缓冲页数量</td>
 </tr>
 <tr>
 <td><code>heap_blks_hit</code></td>
 <td><code>bigint</code></td>
-<td>Number of buffer hits in this table</td>
+<td>在这个表中的缓冲区命中数量</td>
 </tr>
 <tr>
 <td><code>idx_blks_read</code></td>
 <td><code>bigint</code></td>
-<td>Number of disk blocks read from all indexes on this table</td>
+<td>从这个表上所有索引中读取的磁盘块数</td>
 </tr>
 <tr>
-<td><code>idx_blks_cloned</code></td>
+<td><code>idx_blks_clone</code></td>
 <td><code>bigint</code></td>
-<td>Number of data buffers cloned from all indexes on this table</td>
+<td>从这个表上所有索引中构造用于一致性读的缓冲页数</td>
 </tr>
 <tr>
 <td><code>idx_blks_hit</code></td>
 <td><code>bigint</code></td>
-<td>Number of buffer hits in all indexes on this table</td>
+<td>在这个表上的所有索引中的缓冲区命中数量</td>
 </tr>
 <tr>
 <td><code>toast_blks_read</code></td>
 <td><code>bigint</code></td>
-<td>Number of disk blocks read from this table&rsquo;s TOAST table (if any)</td>
+<td>从这个表的 TOAST 表（如果有）读取的磁盘块数</td>
 </tr>
 <tr>
-<td><code>toast_blks_cloned</code></td>
+<td><code>toast_blks_clone</code></td>
 <td><code>bigint</code></td>
-<td>Number of data buffers cloned from this table&rsquo;s TOAST table (if any)</td>
+<td>从这个表的 TOAST 表（如果有）构造用于一致性读的缓冲页数</td>
 </tr>
 <tr>
 <td><code>toast_blks_hit</code></td>
 <td><code>bigint</code></td>
-<td>Number of buffer hits in this table&rsquo;s TOAST table (if any)</td>
+<td>在这个表的 TOAST 表（如果有）中的缓冲区命中数量</td>
 </tr>
 <tr>
 <td><code>tidx_blks_read</code></td>
 <td><code>bigint</code></td>
-<td>Number of disk blocks read from this table&rsquo;s TOAST table indexes (if any)</td>
+<td>从这个表的 TOAST 表索引（如果有）中读取的磁盘块数</td>
 </tr>
 <tr>
-<td><code>tidx_blks_cloned</code></td>
+<td><code>tidx_blks_clone</code></td>
 <td><code>bigint</code></td>
-<td>Number of data buffers cloned from this table&rsquo;s TOAST table indexes (if any)</td>
+<td>从这个表的 TOAST 表索引（如果有）中构造用于一致性读的缓冲页数</td>
 </tr>
 <tr>
 <td><code>tidx_blks_hit</code></td>
 <td><code>bigint</code></td>
-<td>Number of buffer hits in this table&rsquo;s TOAST table indexes (if any)</td>
+<td>在这个表的 TOAST 表索引（如果有）中的缓冲区命中数量</td>
 </tr>
 </tbody>
 </table> </div>
 <div class="gdoc-page__anchorwrap">
     <h2 id="pg_statio_all_undos">
         pg_statio_all_undos
-        <a data-clipboard-text="https://doc.rockdata.net/advanced/monitor-stats/#pg_statio_all_undos" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: pg_statio_all_undos" aria-label="Anchor to: pg_statio_all_undos" href="#pg_statio_all_undos">
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/admin/monitor-stats/#pg_statio_all_undos" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： pg_statio_all_undos" aria-label="锚定到： pg_statio_all_undos" href="#pg_statio_all_undos">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>The <code>pg_statio_all_undos</code> view will contain one row for each undo in the current database, showing statistics about I/O on that specific undo.</p>
-<p><strong>Table 21. <code>pg_statio_all_undos</code> View</strong></p>
+<p><code>pg_statio_all_undos</code>视图将为当前数据库中的每个回滚段包含一行，该行显示指定回滚段上有关 I/O 的统计信息。</p>
+<p><strong>表 21. <code>pg_statio_all_undos</code> 视图</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
@@ -4635,144 +4651,144 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <tr>
 <td><code>relid</code></td>
 <td><code>oid</code></td>
-<td>OID of the table for this index</td>
+<td>一个回滚段的 OID</td>
 </tr>
 <tr>
 <td><code>schemaname</code></td>
 <td><code>name</code></td>
-<td>Name of the schema this undois in</td>
+<td>这个回滚段所在的模式的名称</td>
 </tr>
 <tr>
 <td><code>relname</code></td>
 <td><code>name</code></td>
-<td>Name of the table for this undo</td>
+<td>这个回滚段的名称</td>
 </tr>
 <tr>
 <td><code>undo_blks_read</code></td>
 <td><code>bigint</code></td>
-<td>Number of disk blocks read from this undo</td>
+<td>从这个回滚段读取的磁盘块数量</td>
 </tr>
 <tr>
 <td><code>undo_blks_cloned</code></td>
 <td><code>bigint</code></td>
-<td>Number of data buffers cloned from this undo</td>
+<td>从这个回滚段构造用于一致性读的缓冲页数量，主要涉及回滚段中的事务表访问</td>
 </tr>
 <tr>
 <td><code>undo_blks_hit</code></td>
 <td><code>bigint</code></td>
-<td>Number of buffer hits in this undo</td>
+<td>在这个回滚段中的缓冲区命中数量</td>
 </tr>
 </tbody>
 </table> </div>
 <div class="gdoc-page__anchorwrap">
     <h2 id="pg_statio_all_indexes">
         pg_statio_all_indexes
-        <a data-clipboard-text="https://doc.rockdata.net/advanced/monitor-stats/#pg_statio_all_indexes" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: pg_statio_all_indexes" aria-label="Anchor to: pg_statio_all_indexes" href="#pg_statio_all_indexes">
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/admin/monitor-stats/#pg_statio_all_indexes" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： pg_statio_all_indexes" aria-label="锚定到： pg_statio_all_indexes" href="#pg_statio_all_indexes">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>The <code>pg_statio_all_indexes</code> view will contain one row for each index in the current database, showing statistics about I/O on that specific index. The <code>pg_statio_user_indexes</code> and <code>pg_statio_sys_indexes</code> views contain the same information, but filtered to only show user and system indexes respectively.</p>
-<p><strong>Table 22. <code>pg_statio_all_indexes</code> View</strong></p>
+<p><code>pg_statio_all_indexes</code>视图将为当前数据库中的每个索引包含一行，该行显示指定索引上有关 I/O 的统计信息。<code>pg_statio_user_indexes</code>和<code>pg_statio_sys_indexes</code>视图包含相同的信息，但是被过滤得分别只显示用户索引和系统索引。</p>
+<p><strong>表 22. <code>pg_statio_all_indexes</code>视图</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
-<th>Column</th>
-<th>Type</th>
-<th>Description</th>
+<th>列</th>
+<th>类型</th>
+<th>描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>relid</code></td>
 <td><code>oid</code></td>
-<td>OID of the table for this index</td>
+<td>这个索引的基表的 OID</td>
 </tr>
 <tr>
 <td><code>indexrelid</code></td>
 <td><code>oid</code></td>
-<td>OID of this index</td>
+<td>这个索引的 OID</td>
 </tr>
 <tr>
 <td><code>schemaname</code></td>
 <td><code>name</code></td>
-<td>Name of the schema this index is in</td>
+<td>这个索引所在的模式的名称</td>
 </tr>
 <tr>
 <td><code>relname</code></td>
 <td><code>name</code></td>
-<td>Name of the table for this index</td>
+<td>这个索引的基表的名称</td>
 </tr>
 <tr>
 <td><code>indexrelname</code></td>
 <td><code>name</code></td>
-<td>Name of this index</td>
+<td>这个索引的名称</td>
 </tr>
 <tr>
 <td><code>idx_blks_read</code></td>
 <td><code>bigint</code></td>
-<td>Number of disk blocks read from this index</td>
+<td>从这个索引读取的磁盘块数</td>
 </tr>
 <tr>
-<td><code>idx_blks_cloned</code></td>
+<td><code>idx_blks_clone</code></td>
 <td><code>bigint</code></td>
-<td>Number of data buffers cloned from this index</td>
+<td>从这个索引构造用于一致性读的缓冲页数</td>
 </tr>
 <tr>
 <td><code>idx_blks_hit</code></td>
 <td><code>bigint</code></td>
-<td>Number of buffer hits in this index</td>
+<td>在这个索引中的缓冲区命中数量</td>
 </tr>
 </tbody>
 </table> </div>
 <div class="gdoc-page__anchorwrap">
     <h2 id="pg_statio_all_sequences">
         pg_statio_all_sequences
-        <a data-clipboard-text="https://doc.rockdata.net/advanced/monitor-stats/#pg_statio_all_sequences" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: pg_statio_all_sequences" aria-label="Anchor to: pg_statio_all_sequences" href="#pg_statio_all_sequences">
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/admin/monitor-stats/#pg_statio_all_sequences" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： pg_statio_all_sequences" aria-label="锚定到： pg_statio_all_sequences" href="#pg_statio_all_sequences">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>The <code>pg_statio_all_sequences</code> view will contain one row for each sequence in the current database, showing statistics about I/O on that specific sequence.</p>
-<p><strong>Table 23. <code>pg_statio_all_sequences</code> View</strong></p>
+<p><code>pg_statio_all_sequences</code>视图将为当前数据库中的每个序列包含一行，该行显示在指定序列上有关 I/O 的统计信息。</p>
+<p><strong>表 23. <code>pg_statio_all_sequences</code>视图</strong></p>
 <div class="table-wrap"> <table>
 <thead>
 <tr>
-<th>Column</th>
-<th>Type</th>
-<th>Description</th>
+<th>列</th>
+<th>类型</th>
+<th>描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>relid</code></td>
 <td><code>oid</code></td>
-<td>OID of a sequence</td>
+<td>一个序列的 OID</td>
 </tr>
 <tr>
 <td><code>schemaname</code></td>
 <td><code>name</code></td>
-<td>Name of the schema this sequence is in</td>
+<td>这个序列所在的模式的名称</td>
 </tr>
 <tr>
 <td><code>relname</code></td>
 <td><code>name</code></td>
-<td>Name of this sequence</td>
+<td>这个序列的名称</td>
 </tr>
 <tr>
 <td><code>blks_read</code></td>
 <td><code>bigint</code></td>
-<td>Number of disk blocks read from this sequence</td>
+<td>从这个序列中读取的磁盘块数</td>
 </tr>
 <tr>
-<td><code>blks_cloned</code></td>
+<td><code>blks_clone</code></td>
 <td><code>bigint</code></td>
-<td>Number of data buffers cloned from this sequence</td>
+<td>从这个序列中构造用于一致性读的缓冲页数</td>
 </tr>
 <tr>
 <td><code>blks_hit</code></td>
 <td><code>bigint</code></td>
-<td>Number of buffer hits in this sequence</td>
+<td>在这个序列中的缓冲区命中数量</td>
 </tr>
 </tbody>
 </table> </div>
@@ -5012,14 +5028,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         
           <span class="gdoc-footer__item gdoc-footer__item--row">
             <a href="https://www.rockdata.net/legal-notice/#contact-information" class="gdoc-footer__link">
-              Legal Notice
+              法律声明
             </a>
           </span>
         
         
           <span class="gdoc-footer__item gdoc-footer__item--row">
             <a href="https://www.rockdata.net/legal-notice/#privacy-policy" class="gdoc-footer__link">
-              Privacy Policy
+              隐私政策
             </a>
           </span>
         
@@ -5029,11 +5045,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
       <div class="flex flex-25 justify-end">
         <span class="gdoc-footer__item text-right">
-          <a class="gdoc-footer__link fake-link" href="#" aria-label="Back to top">
+          <a class="gdoc-footer__link fake-link" href="#" aria-label="回到顶部">
             <svg class="gdoc-icon gdoc_keyboard_arrow_up">
               <use xlink:href="#gdoc_keyboard_arrow_up"></use>
             </svg>
-            <span class="hidden-mobile">Back to top</span>
+            <span class="hidden-mobile">回到顶部</span>
           </a>
         </span>
       </div>

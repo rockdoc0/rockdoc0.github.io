@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn" class="color-toggle-hidden">
+<html lang="en" class="color-toggle-hidden">
   <head>
     <meta charset="UTF-8" />
 <meta name="referrer" content="no-referrer" />
@@ -8,12 +8,9 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="PL/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/scheme 可以以 Lisp 风格启动 PostgreSQL 过程。
-PL/Scheme 函数和参数     要用 PL/Scheme 语言创建一个函数，可使用标准的 CREATE FUNCTION语法：
-CREATE FUNCTION funcname (argument-types) RETURNS return-type AS $$ # PL/Scheme 函数体 $$ LANGUAGE plscheme; 函数的主体就是普通的 Scheme 代码。事实上，PL/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。
-在一个 PL/Scheme 过程中，任何从Scheme代码返回的值都会被忽略。
-PL/Scheme 也支持用DO语句调用的匿名代码块：
-DO $$ # PL/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数，并且它返回的任何值都会被抛弃。否则其行为就像一个函数。" />
+  <meta name="description" content="PL/Scheme is a PostgreSQL procedural language handler for Scheme programming language. PL/scheme uses Chibi Scheme in the background as its Scheme interpreter. With lots of builtin SRFIs and complete R7RS compliancy of Chibi Scheme, PL/scheme can power up PostgreSQL procedures in a Lisp style.
+PL/Scheme Functions and Arguments     To create a function in the PL/Scheme language, use the standard CREATE FUNCTION syntax:
+CREATE FUNCTION funcname (argument-types) RETURNS return-type -- function attributes can go here AS $$ # PL/Scheme function body goes here $$ LANGUAGE plscheme; The body of the function is ordinary Scheme code." />
 
     <title>PL/Scheme | Redrock Documentation</title>
 
@@ -40,55 +37,49 @@ DO $$ # PL/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="PL/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/scheme 可以以 Lisp 风格启动 PostgreSQL 过程。
-PL/Scheme 函数和参数     要用 PL/Scheme 语言创建一个函数，可使用标准的 CREATE FUNCTION语法：
-CREATE FUNCTION funcname (argument-types) RETURNS return-type AS $$ # PL/Scheme 函数体 $$ LANGUAGE plscheme; 函数的主体就是普通的 Scheme 代码。事实上，PL/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。
-在一个 PL/Scheme 过程中，任何从Scheme代码返回的值都会被忽略。
-PL/Scheme 也支持用DO语句调用的匿名代码块：
-DO $$ # PL/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数，并且它返回的任何值都会被抛弃。否则其行为就像一个函数。" />
+  <meta property="og:description" content="PL/Scheme is a PostgreSQL procedural language handler for Scheme programming language. PL/scheme uses Chibi Scheme in the background as its Scheme interpreter. With lots of builtin SRFIs and complete R7RS compliancy of Chibi Scheme, PL/scheme can power up PostgreSQL procedures in a Lisp style.
+PL/Scheme Functions and Arguments     To create a function in the PL/Scheme language, use the standard CREATE FUNCTION syntax:
+CREATE FUNCTION funcname (argument-types) RETURNS return-type -- function attributes can go here AS $$ # PL/Scheme function body goes here $$ LANGUAGE plscheme; The body of the function is ordinary Scheme code." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://doc.rockdata.net/zh-cn/advanced/plscheme/" />
+<meta property="og:url" content="https://doc.rockdata.net/develop/plscheme/" />
 
-<meta property="article:section" content="Advanced" />
+<meta property="article:section" content="Develop" />
     <meta
       property="article:modified_time"
-      content="2022-06-12T12:11:00+08:00"
+      content="2022-07-20T16:33:49+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="PL/Scheme" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="PL/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/scheme 可以以 Lisp 风格启动 PostgreSQL 过程。
-PL/Scheme 函数和参数     要用 PL/Scheme 语言创建一个函数，可使用标准的 CREATE FUNCTION语法：
-CREATE FUNCTION funcname (argument-types) RETURNS return-type AS $$ # PL/Scheme 函数体 $$ LANGUAGE plscheme; 函数的主体就是普通的 Scheme 代码。事实上，PL/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。
-在一个 PL/Scheme 过程中，任何从Scheme代码返回的值都会被忽略。
-PL/Scheme 也支持用DO语句调用的匿名代码块：
-DO $$ # PL/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数，并且它返回的任何值都会被抛弃。否则其行为就像一个函数。" />
+  <meta name="twitter:description" content="PL/Scheme is a PostgreSQL procedural language handler for Scheme programming language. PL/scheme uses Chibi Scheme in the background as its Scheme interpreter. With lots of builtin SRFIs and complete R7RS compliancy of Chibi Scheme, PL/scheme can power up PostgreSQL procedures in a Lisp style.
+PL/Scheme Functions and Arguments     To create a function in the PL/Scheme language, use the standard CREATE FUNCTION syntax:
+CREATE FUNCTION funcname (argument-types) RETURNS return-type -- function attributes can go here AS $$ # PL/Scheme function body goes here $$ LANGUAGE plscheme; The body of the function is ordinary Scheme code." />
 
 
   <script type="application/ld+json">
   {
       "@context": "http://schema.org",
       "@type": "TechArticle",
-      "articleSection": "Advanced",
+      "articleSection": "Develop",
       "name": "PL/Scheme",
-      "url" : "https://doc.rockdata.net/zh-cn/advanced/plscheme/",
+      "url" : "https://doc.rockdata.net/develop/plscheme/",
       "headline": "PL/Scheme",
-      "description": "PL\/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL\/scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL\/scheme 可以以 Lisp 风格启动 PostgreSQL 过程。\nPL\/Scheme 函数和参数     要用 PL\/Scheme 语言创建一个函数，可使用标准的 CREATE FUNCTION语法：\nCREATE FUNCTION funcname (argument-types) RETURNS return-type AS $$ # PL\/Scheme 函数体 $$ LANGUAGE plscheme; 函数的主体就是普通的 Scheme 代码。事实上，PL\/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL\/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。\n在一个 PL\/Scheme 过程中，任何从Scheme代码返回的值都会被忽略。\nPL\/Scheme 也支持用DO语句调用的匿名代码块：\nDO $$ # PL\/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数，并且它返回的任何值都会被抛弃。否则其行为就像一个函数。",
+      "description": "PL\/Scheme is a PostgreSQL procedural language handler for Scheme programming language. PL\/scheme uses Chibi Scheme in the background as its Scheme interpreter. With lots of builtin SRFIs and complete R7RS compliancy of Chibi Scheme, PL\/scheme can power up PostgreSQL procedures in a Lisp style.\nPL\/Scheme Functions and Arguments     To create a function in the PL\/Scheme language, use the standard CREATE FUNCTION syntax:\nCREATE FUNCTION funcname (argument-types) RETURNS return-type -- function attributes can go here AS $$ # PL\/Scheme function body goes here $$ LANGUAGE plscheme; The body of the function is ordinary Scheme code.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "109",
-      "inLanguage": "zh-cn",
+      "wordCount" : "321",
+      "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://doc.rockdata.net/zh-cn/advanced/plscheme/"
+          "@id": "https://doc.rockdata.net/develop/plscheme/"
       },
       "copyrightHolder" : "Redrock Documentation",
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-12T12:11:00.00Z",
+      "dateModified": "2022-07-20T16:33:49.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -164,7 +155,7 @@ DO $$ # PL/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数
   href="/custom.css"
   media="all"
 />
-  <link href="https://doc.rockdata.net/zh-cn/advanced/plscheme/" rel="canonical" type="text/html" />
+  <link href="https://doc.rockdata.net/develop/plscheme/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -656,11 +647,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
       <label for="menu-control" class="gdoc-nav__control" tabindex="0">
         <svg class="gdoc-icon gdoc_menu">
-          <title>打开导航</title>
+          <title>Open Navigation</title>
           <use xlink:href="#gdoc_menu"></use>
         </svg>
         <svg class="gdoc-icon gdoc_arrow_back">
-          <title>关闭导航</title>
+          <title>Close Navigation</title>
           <use xlink:href="#gdoc_arrow_back"></use>
         </svg>
       </label>
@@ -726,15 +717,15 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
         <span id="gdoc-dark-mode">
           <svg class="gdoc-icon gdoc_brightness_dark">
-            <title>切换暗/亮/自动模式</title>
+            <title>Toggle Dark/Light/Auto mode</title>
             <use xlink:href="#gdoc_brightness_dark"></use>
           </svg>
           <svg class="gdoc-icon gdoc_brightness_light">
-            <title>切换暗/亮/自动模式</title>
+            <title>Toggle Dark/Light/Auto mode</title>
             <use xlink:href="#gdoc_brightness_light"></use>
           </svg>
           <svg class="gdoc-icon gdoc_brightness_auto">
-            <title>切换暗/亮/自动模式</title>
+            <title>Toggle Dark/Light/Auto mode</title>
             <use xlink:href="#gdoc_brightness_auto"></use>
           </svg>
         </span>
@@ -742,7 +733,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         <span class="gdoc-menu-header__home">
           <a href="https://doc.rockdata.net/" class="gdoc-header__link">
             <svg class="gdoc-icon gdoc_home">
-              <title>返回首页</title>
+              <title>Back to homepage</title>
               <use xlink:href="#gdoc_home"></use>
             </svg>
           </a>
@@ -754,12 +745,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <li>
         
           
-        
-          
             <span class="flex align-center">
               <svg class="gdoc-icon gdoc_language"><use xlink:href="#gdoc_language"></use></svg>
-              <span>ZH-CN</span>
+              <span>EN</span>
             </span>
+          
+        
           
         
 
@@ -770,12 +761,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               <li>
                 <a
                   class="flex gdoc-language__entry"
-                  title="English"
-                  href="/advanced/plscheme/"
-                  hreflang="en"
-                  lang="en"
+                  title="简体中文"
+                  href="/zh-cn/develop/plscheme/"
+                  hreflang="zh-cn"
+                  lang="zh-cn"
                 >
-                  English
+                  简体中文
                 </a>
               </li>
             
@@ -792,7 +783,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
           <label for="menu-header-control">
             <svg class="gdoc-icon gdoc_keyboard_arrow_right">
               <use xlink:href="#gdoc_keyboard_arrow_right"></use>
-              <title>关闭菜单栏</title>
+              <title>Close Menu Bar</title>
             </svg>
           </label>
         </span>
@@ -800,7 +791,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <label for="menu-header-control" class="gdoc-menu-header__control">
         <svg class="gdoc-icon gdoc_keyboard_arrow_left">
           <use xlink:href="#gdoc_keyboard_arrow_left"></use>
-          <title>打开菜单栏</title>
+          <title>Open Menu Bar</title>
         </svg>
       </label>
     </div>
@@ -820,11 +811,11 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       type="text"
       id="gdoc-search-input"
       class="gdoc-search__input"
-      placeholder="搜索"
-      aria-label="搜索"
+      placeholder="Search"
+      aria-label="Search"
       maxlength="64"
       data-site-base-url="https://doc.rockdata.net/"
-      data-site-lang="zh-cn"
+      data-site-lang="en"
     />
     <div class="gdoc-search__spinner spinner hidden"></div>
     <ul id="gdoc-search-results" class="gdoc-search__list"></ul>
@@ -834,7 +825,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
 
   <section class="gdoc-nav--main">
-    <h2>导航</h2>
+    <h2>Navigation</h2>
     
       
 
@@ -871,7 +862,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">使用介绍</span>
+                <span class="flex">Usage</span>
               
               
             </label>
@@ -913,10 +904,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/usage/why-redrock/"
+                    href="/usage/why-redrock/"
                     class="gdoc-nav__entry"
                   >
-                    为什么选择Redrock Postgres？
+                    Why Redrock Postgres?
                   </a>
                 </span>
               
@@ -957,10 +948,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/usage/getting-started/"
+                    href="/usage/getting-started/"
                     class="gdoc-nav__entry"
                   >
-                    开始上手
+                    Getting Started
                   </a>
                 </span>
               
@@ -999,22 +990,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-09089698"
+                class="gdoc-nav__toggle" id="navtree-46385245"
                 
               
             />
             <label
               
-                for="navtree-09089698" class="flex justify-between align-center"
+                for="navtree-46385245" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/installation/"
+                    href="/installation/"
                     class="gdoc-nav__entry"
                   >
-                    安装指导
+                    Installation
                   </a>
                 </span>
               
@@ -1065,10 +1056,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/installation/windows/"
+                    href="/installation/windows/"
                     class="gdoc-nav__entry"
                   >
-                    Windows 安装指导
+                    Installing on Windows
                   </a>
                 </span>
               
@@ -1109,10 +1100,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/installation/redhat/"
+                    href="/installation/redhat/"
                     class="gdoc-nav__entry"
                   >
-                    Red Hat/CentOS 安装指导
+                    Installing on Red Hat
                   </a>
                 </span>
               
@@ -1153,321 +1144,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/installation/debian/"
+                    href="/installation/debian/"
                     class="gdoc-nav__entry"
                   >
-                    Debian 安装指导
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-  </ul>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">基础特性</span>
-              
-              
-            </label>
-
-            
-              
-  
-
-
-  <ul class="gdoc-nav__list">
-    
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/zh-cn/features/undo/"
-                    class="gdoc-nav__entry"
-                  >
-                    回滚段
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/zh-cn/features/recyclebin/"
-                    class="gdoc-nav__entry"
-                  >
-                    回收站
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/zh-cn/features/transaction/"
-                    class="gdoc-nav__entry"
-                  >
-                    事务
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/zh-cn/features/tablespace/"
-                    class="gdoc-nav__entry"
-                  >
-                    表空间
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/zh-cn/features/event-triggers/"
-                    class="gdoc-nav__entry"
-                  >
-                    事件触发器
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/zh-cn/features/postgres-compatibility/"
-                    class="gdoc-nav__entry"
-                  >
-                    同 PostgreSQL 的兼容性
+                    Installing on Debian
                   </a>
                 </span>
               
@@ -1513,7 +1193,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
             >
               
-                <span class="flex">高级特性</span>
+                <span class="flex">Features</span>
               
               
             </label>
@@ -1555,10 +1235,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/advanced/textsearch/"
+                    href="/features/undo/"
                     class="gdoc-nav__entry"
                   >
-                    中文搜索
+                    Undo
                   </a>
                 </span>
               
@@ -1599,7 +1279,328 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/advanced/plscheme/"
+                    href="/features/recyclebin/"
+                    class="gdoc-nav__entry"
+                  >
+                    Recycle Bin
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/features/transaction/"
+                    class="gdoc-nav__entry"
+                  >
+                    Transactions
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/features/tablespace/"
+                    class="gdoc-nav__entry"
+                  >
+                    Tablespaces
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/features/event-triggers/"
+                    class="gdoc-nav__entry"
+                  >
+                    Event Triggers
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/features/postgres-compatibility/"
+                    class="gdoc-nav__entry"
+                  >
+                    Compatibility with PostgreSQL
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+  </ul>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="gdoc-nav__toggle" id="navtree-6f622330"
+                checked
+              
+            />
+            <label
+              
+                for="navtree-6f622330" class="flex justify-between align-center"
+              
+            >
+              
+                <span class="flex">Developer Guide</span>
+              
+              
+                <svg class="gdoc-icon toggle gdoc_keyboard_arrow_left">
+                  <use xlink:href="#gdoc_keyboard_arrow_left"></use>
+                </svg>
+                <svg class="gdoc-icon toggle gdoc_keyboard_arrow_down">
+                  <use xlink:href="#gdoc_keyboard_arrow_down"></use>
+                </svg>
+              
+            </label>
+
+            
+              
+  
+
+
+  <ul class="gdoc-nav__list">
+    
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/develop/textsearch/"
+                    class="gdoc-nav__entry"
+                  >
+                    Chinese Text Search
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/develop/plscheme/"
                     class="gdoc-nav__entry is-active"
                   >
                     PL/Scheme
@@ -1614,50 +1615,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         
       
     
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/zh-cn/advanced/monitor-stats/"
-                    class="gdoc-nav__entry"
-                  >
-                    运行统计视图
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
   </ul>
 
             
@@ -1685,22 +1642,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-2c8f00d6"
+                class="gdoc-nav__toggle" id="navtree-d9ef83eb"
                 
               
             />
             <label
               
-                for="navtree-2c8f00d6" class="flex justify-between align-center"
+                for="navtree-d9ef83eb" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/admin/"
+                    href="/admin/"
                     class="gdoc-nav__entry"
                   >
-                    数据库管理
+                    Server Administration
                   </a>
                 </span>
               
@@ -1751,10 +1708,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/admin/configuration/"
+                    href="/admin/configuration/"
                     class="gdoc-nav__entry"
                   >
-                    参数配置
+                    Configuration
                   </a>
                 </span>
               
@@ -1795,10 +1752,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/admin/network-tablespace/"
+                    href="/admin/monitor-stats/"
                     class="gdoc-nav__entry"
                   >
-                    网络表空间
+                    Statistics Views
                   </a>
                 </span>
               
@@ -1839,10 +1796,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/admin/ddl-subscription/"
+                    href="/admin/network-tablespace/"
                     class="gdoc-nav__entry"
                   >
-                    订阅DDL操作
+                    Network Attached Tablespace
                   </a>
                 </span>
               
@@ -1883,10 +1840,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/admin/audit-trigger/"
+                    href="/admin/ddl-subscription/"
                     class="gdoc-nav__entry"
                   >
-                    审计日志
+                    Subscribe DDL Commands
                   </a>
                 </span>
               
@@ -1927,10 +1884,54 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/admin/online-migration/"
+                    href="/admin/audit-trigger/"
                     class="gdoc-nav__entry"
                   >
-                    在线迁移
+                    Audit Logging
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/admin/online-migration/"
+                    class="gdoc-nav__entry"
+                  >
+                    Online Migration
                   </a>
                 </span>
               
@@ -1969,22 +1970,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-a5b7adb4"
+                class="gdoc-nav__toggle" id="navtree-4ac8285e"
                 
               
             />
             <label
               
-                for="navtree-a5b7adb4" class="flex justify-between align-center"
+                for="navtree-4ac8285e" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/commands/"
+                    href="/commands/"
                     class="gdoc-nav__entry"
                   >
-                    SQL 命令
+                    SQL Commands
                   </a>
                 </span>
               
@@ -2035,7 +2036,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/commands/alterundo/"
+                    href="/commands/alterundo/"
                     class="gdoc-nav__entry"
                   >
                     ALTER UNDO
@@ -2071,7 +2072,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/commands/createundo/"
+                    href="/commands/createundo/"
                     class="gdoc-nav__entry"
                   >
                     CREATE UNDO
@@ -2107,7 +2108,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/commands/dropundo/"
+                    href="/commands/dropundo/"
                     class="gdoc-nav__entry"
                   >
                     DROP UNDO
@@ -2143,7 +2144,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/commands/vacuum/"
+                    href="/commands/vacuum/"
                     class="gdoc-nav__entry"
                   >
                     VACUUM
@@ -2173,6 +2174,8 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
       
         
+      
+        
           
           
           
@@ -2185,22 +2188,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
             <input
               type="checkbox"
               
-                class="gdoc-nav__toggle" id="navtree-7171e5f3"
+                class="gdoc-nav__toggle" id="navtree-0ef779f7"
                 
               
             />
             <label
               
-                for="navtree-7171e5f3" class="flex justify-between align-center"
+                for="navtree-0ef779f7" class="flex justify-between align-center"
               
             >
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/catalogs/"
+                    href="/catalogs/"
                     class="gdoc-nav__entry"
                   >
-                    系统表
+                    System Catalogs
                   </a>
                 </span>
               
@@ -2251,7 +2254,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/catalogs/recyclebin/"
+                    href="/catalogs/recyclebin/"
                     class="gdoc-nav__entry"
                   >
                     pg_recyclebin
@@ -2287,7 +2290,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/catalogs/ts-lexicon/"
+                    href="/catalogs/ts-lexicon/"
                     class="gdoc-nav__entry"
                   >
                     pg_ts_lexicon
@@ -2323,7 +2326,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/catalogs/undo/"
+                    href="/catalogs/undo/"
                     class="gdoc-nav__entry"
                   >
                     pg_undo
@@ -2344,8 +2347,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
           </li>
         
       
-        
-      
     
   </ul>
 
@@ -2362,7 +2363,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
   <section class="gdoc-nav--more">
     
-      <h2>更多</h2>
+      <h2>More</h2>
       
 
   
@@ -2403,10 +2404,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                   <svg class="gdoc-icon gdoc_notification"><use xlink:href="#gdoc_notification"></use></svg>
                 
                 <a
-                  href="/zh-cn/posts/"
+                  href="/posts/"
                   class="gdoc-nav__entry"
                 >
-                  新闻
+                  News
                 </a>
               </span>
               
@@ -2453,7 +2454,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     https://gitee.com/rockdata/redrock/releases"
                   class="gdoc-nav__entry"
                 >
-                  下载
+                  Releases
                 </a>
               </span>
               
@@ -2500,7 +2501,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     https://gitee.com/rockdata/redrock"
                   class="gdoc-nav__entry"
                 >
-                  项目仓库
+                  View Source
                 </a>
               </span>
               
@@ -2569,7 +2570,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/advanced/' href='/zh-cn/advanced/'><span itemprop='name'>高级特性</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>PL/Scheme</span><meta itemprop='position' content='4' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/develop/' href='/develop/'><span itemprop='name'>Developer Guide</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>PL/Scheme</span><meta itemprop='position' content='3' /></li>
   
 
   
@@ -2584,9 +2585,9 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <span class="editpage">
         <svg class="gdoc-icon gdoc_code"><use xlink:href="#gdoc_code"></use></svg>
         <a
-          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/zh-cn/advanced/plscheme.md"
+          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/en/develop/plscheme.md"
         >
-          编辑页面
+          Edit page
         </a>
       </span>
     </div>
@@ -2599,45 +2600,48 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     class="gdoc-markdown gdoc-markdown__align--left"
   >
     <h1>PL/Scheme</h1>
-    <p>PL/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/scheme 可以以 Lisp 风格启动 PostgreSQL 过程。</p>
+    <p>PL/Scheme is a PostgreSQL procedural language handler for Scheme programming language. PL/scheme uses Chibi Scheme in the background as its Scheme interpreter. With lots of builtin SRFIs and complete R7RS compliancy of Chibi Scheme, PL/scheme can power up PostgreSQL procedures in a Lisp style.</p>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="plscheme-函数和参数">
-        PL/Scheme 函数和参数
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/advanced/plscheme/#plscheme-函数和参数" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： PL/Scheme 函数和参数" aria-label="锚定到： PL/Scheme 函数和参数" href="#plscheme-%e5%87%bd%e6%95%b0%e5%92%8c%e5%8f%82%e6%95%b0">
+    <h2 id="plscheme-functions-and-arguments">
+        PL/Scheme Functions and Arguments
+        <a data-clipboard-text="https://doc.rockdata.net/develop/plscheme/#plscheme-functions-and-arguments" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: PL/Scheme Functions and Arguments" aria-label="Anchor to: PL/Scheme Functions and Arguments" href="#plscheme-functions-and-arguments">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>要用 PL/Scheme 语言创建一个函数，可使用标准的 <a
+<p>To create a function in the PL/Scheme language, use the standard <a
   class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/12/sql-createfunction.html"
+  href="https://www.postgresql.org/docs/12/sql-createfunction.html"
   
->CREATE FUNCTION</a>语法：</p>
-<pre tabindex="0"><code>CREATE FUNCTION funcname (argument-types) RETURNS return-type AS $$
-    # PL/Scheme 函数体
+>CREATE FUNCTION</a> syntax:</p>
+<pre tabindex="0"><code>CREATE FUNCTION funcname (argument-types)
+RETURNS return-type
+-- function attributes can go here
+AS $$
+    # PL/Scheme function body goes here
 $$ LANGUAGE plscheme;
-</code></pre><p>函数的主体就是普通的 Scheme 代码。事实上，PL/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。</p>
-<p>在一个 PL/Scheme 过程中，任何从Scheme代码返回的值都会被忽略。</p>
-<p>PL/Scheme 也支持用<a
+</code></pre><p>The body of the function is ordinary Scheme code. In fact, the PL/Scheme glue code wraps it inside a Scheme subroutine. A PL/Scheme function is called in a scalar context, so it can&rsquo;t return a list. You can return non-scalar values (arrays, records, and sets) by returning a reference, as discussed below.</p>
+<p>In a PL/Scheme procedure, any return value from the Scheme code is ignored.</p>
+<p>PL/Scheme also supports anonymous code blocks called with the <a
   class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/12/sql-do.html"
+  href="https://www.postgresql.org/docs/12/sql-do.html"
   
->DO</a>语句调用的匿名代码块：</p>
+>DO</a> statement:</p>
 <pre tabindex="0"><code>DO $$
-    # PL/Scheme 代码
+    # PL/Scheme code
 $$ LANGUAGE plscheme;
-</code></pre><p>一个匿名代码块没有参数，并且它返回的任何值都会被抛弃。否则其行为就像一个函数。</p>
-<p><code>CREATE FUNCTION</code>命令的语法要求函数 体被写作一个字符串常量。通常对字符串常量使用美元引用（见 <a
+</code></pre><p>An anonymous code block receives no arguments, and whatever value it might return is discarded. Otherwise it behaves just like a function.</p>
+<p>The syntax of the <code>CREATE FUNCTION</code> command requires the function body to be written as a string constant. It is usually most convenient to use dollar quoting (see <a
   class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/12/sql-syntax-lexical.html#SQL-SYNTAX-DOLLAR-QUOTING"
+  href="https://www.postgresql.org/docs/12/sql-syntax-lexical.html#SQL-SYNTAX-DOLLAR-QUOTING"
   
->第 4.1.2.4 节</a>）最方便。如果选择使用 转义字符串语法<code>E''</code>，必须双写任何在函数体中使用的单引号 （<code>'</code>）和反斜线（<code>\</code>）（见 <a
+>Section 4.1.2.4</a>) for the string constant. If you choose to use escape string syntax <code>E''</code>, you must double any single quote marks (<code>'</code>) and backslashes (<code>\</code>) used in the body of the function (see <a
   class="gdoc-markdown__link"
-  href="http://www.postgres.cn/docs/12/sql-syntax-lexical.html#SQL-SYNTAX-STRINGS"
+  href="https://www.postgresql.org/docs/12/sql-syntax-lexical.html#SQL-SYNTAX-STRINGS"
   
->第 4.1.2.1 节</a>）。</p>
-<p>参数和结果的处理和在任何其他 Scheme 子程序中一样：参数会以 Scheme 变量的形式传递到函数体中，并且函数中计算的最后一个表达式会作为结果值返回。</p>
-<p>例如，一个返回两个整数值中较大值的函数可以定义为：</p>
+>Section 4.1.2.1</a>).</p>
+<p>Arguments and results are handled as in any other Scheme subroutine: arguments are passed as Scheme variables, and a result value is returned as the last expression evaluated in the function.</p>
+<p>For example, a function returning the greater of two integer values could be defined as:</p>
 <pre tabindex="0"><code>CREATE FUNCTION scheme_max (a integer, b integer) RETURNS integer AS $$
     (if (&gt; a b) a b)
 $$ LANGUAGE plscheme;
@@ -2877,14 +2881,14 @@ $$ LANGUAGE plscheme;
         
           <span class="gdoc-footer__item gdoc-footer__item--row">
             <a href="https://www.rockdata.net/legal-notice/#contact-information" class="gdoc-footer__link">
-              法律声明
+              Legal Notice
             </a>
           </span>
         
         
           <span class="gdoc-footer__item gdoc-footer__item--row">
             <a href="https://www.rockdata.net/legal-notice/#privacy-policy" class="gdoc-footer__link">
-              隐私政策
+              Privacy Policy
             </a>
           </span>
         
@@ -2894,11 +2898,11 @@ $$ LANGUAGE plscheme;
     
       <div class="flex flex-25 justify-end">
         <span class="gdoc-footer__item text-right">
-          <a class="gdoc-footer__link fake-link" href="#" aria-label="回到顶部">
+          <a class="gdoc-footer__link fake-link" href="#" aria-label="Back to top">
             <svg class="gdoc-icon gdoc_keyboard_arrow_up">
               <use xlink:href="#gdoc_keyboard_arrow_up"></use>
             </svg>
-            <span class="hidden-mobile">回到顶部</span>
+            <span class="hidden-mobile">Back to top</span>
           </a>
         </span>
       </div>
