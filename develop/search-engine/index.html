@@ -8,8 +8,11 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
+  <meta name="description" content="PostgreSQL provides the full text search capability. Through full text search, you can build a text content search engine. This section describes how to quickly set up a search engine for website pages in PostgreSQL.
+Create Content Table     Create a web page content table to store the content data of web pages.
+CREATE TABLE IF NOT EXISTS site_page ( id serial PRIMARY KEY, url text, image text, title text, content text ); The site_page table contains the following columns:" />
 
-    <title>Developer Guide | Redrock Documentation</title>
+    <title>Search Engine | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -30,23 +33,29 @@
     
   <meta
     property="og:title"
-    content="Developer Guide"
+    content="Search Engine"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
+  <meta property="og:description" content="PostgreSQL provides the full text search capability. Through full text search, you can build a text content search engine. This section describes how to quickly set up a search engine for website pages in PostgreSQL.
+Create Content Table     Create a web page content table to store the content data of web pages.
+CREATE TABLE IF NOT EXISTS site_page ( id serial PRIMARY KEY, url text, image text, title text, content text ); The site_page table contains the following columns:" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://doc.rockdata.net/develop/" />
+<meta property="og:url" content="https://doc.rockdata.net/develop/search-engine/" />
 
 <meta property="article:section" content="Develop" />
     <meta
       property="article:modified_time"
-      content="2022-07-20T16:41:00+08:00"
+      content="2022-07-21T19:09:01+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Developer Guide" />
+<meta name="twitter:title" content="Search Engine" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
+  <meta name="twitter:description" content="PostgreSQL provides the full text search capability. Through full text search, you can build a text content search engine. This section describes how to quickly set up a search engine for website pages in PostgreSQL.
+Create Content Table     Create a web page content table to store the content data of web pages.
+CREATE TABLE IF NOT EXISTS site_page ( id serial PRIMARY KEY, url text, image text, title text, content text ); The site_page table contains the following columns:" />
 
 
   <script type="application/ld+json">
@@ -54,22 +63,23 @@
       "@context": "http://schema.org",
       "@type": "TechArticle",
       "articleSection": "Develop",
-      "name": "Developer Guide",
-      "url" : "https://doc.rockdata.net/develop/",
-      "headline": "Developer Guide",
+      "name": "Search Engine",
+      "url" : "https://doc.rockdata.net/develop/search-engine/",
+      "headline": "Search Engine",
+      "description": "PostgreSQL provides the full text search capability. Through full text search, you can build a text content search engine. This section describes how to quickly set up a search engine for website pages in PostgreSQL.\nCreate Content Table     Create a web page content table to store the content data of web pages.\nCREATE TABLE IF NOT EXISTS site_page ( id serial PRIMARY KEY, url text, image text, title text, content text ); The site_page table contains the following columns:",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "0",
+      "wordCount" : "381",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://doc.rockdata.net/develop/"
+          "@id": "https://doc.rockdata.net/develop/search-engine/"
       },
       "copyrightHolder" : "Redrock Documentation",
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-20T16:41:00.00Z",
+      "dateModified": "2022-07-21T19:09:01.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -145,7 +155,7 @@
   href="/custom.css"
   media="all"
 />
-  <link href="https://doc.rockdata.net/develop/" rel="canonical" type="text/html" />
+  <link href="https://doc.rockdata.net/develop/search-engine/" rel="canonical" type="text/html" />
 
 <!-- Made with Geekdoc theme https://github.com/thegeeklab/hugo-geekdoc -->
 
@@ -752,7 +762,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <a
                   class="flex gdoc-language__entry"
                   title="简体中文"
-                  href="/zh-cn/develop/"
+                  href="/zh-cn/develop/search-engine/"
                   hreflang="zh-cn"
                   lang="zh-cn"
                 >
@@ -1591,7 +1601,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                 <span class="flex">
                   <a
                     href="/develop/search-engine/"
-                    class="gdoc-nav__entry"
+                    class="gdoc-nav__entry is-active"
                   >
                     Search Engine
                   </a>
@@ -2598,7 +2608,15 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Developer Guide</span><meta itemprop='position' content='2' /></li>
+    
+    
+    
+    
+  
+  
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/develop/' href='/develop/'><span itemprop='name'>Developer Guide</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Search Engine</span><meta itemprop='position' content='3' /></li>
+  
+
   
 
   
@@ -2611,7 +2629,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       <span class="editpage">
         <svg class="gdoc-icon gdoc_code"><use xlink:href="#gdoc_code"></use></svg>
         <a
-          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/en/develop/_index.md"
+          href="https://gitee.com/rockdata/rockdata.net/edit/master/doc/content/en/develop/search-engine.md"
         >
           Edit page
         </a>
@@ -2625,8 +2643,147 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <article
     class="gdoc-markdown gdoc-markdown__align--left"
   >
-    <h1>Developer Guide</h1>
-    
+    <h1>Search Engine</h1>
+    <p>PostgreSQL provides the <a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/textsearch.html"
+  
+>full text search</a> capability. Through full text search, you can build a text content search engine. This section describes how to quickly set up a search engine for website pages in PostgreSQL.</p>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="create-content-table">
+        Create Content Table
+        <a data-clipboard-text="https://doc.rockdata.net/develop/search-engine/#create-content-table" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Create Content Table" aria-label="Anchor to: Create Content Table" href="#create-content-table">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>Create a web page content table to store the content data of web pages.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">site_page</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="n">id</span>        <span class="nb">serial</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">url</span>       <span class="nb">text</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">image</span>     <span class="nb">text</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">title</span>     <span class="nb">text</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="k">content</span>   <span class="nb">text</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span></code></pre></div><p>The <code>site_page</code> table contains the following columns:</p>
+<div class="table-wrap"> <table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>Identifier of the web page.</td>
+</tr>
+<tr>
+<td><code>url</code></td>
+<td>URL of the web page.</td>
+</tr>
+<tr>
+<td><code>image</code></td>
+<td>URL of a web page image.</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>Title of the web page.</td>
+</tr>
+<tr>
+<td><code>content</code></td>
+<td>The body of the web page.</td>
+</tr>
+</tbody>
+</table> </div>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="create-content-index-table">
+        Create Content Index Table
+        <a data-clipboard-text="https://doc.rockdata.net/develop/search-engine/#create-content-index-table" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Create Content Index Table" aria-label="Anchor to: Create Content Index Table" href="#create-content-index-table">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>Create a web page content index table to store the index data of the web page content:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">site_page_tsi</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="n">id</span>        <span class="nb">integer</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">title</span>     <span class="nb">tsvector</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="k">content</span>   <span class="nb">tsvector</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">INDEX</span> <span class="n">site_page_title_idx</span> <span class="k">ON</span> <span class="n">site_page_tsi</span> <span class="k">USING</span> <span class="n">GIN</span> <span class="p">(</span><span class="n">title</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">INDEX</span> <span class="n">site_page_content_idx</span> <span class="k">ON</span> <span class="n">site_page_tsi</span> <span class="k">USING</span> <span class="n">GIN</span> <span class="p">(</span><span class="k">content</span><span class="p">);</span>
+</span></span></code></pre></div><p>The <code>site_page_tsi</code> table contains the following columns:</p>
+<div class="table-wrap"> <table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>Identifier of the web page.</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>Lexemes list of the page title.</td>
+</tr>
+<tr>
+<td><code>content</code></td>
+<td>Lexemes list of the page body.</td>
+</tr>
+</tbody>
+</table> </div>
+<div class="gdoc-page__anchorwrap">
+    <h2 id="store-web-page-data">
+        Store Web Page Data
+        <a data-clipboard-text="https://doc.rockdata.net/develop/search-engine/#store-web-page-data" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Store Web Page Data" aria-label="Anchor to: Store Web Page Data" href="#store-web-page-data">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>You can add a page data record to the <code>site_page</code> table and add a lexemes index record to the <code>site_page_tsi</code> table.</p>
+<pre tabindex="0"><code>BEGIN;
+
+INSERT INTO site_page (url, image, title, content) VALUES
+  (&#39;https://doc.rockdata.net/&#39;,
+   &#39;https://doc.rockdata.net/brand.svg&#39;,
+   &#39;Redrock Postgres Documentation&#39;,
+   &#39;Redrock is an object-relational database management system based on
+PostgreSQL, developed by the PostgreSQL Global Development Group. It is
+intentionally designed as an enterprise grade and cloud native database.&#39;)
+  RETURNING id;
+ id
+----
+  1
+
+INSERT INTO site_page_tsi (id, title, content) VALUES
+  (1,
+   to_tsvector(&#39;english&#39;, &#39;Redrock Postgres Documentation&#39;),
+   to_tsvector(&#39;english&#39;,
+   &#39;Redrock is an object-relational database management system based on
+PostgreSQL, developed by the PostgreSQL Global Development Group. It is
+intentionally designed as an enterprise grade and cloud native database.&#39;));
+
+COMMIT;
+</code></pre><div class="gdoc-page__anchorwrap">
+    <h2 id="search-web-content">
+        Search Web Content
+        <a data-clipboard-text="https://doc.rockdata.net/develop/search-engine/#search-web-content" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Search Web Content" aria-label="Anchor to: Search Web Content" href="#search-web-content">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>Of course, we can search for matching web content based on search keywords. For example, we can execute the following query to search for web page content related to the keyword &ldquo;Redrock Documentation&rdquo;:</p>
+<pre tabindex="0"><code>SELECT sp.id, sp.url, sp.title FROM site_page AS sp
+  LEFT JOIN site_page_tsi AS tsi ON sp.id = tsi.id
+  WHERE tsi.title @@ plainto_tsquery(&#39;english&#39;, &#39;Redrock Documentation&#39;);
+ id |            url            |             title
+----+---------------------------+--------------------------------
+  1 | https://doc.rockdata.net/ | Redrock Postgres Documentation
+</code></pre>
   </article>
 
 

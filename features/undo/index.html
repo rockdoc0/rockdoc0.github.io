@@ -8,7 +8,7 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Undos and Transactions Transaction Rollback Managing Undos      Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo to do the following:
+  <meta name="description" content="Undos and Transactions Transaction Rollback Managing Undos      Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo data to do the following:
  Roll back an active transaction Recover a terminated transaction Provide read consistency  Redrock Postgres stores undo data inside the database rather than in external logs. Undo data is stored in blocks that are updated just like data blocks, with changes to these blocks generating redo." />
 
     <title>Undo | Redrock Documentation</title>
@@ -36,7 +36,7 @@
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Undos and Transactions Transaction Rollback Managing Undos      Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo to do the following:
+  <meta property="og:description" content="Undos and Transactions Transaction Rollback Managing Undos      Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo data to do the following:
  Roll back an active transaction Recover a terminated transaction Provide read consistency  Redrock Postgres stores undo data inside the database rather than in external logs. Undo data is stored in blocks that are updated just like data blocks, with changes to these blocks generating redo." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/features/undo/" />
@@ -44,14 +44,14 @@
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-06-26T09:31:53+08:00"
+      content="2022-07-21T20:23:12+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Undo" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Undos and Transactions Transaction Rollback Managing Undos      Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo to do the following:
+  <meta name="twitter:description" content="Undos and Transactions Transaction Rollback Managing Undos      Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo data to do the following:
  Roll back an active transaction Recover a terminated transaction Provide read consistency  Redrock Postgres stores undo data inside the database rather than in external logs. Undo data is stored in blocks that are updated just like data blocks, with changes to these blocks generating redo." />
 
 
@@ -63,9 +63,9 @@
       "name": "Undo",
       "url" : "https://doc.rockdata.net/features/undo/",
       "headline": "Undo",
-      "description": "Undos and Transactions Transaction Rollback Managing Undos      Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo to do the following:\n Roll back an active transaction Recover a terminated transaction Provide read consistency  Redrock Postgres stores undo data inside the database rather than in external logs. Undo data is stored in blocks that are updated just like data blocks, with changes to these blocks generating redo.",
+      "description": "Undos and Transactions Transaction Rollback Managing Undos      Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo data to do the following:\n Roll back an active transaction Recover a terminated transaction Provide read consistency  Redrock Postgres stores undo data inside the database rather than in external logs. Undo data is stored in blocks that are updated just like data blocks, with changes to these blocks generating redo.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "306",
+      "wordCount" : "437",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -76,7 +76,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-26T09:31:53.00Z",
+      "dateModified": "2022-07-21T20:23:12.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1232,10 +1232,98 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
+                    href="/features/transaction/"
+                    class="gdoc-nav__entry"
+                  >
+                    Transactions
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
                     href="/features/undo/"
                     class="gdoc-nav__entry is-active"
                   >
                     Undo
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/features/tablespace/"
+                    class="gdoc-nav__entry"
+                  >
+                    Tablespaces
                   </a>
                 </span>
               
@@ -1320,54 +1408,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/features/transaction/"
+                    href="/features/textsearch/"
                     class="gdoc-nav__entry"
                   >
-                    Transactions
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/features/tablespace/"
-                    class="gdoc-nav__entry"
-                  >
-                    Tablespaces
+                    Full Text Search
                   </a>
                 </span>
               
@@ -1553,10 +1597,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/develop/textsearch/"
+                    href="/develop/search-engine/"
                     class="gdoc-nav__entry"
                   >
-                    Chinese Text Search
+                    Search Engine
                   </a>
                 </span>
               
@@ -2605,7 +2649,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       </ul></nav>
       <hr />
     </div>
-<p>Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo to do the following:</p>
+<p>Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo data to do the following:</p>
 <ul>
 <li>Roll back an active transaction</li>
 <li>Recover a terminated transaction</li>
@@ -2641,11 +2685,25 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     </h2>
 </div>
 <p>After the database cluster data directory is initialized, 4 cluster-level undos and 8 database-level undos are generated by default in the database. Users can use the following statement to view the undo information in the current database:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">c</span><span class="mf">.</span><span class="n">relname</span><span class="p">,</span> <span class="n">c</span><span class="mf">.</span><span class="n">relisshared</span><span class="p">,</span> <span class="n">u</span><span class="mf">.</span><span class="n">undoid</span><span class="p">,</span> <span class="n">u</span><span class="mf">.</span><span class="n">undrelid</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">       <span class="n">pg_size_pretty</span><span class="p">(</span><span class="n">pg_relation_size</span><span class="p">(</span><span class="n">c</span><span class="mf">.</span><span class="n">oid</span><span class="p">))</span> <span class="k">AS</span> <span class="n">undsize</span>
-</span></span><span class="line"><span class="cl">   <span class="k">FROM</span> <span class="n">pg_undo</span> <span class="n">u</span>
-</span></span><span class="line"><span class="cl">     <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">pg_class</span> <span class="n">c</span> <span class="k">ON</span> <span class="n">u</span><span class="mf">.</span><span class="n">undrelid</span> <span class="o">=</span> <span class="n">c</span><span class="mf">.</span><span class="n">oid</span><span class="p">;</span>
-</span></span></code></pre></div>
+<pre tabindex="0"><code>SELECT c.relname, c.relisshared, u.undoid, u.undrelid,
+       pg_size_pretty(pg_relation_size(c.oid)) AS undsize
+   FROM pg_undo u
+     LEFT JOIN pg_class c ON u.undrelid = c.oid;
+  relname   | relisshared | undoid | undrelid | undsize
+------------+-------------+--------+----------+---------
+ pg_undo_1  | t           |      1 |     4141 | 1096 kB
+ pg_undo_2  | t           |      2 |     4142 | 1040 kB
+ pg_undo_3  | t           |      3 |     4143 | 1040 kB
+ pg_undo_4  | t           |      4 |     4144 | 1040 kB
+ pg_undo_5  | f           |      5 |    11528 | 1040 kB
+ pg_undo_6  | f           |      6 |    11530 | 1040 kB
+ pg_undo_7  | f           |      7 |    11532 | 1096 kB
+ pg_undo_8  | f           |      8 |    11534 | 1040 kB
+ pg_undo_9  | f           |      9 |    11536 | 1040 kB
+ pg_undo_10 | f           |     10 |    11538 | 1040 kB
+ pg_undo_11 | f           |     11 |    11540 | 1040 kB
+ pg_undo_12 | f           |     12 |    11542 | 1040 kB
+</code></pre>
   </article>
 
 

@@ -42,7 +42,7 @@
 <meta property="article:section" content="Usage" />
     <meta
       property="article:modified_time"
-      content="2022-07-19T21:09:01+08:00"
+      content="2022-07-21T19:09:01+08:00"
     />
 
 
@@ -62,7 +62,7 @@
       "headline": "Getting Started",
       "description": "Install Redrock Postgres Access database using psql Access database using Python What’s next?      Install Redrock Postgres     Before you can use Redrock Postgres you need to install it, of course. It is possible that PostgreSQL is already installed at your site, either because it was included in your operating system distribution or because the system administrator already installed it. If that is the case, you should uninstall the installed PostgreSQL first, as it may conflict with Redrock Postgres.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "617",
+      "wordCount" : "615",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -73,7 +73,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-19T21:09:01.00Z",
+      "dateModified": "2022-07-21T19:09:01.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1229,10 +1229,98 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
+                    href="/features/transaction/"
+                    class="gdoc-nav__entry"
+                  >
+                    Transactions
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
                     href="/features/undo/"
                     class="gdoc-nav__entry"
                   >
                     Undo
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/features/tablespace/"
+                    class="gdoc-nav__entry"
+                  >
+                    Tablespaces
                   </a>
                 </span>
               
@@ -1317,54 +1405,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/features/transaction/"
+                    href="/features/textsearch/"
                     class="gdoc-nav__entry"
                   >
-                    Transactions
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/features/tablespace/"
-                    class="gdoc-nav__entry"
-                  >
-                    Tablespaces
+                    Full Text Search
                   </a>
                 </span>
               
@@ -1550,10 +1594,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/develop/textsearch/"
+                    href="/develop/search-engine/"
                     class="gdoc-nav__entry"
                   >
-                    Chinese Text Search
+                    Search Engine
                   </a>
                 </span>
               
@@ -2672,7 +2716,7 @@ postgres=&gt; SELECT 2 + 2;
         </a>
     </h2>
 </div>
-<p>Python is a very popular scripting language. In this section, we take the Python programming language as an example to briefly introduce how to access the database. Before you start, you will need Python on your computer.</p>
+<p>Python is a very popular scripting language. Here we take the Python programming language as an example to briefly introduce how to access the database. Before you start, you will need Python on your computer.</p>
 <p>Assume that you already have an up to date version of Python installed, then you should install psycopg. Psycopg is a PostgreSQL adapter for the Python programming language. It is a wrapper for the <a
   class="gdoc-markdown__link"
   href="https://www.postgresql.org/docs/12/libpq.html"

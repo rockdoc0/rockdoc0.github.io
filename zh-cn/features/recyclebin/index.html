@@ -60,7 +60,7 @@ pg_dropped_[object_type]_[object_id] 其中：
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-07-11T19:32:27+08:00"
+      content="2022-07-21T19:09:01+08:00"
     />
 
 
@@ -89,7 +89,7 @@ pg_dropped_[object_type]_[object_id] 其中：
       "headline": "回收站",
       "description": "什么是回收站？  回收站中的对象命名   查看和查询回收站中的对象 清除回收站中的对象 从回收站恢复表      在删除一个表时，数据库不会立即删除与该表关联的物理文件和回收占用空间。数据库会重命名表，并将其和任何关联对象放置到回收站中，如果表被错误删除，则可以在以后进行恢复。\n什么是回收站？     回收站实际上是一个数据字典表，包含有关丢弃对象的信息。删除的表和任何关联对象（如索引、约束、类型等），它们的物理文件会保留一段时间，并且仍占用空间。\n它们会继续被计入用户空间配额，直到指定从回收站中清除，或者由于表空间需要被删除时，数据库必须清空回收站。\n每个用户都可以被认为有自己的回收站，因为除非用户具有 SUPERUSER 权限，否则用户在回收站中唯一有权访问的对象是用户拥有的对象。用户可以使用以下语句在回收站中查看其模式中的对象：\nSELECT * FROM pg_catalog.pg_recyclebin WHERE namespace = to_regnamespace(CURRENT_SCHEMA)::oid; DDL 命令删除的对象将会被移动到回收站。在移动到回收站的已删除对象中包括以下类型的对象：\n 表 回滚段 索引 约束 类型 函数  当您删除表空间时，表空间中的对象不会放置在回收站中，数据库会清除回收站中位于表空间中的任何对象。同样：\n 删除用户时，属于该用户的任何对象都不会放置在回收站中，并且回收站中的任何对象都会清除。 删除模式时，属于该模式的任何对象都不会放置在回收站中，并且回收站中的任何对象都会清除。  回收站中的对象命名     当删除的表移动到回收站时，该表及其关联的对象将被指定为系统生成的名称。这是必要的，以避免如果多个表具有相同的名称，可能会出现名称冲突。在以下情况下可能发生这种情况：\n 用户删除表，用相同的名称重新创建表，然后再次删除表。 两个用户有同名的表，两个用户都删除他们的表。  删除对象重命名约定如下：\npg_dropped_[object_type]_[object_id] 其中：\n object_type 是对象类型名称，例如：table, index, constraint, type, function。 object_id 是该对象的唯一标识符，这使得回收站名称在当前数据库中唯一。  查看和查询回收站中的对象     您可以查询系统目录pg_recyclebin以识别数据库分配给已删除对象的名称，如以下示例所示：",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "158",
+      "wordCount" : "161",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -100,7 +100,7 @@ pg_dropped_[object_type]_[object_id] 其中：
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-11T19:32:27.00Z",
+      "dateModified": "2022-07-21T19:09:01.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1256,10 +1256,98 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
+                    href="/zh-cn/features/transaction/"
+                    class="gdoc-nav__entry"
+                  >
+                    事务
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
                     href="/zh-cn/features/undo/"
                     class="gdoc-nav__entry"
                   >
                     回滚段
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/features/tablespace/"
+                    class="gdoc-nav__entry"
+                  >
+                    表空间
                   </a>
                 </span>
               
@@ -1344,54 +1432,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/features/transaction/"
+                    href="/zh-cn/features/textsearch/"
                     class="gdoc-nav__entry"
                   >
-                    事务
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/zh-cn/features/tablespace/"
-                    class="gdoc-nav__entry"
-                  >
-                    表空间
+                    全文检索
                   </a>
                 </span>
               
@@ -1577,10 +1621,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/develop/textsearch/"
+                    href="/zh-cn/develop/search-engine/"
                     class="gdoc-nav__entry"
                   >
-                    中文搜索
+                    搜索引擎
                   </a>
                 </span>
               
@@ -2693,7 +2737,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <p>您可以查询系统目录<code>pg_recyclebin</code>以识别数据库分配给已删除对象的名称，如以下示例所示：</p>
 <pre tabindex="0"><code>SELECT objname, oldname FROM pg_catalog.pg_recyclebin
    WHERE namespace = to_regnamespace(&#39;hr&#39;)::oid;
-
        objname         |  oldname
 -----------------------+-----------
 pg_dropped_table_18762 | employees
@@ -2739,12 +2782,11 @@ pg_dropped_table_18762 | employees
 </span></span><span class="line"><span class="cl"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">hr</span><span class="mf">.</span><span class="n">employees2</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">pg_recyclebin</span><span class="mf">.</span><span class="n">pg_dropped_table_18762</span><span class="p">;</span>
 </span></span></code></pre></div><p>如果您多次删除表，回收站中系统生成的对象名称非常有用。例如，假设您在回收站中有三个版本的 <code>employees</code> 表，并且您希望恢复第二个版本。您可以查询回收站，然后恢复到系统生成的相应对象名称，如以下示例所示。在查询中包括删除时间可以帮助您验证您正在恢复正确的表。</p>
 <pre tabindex="0"><code>SELECT objname, oldname, droptime FROM pg_catalog.pg_recyclebin;
-
        objname         |  oldname  |      droptime
 -----------------------+-----------+--------------------
-pg_dropped_table_18762 | employees | 2006-02-05:21:05:52
-pg_dropped_table_18924 | employees | 2006-02-05:21:25:13
-pg_dropped_table_19510 | employees | 2006-02-05:22:05:53
+pg_dropped_table_18762 | employees | 2016-02-05 21:05:52
+pg_dropped_table_18924 | employees | 2016-02-05 21:25:13
+pg_dropped_table_19510 | employees | 2016-02-05 22:05:53
 
 CREATE TABLE hr.employees2 (LIKE pg_recyclebin.pg_dropped_table_18924 INCLUDING ALL);
 INSERT INTO hr.employees2 SELECT * FROM pg_recyclebin.pg_dropped_table_18924;

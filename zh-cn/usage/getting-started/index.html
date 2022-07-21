@@ -54,7 +54,7 @@ postgres=# 这个提示符意味着你是数据库超级用户，最可能出现
 <meta property="article:section" content="Usage" />
     <meta
       property="article:modified_time"
-      content="2022-07-19T21:09:01+08:00"
+      content="2022-07-21T19:09:01+08:00"
     />
 
 
@@ -91,7 +91,7 @@ postgres=# 这个提示符意味着你是数据库超级用户，最可能出现
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-19T21:09:01.00Z",
+      "dateModified": "2022-07-21T19:09:01.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1247,10 +1247,98 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
+                    href="/zh-cn/features/transaction/"
+                    class="gdoc-nav__entry"
+                  >
+                    事务
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
                     href="/zh-cn/features/undo/"
                     class="gdoc-nav__entry"
                   >
                     回滚段
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/zh-cn/features/tablespace/"
+                    class="gdoc-nav__entry"
+                  >
+                    表空间
                   </a>
                 </span>
               
@@ -1335,54 +1423,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/features/transaction/"
+                    href="/zh-cn/features/textsearch/"
                     class="gdoc-nav__entry"
                   >
-                    事务
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/zh-cn/features/tablespace/"
-                    class="gdoc-nav__entry"
-                  >
-                    表空间
+                    全文检索
                   </a>
                 </span>
               
@@ -1568,10 +1612,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/zh-cn/develop/textsearch/"
+                    href="/zh-cn/develop/search-engine/"
                     class="gdoc-nav__entry"
                   >
-                    中文搜索
+                    搜索引擎
                   </a>
                 </span>
               
@@ -2690,7 +2734,7 @@ postgres=&gt; SELECT 2 + 2;
         </a>
     </h2>
 </div>
-<p>Python是一种非常流行的脚本语言。本节我们以Python编程语言为例，简单介绍下如何访问数据库。在您想使用Python访问数据库之前，您需要在计算机上安装Python。</p>
+<p>Python是一种非常流行的脚本语言。这里我们以Python编程语言为例，简单介绍下如何访问数据库。在您想使用Python访问数据库之前，您需要在计算机上安装Python。</p>
 <p>假设您已经安装了最新版本的Python，那么接下来您需要安装psycopg。 Psycopg 是基于Python编程语言的PostgreSQL驱动。 它是在PostgreSQL 客户端库 <a
   class="gdoc-markdown__link"
   href="http://www.postgres.cn/docs/12/libpq.html"

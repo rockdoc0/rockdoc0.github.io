@@ -42,7 +42,7 @@
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-07-11T19:32:27+08:00"
+      content="2022-07-21T19:09:01+08:00"
     />
 
 
@@ -62,7 +62,7 @@
       "headline": "Recycle Bin",
       "description": "What Is the Recycle Bin?  Object Naming in the Recycle Bin   Viewing and Querying Objects in the Recycle Bin Purging Objects in the Recycle Bin Restoring Tables from the Recycle Bin      When you drop a table, the database does not immediately remove the space associated with the table. The database renames the table and places it and any associated objects in a recycle bin, where, in case the table was dropped in error, it can be recovered at a later time.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "993",
+      "wordCount" : "996",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -73,7 +73,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-11T19:32:27.00Z",
+      "dateModified": "2022-07-21T19:09:01.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1229,10 +1229,98 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
+                    href="/features/transaction/"
+                    class="gdoc-nav__entry"
+                  >
+                    Transactions
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
                     href="/features/undo/"
                     class="gdoc-nav__entry"
                   >
                     Undo
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/features/tablespace/"
+                    class="gdoc-nav__entry"
+                  >
+                    Tablespaces
                   </a>
                 </span>
               
@@ -1317,54 +1405,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/features/transaction/"
+                    href="/features/textsearch/"
                     class="gdoc-nav__entry"
                   >
-                    Transactions
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/features/tablespace/"
-                    class="gdoc-nav__entry"
-                  >
-                    Tablespaces
+                    Full Text Search
                   </a>
                 </span>
               
@@ -1550,10 +1594,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/develop/textsearch/"
+                    href="/develop/search-engine/"
                     class="gdoc-nav__entry"
                   >
-                    Chinese Text Search
+                    Search Engine
                   </a>
                 </span>
               
@@ -2666,7 +2710,6 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <p>You can query system catalog <code>pg_recyclebin</code> to identify the name that the database has assigned to a dropped object, as shown in the following example:</p>
 <pre tabindex="0"><code>SELECT objname, oldname FROM pg_catalog.pg_recyclebin
    WHERE namespace = to_regnamespace(&#39;hr&#39;)::oid;
-
        objname         |  oldname
 -----------------------+-----------
 pg_dropped_table_18762 | employees
@@ -2712,12 +2755,11 @@ pg_dropped_table_18762 | employees
 </span></span><span class="line"><span class="cl"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">hr</span><span class="mf">.</span><span class="n">employees2</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">pg_recyclebin</span><span class="mf">.</span><span class="n">pg_dropped_table_18762</span><span class="p">;</span>
 </span></span></code></pre></div><p>The system-generated recycle bin name is very useful if you have dropped a table multiple times. For example, suppose you have three versions of the <code>employees</code> table in the recycle bin and you want to recover the second version. You can query the recycle bin and then restore to the appropriate system-generated name, as shown in the following example. Including the drop time in the query can help you verify that you are restoring the correct table.</p>
 <pre tabindex="0"><code>SELECT objname, oldname, droptime FROM pg_catalog.pg_recyclebin;
-
        objname         |  oldname  |      droptime
 -----------------------+-----------+--------------------
-pg_dropped_table_18762 | employees | 2006-02-05:21:05:52
-pg_dropped_table_18924 | employees | 2006-02-05:21:25:13
-pg_dropped_table_19510 | employees | 2006-02-05:22:05:53
+pg_dropped_table_18762 | employees | 2016-02-05 21:05:52
+pg_dropped_table_18924 | employees | 2016-02-05 21:25:13
+pg_dropped_table_19510 | employees | 2016-02-05 22:05:53
 
 CREATE TABLE hr.employees2 (LIKE pg_recyclebin.pg_dropped_table_18924 INCLUDING ALL);
 INSERT INTO hr.employees2 SELECT * FROM pg_recyclebin.pg_dropped_table_18924;

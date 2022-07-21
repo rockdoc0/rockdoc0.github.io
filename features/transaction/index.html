@@ -42,7 +42,7 @@
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-07-17T18:01:17+08:00"
+      content="2022-07-21T20:23:12+08:00"
     />
 
 
@@ -62,7 +62,7 @@
       "headline": "Transactions",
       "description": "Introduction to Transactions  Sample Transaction: Account Debit and Credit Structure of a Transaction  Beginning of a Transaction End of a Transaction   Statement Level Atomicity Logical Timestamp   Overview of Transaction Control  Active Transactions Savepoints Rollback to Savepoint Rollback of Transactions Committing Transactions        An RDBMS must be able to group SQL statements so that they are either all committed, which means they are applied to the database, or all rolled back, which means they are undone.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "3346",
+      "wordCount" : "3375",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -73,7 +73,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-17T18:01:17.00Z",
+      "dateModified": "2022-07-21T20:23:12.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1229,10 +1229,98 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
+                    href="/features/transaction/"
+                    class="gdoc-nav__entry is-active"
+                  >
+                    Transactions
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
                     href="/features/undo/"
                     class="gdoc-nav__entry"
                   >
                     Undo
+                  </a>
+                </span>
+              
+              
+            </label>
+
+            
+          </li>
+        
+      
+    
+      
+
+      
+        
+      
+
+      
+        
+          
+          
+          
+          
+          
+          
+
+
+          <li>
+            <input
+              type="checkbox"
+              
+                class="hidden"
+              
+            />
+            <label
+              
+            >
+              
+                <span class="flex">
+                  <a
+                    href="/features/tablespace/"
+                    class="gdoc-nav__entry"
+                  >
+                    Tablespaces
                   </a>
                 </span>
               
@@ -1317,54 +1405,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/features/transaction/"
-                    class="gdoc-nav__entry is-active"
-                  >
-                    Transactions
-                  </a>
-                </span>
-              
-              
-            </label>
-
-            
-          </li>
-        
-      
-    
-      
-
-      
-        
-      
-
-      
-        
-          
-          
-          
-          
-          
-          
-
-
-          <li>
-            <input
-              type="checkbox"
-              
-                class="hidden"
-              
-            />
-            <label
-              
-            >
-              
-                <span class="flex">
-                  <a
-                    href="/features/tablespace/"
+                    href="/features/textsearch/"
                     class="gdoc-nav__entry"
                   >
-                    Tablespaces
+                    Full Text Search
                   </a>
                 </span>
               
@@ -1550,10 +1594,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
               
                 <span class="flex">
                   <a
-                    href="/develop/textsearch/"
+                    href="/develop/search-engine/"
                     class="gdoc-nav__entry"
                   >
-                    Chinese Text Search
+                    Search Engine
                   </a>
                 </span>
               
@@ -2758,11 +2802,16 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 
 <p>When a transaction begins, Redrock Postgres Database assigns the transaction to an available undo data segment to record the undo entries for the new transaction. A transaction ID is not allocated until an undo segment and transaction table slot are allocated, which occurs during the first DML statement. A transaction ID is unique to a transaction and represents the undo segment number, slot, and sequence number.</p>
 <p>The following example execute an UPDATE statement to begin a transaction and queries for details about the transaction:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">BEGIN</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="k">UPDATE</span> <span class="n">hr</span><span class="mf">.</span><span class="n">employees</span> <span class="k">SET</span> <span class="n">salary</span> <span class="o">=</span> <span class="n">salary</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">xid</span><span class="p">,</span> <span class="n">pg_xact_commit_status</span><span class="p">(</span><span class="n">xid</span><span class="p">)</span> <span class="k">AS</span> <span class="n">status</span>
-</span></span><span class="line"><span class="cl">  <span class="k">FROM</span> <span class="n">current_xid</span><span class="p">()</span> <span class="k">AS</span> <span class="n">xid</span><span class="p">;</span>
-</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
+<pre tabindex="0"><code>BEGIN;
+
+UPDATE hr.employees SET salary = salary;
+
+SELECT xid, pg_xact_commit_status(xid) AS status
+  FROM current_xid() AS xid;
+   xid    |   status
+----------+-------------
+ (5,16,1) | in progress
+</code></pre><div class="gdoc-page__anchorwrap">
     <h4 id="end-of-a-transaction">
         End of a Transaction
         <a data-clipboard-text="https://doc.rockdata.net/features/transaction/#end-of-a-transaction" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: End of a Transaction" aria-label="Anchor to: End of a Transaction" href="#end-of-a-transaction">
@@ -2785,19 +2834,33 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </li>
 </ul>
 <p>After one transaction ends, the next executable SQL statement automatically starts the following transaction. The following example executes an UPDATE to start a transaction, ends the transaction with a ROLLBACK statement, and then executes an UPDATE to start a new transaction (note that the transaction IDs are different):</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">BEGIN</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="k">UPDATE</span> <span class="n">hr</span><span class="mf">.</span><span class="n">employees</span> <span class="k">SET</span> <span class="n">salary</span> <span class="o">=</span> <span class="n">salary</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">xid</span><span class="p">,</span> <span class="n">pg_xact_commit_status</span><span class="p">(</span><span class="n">xid</span><span class="p">)</span> <span class="k">AS</span> <span class="n">status</span>
-</span></span><span class="line"><span class="cl">  <span class="k">FROM</span> <span class="n">current_xid</span><span class="p">()</span> <span class="k">AS</span> <span class="n">xid</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">ROLLBACK</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">current_xid</span><span class="p">()</span> <span class="k">AS</span> <span class="n">xid</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">BEGIN</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="k">UPDATE</span> <span class="n">hr</span><span class="mf">.</span><span class="n">employees</span> <span class="k">SET</span> <span class="n">last_name</span><span class="o">=</span><span class="n">last_name</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">xid</span><span class="p">,</span> <span class="n">pg_xact_commit_status</span><span class="p">(</span><span class="n">xid</span><span class="p">)</span> <span class="k">AS</span> <span class="n">status</span>
-</span></span><span class="line"><span class="cl">  <span class="k">FROM</span> <span class="n">current_xid</span><span class="p">()</span> <span class="k">AS</span> <span class="n">xid</span><span class="p">;</span>
-</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
+<pre tabindex="0"><code>BEGIN;
+
+UPDATE hr.employees SET salary = salary;
+
+SELECT xid, pg_xact_commit_status(xid) AS status
+  FROM current_xid() AS xid;
+   xid    |   status
+----------+-------------
+ (6,16,1) | in progress
+
+ROLLBACK;
+
+SELECT current_xid() AS xid;
+   xid
+---------
+ (0,0,0)
+
+BEGIN;
+
+UPDATE hr.employees SET last_name = last_name;
+
+SELECT xid, pg_xact_commit_status(xid) AS status
+  FROM current_xid() AS xid;
+   xid    |   status
+----------+-------------
+ (7,16,1) | in progress
+</code></pre><div class="gdoc-page__anchorwrap">
     <h3 id="statement-level-atomicity">
         Statement Level Atomicity
         <a data-clipboard-text="https://doc.rockdata.net/features/transaction/#statement-level-atomicity" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Statement Level Atomicity" aria-label="Anchor to: Statement Level Atomicity" href="#statement-level-atomicity">
