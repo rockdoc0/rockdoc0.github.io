@@ -42,7 +42,7 @@
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-07-21T20:23:12+08:00"
+      content="2022-07-22T16:51:10+08:00"
     />
 
 
@@ -62,7 +62,7 @@
       "headline": "Transactions",
       "description": "Introduction to Transactions  Sample Transaction: Account Debit and Credit Structure of a Transaction  Beginning of a Transaction End of a Transaction   Statement Level Atomicity Logical Timestamp   Overview of Transaction Control  Active Transactions Savepoints Rollback to Savepoint Rollback of Transactions Committing Transactions        An RDBMS must be able to group SQL statements so that they are either all committed, which means they are applied to the database, or all rolled back, which means they are undone.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "3375",
+      "wordCount" : "3359",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -73,7 +73,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-21T20:23:12.00Z",
+      "dateModified": "2022-07-22T16:51:10.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1276,7 +1276,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     href="/features/undo/"
                     class="gdoc-nav__entry"
                   >
-                    Undo
+                    Undo Segments
                   </a>
                 </span>
               
@@ -2608,7 +2608,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/features/' href='/features/'><span itemprop='name'>Features</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Transactions</span><meta itemprop='position' content='3' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/features/' href='/features/'><span itemprop='name'>Features</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Transactions</span><meta itemprop='position' content='3' /></li>
   
 
   
@@ -2800,18 +2800,18 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <div class="gdoc-hint__text">Some client libraries issue <code>BEGIN</code> and <code>COMMIT</code> commands automatically, so that you might get the effect of transaction blocks without asking. Check the documentation for the interface you are using.</div>
 </blockquote>
 
-<p>When a transaction begins, Redrock Postgres Database assigns the transaction to an available undo data segment to record the undo entries for the new transaction. A transaction ID is not allocated until an undo segment and transaction table slot are allocated, which occurs during the first DML statement. A transaction ID is unique to a transaction and represents the undo segment number, slot, and sequence number.</p>
-<p>The following example execute an UPDATE statement to begin a transaction and queries for details about the transaction:</p>
-<pre tabindex="0"><code>BEGIN;
-
-UPDATE hr.employees SET salary = salary;
-
-SELECT xid, pg_xact_commit_status(xid) AS status
-  FROM current_xid() AS xid;
-   xid    |   status
-----------+-------------
- (5,16,1) | in progress
-</code></pre><div class="gdoc-page__anchorwrap">
+<p>When a transaction begins, Redrock Postgres assigns the transaction to an available undo segment to record the undo entries for the new transaction. A transaction ID is not allocated until an undo segment and transaction table slot are allocated, which occurs during the first DML/DDL statement. A transaction ID is unique to a transaction and represents the undo segment number, slot, and sequence number.</p>
+<p>The following example execute an <code>UPDATE</code> statement to begin a transaction and queries for details about the transaction:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">BEGIN</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">UPDATE</span> <span class="n">hr</span><span class="mf">.</span><span class="n">employees</span> <span class="k">SET</span> <span class="n">salary</span> <span class="o">=</span> <span class="n">salary</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">xid</span><span class="p">,</span> <span class="n">pg_xact_commit_status</span><span class="p">(</span><span class="n">xid</span><span class="p">)</span> <span class="k">AS</span> <span class="n">status</span>
+</span></span><span class="line"><span class="cl">  <span class="k">FROM</span> <span class="n">current_xid</span><span class="p">()</span> <span class="k">AS</span> <span class="n">xid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">   <span class="n">xid</span>    <span class="o">|</span>   <span class="n">status</span>
+</span></span><span class="line"><span class="cl"><span class="c1">----------+-------------
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span> <span class="p">(</span><span class="mf">5</span><span class="p">,</span><span class="mf">16</span><span class="p">,</span><span class="mf">1</span><span class="p">)</span> <span class="o">|</span> <span class="k">in</span> <span class="n">progress</span>
+</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
     <h4 id="end-of-a-transaction">
         End of a Transaction
         <a data-clipboard-text="https://doc.rockdata.net/features/transaction/#end-of-a-transaction" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: End of a Transaction" aria-label="Anchor to: End of a Transaction" href="#end-of-a-transaction">
@@ -2822,7 +2822,7 @@ SELECT xid, pg_xact_commit_status(xid) AS status
 <p>A transaction ends when any of the following actions occurs:</p>
 <ul>
 <li>
-<p>A user issues a COMMIT or ROLLBACK statement without a SAVEPOINT clause.</p>
+<p>A user issues a <code>COMMIT</code> or <code>ROLLBACK</code> statement without a <code>SAVEPOINT</code> clause.</p>
 <p>In a commit, a user explicitly or implicitly requested that the changes in the transaction be made permanent. Changes made by the transaction are permanent and visible to other users only after a transaction commits. The transaction shown in Figure 1 ends with a commit.</p>
 </li>
 <li>
@@ -2833,34 +2833,34 @@ SELECT xid, pg_xact_commit_status(xid) AS status
 <p>A client process terminates abnormally, causing the transaction to be implicitly rolled back using metadata stored in the transaction table and the undo.</p>
 </li>
 </ul>
-<p>After one transaction ends, the next executable SQL statement automatically starts the following transaction. The following example executes an UPDATE to start a transaction, ends the transaction with a ROLLBACK statement, and then executes an UPDATE to start a new transaction (note that the transaction IDs are different):</p>
-<pre tabindex="0"><code>BEGIN;
-
-UPDATE hr.employees SET salary = salary;
-
-SELECT xid, pg_xact_commit_status(xid) AS status
-  FROM current_xid() AS xid;
-   xid    |   status
-----------+-------------
- (6,16,1) | in progress
-
-ROLLBACK;
-
-SELECT current_xid() AS xid;
-   xid
----------
- (0,0,0)
-
-BEGIN;
-
-UPDATE hr.employees SET last_name = last_name;
-
-SELECT xid, pg_xact_commit_status(xid) AS status
-  FROM current_xid() AS xid;
-   xid    |   status
-----------+-------------
- (7,16,1) | in progress
-</code></pre><div class="gdoc-page__anchorwrap">
+<p>After one transaction ends, the next executable SQL statement automatically starts the following transaction. The following example executes an <code>UPDATE</code> to start a transaction, ends the transaction with a <code>ROLLBACK</code> statement, and then executes an <code>UPDATE</code> to start a new transaction (note that the transaction IDs are different):</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">BEGIN</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">UPDATE</span> <span class="n">hr</span><span class="mf">.</span><span class="n">employees</span> <span class="k">SET</span> <span class="n">salary</span> <span class="o">=</span> <span class="n">salary</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">xid</span><span class="p">,</span> <span class="n">pg_xact_commit_status</span><span class="p">(</span><span class="n">xid</span><span class="p">)</span> <span class="k">AS</span> <span class="n">status</span>
+</span></span><span class="line"><span class="cl">  <span class="k">FROM</span> <span class="n">current_xid</span><span class="p">()</span> <span class="k">AS</span> <span class="n">xid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">   <span class="n">xid</span>    <span class="o">|</span>   <span class="n">status</span>
+</span></span><span class="line"><span class="cl"><span class="c1">----------+-------------
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span> <span class="p">(</span><span class="mf">6</span><span class="p">,</span><span class="mf">16</span><span class="p">,</span><span class="mf">1</span><span class="p">)</span> <span class="o">|</span> <span class="k">in</span> <span class="n">progress</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">ROLLBACK</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">current_xid</span><span class="p">()</span> <span class="k">AS</span> <span class="n">xid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">   <span class="n">xid</span>
+</span></span><span class="line"><span class="cl"><span class="c1">---------
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span> <span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="mf">0</span><span class="p">,</span><span class="mf">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">BEGIN</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">UPDATE</span> <span class="n">hr</span><span class="mf">.</span><span class="n">employees</span> <span class="k">SET</span> <span class="n">last_name</span> <span class="o">=</span> <span class="n">last_name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">xid</span><span class="p">,</span> <span class="n">pg_xact_commit_status</span><span class="p">(</span><span class="n">xid</span><span class="p">)</span> <span class="k">AS</span> <span class="n">status</span>
+</span></span><span class="line"><span class="cl">  <span class="k">FROM</span> <span class="n">current_xid</span><span class="p">()</span> <span class="k">AS</span> <span class="n">xid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">   <span class="n">xid</span>    <span class="o">|</span>   <span class="n">status</span>
+</span></span><span class="line"><span class="cl"><span class="c1">----------+-------------
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span> <span class="p">(</span><span class="mf">7</span><span class="p">,</span><span class="mf">16</span><span class="p">,</span><span class="mf">1</span><span class="p">)</span> <span class="o">|</span> <span class="k">in</span> <span class="n">progress</span>
+</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
     <h3 id="statement-level-atomicity">
         Statement Level Atomicity
         <a data-clipboard-text="https://doc.rockdata.net/features/transaction/#statement-level-atomicity" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Statement Level Atomicity" aria-label="Anchor to: Statement Level Atomicity" href="#statement-level-atomicity">
@@ -2890,10 +2890,10 @@ SELECT xid, pg_xact_commit_status(xid) AS status
         </a>
     </h3>
 </div>
-<p>A logical timestamp (logicaltime) is a logical, internal time stamp used by Redrock Postgres Database. logicaltimes order events that occur within the database, which is necessary to satisfy the ACID properties of a transaction. Redrock Postgres Database uses logicaltimes to mark the logicaltime before which all changes are known to be on disk so that recovery avoids applying unnecessary redo. The database also uses logicaltimes to mark the point at which no redo exists for a set of data so that recovery can stop.</p>
-<p>logicaltimes occur in a monotonically increasing sequence. Redrock Postgres Database can use an logicaltime like a clock because an observed logicaltime indicates a logical point in time and repeated observations return equal or greater values. If one event has a lower logicaltime than another event, then it occurred at an earlier time with respect to the database. Several events may share the same logicaltime, which means that they occurred at the same time with respect to the database.</p>
-<p>Every transaction has an logicaltime. For example, if a transaction updates a row, then the database records the logicaltime at which this update occurred. Other modifications in this transaction have the same logicaltime. When a transaction commits, the database records an logicaltime for this commit.</p>
-<p>Redrock Postgres Database increments logicaltimes in the shared memory area. When a transaction modifies data, the database writes a new logicaltime to the undo assigned to the transaction. The log writer process then writes the commit record of the transaction immediately to the online redo log. The commit record has the unique logicaltime of the transaction. Redrock Postgres Database also uses logicaltimes as part of its instance recovery and media recovery mechanisms.</p>
+<p>A logical timestamp (<code>logicaltime</code>) is a logical, internal time stamp used by Redrock Postgres Database. logicaltimes order events that occur within the database, which is necessary to satisfy the ACID properties of a transaction. Redrock Postgres uses logicaltimes to mark the <code>logicaltime</code> before which all changes are known to be on disk so that recovery avoids applying unnecessary redo. The database also uses logicaltimes to mark the point at which no redo exists for a set of data so that recovery can stop.</p>
+<p>logicaltimes occur in a monotonically increasing sequence. Redrock Postgres can use an <code>logicaltime</code> like a clock because an observed <code>logicaltime</code> indicates a logical point in time and repeated observations return equal or greater values. If one event has a lower <code>logicaltime</code> than another event, then it occurred at an earlier time with respect to the database. Several events may share the same <code>logicaltime</code>, which means that they occurred at the same time with respect to the database.</p>
+<p>Every transaction has an <code>logicaltime</code>. For example, if a transaction updates a row, then the database records the logicaltime at which this update occurred. Other modifications in this transaction have the same <code>logicaltime</code>. When a transaction commits, the database records an <code>logicaltime</code> for this commit.</p>
+<p>Redrock Postgres increments logicaltimes in the shared memory area. When a transaction modifies data, the database writes a new <code>logicaltime</code> to the undo assigned to the transaction. The log writer process then writes the commit record of the transaction immediately to the online redo log. The commit record has the unique <code>logicaltime</code> of the transaction. Redrock Postgres also uses logicaltimes as part of its instance recovery and media recovery mechanisms.</p>
 <div class="gdoc-page__anchorwrap">
     <h2 id="overview-of-transaction-control">
         Overview of Transaction Control
@@ -2906,7 +2906,7 @@ SELECT xid, pg_xact_commit_status(xid) AS status
 <p>Transaction control involves using the following statements:</p>
 <ul>
 <li><code>BEGIN</code> initiates a transaction block, that is, all statements after a <code>BEGIN</code> command will be executed in a single transaction until an explicit <code>COMMIT</code> or <code>ROLLBACK</code> is given.</li>
-<li>The <code>COMMIT</code> statement ends the current transaction and makes all changes performed in the transaction permanent. COMMIT also erases all savepoints in the transaction and releases transaction locks.</li>
+<li>The <code>COMMIT</code> statement ends the current transaction and makes all changes performed in the transaction permanent. <code>COMMIT</code> also erases all savepoints in the transaction and releases transaction locks.</li>
 <li>The <code>ROLLBACK</code> statement reverses the work done in the current transaction; it causes all data changes since the last <code>COMMIT</code> or <code>ROLLBACK</code> to be discarded. The <code>ROLLBACK TO SAVEPOINT</code> statement undoes the changes since the last savepoint but does not end the entire transaction.</li>
 <li>The <code>SAVEPOINT</code> statement identifies a point in a transaction to which you can later roll back.</li>
 </ul>
@@ -2995,11 +2995,11 @@ SELECT xid, pg_xact_commit_status(xid) AS status
 <p>Data changes made by a transaction are temporary until the transaction is committed or rolled back. Before the transaction ends, the state of the data is as follows:</p>
 <ul>
 <li>
-<p>Redrock Postgres Database has generated undo data information in the shared buffers.</p>
+<p>Redrock Postgres has generated undo data information in the shared buffers.</p>
 <p>The undo data contains the old data values changed by the SQL statements of the transaction.</p>
 </li>
 <li>
-<p>Redrock Postgres Database has generated redo in the shared WAL buffers.</p>
+<p>Redrock Postgres has generated redo in the shared WAL buffers.</p>
 <p>The redo log record contains the change to the data block and the change to the undo block.</p>
 </li>
 <li>
@@ -3032,15 +3032,15 @@ SELECT xid, pg_xact_commit_status(xid) AS status
 <p>A rollback to a savepoint in an uncommitted transaction means undoing any changes made after the specified savepoint, but it does not mean a rollback of the transaction itself. When a transaction is rolled back to a savepoint, as when the <code>ROLLBACK TO SAVEPOINT after_banda_sal</code> is run in Table 1, the following occurs:</p>
 <ol>
 <li>
-<p>Redrock Postgres Database rolls back only the statements run after the savepoint.</p>
+<p>Redrock Postgres rolls back only the statements run after the savepoint.</p>
 <p>In Table 1, the <code>ROLLBACK TO SAVEPOINT</code> causes the <code>UPDATE</code> for Greene to be rolled back, but not the <code>UPDATE</code> for Banda.</p>
 </li>
 <li>
-<p>Redrock Postgres Database preserves the savepoint specified in the <code>ROLLBACK TO SAVEPOINT</code> statement, but all subsequent savepoints are lost.</p>
+<p>Redrock Postgres preserves the savepoint specified in the <code>ROLLBACK TO SAVEPOINT</code> statement, but all subsequent savepoints are lost.</p>
 <p>In Table 1, the <code>ROLLBACK TO SAVEPOINT</code> causes the <code>after_greene_sal</code> savepoint to be lost.</p>
 </li>
 <li>
-<p>Redrock Postgres Database releases all table and row locks acquired after the specified savepoint but retains all data locks acquired previous to the savepoint.</p>
+<p>Redrock Postgres releases all table and row locks acquired after the specified savepoint but retains all data locks acquired previous to the savepoint.</p>
 <p>The transaction remains active and can be continued.</p>
 </li>
 </ol>
@@ -3053,7 +3053,7 @@ SELECT xid, pg_xact_commit_status(xid) AS status
     </h3>
 </div>
 <p>A rollback of an uncommitted transaction undoes any changes to data that have been performed by SQL statements within the transaction. After a transaction has been rolled back, the effects of the work done in the transaction no longer exist.</p>
-<p>In rolling back an entire transaction, without referencing any savepoints, Redrock Postgres Database performs the following actions:</p>
+<p>In rolling back an entire transaction, without referencing any savepoints, Redrock Postgres performs the following actions:</p>
 <ul>
 <li>
 <p>Undoes all changes made by all the SQL statements in the transaction by using the corresponding undo segments</p>
@@ -3084,32 +3084,32 @@ SELECT xid, pg_xact_commit_status(xid) AS status
 <p>When a transaction commits, the following actions occur:</p>
 <ul>
 <li>
-<p>A logical timestamp (logicaltime) is generated for the <code>COMMIT</code>.</p>
-<p>The internal transaction table for the associated undo tablespace records that the transaction has committed. The corresponding unique logicaltime of the transaction is assigned and recorded in the transaction table.</p>
+<p>A logical timestamp (<code>logicaltime</code>) is generated for the <code>COMMIT</code>.</p>
+<p>The internal transaction table for the associated undo tablespace records that the transaction has committed. The corresponding unique <code>logicaltime</code> of the transaction is assigned and recorded in the transaction table.</p>
 </li>
 <li>
-<p>The session process writes remaining WAL records in the WAL buffers to the WAL log and writes the transaction logicaltime to the WAL log. This atomic event constitutes the commit of the transaction.</p>
+<p>The session process writes remaining WAL records in the WAL buffers to the WAL log and writes the transaction <code>logicaltime</code> to the WAL log. This atomic event constitutes the commit of the transaction.</p>
 </li>
 <li>
-<p>Redrock Postgres Database releases locks held on rows and tables.</p>
+<p>Redrock Postgres releases locks held on rows and tables.</p>
 <p>Users who were enqueued waiting on locks held by the uncommitted transaction are allowed to proceed with their work.</p>
 </li>
 <li>
-<p>Redrock Postgres Database deletes savepoints.</p>
+<p>Redrock Postgres deletes savepoints.</p>
 <p>In Table 1, no savepoints existed in the transaction so no savepoints were erased.</p>
 </li>
 <li>
-<p>Redrock Postgres Database performs a <strong>commit cleanout</strong>.</p>
+<p>Redrock Postgres performs a <strong>commit cleanout</strong>.</p>
 <p>If modified blocks containing data from the committed transaction are still in the shared buffers, and if no other session is modifying them, then the database removes lock-related transaction information from the blocks. Ideally, the <code>COMMIT</code> cleans out the blocks so that a subsequent <code>SELECT</code> does not have to perform this task.</p>
 <p><strong>Note</strong>: Because a block cleanout generates redo, a query may generate redo and thus cause blocks to be written during the next checkpoint.</p>
 </li>
 <li>
-<p>Redrock Postgres Database marks the transaction complete.</p>
+<p>Redrock Postgres marks the transaction complete.</p>
 </li>
 </ul>
 <p>After a transaction commits, users can view the changes.</p>
 <p>Typically, a commit is a fast operation, regardless of the transaction size. The speed of a commit does not increase with the size of the data modified in the transaction. The lengthiest part of the commit is the physical disk I/O occured in WAL writes. However, the amount of time spent in transaction commit is reduced because <code>walwriter</code> has been incrementally writing the contents of the WAL buffer in the background.</p>
-<p>The default behavior is for session to write redo to the WAL log synchronously and for transactions to wait for the buffered redo to be on disk before returning a commit to the user. However, for lower transaction commit latency, application developers can specify that redo be written asynchronously so that transactions need not wait for the redo to be on disk and can return from the COMMIT call immediately.</p>
+<p>The default behavior is for session to write redo to the WAL log synchronously and for transactions to wait for the buffered redo to be on disk before returning a commit to the user. However, for lower transaction commit latency, application developers can specify that redo be written asynchronously so that transactions need not wait for the redo to be on disk and can return from the <code>COMMIT</code> call immediately.</p>
 
   </article>
 

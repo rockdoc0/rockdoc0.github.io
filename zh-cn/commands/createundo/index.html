@@ -64,7 +64,7 @@
 <meta property="article:section" content="Commands" />
     <meta
       property="article:modified_time"
-      content="2022-06-19T17:28:24+08:00"
+      content="2022-07-22T09:21:21+08:00"
     />
 
 
@@ -106,7 +106,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-19T17:28:24.00Z",
+      "dateModified": "2022-07-22T09:21:21.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2641,7 +2641,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/commands/' href='/zh-cn/commands/'><span itemprop='name'>SQL 命令</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>CREATE UNDO</span><meta itemprop='position' content='4' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/commands/' href='/zh-cn/commands/'><span itemprop='name'>SQL 命令</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>CREATE UNDO</span><meta itemprop='position' content='4' /></li>
   
 
   
@@ -2769,10 +2769,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     </h2>
 </div>
 <p>创建一个回滚段：</p>
-<pre tabindex="0"><code>CREATE UNDO undo_13;
-</code></pre><p>创建一个回滚段并且把回滚段放在表空间<code>undospace</code>中：</p>
-<pre tabindex="0"><code>CREATE UNDO undo_14 TABLESPACE undospace;
-</code></pre><div class="gdoc-page__anchorwrap">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="n">UNDO</span> <span class="n">undo_13</span><span class="p">;</span>
+</span></span></code></pre></div><p>创建一个回滚段并且把回滚段放在表空间<code>undospace</code>中：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="n">UNDO</span> <span class="n">undo_14</span> <span class="k">TABLESPACE</span> <span class="n">undospace</span><span class="p">;</span>
+</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
     <h2 id="兼容性">
         兼容性
         <a data-clipboard-text="https://doc.rockdata.net/zh-cn/commands/createundo/#兼容性" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="锚定到： 兼容性" aria-label="锚定到： 兼容性" href="#%e5%85%bc%e5%ae%b9%e6%80%a7">

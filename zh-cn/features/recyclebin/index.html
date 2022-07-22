@@ -60,7 +60,7 @@ pg_dropped_[object_type]_[object_id] 其中：
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-07-21T19:09:01+08:00"
+      content="2022-07-22T10:12:52+08:00"
     />
 
 
@@ -89,7 +89,7 @@ pg_dropped_[object_type]_[object_id] 其中：
       "headline": "回收站",
       "description": "什么是回收站？  回收站中的对象命名   查看和查询回收站中的对象 清除回收站中的对象 从回收站恢复表      在删除一个表时，数据库不会立即删除与该表关联的物理文件和回收占用空间。数据库会重命名表，并将其和任何关联对象放置到回收站中，如果表被错误删除，则可以在以后进行恢复。\n什么是回收站？     回收站实际上是一个数据字典表，包含有关丢弃对象的信息。删除的表和任何关联对象（如索引、约束、类型等），它们的物理文件会保留一段时间，并且仍占用空间。\n它们会继续被计入用户空间配额，直到指定从回收站中清除，或者由于表空间需要被删除时，数据库必须清空回收站。\n每个用户都可以被认为有自己的回收站，因为除非用户具有 SUPERUSER 权限，否则用户在回收站中唯一有权访问的对象是用户拥有的对象。用户可以使用以下语句在回收站中查看其模式中的对象：\nSELECT * FROM pg_catalog.pg_recyclebin WHERE namespace = to_regnamespace(CURRENT_SCHEMA)::oid; DDL 命令删除的对象将会被移动到回收站。在移动到回收站的已删除对象中包括以下类型的对象：\n 表 回滚段 索引 约束 类型 函数  当您删除表空间时，表空间中的对象不会放置在回收站中，数据库会清除回收站中位于表空间中的任何对象。同样：\n 删除用户时，属于该用户的任何对象都不会放置在回收站中，并且回收站中的任何对象都会清除。 删除模式时，属于该模式的任何对象都不会放置在回收站中，并且回收站中的任何对象都会清除。  回收站中的对象命名     当删除的表移动到回收站时，该表及其关联的对象将被指定为系统生成的名称。这是必要的，以避免如果多个表具有相同的名称，可能会出现名称冲突。在以下情况下可能发生这种情况：\n 用户删除表，用相同的名称重新创建表，然后再次删除表。 两个用户有同名的表，两个用户都删除他们的表。  删除对象重命名约定如下：\npg_dropped_[object_type]_[object_id] 其中：\n object_type 是对象类型名称，例如：table, index, constraint, type, function。 object_id 是该对象的唯一标识符，这使得回收站名称在当前数据库中唯一。  查看和查询回收站中的对象     您可以查询系统目录pg_recyclebin以识别数据库分配给已删除对象的名称，如以下示例所示：",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "161",
+      "wordCount" : "163",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -100,7 +100,7 @@ pg_dropped_[object_type]_[object_id] 其中：
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-21T19:09:01.00Z",
+      "dateModified": "2022-07-22T10:12:52.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2635,7 +2635,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/features/' href='/zh-cn/features/'><span itemprop='name'>基础特性</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>回收站</span><meta itemprop='position' content='4' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/features/' href='/zh-cn/features/'><span itemprop='name'>基础特性</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>回收站</span><meta itemprop='position' content='4' /></li>
   
 
   
@@ -2735,12 +2735,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     </h2>
 </div>
 <p>您可以查询系统目录<code>pg_recyclebin</code>以识别数据库分配给已删除对象的名称，如以下示例所示：</p>
-<pre tabindex="0"><code>SELECT objname, oldname FROM pg_catalog.pg_recyclebin
-   WHERE namespace = to_regnamespace(&#39;hr&#39;)::oid;
-       objname         |  oldname
------------------------+-----------
-pg_dropped_table_18762 | employees
-</code></pre><p>您还可以使用GUI管理工具（如DBeaver、pgAdmin 4）查看回收站的内容，在指定数据库下展开系统模式<code>pg_recyclebin</code>以查看所有已删除的对象。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">objname</span><span class="p">,</span> <span class="n">oldname</span> <span class="k">FROM</span> <span class="n">pg_catalog</span><span class="mf">.</span><span class="n">pg_recyclebin</span>
+</span></span><span class="line"><span class="cl">   <span class="k">WHERE</span> <span class="n">namespace</span> <span class="o">=</span> <span class="n">to_regnamespace</span><span class="p">(</span><span class="s1">&#39;hr&#39;</span><span class="p">)</span><span class="o">::</span><span class="n">oid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">       <span class="n">objname</span>         <span class="o">|</span>  <span class="n">oldname</span>
+</span></span><span class="line"><span class="cl"><span class="c1">-----------------------+-----------
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">pg_dropped_table_18762</span> <span class="o">|</span> <span class="n">employees</span>
+</span></span></code></pre></div><p>您还可以使用GUI管理工具（如DBeaver、pgAdmin 4）查看回收站的内容，在指定数据库下展开系统模式<code>pg_recyclebin</code>以查看所有已删除的对象。</p>
 <p>您可以查询回收站中的对象，就像查询其他对象一样。但是，您必须用它在回收站中的标识指定对象的名称。例如：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">pg_recyclebin</span><span class="mf">.</span><span class="n">pg_dropped_table_18762</span><span class="p">;</span>
 </span></span></code></pre></div><div class="gdoc-page__anchorwrap">
@@ -2781,16 +2781,17 @@ pg_dropped_table_18762 | employees
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">hr</span><span class="mf">.</span><span class="n">employees2</span> <span class="p">(</span><span class="k">LIKE</span> <span class="n">pg_recyclebin</span><span class="mf">.</span><span class="n">pg_dropped_table_18762</span> <span class="k">INCLUDING</span> <span class="k">ALL</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">hr</span><span class="mf">.</span><span class="n">employees2</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">pg_recyclebin</span><span class="mf">.</span><span class="n">pg_dropped_table_18762</span><span class="p">;</span>
 </span></span></code></pre></div><p>如果您多次删除表，回收站中系统生成的对象名称非常有用。例如，假设您在回收站中有三个版本的 <code>employees</code> 表，并且您希望恢复第二个版本。您可以查询回收站，然后恢复到系统生成的相应对象名称，如以下示例所示。在查询中包括删除时间可以帮助您验证您正在恢复正确的表。</p>
-<pre tabindex="0"><code>SELECT objname, oldname, droptime FROM pg_catalog.pg_recyclebin;
-       objname         |  oldname  |      droptime
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">objname</span><span class="p">,</span> <span class="n">oldname</span><span class="p">,</span> <span class="n">droptime</span> <span class="k">FROM</span> <span class="n">pg_catalog</span><span class="mf">.</span><span class="n">pg_recyclebin</span><span class="p">;</span>
+</span></span></code></pre></div><p>查询结果：</p>
+<pre tabindex="0"><code>       objname         |  oldname  |      droptime
 -----------------------+-----------+--------------------
 pg_dropped_table_18762 | employees | 2016-02-05 21:05:52
 pg_dropped_table_18924 | employees | 2016-02-05 21:25:13
 pg_dropped_table_19510 | employees | 2016-02-05 22:05:53
-
-CREATE TABLE hr.employees2 (LIKE pg_recyclebin.pg_dropped_table_18924 INCLUDING ALL);
-INSERT INTO hr.employees2 SELECT * FROM pg_recyclebin.pg_dropped_table_18924;
-</code></pre>
+</code></pre><p>恢复指定的表对象：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">hr</span><span class="mf">.</span><span class="n">employees2</span> <span class="p">(</span><span class="k">LIKE</span> <span class="n">pg_recyclebin</span><span class="mf">.</span><span class="n">pg_dropped_table_18924</span> <span class="k">INCLUDING</span> <span class="k">ALL</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">hr</span><span class="mf">.</span><span class="n">employees2</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">pg_recyclebin</span><span class="mf">.</span><span class="n">pg_dropped_table_18924</span><span class="p">;</span>
+</span></span></code></pre></div>
   </article>
 
 

@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS site_page ( id serial PRIMARY KEY, url text, image te
 <meta property="article:section" content="Develop" />
     <meta
       property="article:modified_time"
-      content="2022-07-21T19:09:01+08:00"
+      content="2022-07-22T16:51:10+08:00"
     />
 
 
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS site_page ( id serial PRIMARY KEY, url text, image te
       "headline": "Search Engine",
       "description": "PostgreSQL provides the full text search capability. Through full text search, you can build a text content search engine. This section describes how to quickly set up a search engine for website pages in PostgreSQL.\nCreate Content Table     Create a web page content table to store the content data of web pages.\nCREATE TABLE IF NOT EXISTS site_page ( id serial PRIMARY KEY, url text, image text, title text, content text ); The site_page table contains the following columns:",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "381",
+      "wordCount" : "368",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS site_page ( id serial PRIMARY KEY, url text, image te
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-21T19:09:01.00Z",
+      "dateModified": "2022-07-22T16:51:10.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1282,7 +1282,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     href="/features/undo/"
                     class="gdoc-nav__entry"
                   >
-                    Undo
+                    Undo Segments
                   </a>
                 </span>
               
@@ -2614,7 +2614,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/develop/' href='/develop/'><span itemprop='name'>Developer Guide</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Search Engine</span><meta itemprop='position' content='3' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/develop/' href='/develop/'><span itemprop='name'>Developer Guide</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Search Engine</span><meta itemprop='position' content='3' /></li>
   
 
   
@@ -2745,30 +2745,28 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     </h2>
 </div>
 <p>You can add a page data record to the <code>site_page</code> table and add a lexemes index record to the <code>site_page_tsi</code> table.</p>
-<pre tabindex="0"><code>BEGIN;
-
-INSERT INTO site_page (url, image, title, content) VALUES
-  (&#39;https://doc.rockdata.net/&#39;,
-   &#39;https://doc.rockdata.net/brand.svg&#39;,
-   &#39;Redrock Postgres Documentation&#39;,
-   &#39;Redrock is an object-relational database management system based on
-PostgreSQL, developed by the PostgreSQL Global Development Group. It is
-intentionally designed as an enterprise grade and cloud native database.&#39;)
-  RETURNING id;
- id
-----
-  1
-
-INSERT INTO site_page_tsi (id, title, content) VALUES
-  (1,
-   to_tsvector(&#39;english&#39;, &#39;Redrock Postgres Documentation&#39;),
-   to_tsvector(&#39;english&#39;,
-   &#39;Redrock is an object-relational database management system based on
-PostgreSQL, developed by the PostgreSQL Global Development Group. It is
-intentionally designed as an enterprise grade and cloud native database.&#39;));
-
-COMMIT;
-</code></pre><div class="gdoc-page__anchorwrap">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">BEGIN</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">site_page</span> <span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="k">content</span><span class="p">)</span> <span class="k">VALUES</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="s1">&#39;https://doc.rockdata.net/&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">   <span class="s1">&#39;https://doc.rockdata.net/brand.svg&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">   <span class="s1">&#39;Redrock Postgres Documentation&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">   <span class="s1">&#39;Redrock is an object-relational database management system based on PostgreSQL,
+</span></span></span><span class="line"><span class="cl"><span class="s1">It is intentionally designed as an enterprise grade and cloud native database.&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">RETURNING</span> <span class="n">id</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"> <span class="n">id</span>
+</span></span><span class="line"><span class="cl"><span class="c1">----
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="mf">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">site_page_tsi</span> <span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="k">content</span><span class="p">)</span> <span class="k">VALUES</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="mf">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">   <span class="n">to_tsvector</span><span class="p">(</span><span class="s1">&#39;english&#39;</span><span class="p">,</span> <span class="s1">&#39;Redrock Postgres Documentation&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">   <span class="n">to_tsvector</span><span class="p">(</span><span class="s1">&#39;english&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">   <span class="s1">&#39;Redrock is an object-relational database management system based on PostgreSQL,
+</span></span></span><span class="line"><span class="cl"><span class="s1">It is intentionally designed as an enterprise grade and cloud native database.&#39;</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">COMMIT</span><span class="p">;</span>
+</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
     <h2 id="search-web-content">
         Search Web Content
         <a data-clipboard-text="https://doc.rockdata.net/develop/search-engine/#search-web-content" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Search Web Content" aria-label="Anchor to: Search Web Content" href="#search-web-content">
@@ -2777,10 +2775,11 @@ COMMIT;
     </h2>
 </div>
 <p>Of course, we can search for matching web content based on search keywords. For example, we can execute the following query to search for web page content related to the keyword &ldquo;Redrock Documentation&rdquo;:</p>
-<pre tabindex="0"><code>SELECT sp.id, sp.url, sp.title FROM site_page AS sp
-  LEFT JOIN site_page_tsi AS tsi ON sp.id = tsi.id
-  WHERE tsi.title @@ plainto_tsquery(&#39;english&#39;, &#39;Redrock Documentation&#39;);
- id |            url            |             title
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">sp</span><span class="mf">.</span><span class="n">id</span><span class="p">,</span> <span class="n">sp</span><span class="mf">.</span><span class="n">url</span><span class="p">,</span> <span class="n">sp</span><span class="mf">.</span><span class="n">title</span> <span class="k">FROM</span> <span class="n">site_page</span> <span class="k">AS</span> <span class="n">sp</span>
+</span></span><span class="line"><span class="cl">  <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">site_page_tsi</span> <span class="k">AS</span> <span class="n">tsi</span> <span class="k">ON</span> <span class="n">sp</span><span class="mf">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">tsi</span><span class="mf">.</span><span class="n">id</span>
+</span></span><span class="line"><span class="cl">  <span class="k">WHERE</span> <span class="n">tsi</span><span class="mf">.</span><span class="n">title</span> <span class="o">@@</span> <span class="n">plainto_tsquery</span><span class="p">(</span><span class="s1">&#39;english&#39;</span><span class="p">,</span> <span class="s1">&#39;Redrock Documentation&#39;</span><span class="p">);</span>
+</span></span></code></pre></div><p>Result:</p>
+<pre tabindex="0"><code> id |            url            |             title
 ----+---------------------------+--------------------------------
   1 | https://doc.rockdata.net/ | Redrock Postgres Documentation
 </code></pre>

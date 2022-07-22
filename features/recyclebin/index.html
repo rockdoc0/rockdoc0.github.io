@@ -42,7 +42,7 @@
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-07-21T19:09:01+08:00"
+      content="2022-07-22T10:12:52+08:00"
     />
 
 
@@ -62,7 +62,7 @@
       "headline": "Recycle Bin",
       "description": "What Is the Recycle Bin?  Object Naming in the Recycle Bin   Viewing and Querying Objects in the Recycle Bin Purging Objects in the Recycle Bin Restoring Tables from the Recycle Bin      When you drop a table, the database does not immediately remove the space associated with the table. The database renames the table and places it and any associated objects in a recycle bin, where, in case the table was dropped in error, it can be recovered at a later time.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "996",
+      "wordCount" : "1001",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -73,7 +73,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-21T19:09:01.00Z",
+      "dateModified": "2022-07-22T10:12:52.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1276,7 +1276,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     href="/features/undo/"
                     class="gdoc-nav__entry"
                   >
-                    Undo
+                    Undo Segments
                   </a>
                 </span>
               
@@ -2608,7 +2608,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/features/' href='/features/'><span itemprop='name'>Features</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Recycle Bin</span><meta itemprop='position' content='3' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/features/' href='/features/'><span itemprop='name'>Features</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Recycle Bin</span><meta itemprop='position' content='3' /></li>
   
 
   
@@ -2708,12 +2708,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     </h2>
 </div>
 <p>You can query system catalog <code>pg_recyclebin</code> to identify the name that the database has assigned to a dropped object, as shown in the following example:</p>
-<pre tabindex="0"><code>SELECT objname, oldname FROM pg_catalog.pg_recyclebin
-   WHERE namespace = to_regnamespace(&#39;hr&#39;)::oid;
-       objname         |  oldname
------------------------+-----------
-pg_dropped_table_18762 | employees
-</code></pre><p>You can also view the contents of the recycle bin using the GUI management tool like DBeaver, pgAdmin 4, expand the system schema <code>pg_recyclebin</code> under a specified database to view all the dropped objects.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">objname</span><span class="p">,</span> <span class="n">oldname</span> <span class="k">FROM</span> <span class="n">pg_catalog</span><span class="mf">.</span><span class="n">pg_recyclebin</span>
+</span></span><span class="line"><span class="cl">   <span class="k">WHERE</span> <span class="n">namespace</span> <span class="o">=</span> <span class="n">to_regnamespace</span><span class="p">(</span><span class="s1">&#39;hr&#39;</span><span class="p">)</span><span class="o">::</span><span class="n">oid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">       <span class="n">objname</span>         <span class="o">|</span>  <span class="n">oldname</span>
+</span></span><span class="line"><span class="cl"><span class="c1">-----------------------+-----------
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">pg_dropped_table_18762</span> <span class="o">|</span> <span class="n">employees</span>
+</span></span></code></pre></div><p>You can also view the contents of the recycle bin using the GUI management tool like DBeaver, pgAdmin 4, expand the system schema <code>pg_recyclebin</code> under a specified database to view all the dropped objects.</p>
 <p>You can query objects that are in the recycle bin, just as you can query other objects. However, you must specify the name of the object as it is identified in the recycle bin. For example:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">pg_recyclebin</span><span class="mf">.</span><span class="n">pg_dropped_table_18762</span><span class="p">;</span>
 </span></span></code></pre></div><div class="gdoc-page__anchorwrap">
@@ -2754,16 +2754,17 @@ pg_dropped_table_18762 | employees
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">hr</span><span class="mf">.</span><span class="n">employees2</span> <span class="p">(</span><span class="k">LIKE</span> <span class="n">pg_recyclebin</span><span class="mf">.</span><span class="n">pg_dropped_table_18762</span> <span class="k">INCLUDING</span> <span class="k">ALL</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">hr</span><span class="mf">.</span><span class="n">employees2</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">pg_recyclebin</span><span class="mf">.</span><span class="n">pg_dropped_table_18762</span><span class="p">;</span>
 </span></span></code></pre></div><p>The system-generated recycle bin name is very useful if you have dropped a table multiple times. For example, suppose you have three versions of the <code>employees</code> table in the recycle bin and you want to recover the second version. You can query the recycle bin and then restore to the appropriate system-generated name, as shown in the following example. Including the drop time in the query can help you verify that you are restoring the correct table.</p>
-<pre tabindex="0"><code>SELECT objname, oldname, droptime FROM pg_catalog.pg_recyclebin;
-       objname         |  oldname  |      droptime
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">objname</span><span class="p">,</span> <span class="n">oldname</span><span class="p">,</span> <span class="n">droptime</span> <span class="k">FROM</span> <span class="n">pg_catalog</span><span class="mf">.</span><span class="n">pg_recyclebin</span><span class="p">;</span>
+</span></span></code></pre></div><p>Result:</p>
+<pre tabindex="0"><code>       objname         |  oldname  |      droptime
 -----------------------+-----------+--------------------
 pg_dropped_table_18762 | employees | 2016-02-05 21:05:52
 pg_dropped_table_18924 | employees | 2016-02-05 21:25:13
 pg_dropped_table_19510 | employees | 2016-02-05 22:05:53
-
-CREATE TABLE hr.employees2 (LIKE pg_recyclebin.pg_dropped_table_18924 INCLUDING ALL);
-INSERT INTO hr.employees2 SELECT * FROM pg_recyclebin.pg_dropped_table_18924;
-</code></pre>
+</code></pre><p>Restore the dropped table:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">hr</span><span class="mf">.</span><span class="n">employees2</span> <span class="p">(</span><span class="k">LIKE</span> <span class="n">pg_recyclebin</span><span class="mf">.</span><span class="n">pg_dropped_table_18924</span> <span class="k">INCLUDING</span> <span class="k">ALL</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">hr</span><span class="mf">.</span><span class="n">employees2</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">pg_recyclebin</span><span class="mf">.</span><span class="n">pg_dropped_table_18924</span><span class="p">;</span>
+</span></span></code></pre></div>
   </article>
 
 

@@ -15,7 +15,8 @@
 一般内置的文本搜索配置都以对应语言的名称命名，内置的中文搜索配置被称为 pg_catalog.chinese。
 测试和调试文本搜索     一个自定义文本搜索配置的行为很容易变得混乱。本节中描述的函数对于测试文本搜索对象有用。你可以测试一个完整的配置，或者独立测试解析器和词典。
 配置测试     函数ts_debug允许简单地测试一个文本搜索配置。
-SELECT * FROM ts_debug(&#39;chinese&#39;, &#39;关系数据库管理系统&#39;);alias | description | token | dictionaries | dictionary | lexemes-----------&#43;-------------&#43;--------&#43;--------------&#43;------------&#43;----------cjk_words | CJK words | 关系 | {chinese} | chinese | {关系}cjk_words | CJK words | 数据库 | {chinese} | chinese | {数据库}cjk_words | CJK words | 管理 | {chinese} | chinese | {管理}cjk_words | CJK words | 系统 | {chinese} | chinese | {系统} 解析器测试     函数ts_parse 允许直接测试一个文本搜索解析器。" />
+SELECT * FROM ts_debug(&#39;chinese&#39;, &#39;关系数据库管理系统&#39;); 查询结果：
+ alias | description | token | dictionaries | dictionary | lexemes-----------&#43;-------------&#43;--------&#43;--------------&#43;------------&#43;----------cjk_words | CJK words | 关系 | {chinese} | chinese | {关系}cjk_words | CJK words | 数据库 | {chinese} | chinese | {数据库}cjk_words | CJK words | 管理 | {chinese} | chinese | {管理}cjk_words | CJK words | 系统 | {chinese} | chinese | {系统} 解析器测试     函数ts_parse 允许直接测试一个文本搜索解析器。" />
 
     <title>全文检索 | Redrock Documentation</title>
 
@@ -49,14 +50,15 @@ SELECT * FROM ts_debug(&#39;chinese&#39;, &#39;关系数据库管理系统&#39;)
 一般内置的文本搜索配置都以对应语言的名称命名，内置的中文搜索配置被称为 pg_catalog.chinese。
 测试和调试文本搜索     一个自定义文本搜索配置的行为很容易变得混乱。本节中描述的函数对于测试文本搜索对象有用。你可以测试一个完整的配置，或者独立测试解析器和词典。
 配置测试     函数ts_debug允许简单地测试一个文本搜索配置。
-SELECT * FROM ts_debug(&#39;chinese&#39;, &#39;关系数据库管理系统&#39;);alias | description | token | dictionaries | dictionary | lexemes-----------&#43;-------------&#43;--------&#43;--------------&#43;------------&#43;----------cjk_words | CJK words | 关系 | {chinese} | chinese | {关系}cjk_words | CJK words | 数据库 | {chinese} | chinese | {数据库}cjk_words | CJK words | 管理 | {chinese} | chinese | {管理}cjk_words | CJK words | 系统 | {chinese} | chinese | {系统} 解析器测试     函数ts_parse 允许直接测试一个文本搜索解析器。" />
+SELECT * FROM ts_debug(&#39;chinese&#39;, &#39;关系数据库管理系统&#39;); 查询结果：
+ alias | description | token | dictionaries | dictionary | lexemes-----------&#43;-------------&#43;--------&#43;--------------&#43;------------&#43;----------cjk_words | CJK words | 关系 | {chinese} | chinese | {关系}cjk_words | CJK words | 数据库 | {chinese} | chinese | {数据库}cjk_words | CJK words | 管理 | {chinese} | chinese | {管理}cjk_words | CJK words | 系统 | {chinese} | chinese | {系统} 解析器测试     函数ts_parse 允许直接测试一个文本搜索解析器。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/zh-cn/features/textsearch/" />
 
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-07-21T20:23:12+08:00"
+      content="2022-07-22T10:12:52+08:00"
     />
 
 
@@ -70,7 +72,8 @@ SELECT * FROM ts_debug(&#39;chinese&#39;, &#39;关系数据库管理系统&#39;)
 一般内置的文本搜索配置都以对应语言的名称命名，内置的中文搜索配置被称为 pg_catalog.chinese。
 测试和调试文本搜索     一个自定义文本搜索配置的行为很容易变得混乱。本节中描述的函数对于测试文本搜索对象有用。你可以测试一个完整的配置，或者独立测试解析器和词典。
 配置测试     函数ts_debug允许简单地测试一个文本搜索配置。
-SELECT * FROM ts_debug(&#39;chinese&#39;, &#39;关系数据库管理系统&#39;);alias | description | token | dictionaries | dictionary | lexemes-----------&#43;-------------&#43;--------&#43;--------------&#43;------------&#43;----------cjk_words | CJK words | 关系 | {chinese} | chinese | {关系}cjk_words | CJK words | 数据库 | {chinese} | chinese | {数据库}cjk_words | CJK words | 管理 | {chinese} | chinese | {管理}cjk_words | CJK words | 系统 | {chinese} | chinese | {系统} 解析器测试     函数ts_parse 允许直接测试一个文本搜索解析器。" />
+SELECT * FROM ts_debug(&#39;chinese&#39;, &#39;关系数据库管理系统&#39;); 查询结果：
+ alias | description | token | dictionaries | dictionary | lexemes-----------&#43;-------------&#43;--------&#43;--------------&#43;------------&#43;----------cjk_words | CJK words | 关系 | {chinese} | chinese | {关系}cjk_words | CJK words | 数据库 | {chinese} | chinese | {数据库}cjk_words | CJK words | 管理 | {chinese} | chinese | {管理}cjk_words | CJK words | 系统 | {chinese} | chinese | {系统} 解析器测试     函数ts_parse 允许直接测试一个文本搜索解析器。" />
 
 
   <script type="application/ld+json">
@@ -81,9 +84,9 @@ SELECT * FROM ts_debug(&#39;chinese&#39;, &#39;关系数据库管理系统&#39;)
       "name": "全文检索",
       "url" : "https://doc.rockdata.net/zh-cn/features/textsearch/",
       "headline": "全文检索",
-      "description": "全文检索（或者文本搜索）提供了确定满足一个查询的自然语言文档的能力，并可以选择将它们按照与查询的相关度排序。最常用的搜索类型是找到所有包含给定查询词的文档并按照它们与查询的相似性顺序返回它们。查询和相似性的概念非常灵活并且依赖于特定的应用。最简单的搜索认为查询是一组词而相似性是查询词在文档中的频度。\n解析器     文本搜索解析器负责把未处理的文档文本划分成记号并且标识每一个记号的类型，而可能的类型集合由解析器本身定义。注意一个解析器完全不会修改文本 — 它简单地标识看似有理的词边界。因为这种有限的视野，对于应用相关的自定义解析器的需求就没有自定义字典那么强烈。目前Redrock Postgres只提供了两种内置解析器，它们已经被证实对很多种应用都适用。\n有两个内置的文本解析器，一个默认解析器被称为pg_catalog.default，一个中文解析器被称为pg_catalog.cjkparser。\n配置     文本搜索功能包括做更多事情的能力：跳过索引特定词（停用词）、处理同义词并使用更高级的解析，例如基于空白之外的解析。这个功能由文本搜索配置控制。PostgreSQL中有多种语言的预定义配置，并且你可以很容易地创建你自己的配置（psql的\\dF命令显示所有可用的配置）。\n一般内置的文本搜索配置都以对应语言的名称命名，内置的中文搜索配置被称为 pg_catalog.chinese。\n测试和调试文本搜索     一个自定义文本搜索配置的行为很容易变得混乱。本节中描述的函数对于测试文本搜索对象有用。你可以测试一个完整的配置，或者独立测试解析器和词典。\n配置测试     函数ts_debug允许简单地测试一个文本搜索配置。\nSELECT * FROM ts_debug(\u0027chinese\u0027, \u0027关系数据库管理系统\u0027);\ralias | description | token | dictionaries | dictionary | lexemes\r-----------\u002b-------------\u002b--------\u002b--------------\u002b------------\u002b----------\rcjk_words | CJK words | 关系 | {chinese} | chinese | {关系}\rcjk_words | CJK words | 数据库 | {chinese} | chinese | {数据库}\rcjk_words | CJK words | 管理 | {chinese} | chinese | {管理}\rcjk_words | CJK words | 系统 | {chinese} | chinese | {系统} 解析器测试     函数ts_parse 允许直接测试一个文本搜索解析器。",
+      "description": "全文检索（或者文本搜索）提供了确定满足一个查询的自然语言文档的能力，并可以选择将它们按照与查询的相关度排序。最常用的搜索类型是找到所有包含给定查询词的文档并按照它们与查询的相似性顺序返回它们。查询和相似性的概念非常灵活并且依赖于特定的应用。最简单的搜索认为查询是一组词而相似性是查询词在文档中的频度。\n解析器     文本搜索解析器负责把未处理的文档文本划分成记号并且标识每一个记号的类型，而可能的类型集合由解析器本身定义。注意一个解析器完全不会修改文本 — 它简单地标识看似有理的词边界。因为这种有限的视野，对于应用相关的自定义解析器的需求就没有自定义字典那么强烈。目前Redrock Postgres只提供了两种内置解析器，它们已经被证实对很多种应用都适用。\n有两个内置的文本解析器，一个默认解析器被称为pg_catalog.default，一个中文解析器被称为pg_catalog.cjkparser。\n配置     文本搜索功能包括做更多事情的能力：跳过索引特定词（停用词）、处理同义词并使用更高级的解析，例如基于空白之外的解析。这个功能由文本搜索配置控制。PostgreSQL中有多种语言的预定义配置，并且你可以很容易地创建你自己的配置（psql的\\dF命令显示所有可用的配置）。\n一般内置的文本搜索配置都以对应语言的名称命名，内置的中文搜索配置被称为 pg_catalog.chinese。\n测试和调试文本搜索     一个自定义文本搜索配置的行为很容易变得混乱。本节中描述的函数对于测试文本搜索对象有用。你可以测试一个完整的配置，或者独立测试解析器和词典。\n配置测试     函数ts_debug允许简单地测试一个文本搜索配置。\nSELECT * FROM ts_debug(\u0027chinese\u0027, \u0027关系数据库管理系统\u0027); 查询结果：\n alias | description | token | dictionaries | dictionary | lexemes\r-----------\u002b-------------\u002b--------\u002b--------------\u002b------------\u002b----------\rcjk_words | CJK words | 关系 | {chinese} | chinese | {关系}\rcjk_words | CJK words | 数据库 | {chinese} | chinese | {数据库}\rcjk_words | CJK words | 管理 | {chinese} | chinese | {管理}\rcjk_words | CJK words | 系统 | {chinese} | chinese | {系统} 解析器测试     函数ts_parse 允许直接测试一个文本搜索解析器。",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "104",
+      "wordCount" : "106",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -94,7 +97,7 @@ SELECT * FROM ts_debug(&#39;chinese&#39;, &#39;关系数据库管理系统&#39;)
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-21T20:23:12.00Z",
+      "dateModified": "2022-07-22T10:12:52.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2629,7 +2632,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/features/' href='/zh-cn/features/'><span itemprop='name'>基础特性</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>全文检索</span><meta itemprop='position' content='4' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/features/' href='/zh-cn/features/'><span itemprop='name'>基础特性</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>全文检索</span><meta itemprop='position' content='4' /></li>
   
 
   
@@ -2698,8 +2701,9 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     </h3>
 </div>
 <p>函数<code>ts_debug</code>允许简单地测试一个文本搜索配置。</p>
-<pre tabindex="0"><code>SELECT * FROM ts_debug(&#39;chinese&#39;, &#39;关系数据库管理系统&#39;);
-   alias   | description | token  | dictionaries | dictionary | lexemes
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">ts_debug</span><span class="p">(</span><span class="s1">&#39;chinese&#39;</span><span class="p">,</span> <span class="s1">&#39;关系数据库管理系统&#39;</span><span class="p">);</span>
+</span></span></code></pre></div><p>查询结果：</p>
+<pre tabindex="0"><code>   alias   | description | token  | dictionaries | dictionary | lexemes
 -----------+-------------+--------+--------------+------------+----------
  cjk_words | CJK words   | 关系   | {chinese}    | chinese    | {关系}
  cjk_words | CJK words   | 数据库 | {chinese}    | chinese    | {数据库}
@@ -2714,8 +2718,9 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     </h3>
 </div>
 <p>函数<code>ts_parse</code> 允许直接测试一个文本搜索解析器。</p>
-<pre tabindex="0"><code>SELECT * FROM ts_parse(&#39;cjkparser&#39;, &#39;关系数据库管理系统&#39;);
- tokid | token
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">ts_parse</span><span class="p">(</span><span class="s1">&#39;cjkparser&#39;</span><span class="p">,</span> <span class="s1">&#39;关系数据库管理系统&#39;</span><span class="p">);</span>
+</span></span></code></pre></div><p>查询结果：</p>
+<pre tabindex="0"><code> tokid | token
 -------+--------
      1 | 关系
      1 | 数据库

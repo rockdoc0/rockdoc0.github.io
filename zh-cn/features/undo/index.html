@@ -8,12 +8,14 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="回滚段和事务 事务回滚 管理回滚段      Redrock Postgres 维护事务操作的记录，统称为 undo 数据。 Redrock Postgres 使用 undo 数据来执行以下操作：
- 回滚活跃事务 恢复异常结束的事务 提供读一致性  Redrock Postgres 将 undo 数据存储在数据库中而不是外部日志中。 undo 数据存储在与数据块一样更新的块中，对这些块的更改会产生重做。 通过这种方式，Redrock Postgres 可以高效地访问 undo 数据，而无需读取外部日志。
-undo 数据存储在独立的表空间中。 Redrock Postgres 提供了一种完全自动化的机制，称为自动回滚段管理模式，用于管理回滚段和存储空间。
+  <meta name="description" content="回滚段和事务 事务回滚 管理回滚段      Redrock Postgres 维护事务操作的记录，统称为撤消数据。 Redrock Postgres 使用撤消数据来执行以下操作：
+ 回滚活跃事务 恢复异常结束的事务 提供读一致性  Redrock Postgres 将撤消数据存储在数据库中而不是外部日志中。撤消数据存储在与数据块一样更新的块中，对这些块的更改会产生重做。 通过这种方式，Redrock Postgres 可以高效地访问 撤消数据，而无需读取外部日志。
+撤消数据存储在独立的表空间中。 Redrock Postgres 提供了一种完全自动化的机制，称为自动回滚段管理模式，用于管理回滚段和存储空间。
 回滚段和事务     当事务开始时，数据库将事务绑定（分配）到回滚段，因此绑定到事务表。
-多个活动事务可以同时写入相同的回滚段或不同的回滚段。 例如，事务 T1 和 T2 都可以写入 undo U1，或者 T1 可以写入 U1 而 T2 写入 undo U2。
-事务回滚     当执行 ROLLBACK语句时，数据库使用 undo 记录回滚未提交事务对数据库所做的更改。 在恢复期间，数据库回滚从联机重做日志应用到数据文件的任何未提交的更改。 undo 记录通过在另一个用户正在更改数据的同时为访问数据的用户维护数据的前映像来提供读取一致性。" />
+多个活动事务可以同时写入相同的回滚段或不同的回滚段。 例如，事务 T1 和 T2 都可以写入回滚段U1，或者 T1 可以写入 U1 而 T2 写入回滚段U2。
+事务回滚     当执行 ROLLBACK语句时，数据库使用撤消记录回滚未提交事务对数据库所做的更改。 在恢复期间，数据库回滚从联机重做日志应用到数据文件的任何未提交的更改。撤消记录通过在另一个用户正在更改数据的同时为访问数据的用户维护数据的前映像来提供读取一致性。
+管理回滚段     初始化数据库集群数据目录后，数据库中默认会产生4个集群级回滚段和8个数据库级别的回滚段。用户可以使用以下语句查看当前数据库中的回滚段信息：
+SELECT c.relname, c.relisshared, u.undoid, u.undrelid, pg_size_pretty(pg_relation_size(c." />
 
     <title>回滚段 | Redrock Documentation</title>
 
@@ -40,31 +42,35 @@ undo 数据存储在独立的表空间中。 Redrock Postgres 提供了一种完
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="回滚段和事务 事务回滚 管理回滚段      Redrock Postgres 维护事务操作的记录，统称为 undo 数据。 Redrock Postgres 使用 undo 数据来执行以下操作：
- 回滚活跃事务 恢复异常结束的事务 提供读一致性  Redrock Postgres 将 undo 数据存储在数据库中而不是外部日志中。 undo 数据存储在与数据块一样更新的块中，对这些块的更改会产生重做。 通过这种方式，Redrock Postgres 可以高效地访问 undo 数据，而无需读取外部日志。
-undo 数据存储在独立的表空间中。 Redrock Postgres 提供了一种完全自动化的机制，称为自动回滚段管理模式，用于管理回滚段和存储空间。
+  <meta property="og:description" content="回滚段和事务 事务回滚 管理回滚段      Redrock Postgres 维护事务操作的记录，统称为撤消数据。 Redrock Postgres 使用撤消数据来执行以下操作：
+ 回滚活跃事务 恢复异常结束的事务 提供读一致性  Redrock Postgres 将撤消数据存储在数据库中而不是外部日志中。撤消数据存储在与数据块一样更新的块中，对这些块的更改会产生重做。 通过这种方式，Redrock Postgres 可以高效地访问 撤消数据，而无需读取外部日志。
+撤消数据存储在独立的表空间中。 Redrock Postgres 提供了一种完全自动化的机制，称为自动回滚段管理模式，用于管理回滚段和存储空间。
 回滚段和事务     当事务开始时，数据库将事务绑定（分配）到回滚段，因此绑定到事务表。
-多个活动事务可以同时写入相同的回滚段或不同的回滚段。 例如，事务 T1 和 T2 都可以写入 undo U1，或者 T1 可以写入 U1 而 T2 写入 undo U2。
-事务回滚     当执行 ROLLBACK语句时，数据库使用 undo 记录回滚未提交事务对数据库所做的更改。 在恢复期间，数据库回滚从联机重做日志应用到数据文件的任何未提交的更改。 undo 记录通过在另一个用户正在更改数据的同时为访问数据的用户维护数据的前映像来提供读取一致性。" />
+多个活动事务可以同时写入相同的回滚段或不同的回滚段。 例如，事务 T1 和 T2 都可以写入回滚段U1，或者 T1 可以写入 U1 而 T2 写入回滚段U2。
+事务回滚     当执行 ROLLBACK语句时，数据库使用撤消记录回滚未提交事务对数据库所做的更改。 在恢复期间，数据库回滚从联机重做日志应用到数据文件的任何未提交的更改。撤消记录通过在另一个用户正在更改数据的同时为访问数据的用户维护数据的前映像来提供读取一致性。
+管理回滚段     初始化数据库集群数据目录后，数据库中默认会产生4个集群级回滚段和8个数据库级别的回滚段。用户可以使用以下语句查看当前数据库中的回滚段信息：
+SELECT c.relname, c.relisshared, u.undoid, u.undrelid, pg_size_pretty(pg_relation_size(c." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/zh-cn/features/undo/" />
 
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-07-21T20:23:12+08:00"
+      content="2022-07-22T16:51:10+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="回滚段" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="回滚段和事务 事务回滚 管理回滚段      Redrock Postgres 维护事务操作的记录，统称为 undo 数据。 Redrock Postgres 使用 undo 数据来执行以下操作：
- 回滚活跃事务 恢复异常结束的事务 提供读一致性  Redrock Postgres 将 undo 数据存储在数据库中而不是外部日志中。 undo 数据存储在与数据块一样更新的块中，对这些块的更改会产生重做。 通过这种方式，Redrock Postgres 可以高效地访问 undo 数据，而无需读取外部日志。
-undo 数据存储在独立的表空间中。 Redrock Postgres 提供了一种完全自动化的机制，称为自动回滚段管理模式，用于管理回滚段和存储空间。
+  <meta name="twitter:description" content="回滚段和事务 事务回滚 管理回滚段      Redrock Postgres 维护事务操作的记录，统称为撤消数据。 Redrock Postgres 使用撤消数据来执行以下操作：
+ 回滚活跃事务 恢复异常结束的事务 提供读一致性  Redrock Postgres 将撤消数据存储在数据库中而不是外部日志中。撤消数据存储在与数据块一样更新的块中，对这些块的更改会产生重做。 通过这种方式，Redrock Postgres 可以高效地访问 撤消数据，而无需读取外部日志。
+撤消数据存储在独立的表空间中。 Redrock Postgres 提供了一种完全自动化的机制，称为自动回滚段管理模式，用于管理回滚段和存储空间。
 回滚段和事务     当事务开始时，数据库将事务绑定（分配）到回滚段，因此绑定到事务表。
-多个活动事务可以同时写入相同的回滚段或不同的回滚段。 例如，事务 T1 和 T2 都可以写入 undo U1，或者 T1 可以写入 U1 而 T2 写入 undo U2。
-事务回滚     当执行 ROLLBACK语句时，数据库使用 undo 记录回滚未提交事务对数据库所做的更改。 在恢复期间，数据库回滚从联机重做日志应用到数据文件的任何未提交的更改。 undo 记录通过在另一个用户正在更改数据的同时为访问数据的用户维护数据的前映像来提供读取一致性。" />
+多个活动事务可以同时写入相同的回滚段或不同的回滚段。 例如，事务 T1 和 T2 都可以写入回滚段U1，或者 T1 可以写入 U1 而 T2 写入回滚段U2。
+事务回滚     当执行 ROLLBACK语句时，数据库使用撤消记录回滚未提交事务对数据库所做的更改。 在恢复期间，数据库回滚从联机重做日志应用到数据文件的任何未提交的更改。撤消记录通过在另一个用户正在更改数据的同时为访问数据的用户维护数据的前映像来提供读取一致性。
+管理回滚段     初始化数据库集群数据目录后，数据库中默认会产生4个集群级回滚段和8个数据库级别的回滚段。用户可以使用以下语句查看当前数据库中的回滚段信息：
+SELECT c.relname, c.relisshared, u.undoid, u.undrelid, pg_size_pretty(pg_relation_size(c." />
 
 
   <script type="application/ld+json">
@@ -75,9 +81,9 @@ undo 数据存储在独立的表空间中。 Redrock Postgres 提供了一种完
       "name": "回滚段",
       "url" : "https://doc.rockdata.net/zh-cn/features/undo/",
       "headline": "回滚段",
-      "description": "回滚段和事务 事务回滚 管理回滚段      Redrock Postgres 维护事务操作的记录，统称为 undo 数据。 Redrock Postgres 使用 undo 数据来执行以下操作：\n 回滚活跃事务 恢复异常结束的事务 提供读一致性  Redrock Postgres 将 undo 数据存储在数据库中而不是外部日志中。 undo 数据存储在与数据块一样更新的块中，对这些块的更改会产生重做。 通过这种方式，Redrock Postgres 可以高效地访问 undo 数据，而无需读取外部日志。\nundo 数据存储在独立的表空间中。 Redrock Postgres 提供了一种完全自动化的机制，称为自动回滚段管理模式，用于管理回滚段和存储空间。\n回滚段和事务     当事务开始时，数据库将事务绑定（分配）到回滚段，因此绑定到事务表。\n多个活动事务可以同时写入相同的回滚段或不同的回滚段。 例如，事务 T1 和 T2 都可以写入 undo U1，或者 T1 可以写入 U1 而 T2 写入 undo U2。\n事务回滚     当执行 ROLLBACK语句时，数据库使用 undo 记录回滚未提交事务对数据库所做的更改。 在恢复期间，数据库回滚从联机重做日志应用到数据文件的任何未提交的更改。 undo 记录通过在另一个用户正在更改数据的同时为访问数据的用户维护数据的前映像来提供读取一致性。",
+      "description": "回滚段和事务 事务回滚 管理回滚段      Redrock Postgres 维护事务操作的记录，统称为撤消数据。 Redrock Postgres 使用撤消数据来执行以下操作：\n 回滚活跃事务 恢复异常结束的事务 提供读一致性  Redrock Postgres 将撤消数据存储在数据库中而不是外部日志中。撤消数据存储在与数据块一样更新的块中，对这些块的更改会产生重做。 通过这种方式，Redrock Postgres 可以高效地访问 撤消数据，而无需读取外部日志。\n撤消数据存储在独立的表空间中。 Redrock Postgres 提供了一种完全自动化的机制，称为自动回滚段管理模式，用于管理回滚段和存储空间。\n回滚段和事务     当事务开始时，数据库将事务绑定（分配）到回滚段，因此绑定到事务表。\n多个活动事务可以同时写入相同的回滚段或不同的回滚段。 例如，事务 T1 和 T2 都可以写入回滚段U1，或者 T1 可以写入 U1 而 T2 写入回滚段U2。\n事务回滚     当执行 ROLLBACK语句时，数据库使用撤消记录回滚未提交事务对数据库所做的更改。 在恢复期间，数据库回滚从联机重做日志应用到数据文件的任何未提交的更改。撤消记录通过在另一个用户正在更改数据的同时为访问数据的用户维护数据的前映像来提供读取一致性。\n管理回滚段     初始化数据库集群数据目录后，数据库中默认会产生4个集群级回滚段和8个数据库级别的回滚段。用户可以使用以下语句查看当前数据库中的回滚段信息：\nSELECT c.relname, c.relisshared, u.undoid, u.undrelid, pg_size_pretty(pg_relation_size(c.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "210",
+      "wordCount" : "193",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -88,7 +94,7 @@ undo 数据存储在独立的表空间中。 Redrock Postgres 提供了一种完
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-21T20:23:12.00Z",
+      "dateModified": "2022-07-22T16:51:10.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2623,7 +2629,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/features/' href='/zh-cn/features/'><span itemprop='name'>基础特性</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>回滚段</span><meta itemprop='position' content='4' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/features/' href='/zh-cn/features/'><span itemprop='name'>基础特性</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>回滚段</span><meta itemprop='position' content='4' /></li>
   
 
   
@@ -2661,14 +2667,14 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
       </ul></nav>
       <hr />
     </div>
-<p>Redrock Postgres 维护事务操作的记录，统称为 undo 数据。 Redrock Postgres 使用 undo 数据来执行以下操作：</p>
+<p>Redrock Postgres 维护事务操作的记录，统称为撤消数据。 Redrock Postgres 使用撤消数据来执行以下操作：</p>
 <ul>
 <li>回滚活跃事务</li>
 <li>恢复异常结束的事务</li>
 <li>提供读一致性</li>
 </ul>
-<p>Redrock Postgres 将 undo 数据存储在数据库中而不是外部日志中。 undo 数据存储在与数据块一样更新的块中，对这些块的更改会产生重做。 通过这种方式，Redrock Postgres 可以高效地访问 undo 数据，而无需读取外部日志。</p>
-<p>undo 数据存储在独立的表空间中。 Redrock Postgres 提供了一种完全自动化的机制，称为自动回滚段管理模式，用于管理回滚段和存储空间。</p>
+<p>Redrock Postgres 将撤消数据存储在数据库中而不是外部日志中。撤消数据存储在与数据块一样更新的块中，对这些块的更改会产生重做。 通过这种方式，Redrock Postgres 可以高效地访问 撤消数据，而无需读取外部日志。</p>
+<p>撤消数据存储在独立的表空间中。 Redrock Postgres 提供了一种完全自动化的机制，称为自动回滚段管理模式，用于管理回滚段和存储空间。</p>
 <div class="gdoc-page__anchorwrap">
     <h2 id="回滚段和事务">
         回滚段和事务
@@ -2678,7 +2684,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     </h2>
 </div>
 <p>当事务开始时，数据库将事务绑定（分配）到回滚段，因此绑定到事务表。</p>
-<p>多个活动事务可以同时写入相同的回滚段或不同的回滚段。 例如，事务 T1 和 T2 都可以写入 undo U1，或者 T1 可以写入 U1 而 T2 写入 undo U2。</p>
+<p>多个活动事务可以同时写入相同的回滚段或不同的回滚段。 例如，事务 T1 和 T2 都可以写入回滚段U1，或者 T1 可以写入 U1 而 T2 写入回滚段U2。</p>
 <div class="gdoc-page__anchorwrap">
     <h2 id="事务回滚">
         事务回滚
@@ -2687,7 +2693,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         </a>
     </h2>
 </div>
-<p>当执行 <code>ROLLBACK</code>语句时，数据库使用 undo 记录回滚未提交事务对数据库所做的更改。 在恢复期间，数据库回滚从联机重做日志应用到数据文件的任何未提交的更改。 undo 记录通过在另一个用户正在更改数据的同时为访问数据的用户维护数据的前映像来提供读取一致性。</p>
+<p>当执行 <code>ROLLBACK</code>语句时，数据库使用撤消记录回滚未提交事务对数据库所做的更改。 在恢复期间，数据库回滚从联机重做日志应用到数据文件的任何未提交的更改。撤消记录通过在另一个用户正在更改数据的同时为访问数据的用户维护数据的前映像来提供读取一致性。</p>
 <div class="gdoc-page__anchorwrap">
     <h2 id="管理回滚段">
         管理回滚段
@@ -2697,11 +2703,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     </h2>
 </div>
 <p>初始化数据库集群数据目录后，数据库中默认会产生4个集群级回滚段和8个数据库级别的回滚段。用户可以使用以下语句查看当前数据库中的回滚段信息：</p>
-<pre tabindex="0"><code>SELECT c.relname, c.relisshared, u.undoid, u.undrelid,
-       pg_size_pretty(pg_relation_size(c.oid)) AS undsize
-   FROM pg_undo u
-     LEFT JOIN pg_class c ON u.undrelid = c.oid;
-  relname   | relisshared | undoid | undrelid | undsize
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">c</span><span class="mf">.</span><span class="n">relname</span><span class="p">,</span> <span class="n">c</span><span class="mf">.</span><span class="n">relisshared</span><span class="p">,</span> <span class="n">u</span><span class="mf">.</span><span class="n">undoid</span><span class="p">,</span> <span class="n">u</span><span class="mf">.</span><span class="n">undrelid</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">       <span class="n">pg_size_pretty</span><span class="p">(</span><span class="n">pg_relation_size</span><span class="p">(</span><span class="n">c</span><span class="mf">.</span><span class="n">oid</span><span class="p">))</span> <span class="k">AS</span> <span class="n">undsize</span>
+</span></span><span class="line"><span class="cl">   <span class="k">FROM</span> <span class="n">pg_undo</span> <span class="n">u</span>
+</span></span><span class="line"><span class="cl">     <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">pg_class</span> <span class="n">c</span> <span class="k">ON</span> <span class="n">u</span><span class="mf">.</span><span class="n">undrelid</span> <span class="o">=</span> <span class="n">c</span><span class="mf">.</span><span class="n">oid</span><span class="p">;</span>
+</span></span></code></pre></div><p>查询结果：</p>
+<pre tabindex="0"><code>  relname   | relisshared | undoid | undrelid | undsize
 ------------+-------------+--------+----------+---------
  pg_undo_1  | t           |      1 |     4141 | 1096 kB
  pg_undo_2  | t           |      2 |     4142 | 1040 kB

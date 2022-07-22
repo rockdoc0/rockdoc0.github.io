@@ -8,9 +8,9 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="PL/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/scheme 可以以 Lisp 风格启动 PostgreSQL 过程。
+  <meta name="description" content="PL/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/Scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/Scheme 可以以 Lisp 风格启动 PostgreSQL 过程。
 PL/Scheme 函数和参数     要用 PL/Scheme 语言创建一个函数，可使用标准的 CREATE FUNCTION语法：
-CREATE FUNCTION funcname (argument-types) RETURNS return-type AS $$ # PL/Scheme 函数体 $$ LANGUAGE plscheme; 函数的主体就是普通的 Scheme 代码。事实上，PL/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。
+CREATE FUNCTION funcname (argument-types) RETURNS return-type -- 函数相关属性 AS $$ # PL/Scheme 函数体 $$ LANGUAGE plscheme; 函数的主体就是普通的 Scheme 代码。事实上，PL/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。
 在一个 PL/Scheme 过程中，任何从Scheme代码返回的值都会被忽略。
 PL/Scheme 也支持用DO语句调用的匿名代码块：
 DO $$ # PL/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数，并且它返回的任何值都会被抛弃。否则其行为就像一个函数。" />
@@ -40,9 +40,9 @@ DO $$ # PL/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="PL/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/scheme 可以以 Lisp 风格启动 PostgreSQL 过程。
+  <meta property="og:description" content="PL/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/Scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/Scheme 可以以 Lisp 风格启动 PostgreSQL 过程。
 PL/Scheme 函数和参数     要用 PL/Scheme 语言创建一个函数，可使用标准的 CREATE FUNCTION语法：
-CREATE FUNCTION funcname (argument-types) RETURNS return-type AS $$ # PL/Scheme 函数体 $$ LANGUAGE plscheme; 函数的主体就是普通的 Scheme 代码。事实上，PL/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。
+CREATE FUNCTION funcname (argument-types) RETURNS return-type -- 函数相关属性 AS $$ # PL/Scheme 函数体 $$ LANGUAGE plscheme; 函数的主体就是普通的 Scheme 代码。事实上，PL/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。
 在一个 PL/Scheme 过程中，任何从Scheme代码返回的值都会被忽略。
 PL/Scheme 也支持用DO语句调用的匿名代码块：
 DO $$ # PL/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数，并且它返回的任何值都会被抛弃。否则其行为就像一个函数。" />
@@ -52,16 +52,16 @@ DO $$ # PL/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数
 <meta property="article:section" content="Develop" />
     <meta
       property="article:modified_time"
-      content="2022-07-20T16:33:49+08:00"
+      content="2022-07-22T09:21:21+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="PL/Scheme" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="PL/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/scheme 可以以 Lisp 风格启动 PostgreSQL 过程。
+  <meta name="twitter:description" content="PL/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/Scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/Scheme 可以以 Lisp 风格启动 PostgreSQL 过程。
 PL/Scheme 函数和参数     要用 PL/Scheme 语言创建一个函数，可使用标准的 CREATE FUNCTION语法：
-CREATE FUNCTION funcname (argument-types) RETURNS return-type AS $$ # PL/Scheme 函数体 $$ LANGUAGE plscheme; 函数的主体就是普通的 Scheme 代码。事实上，PL/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。
+CREATE FUNCTION funcname (argument-types) RETURNS return-type -- 函数相关属性 AS $$ # PL/Scheme 函数体 $$ LANGUAGE plscheme; 函数的主体就是普通的 Scheme 代码。事实上，PL/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。
 在一个 PL/Scheme 过程中，任何从Scheme代码返回的值都会被忽略。
 PL/Scheme 也支持用DO语句调用的匿名代码块：
 DO $$ # PL/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数，并且它返回的任何值都会被抛弃。否则其行为就像一个函数。" />
@@ -75,9 +75,9 @@ DO $$ # PL/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数
       "name": "PL/Scheme",
       "url" : "https://doc.rockdata.net/zh-cn/develop/plscheme/",
       "headline": "PL/Scheme",
-      "description": "PL\/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL\/scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL\/scheme 可以以 Lisp 风格启动 PostgreSQL 过程。\nPL\/Scheme 函数和参数     要用 PL\/Scheme 语言创建一个函数，可使用标准的 CREATE FUNCTION语法：\nCREATE FUNCTION funcname (argument-types) RETURNS return-type AS $$ # PL\/Scheme 函数体 $$ LANGUAGE plscheme; 函数的主体就是普通的 Scheme 代码。事实上，PL\/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL\/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。\n在一个 PL\/Scheme 过程中，任何从Scheme代码返回的值都会被忽略。\nPL\/Scheme 也支持用DO语句调用的匿名代码块：\nDO $$ # PL\/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数，并且它返回的任何值都会被抛弃。否则其行为就像一个函数。",
+      "description": "PL\/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL\/Scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL\/Scheme 可以以 Lisp 风格启动 PostgreSQL 过程。\nPL\/Scheme 函数和参数     要用 PL\/Scheme 语言创建一个函数，可使用标准的 CREATE FUNCTION语法：\nCREATE FUNCTION funcname (argument-types) RETURNS return-type -- 函数相关属性 AS $$ # PL\/Scheme 函数体 $$ LANGUAGE plscheme; 函数的主体就是普通的 Scheme 代码。事实上，PL\/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL\/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。\n在一个 PL\/Scheme 过程中，任何从Scheme代码返回的值都会被忽略。\nPL\/Scheme 也支持用DO语句调用的匿名代码块：\nDO $$ # PL\/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数，并且它返回的任何值都会被抛弃。否则其行为就像一个函数。",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "109",
+      "wordCount" : "111",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -88,7 +88,7 @@ DO $$ # PL/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-20T16:33:49.00Z",
+      "dateModified": "2022-07-22T09:21:21.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2623,7 +2623,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>欢迎访问红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/develop/' href='/zh-cn/develop/'><span itemprop='name'>应用开发</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>PL/Scheme</span><meta itemprop='position' content='4' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/' href='/zh-cn/'><span itemprop='name'>红石数据库文档</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/zh-cn/develop/' href='/zh-cn/develop/'><span itemprop='name'>应用开发</span></a><meta itemprop='position' content='3' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>PL/Scheme</span><meta itemprop='position' content='4' /></li>
   
 
   
@@ -2653,7 +2653,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     class="gdoc-markdown gdoc-markdown__align--left"
   >
     <h1>PL/Scheme</h1>
-    <p>PL/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/scheme 可以以 Lisp 风格启动 PostgreSQL 过程。</p>
+    <p>PL/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/Scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/Scheme 可以以 Lisp 风格启动 PostgreSQL 过程。</p>
 <div class="gdoc-page__anchorwrap">
     <h2 id="plscheme-函数和参数">
         PL/Scheme 函数和参数
@@ -2667,20 +2667,22 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   href="http://www.postgres.cn/docs/12/sql-createfunction.html"
   
 >CREATE FUNCTION</a>语法：</p>
-<pre tabindex="0"><code>CREATE FUNCTION funcname (argument-types) RETURNS return-type AS $$
-    # PL/Scheme 函数体
-$$ LANGUAGE plscheme;
-</code></pre><p>函数的主体就是普通的 Scheme 代码。事实上，PL/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">FUNCTION</span> <span class="n">funcname</span> <span class="p">(</span><span class="n">argument</span><span class="o">-</span><span class="k">types</span><span class="p">)</span> <span class="k">RETURNS</span> <span class="n">return</span><span class="o">-</span><span class="k">type</span>
+</span></span><span class="line"><span class="cl"><span class="c1">-- 函数相关属性
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">AS</span> <span class="sh">$$
+</span></span></span><span class="line"><span class="cl"><span class="sh">    # PL/Scheme 函数体
+</span></span></span><span class="line"><span class="cl"><span class="sh">$$</span> <span class="k">LANGUAGE</span> <span class="s1">plscheme</span><span class="p">;</span>
+</span></span></code></pre></div><p>函数的主体就是普通的 Scheme 代码。事实上，PL/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。</p>
 <p>在一个 PL/Scheme 过程中，任何从Scheme代码返回的值都会被忽略。</p>
 <p>PL/Scheme 也支持用<a
   class="gdoc-markdown__link"
   href="http://www.postgres.cn/docs/12/sql-do.html"
   
 >DO</a>语句调用的匿名代码块：</p>
-<pre tabindex="0"><code>DO $$
-    # PL/Scheme 代码
-$$ LANGUAGE plscheme;
-</code></pre><p>一个匿名代码块没有参数，并且它返回的任何值都会被抛弃。否则其行为就像一个函数。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">DO</span> <span class="sh">$$
+</span></span></span><span class="line"><span class="cl"><span class="sh">    # PL/Scheme 代码
+</span></span></span><span class="line"><span class="cl"><span class="sh">$$</span> <span class="k">LANGUAGE</span> <span class="n">plscheme</span><span class="p">;</span>
+</span></span></code></pre></div><p>一个匿名代码块没有参数，并且它返回的任何值都会被抛弃。否则其行为就像一个函数。</p>
 <p><code>CREATE FUNCTION</code>命令的语法要求函数 体被写作一个字符串常量。通常对字符串常量使用美元引用（见 <a
   class="gdoc-markdown__link"
   href="http://www.postgres.cn/docs/12/sql-syntax-lexical.html#SQL-SYNTAX-DOLLAR-QUOTING"
@@ -2692,10 +2694,11 @@ $$ LANGUAGE plscheme;
 >第 4.1.2.1 节</a>）。</p>
 <p>参数和结果的处理和在任何其他 Scheme 子程序中一样：参数会以 Scheme 变量的形式传递到函数体中，并且函数中计算的最后一个表达式会作为结果值返回。</p>
 <p>例如，一个返回两个整数值中较大值的函数可以定义为：</p>
-<pre tabindex="0"><code>CREATE FUNCTION scheme_max (a integer, b integer) RETURNS integer AS $$
-    (if (&gt; a b) a b)
-$$ LANGUAGE plscheme;
-</code></pre>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">FUNCTION</span> <span class="n">scheme_max</span> <span class="p">(</span><span class="n">a</span> <span class="nb">integer</span><span class="p">,</span> <span class="n">b</span> <span class="nb">integer</span><span class="p">)</span> <span class="k">RETURNS</span> <span class="nb">integer</span>
+</span></span><span class="line"><span class="cl"><span class="k">AS</span> <span class="sh">$$
+</span></span></span><span class="line"><span class="cl"><span class="sh">    (if (&gt; a b) a b)
+</span></span></span><span class="line"><span class="cl"><span class="sh">$$</span> <span class="k">LANGUAGE</span> <span class="s1">plscheme</span><span class="p">;</span>
+</span></span></code></pre></div>
   </article>
 
 

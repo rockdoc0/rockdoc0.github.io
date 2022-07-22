@@ -44,7 +44,7 @@ Synopsis     CREATE UNDO [ IF NOT EXISTS ] name[ WITH ( storage_parameter = val
 <meta property="article:section" content="Commands" />
     <meta
       property="article:modified_time"
-      content="2022-06-19T17:28:24+08:00"
+      content="2022-07-22T09:21:21+08:00"
     />
 
 
@@ -76,7 +76,7 @@ Synopsis     CREATE UNDO [ IF NOT EXISTS ] name[ WITH ( storage_parameter = val
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-19T17:28:24.00Z",
+      "dateModified": "2022-07-22T09:21:21.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1279,7 +1279,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     href="/features/undo/"
                     class="gdoc-nav__entry"
                   >
-                    Undo
+                    Undo Segments
                   </a>
                 </span>
               
@@ -2611,7 +2611,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/commands/' href='/commands/'><span itemprop='name'>SQL Commands</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>CREATE UNDO</span><meta itemprop='position' content='3' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/commands/' href='/commands/'><span itemprop='name'>SQL Commands</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>CREATE UNDO</span><meta itemprop='position' content='3' /></li>
   
 
   
@@ -2739,10 +2739,10 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     </h2>
 </div>
 <p>Create a undo:</p>
-<pre tabindex="0"><code>CREATE UNDO undo_13;
-</code></pre><p>To create an undo and have the undo reside in the tablespace <code>undospace</code>:</p>
-<pre tabindex="0"><code>CREATE UNDO undo_14 TABLESPACE undospace;
-</code></pre><div class="gdoc-page__anchorwrap">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="n">UNDO</span> <span class="n">undo_13</span><span class="p">;</span>
+</span></span></code></pre></div><p>To create an undo and have the undo reside in the tablespace <code>undospace</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="n">UNDO</span> <span class="n">undo_14</span> <span class="k">TABLESPACE</span> <span class="n">undospace</span><span class="p">;</span>
+</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
     <h2 id="compatibility">
         Compatibility
         <a data-clipboard-text="https://doc.rockdata.net/commands/createundo/#compatibility" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Compatibility" aria-label="Anchor to: Compatibility" href="#compatibility">

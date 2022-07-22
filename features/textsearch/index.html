@@ -42,7 +42,7 @@
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-07-21T20:23:12+08:00"
+      content="2022-07-22T10:12:52+08:00"
     />
 
 
@@ -62,7 +62,7 @@
       "headline": "Full Text Search",
       "description": "Full Text Searching (or just text search) provides the capability to identify natural-language documents that satisfy a query, and optionally to sort them by relevance to the query. The most common type of search is to find all documents containing given query terms and return them in order of their similarity to the query. Notions of query and similarity are very flexible and depend on the specific application. The simplest search considers query as a set of words and similarity as the frequency of query words in the document.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "484",
+      "wordCount" : "486",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -73,7 +73,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-21T20:23:12.00Z",
+      "dateModified": "2022-07-22T10:12:52.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1276,7 +1276,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     href="/features/undo/"
                     class="gdoc-nav__entry"
                   >
-                    Undo
+                    Undo Segments
                   </a>
                 </span>
               
@@ -2608,7 +2608,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/features/' href='/features/'><span itemprop='name'>Features</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Full Text Search</span><meta itemprop='position' content='3' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/features/' href='/features/'><span itemprop='name'>Features</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Full Text Search</span><meta itemprop='position' content='3' /></li>
   
 
   
@@ -2677,8 +2677,9 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     </h3>
 </div>
 <p>The function <code>ts_debug</code> allows easy testing of a text search configuration.</p>
-<pre tabindex="0"><code>SELECT * FROM ts_debug(&#39;english&#39;, &#39;relational database management system&#39;);
-   alias   |   description   |   token    |  dictionaries  |  dictionary  |  lexemes
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">ts_debug</span><span class="p">(</span><span class="s1">&#39;english&#39;</span><span class="p">,</span> <span class="s1">&#39;relational database management system&#39;</span><span class="p">);</span>
+</span></span></code></pre></div><p>Result:</p>
+<pre tabindex="0"><code>   alias   |   description   |   token    |  dictionaries  |  dictionary  |  lexemes
 -----------+-----------------+------------+----------------+--------------+-----------
  asciiword | Word, all ASCII | relational | {english_stem} | english_stem | {relat}
  blank     | Space symbols   |            | {}             |              |
@@ -2696,8 +2697,9 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     </h3>
 </div>
 <p>The function <code>ts_parse</code> allows direct testing of a text search parser.</p>
-<pre tabindex="0"><code>SELECT * FROM ts_parse(&#39;default&#39;, &#39;relational database management system&#39;);
- tokid |   token
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">ts_parse</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">,</span> <span class="s1">&#39;relational database management system&#39;</span><span class="p">);</span>
+</span></span></code></pre></div><p>Result:</p>
+<pre tabindex="0"><code> tokid |   token
 -------+------------
      1 | relational
     12 |

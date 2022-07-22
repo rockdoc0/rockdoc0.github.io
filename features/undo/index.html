@@ -8,10 +8,10 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Undos and Transactions Transaction Rollback Managing Undos      Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo data to do the following:
+  <meta name="description" content="Undo Segments and Transactions Transaction Rollback Manage Undo Segments      Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo data to do the following:
  Roll back an active transaction Recover a terminated transaction Provide read consistency  Redrock Postgres stores undo data inside the database rather than in external logs. Undo data is stored in blocks that are updated just like data blocks, with changes to these blocks generating redo." />
 
-    <title>Undo | Redrock Documentation</title>
+    <title>Undo Segments | Redrock Documentation</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -32,11 +32,11 @@
     
   <meta
     property="og:title"
-    content="Undo"
+    content="Undo Segments"
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Undos and Transactions Transaction Rollback Managing Undos      Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo data to do the following:
+  <meta property="og:description" content="Undo Segments and Transactions Transaction Rollback Manage Undo Segments      Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo data to do the following:
  Roll back an active transaction Recover a terminated transaction Provide read consistency  Redrock Postgres stores undo data inside the database rather than in external logs. Undo data is stored in blocks that are updated just like data blocks, with changes to these blocks generating redo." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/features/undo/" />
@@ -44,14 +44,14 @@
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-07-21T20:23:12+08:00"
+      content="2022-07-22T16:51:10+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Undo" />
+<meta name="twitter:title" content="Undo Segments" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Undos and Transactions Transaction Rollback Managing Undos      Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo data to do the following:
+  <meta name="twitter:description" content="Undo Segments and Transactions Transaction Rollback Manage Undo Segments      Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo data to do the following:
  Roll back an active transaction Recover a terminated transaction Provide read consistency  Redrock Postgres stores undo data inside the database rather than in external logs. Undo data is stored in blocks that are updated just like data blocks, with changes to these blocks generating redo." />
 
 
@@ -60,12 +60,12 @@
       "@context": "http://schema.org",
       "@type": "TechArticle",
       "articleSection": "Features",
-      "name": "Undo",
+      "name": "Undo Segments",
       "url" : "https://doc.rockdata.net/features/undo/",
-      "headline": "Undo",
-      "description": "Undos and Transactions Transaction Rollback Managing Undos      Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo data to do the following:\n Roll back an active transaction Recover a terminated transaction Provide read consistency  Redrock Postgres stores undo data inside the database rather than in external logs. Undo data is stored in blocks that are updated just like data blocks, with changes to these blocks generating redo.",
+      "headline": "Undo Segments",
+      "description": "Undo Segments and Transactions Transaction Rollback Manage Undo Segments      Redrock Postgres maintains records of the actions of transactions, collectively known as undo data. Redrock Postgres uses undo data to do the following:\n Roll back an active transaction Recover a terminated transaction Provide read consistency  Redrock Postgres stores undo data inside the database rather than in external logs. Undo data is stored in blocks that are updated just like data blocks, with changes to these blocks generating redo.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "437",
+      "wordCount" : "448",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -76,7 +76,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-21T20:23:12.00Z",
+      "dateModified": "2022-07-22T16:51:10.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1279,7 +1279,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     href="/features/undo/"
                     class="gdoc-nav__entry is-active"
                   >
-                    Undo
+                    Undo Segments
                   </a>
                 </span>
               
@@ -2611,7 +2611,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/features/' href='/features/'><span itemprop='name'>Features</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Undo</span><meta itemprop='position' content='3' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/features/' href='/features/'><span itemprop='name'>Features</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>Undo Segments</span><meta itemprop='position' content='3' /></li>
   
 
   
@@ -2640,12 +2640,12 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   <article
     class="gdoc-markdown gdoc-markdown__align--left"
   >
-    <h1>Undo</h1>
+    <h1>Undo Segments</h1>
     <div class="gdoc-toc gdoc-toc__level--3">
       <nav id="TableOfContents"><ul>
-        <li><a href="#undos-and-transactions">Undos and Transactions</a></li>
+        <li><a href="#undo-segments-and-transactions">Undo Segments and Transactions</a></li>
         <li><a href="#transaction-rollback">Transaction Rollback</a></li>
-        <li><a href="#managing-undos">Managing Undos</a></li>
+        <li><a href="#manage-undo-segments">Manage Undo Segments</a></li>
       </ul></nav>
       <hr />
     </div>
@@ -2658,15 +2658,15 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <p>Redrock Postgres stores undo data inside the database rather than in external logs. Undo data is stored in blocks that are updated just like data blocks, with changes to these blocks generating redo. In this way, Redrock Postgres can efficiently access undo data without needing to read external logs.</p>
 <p>Undo data is stored in an independent tablespace. Redrock Postgres provides a fully automated mechanism, known as automatic undo management mode, for managing undos and space.</p>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="undos-and-transactions">
-        Undos and Transactions
-        <a data-clipboard-text="https://doc.rockdata.net/features/undo/#undos-and-transactions" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Undos and Transactions" aria-label="Anchor to: Undos and Transactions" href="#undos-and-transactions">
+    <h2 id="undo-segments-and-transactions">
+        Undo Segments and Transactions
+        <a data-clipboard-text="https://doc.rockdata.net/features/undo/#undo-segments-and-transactions" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Undo Segments and Transactions" aria-label="Anchor to: Undo Segments and Transactions" href="#undo-segments-and-transactions">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
 <p>When a transaction starts, the database binds (assigns) the transaction to an undo segment, and therefore to a transaction table.</p>
-<p>Multiple active transactions can write concurrently to the same undo or to different undos. For example, transactions T1 and T2 can both write to undo U1, or T1 can write to U1 while T2 writes to undo U2.</p>
+<p>Multiple active transactions can write concurrently to the same undo or to different undo segments. For example, transactions T1 and T2 can both write to undo segment U1, or T1 can write to U1 while T2 writes to undo segment U2.</p>
 <div class="gdoc-page__anchorwrap">
     <h2 id="transaction-rollback">
         Transaction Rollback
@@ -2677,19 +2677,20 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </div>
 <p>When a <code>ROLLBACK</code> statement is issued, the database uses undo records to roll back changes made to the database by the uncommitted transaction. During recovery, the database rolls back any uncommitted changes applied from the online redo log to the data files. Undo records provide read consistency by maintaining the before image of the data for users accessing data at the same time that another user is changing it.</p>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="managing-undos">
-        Managing Undos
-        <a data-clipboard-text="https://doc.rockdata.net/features/undo/#managing-undos" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Managing Undos" aria-label="Anchor to: Managing Undos" href="#managing-undos">
+    <h2 id="manage-undo-segments">
+        Manage Undo Segments
+        <a data-clipboard-text="https://doc.rockdata.net/features/undo/#manage-undo-segments" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Manage Undo Segments" aria-label="Anchor to: Manage Undo Segments" href="#manage-undo-segments">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
 </div>
-<p>After the database cluster data directory is initialized, 4 cluster-level undos and 8 database-level undos are generated by default in the database. Users can use the following statement to view the undo information in the current database:</p>
-<pre tabindex="0"><code>SELECT c.relname, c.relisshared, u.undoid, u.undrelid,
-       pg_size_pretty(pg_relation_size(c.oid)) AS undsize
-   FROM pg_undo u
-     LEFT JOIN pg_class c ON u.undrelid = c.oid;
-  relname   | relisshared | undoid | undrelid | undsize
+<p>After the database cluster data directory is initialized, 4 cluster-level undo segments and 8 database-level undo segments are generated by default in the database. Users can use the following statement to view the undo segment information in the current database:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">c</span><span class="mf">.</span><span class="n">relname</span><span class="p">,</span> <span class="n">c</span><span class="mf">.</span><span class="n">relisshared</span><span class="p">,</span> <span class="n">u</span><span class="mf">.</span><span class="n">undoid</span><span class="p">,</span> <span class="n">u</span><span class="mf">.</span><span class="n">undrelid</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">       <span class="n">pg_size_pretty</span><span class="p">(</span><span class="n">pg_relation_size</span><span class="p">(</span><span class="n">c</span><span class="mf">.</span><span class="n">oid</span><span class="p">))</span> <span class="k">AS</span> <span class="n">undsize</span>
+</span></span><span class="line"><span class="cl">   <span class="k">FROM</span> <span class="n">pg_undo</span> <span class="n">u</span>
+</span></span><span class="line"><span class="cl">     <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">pg_class</span> <span class="n">c</span> <span class="k">ON</span> <span class="n">u</span><span class="mf">.</span><span class="n">undrelid</span> <span class="o">=</span> <span class="n">c</span><span class="mf">.</span><span class="n">oid</span><span class="p">;</span>
+</span></span></code></pre></div><p>Result:</p>
+<pre tabindex="0"><code>  relname   | relisshared | undoid | undrelid | undsize
 ------------+-------------+--------+----------+---------
  pg_undo_1  | t           |      1 |     4141 | 1096 kB
  pg_undo_2  | t           |      2 |     4142 | 1040 kB

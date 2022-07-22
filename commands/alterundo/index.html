@@ -44,7 +44,7 @@ Synopsis     ALTER UNDO [ IF EXISTS ] name RENAME TO new_nameALTER UNDO [ IF EX
 <meta property="article:section" content="Commands" />
     <meta
       property="article:modified_time"
-      content="2022-06-19T17:28:24+08:00"
+      content="2022-07-22T09:21:21+08:00"
     />
 
 
@@ -76,7 +76,7 @@ Synopsis     ALTER UNDO [ IF EXISTS ] name RENAME TO new_nameALTER UNDO [ IF EX
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-06-19T17:28:24.00Z",
+      "dateModified": "2022-07-22T09:21:21.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -1279,7 +1279,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
                     href="/features/undo/"
                     class="gdoc-nav__entry"
                   >
-                    Undo
+                    Undo Segments
                   </a>
                 </span>
               
@@ -2611,7 +2611,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     
   
   
-    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Welcome to Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/commands/' href='/commands/'><span itemprop='name'>SQL Commands</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>ALTER UNDO</span><meta itemprop='position' content='3' /></li>
+    <li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/' href='/'><span itemprop='name'>Redrock Documentation</span></a><meta itemprop='position' content='1' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><a itemscope itemtype='https://schema.org/WebPage' itemprop='item' itemid='/commands/' href='/commands/'><span itemprop='name'>SQL Commands</span></a><meta itemprop='position' content='2' /></li><li> / </li><li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'><span itemprop='name'>ALTER UNDO</span><meta itemprop='position' content='3' /></li>
   
 
   
@@ -2742,14 +2742,14 @@ ALTER UNDO [ IF EXISTS ] name RESET ( storage_parameter [, ... ] )
     </h2>
 </div>
 <p>To rename an existing undo:</p>
-<pre tabindex="0"><code>ALTER UNDO undo_abc RENAME TO undo_test;
-</code></pre><p>To move an undo to a different tablespace:</p>
-<pre tabindex="0"><code>ALTER UNDO undo_15 SET TABLESPACE undospace;
-</code></pre><p>To change an undo&rsquo;s minimum pages:</p>
-<pre tabindex="0"><code>ALTER UNDO undo_15 SET (minpages = 131072);
-</code></pre><p>Change the owner of undo <code>undo_15</code>:</p>
-<pre tabindex="0"><code>ALTER UNDO undo_15 OWNER TO mary;
-</code></pre><div class="gdoc-page__anchorwrap">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">ALTER</span> <span class="n">UNDO</span> <span class="n">undo_abc</span> <span class="k">RENAME</span> <span class="k">TO</span> <span class="n">undo_test</span><span class="p">;</span>
+</span></span></code></pre></div><p>To move an undo to a different tablespace:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">ALTER</span> <span class="n">UNDO</span> <span class="n">undo_15</span> <span class="k">SET</span> <span class="k">TABLESPACE</span> <span class="n">undospace</span><span class="p">;</span>
+</span></span></code></pre></div><p>To change an undo&rsquo;s minimum pages:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">ALTER</span> <span class="n">UNDO</span> <span class="n">undo_15</span> <span class="k">SET</span> <span class="p">(</span><span class="n">minpages</span> <span class="o">=</span> <span class="mf">131072</span><span class="p">);</span>
+</span></span></code></pre></div><p>Change the owner of undo <code>undo_15</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">ALTER</span> <span class="n">UNDO</span> <span class="n">undo_15</span> <span class="k">OWNER</span> <span class="k">TO</span> <span class="n">mary</span><span class="p">;</span>
+</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
     <h2 id="compatibility">
         Compatibility
         <a data-clipboard-text="https://doc.rockdata.net/commands/alterundo/#compatibility" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="Anchor to: Compatibility" aria-label="Anchor to: Compatibility" href="#compatibility">
