@@ -12,12 +12,9 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="PL/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/Scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/Scheme 可以以 Lisp 风格启动 PostgreSQL 过程。
-PL/Scheme 函数和参数     要用 PL/Scheme 语言创建一个函数，可使用标准的 CREATE FUNCTION语法：
-CREATE FUNCTION funcname (argument-types) RETURNS return-type -- 函数相关属性 AS $$ # PL/Scheme 函数体 $$ LANGUAGE plscheme; 函数的主体就是普通的 Scheme 代码。事实上，PL/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。
-在一个 PL/Scheme 过程中，任何从Scheme代码返回的值都会被忽略。
-PL/Scheme 也支持用DO语句调用的匿名代码块：
-DO $$ # PL/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数，并且它返回的任何值都会被抛弃。否则其行为就像一个函数。" />
+  <meta name="description" content="函数和参数 数据值  数据类型映射 NULL 数组，向量   标准模块      PL/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/Scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/Scheme 可以以 Lisp 风格启动 PostgreSQL 过程。
+函数和参数     要用 PL/Scheme 语言创建一个函数，可使用标准的 CREATE FUNCTION语法：
+CREATE FUNCTION funcname (argument-types) RETURNS return-type -- 函数相关属性 AS $$ #;&#34;PL/Scheme 函数体&#34; $$ LANGUAGE plscheme; 函数的主体就是普通的 Scheme 代码。事实上，PL/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。" />
 
     <title>PL/Scheme | Redrock Documentation</title>
 
@@ -44,31 +41,25 @@ DO $$ # PL/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="PL/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/Scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/Scheme 可以以 Lisp 风格启动 PostgreSQL 过程。
-PL/Scheme 函数和参数     要用 PL/Scheme 语言创建一个函数，可使用标准的 CREATE FUNCTION语法：
-CREATE FUNCTION funcname (argument-types) RETURNS return-type -- 函数相关属性 AS $$ # PL/Scheme 函数体 $$ LANGUAGE plscheme; 函数的主体就是普通的 Scheme 代码。事实上，PL/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。
-在一个 PL/Scheme 过程中，任何从Scheme代码返回的值都会被忽略。
-PL/Scheme 也支持用DO语句调用的匿名代码块：
-DO $$ # PL/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数，并且它返回的任何值都会被抛弃。否则其行为就像一个函数。" />
+  <meta property="og:description" content="函数和参数 数据值  数据类型映射 NULL 数组，向量   标准模块      PL/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/Scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/Scheme 可以以 Lisp 风格启动 PostgreSQL 过程。
+函数和参数     要用 PL/Scheme 语言创建一个函数，可使用标准的 CREATE FUNCTION语法：
+CREATE FUNCTION funcname (argument-types) RETURNS return-type -- 函数相关属性 AS $$ #;&#34;PL/Scheme 函数体&#34; $$ LANGUAGE plscheme; 函数的主体就是普通的 Scheme 代码。事实上，PL/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/zh-cn/develop/plscheme/" />
 
 <meta property="article:section" content="Develop" />
     <meta
       property="article:modified_time"
-      content="2022-07-22T09:21:21+08:00"
+      content="2022-07-25T19:39:35+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="PL/Scheme" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="PL/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/Scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/Scheme 可以以 Lisp 风格启动 PostgreSQL 过程。
-PL/Scheme 函数和参数     要用 PL/Scheme 语言创建一个函数，可使用标准的 CREATE FUNCTION语法：
-CREATE FUNCTION funcname (argument-types) RETURNS return-type -- 函数相关属性 AS $$ # PL/Scheme 函数体 $$ LANGUAGE plscheme; 函数的主体就是普通的 Scheme 代码。事实上，PL/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。
-在一个 PL/Scheme 过程中，任何从Scheme代码返回的值都会被忽略。
-PL/Scheme 也支持用DO语句调用的匿名代码块：
-DO $$ # PL/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数，并且它返回的任何值都会被抛弃。否则其行为就像一个函数。" />
+  <meta name="twitter:description" content="函数和参数 数据值  数据类型映射 NULL 数组，向量   标准模块      PL/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/Scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/Scheme 可以以 Lisp 风格启动 PostgreSQL 过程。
+函数和参数     要用 PL/Scheme 语言创建一个函数，可使用标准的 CREATE FUNCTION语法：
+CREATE FUNCTION funcname (argument-types) RETURNS return-type -- 函数相关属性 AS $$ #;&#34;PL/Scheme 函数体&#34; $$ LANGUAGE plscheme; 函数的主体就是普通的 Scheme 代码。事实上，PL/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。" />
 
 
   <script type="application/ld+json">
@@ -79,9 +70,9 @@ DO $$ # PL/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数
       "name": "PL/Scheme",
       "url" : "https://doc.rockdata.net/zh-cn/develop/plscheme/",
       "headline": "PL/Scheme",
-      "description": "PL\/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL\/Scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL\/Scheme 可以以 Lisp 风格启动 PostgreSQL 过程。\nPL\/Scheme 函数和参数     要用 PL\/Scheme 语言创建一个函数，可使用标准的 CREATE FUNCTION语法：\nCREATE FUNCTION funcname (argument-types) RETURNS return-type -- 函数相关属性 AS $$ # PL\/Scheme 函数体 $$ LANGUAGE plscheme; 函数的主体就是普通的 Scheme 代码。事实上，PL\/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL\/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。\n在一个 PL\/Scheme 过程中，任何从Scheme代码返回的值都会被忽略。\nPL\/Scheme 也支持用DO语句调用的匿名代码块：\nDO $$ # PL\/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数，并且它返回的任何值都会被抛弃。否则其行为就像一个函数。",
+      "description": "函数和参数 数据值  数据类型映射 NULL 数组，向量   标准模块      PL\/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL\/Scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL\/Scheme 可以以 Lisp 风格启动 PostgreSQL 过程。\n函数和参数     要用 PL\/Scheme 语言创建一个函数，可使用标准的 CREATE FUNCTION语法：\nCREATE FUNCTION funcname (argument-types) RETURNS return-type -- 函数相关属性 AS $$ #;\u0022PL\/Scheme 函数体\u0022 $$ LANGUAGE plscheme; 函数的主体就是普通的 Scheme 代码。事实上，PL\/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL\/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "111",
+      "wordCount" : "713",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -92,7 +83,7 @@ DO $$ # PL/Scheme 代码 $$ LANGUAGE plscheme; 一个匿名代码块没有参数
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-22T09:21:21.00Z",
+      "dateModified": "2022-07-25T19:39:35.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2657,11 +2648,25 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     class="gdoc-markdown gdoc-markdown__align--left"
   >
     <h1>PL/Scheme</h1>
-    <p>PL/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/Scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/Scheme 可以以 Lisp 风格启动 PostgreSQL 过程。</p>
+    <div class="gdoc-toc gdoc-toc__level--3">
+      <nav id="TableOfContents"><ul>
+        <li><a href="#函数和参数">函数和参数</a></li>
+        <li><a href="#数据值">数据值</a>
+          <ul>
+            <li><a href="#数据类型映射">数据类型映射</a></li>
+            <li><a href="#null">NULL</a></li>
+            <li><a href="#数组向量">数组，向量</a></li>
+          </ul>
+        </li>
+        <li><a href="#标准模块">标准模块</a></li>
+      </ul></nav>
+      <hr />
+    </div>
+<p>PL/Scheme 是一个用于 Scheme 编程语言的 PostgreSQL 过程语言处理程序。 PL/Scheme 在后台使用 Chibi Scheme 作为其 Scheme 解释器。 凭借大量内置的 SRFI 和 Chibi Scheme 的完全 R7RS 兼容性，PL/Scheme 可以以 Lisp 风格启动 PostgreSQL 过程。</p>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="plscheme-函数和参数">
-        PL/Scheme 函数和参数
-        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/develop/plscheme/#plscheme-函数和参数" class="gdoc-page__anchor clip flex align-center" title="锚定到： PL/Scheme 函数和参数" aria-label="锚定到： PL/Scheme 函数和参数" href="#plscheme-%e5%87%bd%e6%95%b0%e5%92%8c%e5%8f%82%e6%95%b0">
+    <h2 id="函数和参数">
+        函数和参数
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/develop/plscheme/#函数和参数" class="gdoc-page__anchor clip flex align-center" title="锚定到： 函数和参数" aria-label="锚定到： 函数和参数" href="#%e5%87%bd%e6%95%b0%e5%92%8c%e5%8f%82%e6%95%b0">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
@@ -2673,7 +2678,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">FUNCTION</span> <span class="n">funcname</span> <span class="p">(</span><span class="n">argument</span><span class="o">-</span><span class="k">types</span><span class="p">)</span> <span class="k">RETURNS</span> <span class="n">return</span><span class="o">-</span><span class="k">type</span>
 </span></span><span class="line"><span class="cl"><span class="c1">-- 函数相关属性
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">AS</span> <span class="sh">$$
-</span></span></span><span class="line"><span class="cl"><span class="sh">    # PL/Scheme 函数体
+</span></span></span><span class="line"><span class="cl"><span class="sh">  #;&#34;PL/Scheme 函数体&#34;
 </span></span></span><span class="line"><span class="cl"><span class="sh">$$</span> <span class="k">LANGUAGE</span> <span class="s1">plscheme</span><span class="p">;</span>
 </span></span></code></pre></div><p>函数的主体就是普通的 Scheme 代码。事实上，PL/Scheme 的粘合代码会把它 包裹在一个 Scheme 子程序中。一个 PL/Scheme 函数会在一种标量上下文中 被调用，因此它无法返回列表。如下文所述，可以通过返回引用来返回 非标量值（数组、记录和集合）。</p>
 <p>在一个 PL/Scheme 过程中，任何从Scheme代码返回的值都会被忽略。</p>
@@ -2682,7 +2687,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   href="http://www.postgres.cn/docs/12/sql-do.html"
 >DO</a>语句调用的匿名代码块：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">DO</span> <span class="sh">$$
-</span></span></span><span class="line"><span class="cl"><span class="sh">    # PL/Scheme 代码
+</span></span></span><span class="line"><span class="cl"><span class="sh">  #;&#34;PL/Scheme 代码&#34;
 </span></span></span><span class="line"><span class="cl"><span class="sh">$$</span> <span class="k">LANGUAGE</span> <span class="n">plscheme</span><span class="p">;</span>
 </span></span></code></pre></div><p>一个匿名代码块没有参数，并且它返回的任何值都会被抛弃。否则其行为就像一个函数。</p>
 <p><code>CREATE FUNCTION</code>命令的语法要求函数 体被写作一个字符串常量。通常对字符串常量使用美元引用（见 <a
@@ -2696,9 +2701,505 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <p>例如，一个返回两个整数值中较大值的函数可以定义为：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">FUNCTION</span> <span class="n">scheme_max</span> <span class="p">(</span><span class="n">a</span> <span class="nb">integer</span><span class="p">,</span> <span class="n">b</span> <span class="nb">integer</span><span class="p">)</span> <span class="k">RETURNS</span> <span class="nb">integer</span>
 </span></span><span class="line"><span class="cl"><span class="k">AS</span> <span class="sh">$$
-</span></span></span><span class="line"><span class="cl"><span class="sh">    (if (&gt; a b) a b)
+</span></span></span><span class="line"><span class="cl"><span class="sh">  (if (&gt; a b) a b)
 </span></span></span><span class="line"><span class="cl"><span class="sh">$$</span> <span class="k">LANGUAGE</span> <span class="s1">plscheme</span><span class="p">;</span>
-</span></span></code></pre></div>
+</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
+    <h2 id="数据值">
+        数据值
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/develop/plscheme/#数据值" class="gdoc-page__anchor clip flex align-center" title="锚定到： 数据值" aria-label="锚定到： 数据值" href="#%e6%95%b0%e6%8d%ae%e5%80%bc">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>一般来讲，PL/Scheme 的目标是提供在 PostgreSQL 和 Scheme 世界之间的一种“自然的”映射。这包括下面介绍的数据映射规则。</p>
+<div class="gdoc-page__anchorwrap">
+    <h3 id="数据类型映射">
+        数据类型映射
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/develop/plscheme/#数据类型映射" class="gdoc-page__anchor clip flex align-center" title="锚定到： 数据类型映射" aria-label="锚定到： 数据类型映射" href="#%e6%95%b0%e6%8d%ae%e7%b1%bb%e5%9e%8b%e6%98%a0%e5%b0%84">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p>在调用一个 PL/Scheme 函数时，它的参数会被从 PostgreSQL 的数据类型转换成相应的 Scheme 类型：</p>
+<ul>
+<li>PostgreSQL 的<code>boolean</code>被转换成 Scheme 的<code>boolean</code>。</li>
+<li>PostgreSQL 的<code>smallint</code>和<code>int</code>被转换成 Scheme 的<code>fixnum</code>。PostgreSQL 的<code>bigint</code>和<code>oid</code>也被转换成 Scheme  的<code>fixnum</code>。</li>
+<li>PostgreSQL 的<code>real</code>和<code>double</code>被转换成 Scheme 的<code>flonum</code>。</li>
+<li>PostgreSQL 的<code>numeric</code>被转换成 Scheme 的<code>flonum</code>。</li>
+<li>PostgreSQL 的<code>bytea</code>被转换成 Scheme 的<code>bytevector</code>。</li>
+<li>包括 PostgreSQL 字符串类型在内的所有其他数据类型会被转换成一个 Scheme 的<code>string</code>。</li>
+<li>对于非标量数据类型，请见下文。</li>
+</ul>
+<p>当一个 PL/Scheme 函数返回时，会按照下列规则把它的返回值转换成该函数声明的 PostgreSQL 返回数据类型：</p>
+<ul>
+<li>当 PostgreSQL 返回类型是<code>boolean</code>时，返回值会被根据 Scheme 规则计算真假。</li>
+<li>当 PostgreSQL 返回类型是<code>bytea</code>时，返回值会被使用相应的 Scheme 内建机制转换成<code>bytea</code>。</li>
+<li>对于所有其他 PostgreSQL 返回类型，返回值被使用 Scheme 内建的<code>string</code>转换成一个串，并且结果会被传递给 PostgreSQL 数据类型的输入函数。</li>
+<li>对于非标量数据类型，请见下文。</li>
+</ul>
+<p>注意所声明的 PostgreSQL 返回类型和实际返回对象的 Scheme 数据类型之间的逻辑失配不会被标志，无论怎样该值都会被转换。</p>
+<div class="gdoc-page__anchorwrap">
+    <h3 id="null">
+        NULL
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/develop/plscheme/#null" class="gdoc-page__anchor clip flex align-center" title="锚定到： NULL" aria-label="锚定到： NULL" href="#null">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p>如果一个 SQL 空值被传递给一个函数，该参数值将作为 Scheme 中的<code>#()</code>出现。例如，上面<a
+  class="gdoc-markdown__link"
+  href="/zh-cn/develop/plscheme/#%e5%87%bd%e6%95%b0%e5%92%8c%e5%8f%82%e6%95%b0"
+>函数和参数</a>中展示的<code>scheme_max</code>的函数定义对于空值输入将会返回错误的回答。我们可以为函数定义增加<code>STRICT</code>让PostgreSQL做得更加合理：如果一个空值被传入，该函数将根本不会被调用，而只是自动地返回一个空结果。此外，我们可以在函数体中检查空输入：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">FUNCTION</span> <span class="n">scheme_max</span> <span class="p">(</span><span class="n">a</span> <span class="nb">integer</span><span class="p">,</span> <span class="n">b</span> <span class="nb">integer</span><span class="p">)</span> <span class="k">RETURNS</span> <span class="nb">integer</span>
+</span></span><span class="line"><span class="cl"><span class="k">AS</span> <span class="sh">$$
+</span></span></span><span class="line"><span class="cl"><span class="sh">  (if (or (null? a) (null? b))
+</span></span></span><span class="line"><span class="cl"><span class="sh">    &#39;#()
+</span></span></span><span class="line"><span class="cl"><span class="sh">    (if (&gt; a b) a b))
+</span></span></span><span class="line"><span class="cl"><span class="sh">$$</span> <span class="k">LANGUAGE</span> <span class="s1">plscheme</span><span class="p">;</span>
+</span></span></code></pre></div><p>如前所示，要从一个 PL/Scheme 函数返回一个 SQL 空值，可返回值<code>#()</code>。不管该函数严格与否都可以这样做。</p>
+<div class="gdoc-page__anchorwrap">
+    <h3 id="数组向量">
+        数组，向量
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/develop/plscheme/#数组向量" class="gdoc-page__anchor clip flex align-center" title="锚定到： 数组，向量" aria-label="锚定到： 数组，向量" href="#%e6%95%b0%e7%bb%84%e5%90%91%e9%87%8f">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p>SQL 数组会被作为一个 Scheme 向量传递到 PL/Scheme 中。要从一个 PL/Scheme 函数中返回出一个 SQL 数组值，可返回一个 Scheme 向量：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">FUNCTION</span> <span class="n">return_arr</span><span class="p">()</span> <span class="k">RETURNS</span> <span class="nb">int</span><span class="p">[]</span>
+</span></span><span class="line"><span class="cl"><span class="k">AS</span> <span class="sh">$$
+</span></span></span><span class="line"><span class="cl"><span class="sh">  (vector 1 2 &#39;() 3)
+</span></span></span><span class="line"><span class="cl"><span class="sh">$$</span> <span class="k">LANGUAGE</span> <span class="s1">plscheme</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">return_arr</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">     <span class="n">return_arr</span>
+</span></span><span class="line"><span class="cl"><span class="c1">--------------------
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span> <span class="p">[</span><span class="mf">0</span><span class="p">:</span><span class="mf">3</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="mf">1</span><span class="p">,</span><span class="mf">2</span><span class="p">,</span><span class="k">NULL</span><span class="p">,</span><span class="mf">3</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="mf">1</span> <span class="k">row</span><span class="p">)</span>
+</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
+    <h2 id="标准模块">
+        标准模块
+        <a data-clipboard-text="https://doc.rockdata.net/zh-cn/develop/plscheme/#标准模块" class="gdoc-page__anchor clip flex align-center" title="锚定到： 标准模块" aria-label="锚定到： 标准模块" href="#%e6%a0%87%e5%87%86%e6%a8%a1%e5%9d%97">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>我们可以在 PL/Scheme 函数导入 Scheme 提供的标准模块，例如：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">DO</span> <span class="sh">$$
+</span></span></span><span class="line"><span class="cl"><span class="sh">  (import (scheme small)
+</span></span></span><span class="line"><span class="cl"><span class="sh">          (srfi 1))
+</span></span></span><span class="line"><span class="cl"><span class="sh">$$</span> <span class="k">LANGUAGE</span> <span class="n">plscheme</span><span class="p">;</span>
+</span></span></code></pre></div><p>Chibi Scheme 中提供了许多 SRFI。请注意，SRFI 0、6、23、46 和 62 已内置到默认环境中，因此无需导入它们。 此列表包括流行的 SRFI 或标准 Chibi 模块中使用到的SRFI：</p>
+<ul>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-0/srfi-0.html"
+>(srfi 0) - cond-expand: 基于特征的条件扩展构造</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-1/srfi-1.html"
+>(srfi 1) - 列表库</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-2/srfi-2.html"
+>(srfi 2) - and-let*</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-6/srfi-6.html"
+>(srfi 6) - 基础字符串端口</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-8/srfi-8.html"
+>(srfi 8) - receive: 绑定到多个值</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-9/srfi-9.html"
+>(srfi 9) - define-record-type</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-11/srfi-11.html"
+>(srfi 11) - let-values/let*-values: 接收多个值的语法</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-14/srfi-14.html"
+>(srfi 14) - 字符集库</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-16/srfi-16.html"
+>(srfi 16) - case-lambda: 具有可变数量参数的过程的语法</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-18/srfi-18.html"
+>(srfi 18) - 多线程支持</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-23/srfi-23.html"
+>(srfi 23) - 错误报告机制</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-26/srfi-26.html"
+>(srfi 26) - 不柯里化的特殊参数表示法</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-27/srfi-27.html"
+>(srfi 27) - 随机位的来源</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-33/srfi-33.html"
+>(srfi 33) - 位运算符</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-38/srfi-38.html"
+>(srfi 38) - 读写共享结构的数据</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-39/srfi-39.html"
+>(srfi 39) - 参数对象</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-41/srfi-41.html"
+>(srfi 41) - 流</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-46/srfi-46.html"
+>(srfi 46) - 基础语法规则扩展</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-55/srfi-55.html"
+>(srfi 55) - require-extension</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-62/srfi-62.html"
+>(srfi 62) - S表达式形式的注释</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-69/srfi-69.html"
+>(srfi 69) - 基础哈希表</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-95/srfi-95.html"
+>(srfi 95) - 排序和合并</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-98/srfi-98.html"
+>(srfi 98) - 环境访问</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-99/srfi-99.html"
+>(srfi 99) - ERR5RS标准的记录</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-101/srfi-101.html"
+>(srfi 101) - 纯函数式可随机访问的配对和列表</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-111/srfi-111.html"
+>(srfi 111) - boxes</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-113/srfi-113.html"
+>(srfi 113) - 集合和包</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-115/srfi-115.html"
+>(srfi 115) - Scheme正则表达式</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-116/srfi-116.html"
+>(srfi 116) - 不可变列表库</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-117/srfi-117.html"
+>(srfi 117) - 可变队列</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-121/srfi-121.html"
+>(srfi 121) - 数据生成器</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-124/srfi-124.html"
+>(srfi 124) - ephemerons</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-125/srfi-125.html"
+>(srfi 125) - 通用哈希表</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-127/srfi-127.html"
+>(srfi 127) - 惰性序列</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-128/srfi-128.html"
+>(srfi 128) - 组合比较器</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-129/srfi-129.html"
+>(srfi 129) - Unicode字符大小写函数库</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-130/srfi-130.html"
+>(srfi 130) - 基于游标的字符串库</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-132/srfi-132.html"
+>(srfi 132) - 排序库</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-133/srfi-133.html"
+>(srfi 133) - 向量库</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-134/srfi-134.html"
+>(srfi 134) - 不可变的双向队列</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-135/srfi-135.html"
+>(srfi 135) - 不可变的文本</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-139/srfi-139.html"
+>(srfi 139) - 语法参数</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-141/srfi-141.html"
+>(srfi 141) - 整数除法</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-143/srfi-142.html"
+>(srfi 142) - 按位运算</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-143/srfi-143.html"
+>(srfi 143) - 精确整数</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-144/srfi-144.html"
+>(srfi 144) - 浮点型数字</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-145/srfi-145.html"
+>(srfi 145) - 假设</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-147/srfi-147.html"
+>(srfi 147) - 自定义宏转换器</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-151/srfi-151.html"
+>(srfi 151) - 位运算符</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-154/srfi-154.html"
+>(srfi 154) - 一等的动态范围</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-158/srfi-158.html"
+>(srfi 158) - 数据生成器和聚合器</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-160/srfi-160.html"
+>(srfi 160) - 同质数值向量库</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-165/srfi-165.html"
+>(srfi 165) - Monad计算环境</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-166/srfi-166.html"
+>(srfi 166) - Monad格式化</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-166/srfi-188.html"
+>(srfi 188) - 语法关键字的拼接绑定结构</a></li>
+</ul>
+<p>额外的非标准模块被放置在 <code>(chibi)</code> 模块命名空间中。</p>
+<ul>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/app.html"
+>(chibi app) - 统一选项解析和配置</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/ast.html"
+>(chibi ast) - 抽象语法树和其他内部数据类型</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/base64.html"
+>(chibi base64) - Base64编码和解码</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/bytevector.html"
+>(chibi bytevector) - 字节向量处理函数库</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/config.html"
+>(chibi config) - 通用配置管理</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/crypto/md5.html"
+>(chibi crypto md5) - MD5哈希</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/crypto/rsa.html"
+>(chibi crypto rsa) - RSA公钥加密</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/crypto/sha2.html"
+>(chibi crypto sha2) - SHA-2哈希</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/diff.html"
+>(chibi diff) - LCS算法和差异函数库</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/disasm.html"
+>(chibi disasm) - 虚拟机的反汇编器</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/doc.html"
+>(chibi doc) - Chibi文档函数库</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/edit-distance.html"
+>(chibi edit-distance) - 一个levenshtein距离实现</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/equiv.html"
+>(chibi equiv) - 一个保证终止的<code>equal?</code>版本</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/filesystem.html"
+>(chibi filesystem) - 文件系统和文件描述符对象的接口</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/generic.html"
+>(chibi generic) - CLOS风格的面向对象编程的通用方法</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/heap-stats.html"
+>(chibi heap-stats) - 用于收集堆统计信息的函数库</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/io.html"
+>(chibi io) - 各种I/O扩展和自定义端口</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/iset/base.html"
+>(chibi iset base) - 紧凑整数集</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/iset/constructors.html"
+>(chibi iset constructors) - 紧凑整数集的构造</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/iset/iterators.html"
+>(chibi iset iterators) - 遍历紧凑整数集</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/json.html"
+>(chibi json) - JSON读写</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/loop.html"
+>(chibi loop) - 快速且可扩展的循环语法</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/match.html"
+>(chibi match) - 直观且广泛支持的模式匹配语法</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/math/prime.html"
+>(chibi math prime) - 素数函数库</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/memoize.html"
+>(chibi memoize) - 过程记忆</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/mime.html"
+>(chibi mime) - 将MIME文件解析为SXML</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/modules.html"
+>(chibi modules) - 模块系统访问函数库</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/net.html"
+>(chibi net) - 简单的网络接口</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/net/http-server.html"
+>(chibi net http-server) - 带有servlet支持的简单HTTP服务器</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/net/servlet.html"
+>(chibi net servlet) - 用于HTTP服务器或CGI的HTTP servlet</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/parse.html"
+>(chibi parse) - 语法方便的解析器组合器</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/pathname.html"
+>(chibi pathname) - 用于分解和操作路径名的函数库</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/process.html"
+>(chibi process) - 创建进程和处理信号的接口</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/repl.html"
+>(chibi repl) - 功能齐全的读取/评估/打印循环</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/scribble.html"
+>(chibi scribble) - 用于编写本手册的涂鸦式语法解析器</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/string.html"
+>(chibi string) - 基于游标的字符串库 (SRFI 130的前身)</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/stty.html"
+>(chibi stty) - ioctl的高级接口</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/sxml.html"
+>(chibi sxml) - SXML函数库</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/system.html"
+>(chibi system) - 访问主机系统和当前用户信息</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/temp-file.html"
+>(chibi temp-file) - 临时文件和目录创建</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/test.html"
+>(chibi test) - 一个简单的单元测试框架</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/time.html"
+>(chibi time) - 获取当前系统时间的接口</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/trace.html"
+>(chibi trace) - 跟踪过程调用的函数库</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/type-inference.html"
+>(chibi type-inference) - 一个易于使用的类型推理系统</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/uri.html"
+>(chibi uri) - 解析和构造URI的函数库</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/weak.html"
+>(chibi weak) - 具有弱引用的数据结构</a></li>
+</ul>
+
   </article>
 
 

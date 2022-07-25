@@ -12,9 +12,8 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="PL/Scheme is a PostgreSQL procedural language handler for Scheme programming language. PL/Scheme uses Chibi Scheme in the background as its Scheme interpreter. With lots of builtin SRFIs and complete R7RS compliancy of Chibi Scheme, PL/Scheme can power up PostgreSQL procedures in a Lisp style.
-PL/Scheme Functions and Arguments     To create a function in the PL/Scheme language, use the standard CREATE FUNCTION syntax:
-CREATE FUNCTION funcname (argument-types) RETURNS return-type -- function attributes can go here AS $$ # PL/Scheme function body goes here $$ LANGUAGE plscheme; The body of the function is ordinary Scheme code." />
+  <meta name="description" content="Functions and Arguments Data Values  Data Type Mapping NULL Arrays, Vectors   Standard Modules      PL/Scheme is a PostgreSQL procedural language handler for Scheme programming language. PL/Scheme uses Chibi Scheme in the background as its Scheme interpreter. With lots of builtin SRFIs and complete R7RS compliancy of Chibi Scheme, PL/Scheme can power up PostgreSQL procedures in a Lisp style.
+Functions and Arguments     To create a function in the PL/Scheme language, use the standard CREATE FUNCTION syntax:" />
 
     <title>PL/Scheme | Redrock Documentation</title>
 
@@ -41,25 +40,23 @@ CREATE FUNCTION funcname (argument-types) RETURNS return-type -- function attrib
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="PL/Scheme is a PostgreSQL procedural language handler for Scheme programming language. PL/Scheme uses Chibi Scheme in the background as its Scheme interpreter. With lots of builtin SRFIs and complete R7RS compliancy of Chibi Scheme, PL/Scheme can power up PostgreSQL procedures in a Lisp style.
-PL/Scheme Functions and Arguments     To create a function in the PL/Scheme language, use the standard CREATE FUNCTION syntax:
-CREATE FUNCTION funcname (argument-types) RETURNS return-type -- function attributes can go here AS $$ # PL/Scheme function body goes here $$ LANGUAGE plscheme; The body of the function is ordinary Scheme code." />
+  <meta property="og:description" content="Functions and Arguments Data Values  Data Type Mapping NULL Arrays, Vectors   Standard Modules      PL/Scheme is a PostgreSQL procedural language handler for Scheme programming language. PL/Scheme uses Chibi Scheme in the background as its Scheme interpreter. With lots of builtin SRFIs and complete R7RS compliancy of Chibi Scheme, PL/Scheme can power up PostgreSQL procedures in a Lisp style.
+Functions and Arguments     To create a function in the PL/Scheme language, use the standard CREATE FUNCTION syntax:" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/develop/plscheme/" />
 
 <meta property="article:section" content="Develop" />
     <meta
       property="article:modified_time"
-      content="2022-07-22T09:21:21+08:00"
+      content="2022-07-25T19:39:35+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="PL/Scheme" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="PL/Scheme is a PostgreSQL procedural language handler for Scheme programming language. PL/Scheme uses Chibi Scheme in the background as its Scheme interpreter. With lots of builtin SRFIs and complete R7RS compliancy of Chibi Scheme, PL/Scheme can power up PostgreSQL procedures in a Lisp style.
-PL/Scheme Functions and Arguments     To create a function in the PL/Scheme language, use the standard CREATE FUNCTION syntax:
-CREATE FUNCTION funcname (argument-types) RETURNS return-type -- function attributes can go here AS $$ # PL/Scheme function body goes here $$ LANGUAGE plscheme; The body of the function is ordinary Scheme code." />
+  <meta name="twitter:description" content="Functions and Arguments Data Values  Data Type Mapping NULL Arrays, Vectors   Standard Modules      PL/Scheme is a PostgreSQL procedural language handler for Scheme programming language. PL/Scheme uses Chibi Scheme in the background as its Scheme interpreter. With lots of builtin SRFIs and complete R7RS compliancy of Chibi Scheme, PL/Scheme can power up PostgreSQL procedures in a Lisp style.
+Functions and Arguments     To create a function in the PL/Scheme language, use the standard CREATE FUNCTION syntax:" />
 
 
   <script type="application/ld+json">
@@ -70,9 +67,9 @@ CREATE FUNCTION funcname (argument-types) RETURNS return-type -- function attrib
       "name": "PL/Scheme",
       "url" : "https://doc.rockdata.net/develop/plscheme/",
       "headline": "PL/Scheme",
-      "description": "PL\/Scheme is a PostgreSQL procedural language handler for Scheme programming language. PL\/Scheme uses Chibi Scheme in the background as its Scheme interpreter. With lots of builtin SRFIs and complete R7RS compliancy of Chibi Scheme, PL\/Scheme can power up PostgreSQL procedures in a Lisp style.\nPL\/Scheme Functions and Arguments     To create a function in the PL\/Scheme language, use the standard CREATE FUNCTION syntax:\nCREATE FUNCTION funcname (argument-types) RETURNS return-type -- function attributes can go here AS $$ # PL\/Scheme function body goes here $$ LANGUAGE plscheme; The body of the function is ordinary Scheme code.",
+      "description": "Functions and Arguments Data Values  Data Type Mapping NULL Arrays, Vectors   Standard Modules      PL\/Scheme is a PostgreSQL procedural language handler for Scheme programming language. PL\/Scheme uses Chibi Scheme in the background as its Scheme interpreter. With lots of builtin SRFIs and complete R7RS compliancy of Chibi Scheme, PL\/Scheme can power up PostgreSQL procedures in a Lisp style.\nFunctions and Arguments     To create a function in the PL\/Scheme language, use the standard CREATE FUNCTION syntax:",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "321",
+      "wordCount" : "1562",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -83,7 +80,7 @@ CREATE FUNCTION funcname (argument-types) RETURNS return-type -- function attrib
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-22T09:21:21.00Z",
+      "dateModified": "2022-07-25T19:39:35.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2648,11 +2645,25 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     class="gdoc-markdown gdoc-markdown__align--left"
   >
     <h1>PL/Scheme</h1>
-    <p>PL/Scheme is a PostgreSQL procedural language handler for Scheme programming language. PL/Scheme uses Chibi Scheme in the background as its Scheme interpreter. With lots of builtin SRFIs and complete R7RS compliancy of Chibi Scheme, PL/Scheme can power up PostgreSQL procedures in a Lisp style.</p>
+    <div class="gdoc-toc gdoc-toc__level--3">
+      <nav id="TableOfContents"><ul>
+        <li><a href="#functions-and-arguments">Functions and Arguments</a></li>
+        <li><a href="#data-values">Data Values</a>
+          <ul>
+            <li><a href="#data-type-mapping">Data Type Mapping</a></li>
+            <li><a href="#null">NULL</a></li>
+            <li><a href="#arrays-vectors">Arrays, Vectors</a></li>
+          </ul>
+        </li>
+        <li><a href="#standard-modules">Standard Modules</a></li>
+      </ul></nav>
+      <hr />
+    </div>
+<p>PL/Scheme is a PostgreSQL procedural language handler for Scheme programming language. PL/Scheme uses Chibi Scheme in the background as its Scheme interpreter. With lots of builtin SRFIs and complete R7RS compliancy of Chibi Scheme, PL/Scheme can power up PostgreSQL procedures in a Lisp style.</p>
 <div class="gdoc-page__anchorwrap">
-    <h2 id="plscheme-functions-and-arguments">
-        PL/Scheme Functions and Arguments
-        <a data-clipboard-text="https://doc.rockdata.net/develop/plscheme/#plscheme-functions-and-arguments" class="gdoc-page__anchor clip flex align-center" title="Anchor to: PL/Scheme Functions and Arguments" aria-label="Anchor to: PL/Scheme Functions and Arguments" href="#plscheme-functions-and-arguments">
+    <h2 id="functions-and-arguments">
+        Functions and Arguments
+        <a data-clipboard-text="https://doc.rockdata.net/develop/plscheme/#functions-and-arguments" class="gdoc-page__anchor clip flex align-center" title="Anchor to: Functions and Arguments" aria-label="Anchor to: Functions and Arguments" href="#functions-and-arguments">
             <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
         </a>
     </h2>
@@ -2664,7 +2675,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">FUNCTION</span> <span class="n">funcname</span> <span class="p">(</span><span class="n">argument</span><span class="o">-</span><span class="k">types</span><span class="p">)</span> <span class="k">RETURNS</span> <span class="n">return</span><span class="o">-</span><span class="k">type</span>
 </span></span><span class="line"><span class="cl"><span class="c1">-- function attributes can go here
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">AS</span> <span class="sh">$$
-</span></span></span><span class="line"><span class="cl"><span class="sh">    # PL/Scheme function body goes here
+</span></span></span><span class="line"><span class="cl"><span class="sh">  #;&#34;PL/Scheme function body goes here&#34;
 </span></span></span><span class="line"><span class="cl"><span class="sh">$$</span> <span class="k">LANGUAGE</span> <span class="s1">plscheme</span><span class="p">;</span>
 </span></span></code></pre></div><p>The body of the function is ordinary Scheme code. In fact, the PL/Scheme glue code wraps it inside a Scheme subroutine. A PL/Scheme function is called in a scalar context, so it can&rsquo;t return a list. You can return non-scalar values (arrays, records, and sets) by returning a reference, as discussed below.</p>
 <p>In a PL/Scheme procedure, any return value from the Scheme code is ignored.</p>
@@ -2673,7 +2684,7 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
   href="https://www.postgresql.org/docs/12/sql-do.html"
 >DO</a> statement:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">DO</span> <span class="sh">$$
-</span></span></span><span class="line"><span class="cl"><span class="sh">    # PL/Scheme code
+</span></span></span><span class="line"><span class="cl"><span class="sh">  #;&#34;PL/Scheme code&#34;
 </span></span></span><span class="line"><span class="cl"><span class="sh">$$</span> <span class="k">LANGUAGE</span> <span class="n">plscheme</span><span class="p">;</span>
 </span></span></code></pre></div><p>An anonymous code block receives no arguments, and whatever value it might return is discarded. Otherwise it behaves just like a function.</p>
 <p>The syntax of the <code>CREATE FUNCTION</code> command requires the function body to be written as a string constant. It is usually most convenient to use dollar quoting (see <a
@@ -2687,9 +2698,505 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 <p>For example, a function returning the greater of two integer values could be defined as:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">FUNCTION</span> <span class="n">scheme_max</span> <span class="p">(</span><span class="n">a</span> <span class="nb">integer</span><span class="p">,</span> <span class="n">b</span> <span class="nb">integer</span><span class="p">)</span> <span class="k">RETURNS</span> <span class="nb">integer</span>
 </span></span><span class="line"><span class="cl"><span class="k">AS</span> <span class="sh">$$
-</span></span></span><span class="line"><span class="cl"><span class="sh">    (if (&gt; a b) a b)
+</span></span></span><span class="line"><span class="cl"><span class="sh">  (if (&gt; a b) a b)
 </span></span></span><span class="line"><span class="cl"><span class="sh">$$</span> <span class="k">LANGUAGE</span> <span class="s1">plscheme</span><span class="p">;</span>
-</span></span></code></pre></div>
+</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
+    <h2 id="data-values">
+        Data Values
+        <a data-clipboard-text="https://doc.rockdata.net/develop/plscheme/#data-values" class="gdoc-page__anchor clip flex align-center" title="Anchor to: Data Values" aria-label="Anchor to: Data Values" href="#data-values">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>Generally speaking, the aim of PL/Scheme is to provide a “natural” mapping between the PostgreSQL and the Scheme worlds. This informs the data mapping rules described below.</p>
+<div class="gdoc-page__anchorwrap">
+    <h3 id="data-type-mapping">
+        Data Type Mapping
+        <a data-clipboard-text="https://doc.rockdata.net/develop/plscheme/#data-type-mapping" class="gdoc-page__anchor clip flex align-center" title="Anchor to: Data Type Mapping" aria-label="Anchor to: Data Type Mapping" href="#data-type-mapping">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p>When a PL/Scheme function is called, its arguments are converted from their PostgreSQL data type to a corresponding Scheme type:</p>
+<ul>
+<li>PostgreSQL <code>boolean</code> is converted to Scheme <code>boolean</code>.</li>
+<li>PostgreSQL <code>smallint</code> and <code>int</code> are converted to Scheme <code>fixnum</code>. PostgreSQL <code>bigint</code> and <code>oid</code> are converted to <code>fixnum</code> in Scheme.</li>
+<li>PostgreSQL <code>real</code> and <code>double</code> are converted to Scheme <code>flonum</code>.</li>
+<li>PostgreSQL <code>numeric</code> is converted to Scheme <code>flonum</code>.</li>
+<li>PostgreSQL <code>bytea</code> is converted to Scheme <code>bytevector</code>.</li>
+<li>All other data types, including the PostgreSQL character string types, are converted to a Scheme <code>string</code>.</li>
+<li>For nonscalar data types, see below.</li>
+</ul>
+<p>When a PL/Scheme function returns, its return value is converted to the function&rsquo;s declared PostgreSQL return data type as follows:</p>
+<ul>
+<li>When the PostgreSQL return type is <code>boolean</code>, the return value will be evaluated for truth according to the Scheme rules.</li>
+<li>When the PostgreSQL return type is <code>bytea</code>, the return value will be converted to bytes using the respective Scheme built-ins, with the result being converted to <code>bytea</code>.</li>
+<li>For all other PostgreSQL return types, the return value is converted to a string using the Scheme built-in <code>string</code>, and the result is passed to the input function of the PostgreSQL data type.</li>
+<li>For nonscalar data types, see below.</li>
+</ul>
+<p>Note that logical mismatches between the declared PostgreSQL return type and the Scheme data type of the actual return object are not flagged; the value will be converted in any case.</p>
+<div class="gdoc-page__anchorwrap">
+    <h3 id="null">
+        NULL
+        <a data-clipboard-text="https://doc.rockdata.net/develop/plscheme/#null" class="gdoc-page__anchor clip flex align-center" title="Anchor to: NULL" aria-label="Anchor to: NULL" href="#null">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p>If an SQL null value is passed to a function, the argument value will appear as <code>#()</code> in Scheme. For example, the function definition of <code>scheme_max</code> shown in <a
+  class="gdoc-markdown__link"
+  href="/develop/plscheme/#functions-and-arguments"
+>Functions and Arguments</a> will return the wrong answer for null inputs. We could add <code>STRICT</code> to the function definition to make PostgreSQL do something more reasonable: if a null value is passed, the function will not be called at all, but will just return a null result automatically. Alternatively, we could check for null inputs in the function body:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">FUNCTION</span> <span class="n">scheme_max</span> <span class="p">(</span><span class="n">a</span> <span class="nb">integer</span><span class="p">,</span> <span class="n">b</span> <span class="nb">integer</span><span class="p">)</span> <span class="k">RETURNS</span> <span class="nb">integer</span>
+</span></span><span class="line"><span class="cl"><span class="k">AS</span> <span class="sh">$$
+</span></span></span><span class="line"><span class="cl"><span class="sh">  (if (or (null? a) (null? b))
+</span></span></span><span class="line"><span class="cl"><span class="sh">    &#39;#()
+</span></span></span><span class="line"><span class="cl"><span class="sh">    (if (&gt; a b) a b))
+</span></span></span><span class="line"><span class="cl"><span class="sh">$$</span> <span class="k">LANGUAGE</span> <span class="s1">plscheme</span><span class="p">;</span>
+</span></span></code></pre></div><p>As shown above, to return an SQL null value from a PL/Scheme function, return the value <code>#()</code>. This can be done whether the function is strict or not.</p>
+<div class="gdoc-page__anchorwrap">
+    <h3 id="arrays-vectors">
+        Arrays, Vectors
+        <a data-clipboard-text="https://doc.rockdata.net/develop/plscheme/#arrays-vectors" class="gdoc-page__anchor clip flex align-center" title="Anchor to: Arrays, Vectors" aria-label="Anchor to: Arrays, Vectors" href="#arrays-vectors">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h3>
+</div>
+<p>SQL array values are passed into PL/Scheme as a Scheme vector. To return an SQL array value out of a PL/Scheme function, return a Scheme vector:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">FUNCTION</span> <span class="n">return_arr</span><span class="p">()</span> <span class="k">RETURNS</span> <span class="nb">int</span><span class="p">[]</span>
+</span></span><span class="line"><span class="cl"><span class="k">AS</span> <span class="sh">$$
+</span></span></span><span class="line"><span class="cl"><span class="sh">  (vector 1 2 &#39;() 3)
+</span></span></span><span class="line"><span class="cl"><span class="sh">$$</span> <span class="k">LANGUAGE</span> <span class="s1">plscheme</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">return_arr</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">     <span class="n">return_arr</span>
+</span></span><span class="line"><span class="cl"><span class="c1">--------------------
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span> <span class="p">[</span><span class="mf">0</span><span class="p">:</span><span class="mf">3</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="mf">1</span><span class="p">,</span><span class="mf">2</span><span class="p">,</span><span class="k">NULL</span><span class="p">,</span><span class="mf">3</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="mf">1</span> <span class="k">row</span><span class="p">)</span>
+</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
+    <h2 id="standard-modules">
+        Standard Modules
+        <a data-clipboard-text="https://doc.rockdata.net/develop/plscheme/#standard-modules" class="gdoc-page__anchor clip flex align-center" title="Anchor to: Standard Modules" aria-label="Anchor to: Standard Modules" href="#standard-modules">
+            <svg class="gdoc-icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h2>
+</div>
+<p>We can import standard modules provided by Scheme in PL/Scheme functions, for example:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">DO</span> <span class="sh">$$
+</span></span></span><span class="line"><span class="cl"><span class="sh">  (import (scheme small)
+</span></span></span><span class="line"><span class="cl"><span class="sh">          (srfi 1))
+</span></span></span><span class="line"><span class="cl"><span class="sh">$$</span> <span class="k">LANGUAGE</span> <span class="n">plscheme</span><span class="p">;</span>
+</span></span></code></pre></div><p>A number of SRFIs are provided in Chibi Scheme. Note that SRFIs 0, 6, 23, 46 and 62 are built into the default environment so there&rsquo;s no need to import them. This list includes popular SRFIs or SRFIs used in standard Chibi modules:</p>
+<ul>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-0/srfi-0.html"
+>(srfi 0) - cond-expand: feature-based conditional expansion construct</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-1/srfi-1.html"
+>(srfi 1) - list library</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-2/srfi-2.html"
+>(srfi 2) - and-let*</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-6/srfi-6.html"
+>(srfi 6) - basic string ports</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-8/srfi-8.html"
+>(srfi 8) - receive: binding to multiple values</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-9/srfi-9.html"
+>(srfi 9) - define-record-type: defining record types</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-11/srfi-11.html"
+>(srfi 11) - let-values/let*-values: syntax for receiving multiple values</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-14/srfi-14.html"
+>(srfi 14) - character-set library</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-16/srfi-16.html"
+>(srfi 16) - case-lambda: syntax for procedures with a variable number of arguments</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-18/srfi-18.html"
+>(srfi 18) - multi-threading support</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-23/srfi-23.html"
+>(srfi 23) - error reporting mechanism</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-26/srfi-26.html"
+>(srfi 26) - cut/cute partial application</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-27/srfi-27.html"
+>(srfi 27) - sources of random bits</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-33/srfi-33.html"
+>(srfi 33) - bitwise operators</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-38/srfi-38.html"
+>(srfi 38) - read/write shared structures</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-39/srfi-39.html"
+>(srfi 39) - parameter objects</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-41/srfi-41.html"
+>(srfi 41) - streams</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-46/srfi-46.html"
+>(srfi 46) - basic syntax-rules extensions</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-55/srfi-55.html"
+>(srfi 55) - require-extension</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-62/srfi-62.html"
+>(srfi 62) - s-expression comments</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-69/srfi-69.html"
+>(srfi 69) - basic hash tables</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-95/srfi-95.html"
+>(srfi 95) - sorting and merging</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-98/srfi-98.html"
+>(srfi 98) - environment access</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-99/srfi-99.html"
+>(srfi 99) - ERR5RS records</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-101/srfi-101.html"
+>(srfi 101) - purely functional random-access pairs and lists</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-111/srfi-111.html"
+>(srfi 111) - boxes</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-113/srfi-113.html"
+>(srfi 113) - sets and bags</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-115/srfi-115.html"
+>(srfi 115) - Scheme regular expressions</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-116/srfi-116.html"
+>(srfi 116) - immutable list library</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-117/srfi-117.html"
+>(srfi 117) - mutable queues</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-121/srfi-121.html"
+>(srfi 121) - generators</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-124/srfi-124.html"
+>(srfi 124) - ephemerons</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-125/srfi-125.html"
+>(srfi 125) - intermediate hash tables</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-127/srfi-127.html"
+>(srfi 127) - lazy sequences</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-128/srfi-128.html"
+>(srfi 128) - comparators (reduced)</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-129/srfi-129.html"
+>(srfi 129) - titlecase procedures</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-130/srfi-130.html"
+>(srfi 130) - cursor-based string library</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-132/srfi-132.html"
+>(srfi 132) - sort libraries</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-133/srfi-133.html"
+>(srfi 133) - vector library</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-134/srfi-134.html"
+>(srfi 134) - immutable deques</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-135/srfi-135.html"
+>(srfi 135) - immutable texts</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-139/srfi-139.html"
+>(srfi 139) - syntax parameters</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-141/srfi-141.html"
+>(srfi 141) - integer division</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-143/srfi-142.html"
+>(srfi 142) - bitwise operations</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-143/srfi-143.html"
+>(srfi 143) - fixnums</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-144/srfi-144.html"
+>(srfi 144) - flonums</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-145/srfi-145.html"
+>(srfi 145) - assumptions</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-147/srfi-147.html"
+>(srfi 147) - custom macro transformers</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-151/srfi-151.html"
+>(srfi 151) - bitwise operators</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-154/srfi-154.html"
+>(srfi 154) - first-class dynamic extents</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-158/srfi-158.html"
+>(srfi 158) - generators and accumulators</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-160/srfi-160.html"
+>(srfi 160) - homogeneous numeric vector libraries</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-165/srfi-165.html"
+>(srfi 165) - the environment Monad</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-166/srfi-166.html"
+>(srfi 166) - monadic formatting</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://srfi.schemers.org/srfi-166/srfi-188.html"
+>(srfi 188) - splicing binding constructs for syntactic keywords</a></li>
+</ul>
+<p>Additional non-standard modules are put in the <code>(chibi)</code> module namespace.</p>
+<ul>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/app.html"
+>(chibi app) - Unified option parsing and config</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/ast.html"
+>(chibi ast) - Abstract Syntax Tree and other internal data types</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/base64.html"
+>(chibi base64) - Base64 encoding and decoding</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/bytevector.html"
+>(chibi bytevector) - Bytevector Utilities</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/config.html"
+>(chibi config) - General configuration management</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/crypto/md5.html"
+>(chibi crypto md5) - MD5 hash</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/crypto/rsa.html"
+>(chibi crypto rsa) - RSA public key encryption</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/crypto/sha2.html"
+>(chibi crypto sha2) - SHA-2 hash</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/diff.html"
+>(chibi diff) - LCS Algorithm and diff utilities</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/disasm.html"
+>(chibi disasm) - Disassembler for the virtual machine</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/doc.html"
+>(chibi doc) - Chibi documentation utilities</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/edit-distance.html"
+>(chibi edit-distance) - A levenshtein distance implementation</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/equiv.html"
+>(chibi equiv) - A version of <code>equal?</code> which is guaranteed to terminate</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/filesystem.html"
+>(chibi filesystem) - Interface to the filesystem and file descriptor objects</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/generic.html"
+>(chibi generic) - Generic methods for CLOS-style object oriented programming</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/heap-stats.html"
+>(chibi heap-stats) - Utilities for gathering statistics on the heap</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/io.html"
+>(chibi io) - Various I/O extensions and custom ports</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/iset/base.html"
+>(chibi iset base) - Compact integer sets</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/iset/constructors.html"
+>(chibi iset constructors) - Compact integer set construction</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/iset/iterators.html"
+>(chibi iset iterators) - Iterating over compact integer sets</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/json.html"
+>(chibi json) - JSON reading and writing</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/loop.html"
+>(chibi loop) - Fast and extensible loop syntax</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/match.html"
+>(chibi match) - Intuitive and widely supported pattern matching syntax</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/math/prime.html"
+>(chibi math prime) - Prime number utilities</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/memoize.html"
+>(chibi memoize) - Procedure memoization</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/mime.html"
+>(chibi mime) - Parse MIME files into SXML</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/modules.html"
+>(chibi modules) - Introspection for the module system itself</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/net.html"
+>(chibi net) - Simple networking interface</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/net/http-server.html"
+>(chibi net http-server) - Simple http-server with servlet support</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/net/servlet.html"
+>(chibi net servlet) - HTTP servlets for http-server or CGI</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/parse.html"
+>(chibi parse) - Parser combinators with convenient syntax</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/pathname.html"
+>(chibi pathname) - Utilities to decompose and manipulate pathnames</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/process.html"
+>(chibi process) - Interface to spawn processes and handle signals</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/repl.html"
+>(chibi repl) - A full-featured Read/Eval/Print Loop</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/scribble.html"
+>(chibi scribble) - A parser for the scribble syntax used to write this manual</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/string.html"
+>(chibi string) - Cursor-based string library (predecessor to SRFI 130)</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/stty.html"
+>(chibi stty) - A high-level interface to ioctl</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/sxml.html"
+>(chibi sxml) - SXML utilities</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/system.html"
+>(chibi system) - Access to the host system and current user information</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/temp-file.html"
+>(chibi temp-file) - Temporary file and directory creation</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/test.html"
+>(chibi test) - A simple unit testing framework</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/time.html"
+>(chibi time) - An interface to the current system time</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/trace.html"
+>(chibi trace) - A utility to trace procedure calls</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/type-inference.html"
+>(chibi type-inference) - An easy-to-use type inference system</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/uri.html"
+>(chibi uri) - Utilities to parse and construct URIs</a></li>
+<li><a
+  class="gdoc-markdown__link"
+  href="http://synthcode.com/scheme/chibi/lib/chibi/weak.html"
+>(chibi weak) - Data structures with weak references</a></li>
+</ul>
+
   </article>
 
 

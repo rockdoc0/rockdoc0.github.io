@@ -12,9 +12,8 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="PostgreSQL provides the full text search capability. Through full text search, you can build a text content search engine. This section describes how to quickly set up a search engine for website pages in PostgreSQL.
-Create Content Table     Create a web page content table to store the content data of web pages.
-CREATE TABLE IF NOT EXISTS site_page ( id serial PRIMARY KEY, url text, image text, title text, content text ); The site_page table contains the following columns:" />
+  <meta name="description" content="Create Content Table Create Content Index Table Store Web Page Data Search Web Content      PostgreSQL provides the full text search capability. Through full text search, you can build a text content search engine. This section describes how to quickly set up a search engine for website pages in PostgreSQL.
+Create Content Table     Create a web page content table to store the content data of web pages." />
 
     <title>Search Engine | Redrock Documentation</title>
 
@@ -41,25 +40,23 @@ CREATE TABLE IF NOT EXISTS site_page ( id serial PRIMARY KEY, url text, image te
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="PostgreSQL provides the full text search capability. Through full text search, you can build a text content search engine. This section describes how to quickly set up a search engine for website pages in PostgreSQL.
-Create Content Table     Create a web page content table to store the content data of web pages.
-CREATE TABLE IF NOT EXISTS site_page ( id serial PRIMARY KEY, url text, image text, title text, content text ); The site_page table contains the following columns:" />
+  <meta property="og:description" content="Create Content Table Create Content Index Table Store Web Page Data Search Web Content      PostgreSQL provides the full text search capability. Through full text search, you can build a text content search engine. This section describes how to quickly set up a search engine for website pages in PostgreSQL.
+Create Content Table     Create a web page content table to store the content data of web pages." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/develop/search-engine/" />
 
 <meta property="article:section" content="Develop" />
     <meta
       property="article:modified_time"
-      content="2022-07-22T16:51:10+08:00"
+      content="2022-07-25T19:39:35+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Search Engine" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="PostgreSQL provides the full text search capability. Through full text search, you can build a text content search engine. This section describes how to quickly set up a search engine for website pages in PostgreSQL.
-Create Content Table     Create a web page content table to store the content data of web pages.
-CREATE TABLE IF NOT EXISTS site_page ( id serial PRIMARY KEY, url text, image text, title text, content text ); The site_page table contains the following columns:" />
+  <meta name="twitter:description" content="Create Content Table Create Content Index Table Store Web Page Data Search Web Content      PostgreSQL provides the full text search capability. Through full text search, you can build a text content search engine. This section describes how to quickly set up a search engine for website pages in PostgreSQL.
+Create Content Table     Create a web page content table to store the content data of web pages." />
 
 
   <script type="application/ld+json">
@@ -70,9 +67,9 @@ CREATE TABLE IF NOT EXISTS site_page ( id serial PRIMARY KEY, url text, image te
       "name": "Search Engine",
       "url" : "https://doc.rockdata.net/develop/search-engine/",
       "headline": "Search Engine",
-      "description": "PostgreSQL provides the full text search capability. Through full text search, you can build a text content search engine. This section describes how to quickly set up a search engine for website pages in PostgreSQL.\nCreate Content Table     Create a web page content table to store the content data of web pages.\nCREATE TABLE IF NOT EXISTS site_page ( id serial PRIMARY KEY, url text, image text, title text, content text ); The site_page table contains the following columns:",
+      "description": "Create Content Table Create Content Index Table Store Web Page Data Search Web Content      PostgreSQL provides the full text search capability. Through full text search, you can build a text content search engine. This section describes how to quickly set up a search engine for website pages in PostgreSQL.\nCreate Content Table     Create a web page content table to store the content data of web pages.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "368",
+      "wordCount" : "591",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -83,7 +80,7 @@ CREATE TABLE IF NOT EXISTS site_page ( id serial PRIMARY KEY, url text, image te
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-22T16:51:10.00Z",
+      "dateModified": "2022-07-25T19:39:35.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2648,7 +2645,16 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     class="gdoc-markdown gdoc-markdown__align--left"
   >
     <h1>Search Engine</h1>
-    <p>PostgreSQL provides the <a
+    <div class="gdoc-toc gdoc-toc__level--3">
+      <nav id="TableOfContents"><ul>
+        <li><a href="#create-content-table">Create Content Table</a></li>
+        <li><a href="#create-content-index-table">Create Content Index Table</a></li>
+        <li><a href="#store-web-page-data">Store Web Page Data</a></li>
+        <li><a href="#search-web-content">Search Web Content</a></li>
+      </ul></nav>
+      <hr />
+    </div>
+<p>PostgreSQL provides the <a
   class="gdoc-markdown__link"
   href="https://www.postgresql.org/docs/12/textsearch.html"
 >full text search</a> capability. Through full text search, you can build a text content search engine. This section describes how to quickly set up a search engine for website pages in PostgreSQL.</p>
@@ -2739,6 +2745,18 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 </tbody>
 </table> </div>
+
+
+
+
+
+<blockquote class="gdoc-hint tip">
+  <div class="gdoc-hint__title flex align-center"><i class="fa tip" title="Tip"></i></div>
+  <div class="gdoc-hint__text"><p>Of course, you can also combine the tables <code>site_page</code> and <code>site_page_tsi</code> into one table. Here, we recommend that you store webpage content data and content index data separately, which can improve the query performance of webpage content data and facilitate the maintenance and cleaning of index data separately.</p>
+<p>By storing the content index data into a single table, we can view the storage space usage of this part of the data. In addition, we can also optimize and adjust the content-related lexemes list when adding web page data, and remove those words that we are not interested in. This can not only save storage space, but also improve the efficiency of full text search.</p>
+</div>
+</blockquote>
+
 <div class="gdoc-page__anchorwrap">
     <h2 id="store-web-page-data">
         Store Web Page Data
@@ -2769,7 +2787,8 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </span></span></span><span class="line"><span class="cl"><span class="s1">It is intentionally designed as an enterprise grade and cloud native database.&#39;</span><span class="p">));</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">COMMIT</span><span class="p">;</span>
-</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
+</span></span></code></pre></div><p>In the above example, we add a piece of webpage content data to the table <code>site_page</code>, get the identifier of the webpage content, and then generate the lexemes list of the webpage content using the function <code>to_tsvector</code>, specify the corresponding webpage identifier, and insert it into the content Index table <code>site_page_tsi</code>.</p>
+<div class="gdoc-page__anchorwrap">
     <h2 id="search-web-content">
         Search Web Content
         <a data-clipboard-text="https://doc.rockdata.net/develop/search-engine/#search-web-content" class="gdoc-page__anchor clip flex align-center" title="Anchor to: Search Web Content" aria-label="Anchor to: Search Web Content" href="#search-web-content">
@@ -2777,15 +2796,20 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         </a>
     </h2>
 </div>
-<p>Of course, we can search for matching web content based on search keywords. For example, we can execute the following query to search for web page content related to the keyword &ldquo;Redrock Documentation&rdquo;:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">sp</span><span class="mf">.</span><span class="n">id</span><span class="p">,</span> <span class="n">sp</span><span class="mf">.</span><span class="n">url</span><span class="p">,</span> <span class="n">sp</span><span class="mf">.</span><span class="n">title</span> <span class="k">FROM</span> <span class="n">site_page</span> <span class="k">AS</span> <span class="n">sp</span>
-</span></span><span class="line"><span class="cl">  <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">site_page_tsi</span> <span class="k">AS</span> <span class="n">tsi</span> <span class="k">ON</span> <span class="n">sp</span><span class="mf">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">tsi</span><span class="mf">.</span><span class="n">id</span>
+<p>Of course, we can search for matching web content based on search keywords. For example, we can execute the following query to search for web page content whose title matches the keyword &ldquo;Redrock Documentation&rdquo;:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">sp</span><span class="mf">.</span><span class="n">id</span><span class="p">,</span> <span class="n">sp</span><span class="mf">.</span><span class="n">url</span><span class="p">,</span> <span class="n">sp</span><span class="mf">.</span><span class="n">title</span>
+</span></span><span class="line"><span class="cl">  <span class="k">FROM</span> <span class="n">site_page</span> <span class="k">AS</span> <span class="n">sp</span>
+</span></span><span class="line"><span class="cl">    <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">site_page_tsi</span> <span class="k">AS</span> <span class="n">tsi</span> <span class="k">ON</span> <span class="n">sp</span><span class="mf">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">tsi</span><span class="mf">.</span><span class="n">id</span>
 </span></span><span class="line"><span class="cl">  <span class="k">WHERE</span> <span class="n">tsi</span><span class="mf">.</span><span class="n">title</span> <span class="o">@@</span> <span class="n">plainto_tsquery</span><span class="p">(</span><span class="s1">&#39;english&#39;</span><span class="p">,</span> <span class="s1">&#39;Redrock Documentation&#39;</span><span class="p">);</span>
 </span></span></code></pre></div><p>Result:</p>
 <pre tabindex="0"><code> id |            url            |             title
 ----+---------------------------+--------------------------------
   1 | https://doc.rockdata.net/ | Redrock Postgres Documentation
-</code></pre>
+</code></pre><p>The above example is very simple. Generally, when you specify keywords to search web page content, many matching web page data may be returned. In this case, you may consider specifying <a
+  class="gdoc-markdown__link"
+  href="https://www.postgresql.org/docs/12/sql-select.html#SQL-LIMIT"
+>LIMIT &hellip; OFFSET &hellip;</a> to display the returned result set in pagination.</p>
+
   </article>
 
 

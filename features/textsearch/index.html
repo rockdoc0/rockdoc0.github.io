@@ -12,7 +12,7 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Full Text Searching (or just text search) provides the capability to identify natural-language documents that satisfy a query, and optionally to sort them by relevance to the query. The most common type of search is to find all documents containing given query terms and return them in order of their similarity to the query. Notions of query and similarity are very flexible and depend on the specific application. The simplest search considers query as a set of words and similarity as the frequency of query words in the document." />
+  <meta name="description" content="Parsers Configurations Testing and Debugging Text Search  Configuration Testing Parser Testing        Full Text Searching (or just text search) provides the capability to identify natural-language documents that satisfy a query, and optionally to sort them by relevance to the query. The most common type of search is to find all documents containing given query terms and return them in order of their similarity to the query." />
 
     <title>Full Text Search | Redrock Documentation</title>
 
@@ -39,21 +39,21 @@
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Full Text Searching (or just text search) provides the capability to identify natural-language documents that satisfy a query, and optionally to sort them by relevance to the query. The most common type of search is to find all documents containing given query terms and return them in order of their similarity to the query. Notions of query and similarity are very flexible and depend on the specific application. The simplest search considers query as a set of words and similarity as the frequency of query words in the document." />
+  <meta property="og:description" content="Parsers Configurations Testing and Debugging Text Search  Configuration Testing Parser Testing        Full Text Searching (or just text search) provides the capability to identify natural-language documents that satisfy a query, and optionally to sort them by relevance to the query. The most common type of search is to find all documents containing given query terms and return them in order of their similarity to the query." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/features/textsearch/" />
 
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-07-22T10:12:52+08:00"
+      content="2022-07-24T22:43:48+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Full Text Search" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Full Text Searching (or just text search) provides the capability to identify natural-language documents that satisfy a query, and optionally to sort them by relevance to the query. The most common type of search is to find all documents containing given query terms and return them in order of their similarity to the query. Notions of query and similarity are very flexible and depend on the specific application. The simplest search considers query as a set of words and similarity as the frequency of query words in the document." />
+  <meta name="twitter:description" content="Parsers Configurations Testing and Debugging Text Search  Configuration Testing Parser Testing        Full Text Searching (or just text search) provides the capability to identify natural-language documents that satisfy a query, and optionally to sort them by relevance to the query. The most common type of search is to find all documents containing given query terms and return them in order of their similarity to the query." />
 
 
   <script type="application/ld+json">
@@ -64,9 +64,9 @@
       "name": "Full Text Search",
       "url" : "https://doc.rockdata.net/features/textsearch/",
       "headline": "Full Text Search",
-      "description": "Full Text Searching (or just text search) provides the capability to identify natural-language documents that satisfy a query, and optionally to sort them by relevance to the query. The most common type of search is to find all documents containing given query terms and return them in order of their similarity to the query. Notions of query and similarity are very flexible and depend on the specific application. The simplest search considers query as a set of words and similarity as the frequency of query words in the document.",
+      "description": "Parsers Configurations Testing and Debugging Text Search  Configuration Testing Parser Testing        Full Text Searching (or just text search) provides the capability to identify natural-language documents that satisfy a query, and optionally to sort them by relevance to the query. The most common type of search is to find all documents containing given query terms and return them in order of their similarity to the query.",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "486",
+      "wordCount" : "497",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -77,7 +77,7 @@
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-22T10:12:52.00Z",
+      "dateModified": "2022-07-24T22:43:48.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2642,7 +2642,20 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     class="gdoc-markdown gdoc-markdown__align--left"
   >
     <h1>Full Text Search</h1>
-    <p>Full Text Searching (or just <em>text search</em>) provides the capability to identify natural-language <em>documents</em> that satisfy a <em>query</em>, and optionally to sort them by relevance to the query. The most common type of search is to find all documents containing given <em>query terms</em> and return them in order of their <em>similarity</em> to the query. Notions of <code>query</code> and <code>similarity</code> are very flexible and depend on the specific application. The simplest search considers <code>query</code> as a set of words and <code>similarity</code> as the frequency of query words in the document.</p>
+    <div class="gdoc-toc gdoc-toc__level--3">
+      <nav id="TableOfContents"><ul>
+        <li><a href="#parsers">Parsers</a></li>
+        <li><a href="#configurations">Configurations</a></li>
+        <li><a href="#testing-and-debugging-text-search">Testing and Debugging Text Search</a>
+          <ul>
+            <li><a href="#configuration-testing">Configuration Testing</a></li>
+            <li><a href="#parser-testing">Parser Testing</a></li>
+          </ul>
+        </li>
+      </ul></nav>
+      <hr />
+    </div>
+<p>Full Text Searching (or just <em>text search</em>) provides the capability to identify natural-language <em>documents</em> that satisfy a <em>query</em>, and optionally to sort them by relevance to the query. The most common type of search is to find all documents containing given <em>query terms</em> and return them in order of their <em>similarity</em> to the query. Notions of <code>query</code> and <code>similarity</code> are very flexible and depend on the specific application. The simplest search considers <code>query</code> as a set of words and <code>similarity</code> as the frequency of query words in the document.</p>
 <div class="gdoc-page__anchorwrap">
     <h2 id="parsers">
         Parsers

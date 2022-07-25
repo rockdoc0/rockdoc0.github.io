@@ -12,7 +12,7 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="全文检索（或者文本搜索）提供了确定满足一个查询的自然语言文档的能力，并可以选择将它们按照与查询的相关度排序。最常用的搜索类型是找到所有包含给定查询词的文档并按照它们与查询的相似性顺序返回它们。查询和相似性的概念非常灵活并且依赖于特定的应用。最简单的搜索认为查询是一组词而相似性是查询词在文档中的频度。
+  <meta name="description" content="解析器 配置 测试和调试文本搜索  配置测试 解析器测试        全文检索（或者文本搜索）提供了确定满足一个查询的自然语言文档的能力，并可以选择将它们按照与查询的相关度排序。最常用的搜索类型是找到所有包含给定查询词的文档并按照它们与查询的相似性顺序返回它们。查询和相似性的概念非常灵活并且依赖于特定的应用。最简单的搜索认为查询是一组词而相似性是查询词在文档中的频度。
 解析器     文本搜索解析器负责把未处理的文档文本划分成记号并且标识每一个记号的类型，而可能的类型集合由解析器本身定义。注意一个解析器完全不会修改文本 — 它简单地标识看似有理的词边界。因为这种有限的视野，对于应用相关的自定义解析器的需求就没有自定义字典那么强烈。目前Redrock Postgres只提供了两种内置解析器，它们已经被证实对很多种应用都适用。
 有两个内置的文本解析器，一个默认解析器被称为pg_catalog.default，一个中文解析器被称为pg_catalog.cjkparser。
 配置     文本搜索功能包括做更多事情的能力：跳过索引特定词（停用词）、处理同义词并使用更高级的解析，例如基于空白之外的解析。这个功能由文本搜索配置控制。PostgreSQL中有多种语言的预定义配置，并且你可以很容易地创建你自己的配置（psql的\dF命令显示所有可用的配置）。
@@ -47,7 +47,7 @@ SELECT * FROM ts_debug(&#39;chinese&#39;, &#39;关系数据库管理系统&#39;)
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="全文检索（或者文本搜索）提供了确定满足一个查询的自然语言文档的能力，并可以选择将它们按照与查询的相关度排序。最常用的搜索类型是找到所有包含给定查询词的文档并按照它们与查询的相似性顺序返回它们。查询和相似性的概念非常灵活并且依赖于特定的应用。最简单的搜索认为查询是一组词而相似性是查询词在文档中的频度。
+  <meta property="og:description" content="解析器 配置 测试和调试文本搜索  配置测试 解析器测试        全文检索（或者文本搜索）提供了确定满足一个查询的自然语言文档的能力，并可以选择将它们按照与查询的相关度排序。最常用的搜索类型是找到所有包含给定查询词的文档并按照它们与查询的相似性顺序返回它们。查询和相似性的概念非常灵活并且依赖于特定的应用。最简单的搜索认为查询是一组词而相似性是查询词在文档中的频度。
 解析器     文本搜索解析器负责把未处理的文档文本划分成记号并且标识每一个记号的类型，而可能的类型集合由解析器本身定义。注意一个解析器完全不会修改文本 — 它简单地标识看似有理的词边界。因为这种有限的视野，对于应用相关的自定义解析器的需求就没有自定义字典那么强烈。目前Redrock Postgres只提供了两种内置解析器，它们已经被证实对很多种应用都适用。
 有两个内置的文本解析器，一个默认解析器被称为pg_catalog.default，一个中文解析器被称为pg_catalog.cjkparser。
 配置     文本搜索功能包括做更多事情的能力：跳过索引特定词（停用词）、处理同义词并使用更高级的解析，例如基于空白之外的解析。这个功能由文本搜索配置控制。PostgreSQL中有多种语言的预定义配置，并且你可以很容易地创建你自己的配置（psql的\dF命令显示所有可用的配置）。
@@ -62,14 +62,14 @@ SELECT * FROM ts_debug(&#39;chinese&#39;, &#39;关系数据库管理系统&#39;)
 <meta property="article:section" content="Features" />
     <meta
       property="article:modified_time"
-      content="2022-07-22T10:12:52+08:00"
+      content="2022-07-24T22:43:48+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="全文检索" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="全文检索（或者文本搜索）提供了确定满足一个查询的自然语言文档的能力，并可以选择将它们按照与查询的相关度排序。最常用的搜索类型是找到所有包含给定查询词的文档并按照它们与查询的相似性顺序返回它们。查询和相似性的概念非常灵活并且依赖于特定的应用。最简单的搜索认为查询是一组词而相似性是查询词在文档中的频度。
+  <meta name="twitter:description" content="解析器 配置 测试和调试文本搜索  配置测试 解析器测试        全文检索（或者文本搜索）提供了确定满足一个查询的自然语言文档的能力，并可以选择将它们按照与查询的相关度排序。最常用的搜索类型是找到所有包含给定查询词的文档并按照它们与查询的相似性顺序返回它们。查询和相似性的概念非常灵活并且依赖于特定的应用。最简单的搜索认为查询是一组词而相似性是查询词在文档中的频度。
 解析器     文本搜索解析器负责把未处理的文档文本划分成记号并且标识每一个记号的类型，而可能的类型集合由解析器本身定义。注意一个解析器完全不会修改文本 — 它简单地标识看似有理的词边界。因为这种有限的视野，对于应用相关的自定义解析器的需求就没有自定义字典那么强烈。目前Redrock Postgres只提供了两种内置解析器，它们已经被证实对很多种应用都适用。
 有两个内置的文本解析器，一个默认解析器被称为pg_catalog.default，一个中文解析器被称为pg_catalog.cjkparser。
 配置     文本搜索功能包括做更多事情的能力：跳过索引特定词（停用词）、处理同义词并使用更高级的解析，例如基于空白之外的解析。这个功能由文本搜索配置控制。PostgreSQL中有多种语言的预定义配置，并且你可以很容易地创建你自己的配置（psql的\dF命令显示所有可用的配置）。
@@ -88,9 +88,9 @@ SELECT * FROM ts_debug(&#39;chinese&#39;, &#39;关系数据库管理系统&#39;)
       "name": "全文检索",
       "url" : "https://doc.rockdata.net/zh-cn/features/textsearch/",
       "headline": "全文检索",
-      "description": "全文检索（或者文本搜索）提供了确定满足一个查询的自然语言文档的能力，并可以选择将它们按照与查询的相关度排序。最常用的搜索类型是找到所有包含给定查询词的文档并按照它们与查询的相似性顺序返回它们。查询和相似性的概念非常灵活并且依赖于特定的应用。最简单的搜索认为查询是一组词而相似性是查询词在文档中的频度。\n解析器     文本搜索解析器负责把未处理的文档文本划分成记号并且标识每一个记号的类型，而可能的类型集合由解析器本身定义。注意一个解析器完全不会修改文本 — 它简单地标识看似有理的词边界。因为这种有限的视野，对于应用相关的自定义解析器的需求就没有自定义字典那么强烈。目前Redrock Postgres只提供了两种内置解析器，它们已经被证实对很多种应用都适用。\n有两个内置的文本解析器，一个默认解析器被称为pg_catalog.default，一个中文解析器被称为pg_catalog.cjkparser。\n配置     文本搜索功能包括做更多事情的能力：跳过索引特定词（停用词）、处理同义词并使用更高级的解析，例如基于空白之外的解析。这个功能由文本搜索配置控制。PostgreSQL中有多种语言的预定义配置，并且你可以很容易地创建你自己的配置（psql的\\dF命令显示所有可用的配置）。\n一般内置的文本搜索配置都以对应语言的名称命名，内置的中文搜索配置被称为 pg_catalog.chinese。\n测试和调试文本搜索     一个自定义文本搜索配置的行为很容易变得混乱。本节中描述的函数对于测试文本搜索对象有用。你可以测试一个完整的配置，或者独立测试解析器和词典。\n配置测试     函数ts_debug允许简单地测试一个文本搜索配置。\nSELECT * FROM ts_debug(\u0027chinese\u0027, \u0027关系数据库管理系统\u0027); 查询结果：\n alias | description | token | dictionaries | dictionary | lexemes\r-----------\u002b-------------\u002b--------\u002b--------------\u002b------------\u002b----------\rcjk_words | CJK words | 关系 | {chinese} | chinese | {关系}\rcjk_words | CJK words | 数据库 | {chinese} | chinese | {数据库}\rcjk_words | CJK words | 管理 | {chinese} | chinese | {管理}\rcjk_words | CJK words | 系统 | {chinese} | chinese | {系统} 解析器测试     函数ts_parse 允许直接测试一个文本搜索解析器。",
+      "description": "解析器 配置 测试和调试文本搜索  配置测试 解析器测试        全文检索（或者文本搜索）提供了确定满足一个查询的自然语言文档的能力，并可以选择将它们按照与查询的相关度排序。最常用的搜索类型是找到所有包含给定查询词的文档并按照它们与查询的相似性顺序返回它们。查询和相似性的概念非常灵活并且依赖于特定的应用。最简单的搜索认为查询是一组词而相似性是查询词在文档中的频度。\n解析器     文本搜索解析器负责把未处理的文档文本划分成记号并且标识每一个记号的类型，而可能的类型集合由解析器本身定义。注意一个解析器完全不会修改文本 — 它简单地标识看似有理的词边界。因为这种有限的视野，对于应用相关的自定义解析器的需求就没有自定义字典那么强烈。目前Redrock Postgres只提供了两种内置解析器，它们已经被证实对很多种应用都适用。\n有两个内置的文本解析器，一个默认解析器被称为pg_catalog.default，一个中文解析器被称为pg_catalog.cjkparser。\n配置     文本搜索功能包括做更多事情的能力：跳过索引特定词（停用词）、处理同义词并使用更高级的解析，例如基于空白之外的解析。这个功能由文本搜索配置控制。PostgreSQL中有多种语言的预定义配置，并且你可以很容易地创建你自己的配置（psql的\\dF命令显示所有可用的配置）。\n一般内置的文本搜索配置都以对应语言的名称命名，内置的中文搜索配置被称为 pg_catalog.chinese。\n测试和调试文本搜索     一个自定义文本搜索配置的行为很容易变得混乱。本节中描述的函数对于测试文本搜索对象有用。你可以测试一个完整的配置，或者独立测试解析器和词典。\n配置测试     函数ts_debug允许简单地测试一个文本搜索配置。\nSELECT * FROM ts_debug(\u0027chinese\u0027, \u0027关系数据库管理系统\u0027); 查询结果：\n alias | description | token | dictionaries | dictionary | lexemes\r-----------\u002b-------------\u002b--------\u002b--------------\u002b------------\u002b----------\rcjk_words | CJK words | 关系 | {chinese} | chinese | {关系}\rcjk_words | CJK words | 数据库 | {chinese} | chinese | {数据库}\rcjk_words | CJK words | 管理 | {chinese} | chinese | {管理}\rcjk_words | CJK words | 系统 | {chinese} | chinese | {系统} 解析器测试     函数ts_parse 允许直接测试一个文本搜索解析器。",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "106",
+      "wordCount" : "111",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -101,7 +101,7 @@ SELECT * FROM ts_debug(&#39;chinese&#39;, &#39;关系数据库管理系统&#39;)
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-22T10:12:52.00Z",
+      "dateModified": "2022-07-24T22:43:48.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2666,7 +2666,20 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     class="gdoc-markdown gdoc-markdown__align--left"
   >
     <h1>全文检索</h1>
-    <p>全文检索（或者<em>文本搜索</em>）提供了确定满足一个<em>查询</em>的自然语言<em>文档</em>的能力，并可以选择将它们按照与查询的相关度排序。最常用的搜索类型是找到所有包含给定<em>查询词</em>的文档并按照它们与查询的<em>相似性</em>顺序返回它们。<code>查询</code>和<code>相似性</code>的概念非常灵活并且依赖于特定的应用。最简单的搜索认为<code>查询</code>是一组词而<code>相似性</code>是查询词在文档中的频度。</p>
+    <div class="gdoc-toc gdoc-toc__level--3">
+      <nav id="TableOfContents"><ul>
+        <li><a href="#解析器">解析器</a></li>
+        <li><a href="#配置">配置</a></li>
+        <li><a href="#测试和调试文本搜索">测试和调试文本搜索</a>
+          <ul>
+            <li><a href="#配置测试">配置测试</a></li>
+            <li><a href="#解析器测试">解析器测试</a></li>
+          </ul>
+        </li>
+      </ul></nav>
+      <hr />
+    </div>
+<p>全文检索（或者<em>文本搜索</em>）提供了确定满足一个<em>查询</em>的自然语言<em>文档</em>的能力，并可以选择将它们按照与查询的相关度排序。最常用的搜索类型是找到所有包含给定<em>查询词</em>的文档并按照它们与查询的<em>相似性</em>顺序返回它们。<code>查询</code>和<code>相似性</code>的概念非常灵活并且依赖于特定的应用。最简单的搜索认为<code>查询</code>是一组词而<code>相似性</code>是查询词在文档中的频度。</p>
 <div class="gdoc-page__anchorwrap">
     <h2 id="解析器">
         解析器

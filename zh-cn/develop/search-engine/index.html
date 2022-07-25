@@ -12,11 +12,10 @@
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-  <meta name="description" content="Redrock Postgres 提供了全文检索的能力，通过全文检索可以搭建文本内容搜索引擎。在本节中，我们以网页文本内容为例，介绍如何在PostgreSQL中快速建立一个网页文本内容的搜索引擎。
+  <meta name="description" content="创建网页数据表 创建网页内容索引表 添加网页数据 检索网页内容      Redrock Postgres 提供了全文检索的能力，通过全文检索可以搭建文本内容搜索引擎。在本节中，我们以网页文本内容为例，介绍如何在PostgreSQL中快速建立一个网页文本内容的搜索引擎。
 创建网页数据表     创建网页数据表，用于存储网页的内容数据：
 CREATE TABLE IF NOT EXISTS site_page ( id serial PRIMARY KEY, url text, image text, title text, content text ); 其中表 site_page 包括的列如下：
-   名称 描述     id 网页的编号   url 网页的链接地址   image 网页图片的链接地址   title 网页的标题   content 网页的正文    创建网页内容索引表     创建网页内容索引数据表，用于存储网页内容的索引数据：
-CREATE TABLE IF NOT EXISTS site_page_tsi ( id integer, title tsvector, content tsvector ); CREATE INDEX site_page_title_idx ON site_page_tsi USING GIN (title); CREATE INDEX site_page_content_idx ON site_page_tsi USING GIN (content); 其中表 site_page_tsi 包括的列如下：" />
+   名称 描述     id 网页的编号   url 网页的链接地址   image 网页图片的链接地址   title 网页的标题   content 网页的正文    创建网页内容索引表     创建网页内容索引数据表，用于存储网页内容的索引数据：" />
 
     <title>搜索引擎 | Redrock Documentation</title>
 
@@ -43,29 +42,27 @@ CREATE TABLE IF NOT EXISTS site_page_tsi ( id integer, title tsvector, content t
   />
   <meta property="og:site_name" content="Redrock Documentation" />
   <meta property="og:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta property="og:description" content="Redrock Postgres 提供了全文检索的能力，通过全文检索可以搭建文本内容搜索引擎。在本节中，我们以网页文本内容为例，介绍如何在PostgreSQL中快速建立一个网页文本内容的搜索引擎。
+  <meta property="og:description" content="创建网页数据表 创建网页内容索引表 添加网页数据 检索网页内容      Redrock Postgres 提供了全文检索的能力，通过全文检索可以搭建文本内容搜索引擎。在本节中，我们以网页文本内容为例，介绍如何在PostgreSQL中快速建立一个网页文本内容的搜索引擎。
 创建网页数据表     创建网页数据表，用于存储网页的内容数据：
 CREATE TABLE IF NOT EXISTS site_page ( id serial PRIMARY KEY, url text, image text, title text, content text ); 其中表 site_page 包括的列如下：
-   名称 描述     id 网页的编号   url 网页的链接地址   image 网页图片的链接地址   title 网页的标题   content 网页的正文    创建网页内容索引表     创建网页内容索引数据表，用于存储网页内容的索引数据：
-CREATE TABLE IF NOT EXISTS site_page_tsi ( id integer, title tsvector, content tsvector ); CREATE INDEX site_page_title_idx ON site_page_tsi USING GIN (title); CREATE INDEX site_page_content_idx ON site_page_tsi USING GIN (content); 其中表 site_page_tsi 包括的列如下：" />
+   名称 描述     id 网页的编号   url 网页的链接地址   image 网页图片的链接地址   title 网页的标题   content 网页的正文    创建网页内容索引表     创建网页内容索引数据表，用于存储网页内容的索引数据：" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://doc.rockdata.net/zh-cn/develop/search-engine/" />
 
 <meta property="article:section" content="Develop" />
     <meta
       property="article:modified_time"
-      content="2022-07-22T16:51:10+08:00"
+      content="2022-07-25T19:39:35+08:00"
     />
 
 
   <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="搜索引擎" />
   <meta property="twitter:image" content="https://doc.rockdata.net/socialmedia2.png" />
-  <meta name="twitter:description" content="Redrock Postgres 提供了全文检索的能力，通过全文检索可以搭建文本内容搜索引擎。在本节中，我们以网页文本内容为例，介绍如何在PostgreSQL中快速建立一个网页文本内容的搜索引擎。
+  <meta name="twitter:description" content="创建网页数据表 创建网页内容索引表 添加网页数据 检索网页内容      Redrock Postgres 提供了全文检索的能力，通过全文检索可以搭建文本内容搜索引擎。在本节中，我们以网页文本内容为例，介绍如何在PostgreSQL中快速建立一个网页文本内容的搜索引擎。
 创建网页数据表     创建网页数据表，用于存储网页的内容数据：
 CREATE TABLE IF NOT EXISTS site_page ( id serial PRIMARY KEY, url text, image text, title text, content text ); 其中表 site_page 包括的列如下：
-   名称 描述     id 网页的编号   url 网页的链接地址   image 网页图片的链接地址   title 网页的标题   content 网页的正文    创建网页内容索引表     创建网页内容索引数据表，用于存储网页内容的索引数据：
-CREATE TABLE IF NOT EXISTS site_page_tsi ( id integer, title tsvector, content tsvector ); CREATE INDEX site_page_title_idx ON site_page_tsi USING GIN (title); CREATE INDEX site_page_content_idx ON site_page_tsi USING GIN (content); 其中表 site_page_tsi 包括的列如下：" />
+   名称 描述     id 网页的编号   url 网页的链接地址   image 网页图片的链接地址   title 网页的标题   content 网页的正文    创建网页内容索引表     创建网页内容索引数据表，用于存储网页内容的索引数据：" />
 
 
   <script type="application/ld+json">
@@ -76,9 +73,9 @@ CREATE TABLE IF NOT EXISTS site_page_tsi ( id integer, title tsvector, content t
       "name": "搜索引擎",
       "url" : "https://doc.rockdata.net/zh-cn/develop/search-engine/",
       "headline": "搜索引擎",
-      "description": "Redrock Postgres 提供了全文检索的能力，通过全文检索可以搭建文本内容搜索引擎。在本节中，我们以网页文本内容为例，介绍如何在PostgreSQL中快速建立一个网页文本内容的搜索引擎。\n创建网页数据表     创建网页数据表，用于存储网页的内容数据：\nCREATE TABLE IF NOT EXISTS site_page ( id serial PRIMARY KEY, url text, image text, title text, content text ); 其中表 site_page 包括的列如下：\n   名称 描述     id 网页的编号   url 网页的链接地址   image 网页图片的链接地址   title 网页的标题   content 网页的正文    创建网页内容索引表     创建网页内容索引数据表，用于存储网页内容的索引数据：\nCREATE TABLE IF NOT EXISTS site_page_tsi ( id integer, title tsvector, content tsvector ); CREATE INDEX site_page_title_idx ON site_page_tsi USING GIN (title); CREATE INDEX site_page_content_idx ON site_page_tsi USING GIN (content); 其中表 site_page_tsi 包括的列如下：",
+      "description": "创建网页数据表 创建网页内容索引表 添加网页数据 检索网页内容      Redrock Postgres 提供了全文检索的能力，通过全文检索可以搭建文本内容搜索引擎。在本节中，我们以网页文本内容为例，介绍如何在PostgreSQL中快速建立一个网页文本内容的搜索引擎。\n创建网页数据表     创建网页数据表，用于存储网页的内容数据：\nCREATE TABLE IF NOT EXISTS site_page ( id serial PRIMARY KEY, url text, image text, title text, content text ); 其中表 site_page 包括的列如下：\n   名称 描述     id 网页的编号   url 网页的链接地址   image 网页图片的链接地址   title 网页的标题   content 网页的正文    创建网页内容索引表     创建网页内容索引数据表，用于存储网页内容的索引数据：",
       "thumbnailUrl": "https://doc.rockdata.net/socialmedia2.png",
-      "wordCount" : "154",
+      "wordCount" : "167",
       "inLanguage": "zh-cn",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -89,7 +86,7 @@ CREATE TABLE IF NOT EXISTS site_page_tsi ( id integer, title tsvector, content t
       "copyrightYear" : "0001",
       "dateCreated": "0001-01-01T00:00:00.00Z",
       "datePublished": "0001-01-01T00:00:00.00Z",
-      "dateModified": "2022-07-22T16:51:10.00Z",
+      "dateModified": "2022-07-25T19:39:35.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Redrock Documentation",
@@ -2654,7 +2651,16 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
     class="gdoc-markdown gdoc-markdown__align--left"
   >
     <h1>搜索引擎</h1>
-    <p>Redrock Postgres 提供了<a
+    <div class="gdoc-toc gdoc-toc__level--3">
+      <nav id="TableOfContents"><ul>
+        <li><a href="#创建网页数据表">创建网页数据表</a></li>
+        <li><a href="#创建网页内容索引表">创建网页内容索引表</a></li>
+        <li><a href="#添加网页数据">添加网页数据</a></li>
+        <li><a href="#检索网页内容">检索网页内容</a></li>
+      </ul></nav>
+      <hr />
+    </div>
+<p>Redrock Postgres 提供了<a
   class="gdoc-markdown__link"
   href="/zh-cn/features/textsearch/"
 >全文检索</a>的能力，通过全文检索可以搭建文本内容搜索引擎。在本节中，我们以网页文本内容为例，介绍如何在PostgreSQL中快速建立一个网页文本内容的搜索引擎。</p>
@@ -2745,6 +2751,18 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </tr>
 </tbody>
 </table> </div>
+
+
+
+
+
+<blockquote class="gdoc-hint tip">
+  <div class="gdoc-hint__title flex align-center"><i class="fa tip" title="Tip"></i></div>
+  <div class="gdoc-hint__text"><p>当然，您也可以将表<code>site_page</code>和<code>site_page_tsi</code>合并成一个表。在这里，我们更推荐您将网页内容数据和内容索引数据分开存储，这样可以提升网页内容数据的查询性能，也方便单独对索引数据进行维护和调整。</p>
+<p>通过将内容索引数据独立成一个表，我们可以查看这部分数据的存储空间占用量。另外，我们也可以在添加网页数据时，对内容相关的分词索引项进行优化调整，去除那些我们不感兴趣的关键词，这样做既能节省存储空间，也能提升全文检索的效率。</p>
+</div>
+</blockquote>
+
 <div class="gdoc-page__anchorwrap">
     <h2 id="添加网页数据">
         添加网页数据
@@ -2775,7 +2793,8 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
 </span></span></span><span class="line"><span class="cl"><span class="s1">红石数据库主要为企业生产环境和多云环境部署而设计。&#39;</span><span class="p">));</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">COMMIT</span><span class="p">;</span>
-</span></span></code></pre></div><div class="gdoc-page__anchorwrap">
+</span></span></code></pre></div><p>在上面的例子中，我们将一条网页内容数据添加到表<code>site_page</code>中，获取该条网页内容的编号，然后通过函数<code>to_tsvector</code>生成网页内容的分词索引，指定对应的网页编号，插入到内容索引数据表<code>site_page_tsi</code>中。</p>
+<div class="gdoc-page__anchorwrap">
     <h2 id="检索网页内容">
         检索网页内容
         <a data-clipboard-text="https://doc.rockdata.net/zh-cn/develop/search-engine/#检索网页内容" class="gdoc-page__anchor clip flex align-center" title="锚定到： 检索网页内容" aria-label="锚定到： 检索网页内容" href="#%e6%a3%80%e7%b4%a2%e7%bd%91%e9%a1%b5%e5%86%85%e5%ae%b9">
@@ -2783,15 +2802,20 @@ License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL
         </a>
     </h2>
 </div>
-<p>当然，我们可以根据搜索关键词，检索匹配的网页内容。比如我们可以执行下面查询，检索匹配关键词&quot;红石文档&quot;相关网页数据：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">sp</span><span class="mf">.</span><span class="n">id</span><span class="p">,</span> <span class="n">sp</span><span class="mf">.</span><span class="n">url</span><span class="p">,</span> <span class="n">sp</span><span class="mf">.</span><span class="n">title</span> <span class="k">FROM</span> <span class="n">site_page</span> <span class="k">AS</span> <span class="n">sp</span>
-</span></span><span class="line"><span class="cl">  <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">site_page_tsi</span> <span class="k">AS</span> <span class="n">tsi</span> <span class="k">ON</span> <span class="n">sp</span><span class="mf">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">tsi</span><span class="mf">.</span><span class="n">id</span>
+<p>当然，我们可以根据搜索关键词，检索匹配的网页内容。比如我们可以执行下面的查询，检索网页标题匹配关键词&quot;红石文档&quot;的相关网页数据：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-postgresql" data-lang="postgresql"><span class="line"><span class="cl"><span class="k">SELECT</span> <span class="n">sp</span><span class="mf">.</span><span class="n">id</span><span class="p">,</span> <span class="n">sp</span><span class="mf">.</span><span class="n">url</span><span class="p">,</span> <span class="n">sp</span><span class="mf">.</span><span class="n">title</span>
+</span></span><span class="line"><span class="cl">  <span class="k">FROM</span> <span class="n">site_page</span> <span class="k">AS</span> <span class="n">sp</span>
+</span></span><span class="line"><span class="cl">    <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">site_page_tsi</span> <span class="k">AS</span> <span class="n">tsi</span> <span class="k">ON</span> <span class="n">sp</span><span class="mf">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">tsi</span><span class="mf">.</span><span class="n">id</span>
 </span></span><span class="line"><span class="cl">  <span class="k">WHERE</span> <span class="n">tsi</span><span class="mf">.</span><span class="n">title</span> <span class="o">@@</span> <span class="n">plainto_tsquery</span><span class="p">(</span><span class="s1">&#39;chinese&#39;</span><span class="p">,</span> <span class="s1">&#39;红石文档&#39;</span><span class="p">);</span>
 </span></span></code></pre></div><p>查询结果：</p>
 <pre tabindex="0"><code> id |               url               |     title
 ----+---------------------------------+----------------
   1 | https://doc.rockdata.net/zh-cn/ | 红石数据库文档
-</code></pre>
+</code></pre><p>上面的例子比较简单。通常来说，在指定搜索关键词检索网页内容时，可能会返回很多匹配的网页数据，此时，您可以考虑通过在查询中指定 <a
+  class="gdoc-markdown__link"
+  href="http://www.postgres.cn/docs/12/sql-select.html#SQL-LIMIT"
+>LIMIT &hellip; OFFSET &hellip;</a> 对返回的结果集进行分页展示。</p>
+
   </article>
 
 
